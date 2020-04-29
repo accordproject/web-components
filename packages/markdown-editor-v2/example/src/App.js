@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { SlateTransformer } from '@accordproject/markdown-slate';
-import { RichTextEditor } from '@accordproject/rich-text-editor';
+import { MarkdownEditor } from '@accordproject/markdown-editor';
 
 const slateTransformer = new SlateTransformer();
 console.log(slateTransformer);
@@ -74,7 +74,7 @@ const propsObj = {
 
 
 /**
- * RichTextEditor demo
+ * ContractEditor demo
  */
 const App = () => {
 
@@ -104,7 +104,7 @@ const App = () => {
 
   return (
     <div>
-      <RichTextEditor
+      <MarkdownEditor
         readOnly={false}
         value={slateValue}
         onChange={onSlateValueChange}

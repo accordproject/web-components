@@ -1,10 +1,10 @@
 {
-  "name": "@accordproject/rich-text-editor",
+  "name": "@accordproject/markdown-editor-v2",
   "version": "1.0.0",
   "description": "WYSIWYG Markdown editor",
   "author": "dselman",
   "license": "MIT",
-  "repository": "dselman/@accordproject/rich-text-editor",
+  "repository": "dselman/@accordproject/markdown-editor",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",

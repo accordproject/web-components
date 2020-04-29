@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/text-editor-example",
-  "homepage": "https://dselman.github.io/@accordproject/markdown-editor",
+  "homepage": "https://dselman.github.io/@accordproject/text-editor",
   "version": "0.0.0",
   "private": true,
   "dependencies": {

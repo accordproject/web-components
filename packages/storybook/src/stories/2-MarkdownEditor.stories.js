@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { boolean } from '@storybook/addon-knobs';
-import {RichTextEditor} from '@accordproject/rich-text-editor';
+import { MarkdownEditor } from '@accordproject/markdown-editor-v2';
 import '../styles.module.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -76,7 +76,7 @@ const propsObj = {
 
 
 /**
- * RichTextEditor demo
+ * MarkdownEditor demo
  */
 export const Demo = () => {
 
@@ -116,7 +116,7 @@ export const Demo = () => {
 
   return (
     <div>
-      <RichTextEditor
+      <MarkdownEditor
         readOnly={readOnly}
         value={slateValue}
         onChange={onSlateValueChange}
@@ -127,8 +127,8 @@ export const Demo = () => {
 }
 
 export default {
-  title: 'Rich Text Editor',
-  component: RichTextEditor,
+  title: 'Markdown Editor',
+  component: MarkdownEditor,
   parameters: {
     componentSubtitle: 'WYSIWYG Markdown Editor',
   }

@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import { SlateTransformer } from '@accordproject/markdown-slate';
-import RichTextEditor from '../index';
+import MarkdownEditor from '../index';
 
 const slateTransformer = new SlateTransformer();
 Enzyme.configure({ adapter: new Adapter() });
@@ -70,13 +70,13 @@ Fin.
 `;
 const mockOnChange = jest.fn();
 
-describe('<RichTextEditor />', () => {
+describe('<MarkdownEditor />', () => {
   describe('on initialization', () => {
     it('renders page correctly', () => {
       const slate = slateTransformer.fromMarkdown(defaultMarkdown);
 
       const component = shallow(
-        <RichTextEditor
+        <MarkdownEditor
             className="ap-rich-text-editor"
             readOnly={false}
             value={slate.document.children}

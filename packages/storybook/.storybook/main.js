@@ -8,7 +8,9 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links', 
     '@storybook/addon-knobs', 
-    '@storybook/addon-docs'
+    '@storybook/addon-docs',
+    '@storybook/addon-a11y/register',
+    '@storybook/addon-notes/register'
   ],
   webpackFinal: async (config, { configType }) => {
     config.module.rules.push({

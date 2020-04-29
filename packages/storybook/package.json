@@ -34,6 +34,8 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-docs": "^5.3.18",
+    "@storybook/addon-a11y": "^5.3.18",
+    "@storybook/addon-notes": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
     "babel-eslint": "^10.0.3",
@@ -60,10 +62,15 @@
     "dist"
   ],
   "dependencies": {
+    "@accordproject/cicero-core": "^0.20.10",
+    "@accordproject/cicero-ui": "unstable",
+    "@accordproject/concerto-ui-react": "1.0.0",
+    "@accordproject/markdown-editor-v2": "1.0.0",
     "@accordproject/markdown-slate": "^0.11.2",
-    "@accordproject/rich-text-editor": "1.0.0",
     "@accordproject/text-editor": "1.0.0",
-    "@accordproject/concerto-ui-react" : "1.0.0",
-    "semantic-ui-css": "^2.4.1"
+    "semantic-ui-css": "^2.4.1",
+    "slate": "^0.57.2",
+    "slate-react": "^0.57.2",
+    "styled-components": "^5.1.0"
   }
 }

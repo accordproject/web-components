@@ -27,7 +27,7 @@ export const markdownToSlate = (markdown) => {
   return slateTransformer.fromMarkdown(markdown);
 }
 
-export const RichTextEditor = (props) => {
+export const MarkdownEditor = (props) => {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const { augmentEditor } = props;
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
@@ -164,7 +164,7 @@ export const RichTextEditor = (props) => {
 /**
  * The property types for this component
  */
-RichTextEditor.propTypes = {
+MarkdownEditor.propTypes = {
   /* Initial contents for the editor (markdown text) */
   value: PropTypes.array.isRequired,
   /* Props for the editor */
@@ -183,7 +183,7 @@ RichTextEditor.propTypes = {
   canBeFormatted: PropTypes.func,
 };
 
-RichTextEditor.defaultProps = {
+MarkdownEditor.defaultProps = {
   isEditable: () => true,
   canBeFormatted: () => true,
 };
