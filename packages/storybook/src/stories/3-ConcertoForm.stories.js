@@ -7,10 +7,11 @@ export default {
   title: 'Concerto Form',
   component: ConcertoForm,
   parameters: {
-    componentSubtitle: 'Dynamic web forms created from Concerto models',
+    componentSubtitle: 'Create dynamic forms from Concerto models',
   }
 };
 export const Demo = () => {
+  const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Address');
   const options = object('Options', {});
   const model = text('Model', `namespace test 
@@ -29,7 +30,6 @@ export const Demo = () => {
     o Country country
   }
   `);
-  const readOnly = boolean('Read-only', false);
   return <ConcertoForm 
     readOnly={readOnly} 
     models={[model]} 
