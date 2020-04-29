@@ -1,0 +1,7 @@
+.ap-text-editor .textarea {
+  font-family: monospace;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  resize: none;
+}

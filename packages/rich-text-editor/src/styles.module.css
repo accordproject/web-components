@@ -1,0 +1,89 @@
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+pre {
+	padding: 10px;
+	background-color: #eee;
+	white-space: pre-wrap;
+}
+
+:not(pre)>code {
+	font-family: monospace;
+	background-color: #eee;
+	padding: 3px;
+}
+
+html {
+	height: 100%;
+}
+
+.doc {
+	margin: 20px;
+	height: calc(100vh - 40px);
+	display: flex;
+	flex-direction: row;
+	background-color: #fff;
+}
+
+.doc .doc-inner {
+	width: 50%;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	padding: 20px;
+	overflow: auto;
+}
+
+blockquote {
+	width: 80%;
+	margin: 10px auto;
+	padding: 1.0em 10px 1.2em 15px;
+	border-left: 3px solid #484848;
+	line-height: 1;
+	position: relative;
+}
+
+a {
+	color: #9d7ff2;
+}
+
+blockquote::before {
+	font-family: Arial;
+	content: '\201C';
+	font-size: 1em;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+}
+
+blockquote::after {
+	content: '';
+}
+
+blockquote span {
+	margin-top: 1em;
+}
+
+.App {
+	color: rgb(17, 17, 17);
+	max-width: 740px;
+	background-color: rgb(255, 255, 255);
+	box-shadow: rgba(118, 143, 255, 0.1) 0px 16px 24px 0px;
+	padding: 40px;
+	margin: 65px auto 45px;
+	border-radius: 4.5px;
+}
+
+.markdown-box {
+	width: 100%;
+	border: none;
+	height: 100%;
+	outline: none;
+}
+
+.heading {
+	font-size: 18px;
+	text-align: center;
+	position: relative;
+	text-transform: uppercase;
+}
