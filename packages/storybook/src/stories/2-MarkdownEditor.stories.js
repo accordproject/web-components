@@ -126,10 +126,26 @@ export const Demo = () => {
   );
 }
 
+const intro = `
+The markdown editor implements a WYSIWYG editor for markdown that conforms to
+the [CommonMark](https://spec.commonmark.org) specification.
+
+The editor is based on [Slate](https://www.slatejs.org) and the Accord Project
+\`markdown-transform \` [project](https://github.com/accordproject/markdown-transform) includes lots of useful utilities to transform various
+formats to and from markdown.
+`
+
+const configuration = `
+You can configure this component to be in read/write mode, 
+in which case a formatting toolbar is displayed, or a read-only mode which locks
+the text against editing and the formatting toolbar is removed.
+`
+
 export default {
   title: 'Markdown Editor',
   component: MarkdownEditor,
   parameters: {
     componentSubtitle: 'WYSIWYG Markdown Editor',
+    notes: { Introduction: intro, Configuration: configuration },
   }
 };
