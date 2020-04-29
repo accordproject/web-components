@@ -29,5 +29,13 @@ jobs:
         lerna bootstrap
         cd ./packages/storybook
         npm run build-storybook --quiet
+    
+    # Deploy to GitHub Pages
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: ./packages/storybook/storybook-static
         
         
