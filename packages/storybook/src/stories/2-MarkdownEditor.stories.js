@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { boolean } from '@storybook/addon-knobs';
-import { MarkdownEditor } from '@accordproject/markdown-editor-v2';
+import { MarkdownEditor } from '@accordproject/markdown-editor';
 import '../styles.module.css';
 import 'semantic-ui-css/semantic.min.css';
 

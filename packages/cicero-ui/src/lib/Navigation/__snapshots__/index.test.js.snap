@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ComponentSwitch /> on initialization renders component correctly showing Files 1`] = `
+<Fragment>
+  <Styled(styled.a)
+    filesVisible={true}
+    id="ContractNavigationSwitchComponent"
+    navState="FILES"
+    onClick={[Function]}
+  >
+    NAVIGATION
+  </Styled(styled.a)>
+  <Styled(styled.a)
+    filesVisible={true}
+    id="ContractFilesSwitchComponent"
+    navState="FILES"
+    onClick={[Function]}
+  >
+    FILES
+  </Styled(styled.a)>
+</Fragment>
+`;
+
+exports[`<ComponentSwitch /> on initialization renders component correctly showing Navigation 1`] = `
+<Fragment>
+  <Styled(styled.a)
+    filesVisible={false}
+    id="ContractNavigationSwitchComponent"
+    navState="NAVIGATION"
+    onClick={[Function]}
+  >
+    NAVIGATION
+  </Styled(styled.a)>
+  <Styled(styled.a)
+    filesVisible={false}
+    id="ContractFilesSwitchComponent"
+    navState="NAVIGATION"
+    onClick={[Function]}
+  >
+    FILES
+  </Styled(styled.a)>
+</Fragment>
+`;
+
+exports[`<NavigationComponent /> on initialization renders component correctly hiding Files 1`] = `
+<styled.div
+  id="NavigationWrapperComponent"
+>
+  <NavigationComponent
+    filesVisible={false}
+    navState="NAVIGATION"
+    setNavState={[Function]}
+  />
+  <ContractNavigation
+    headers={Array []}
+    id="ContractNavigationComponent"
+    navigateHeader={[MockFunction]}
+    navigationProps={
+      Object {
+        "NAVIGATE_SWITCH_FILES_VISIBLE": false,
+      }
+    }
+    styleProps={
+      Object {
+        "clauseColor": undefined,
+        "clauseHeaderColor": undefined,
+        "headerColor": undefined,
+      }
+    }
+  />
+</styled.div>
+`;
+
+exports[`<NavigationComponent /> on initialization renders component correctly showing Files 1`] = `
+<styled.div
+  id="NavigationWrapperComponent"
+>
+  <NavigationComponent
+    filesVisible={true}
+    navState="NAVIGATION"
+    setNavState={[Function]}
+  />
+  <ContractNavigation
+    headers={Array []}
+    id="ContractNavigationComponent"
+    navigateHeader={[MockFunction]}
+    navigationProps={
+      Object {
+        "NAVIGATE_SWITCH_FILES_VISIBLE": true,
+      }
+    }
+    styleProps={
+      Object {
+        "clauseColor": undefined,
+        "clauseHeaderColor": undefined,
+        "headerColor": undefined,
+      }
+    }
+  />
+</styled.div>
+`;

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorComponent /> should render correct component 1`] = `
+<ErrorComponent>
+  <ArrowDiv
+    expanded={false}
+    onClick={[Function]}
+  />
+  <ErrorFile
+    onClick={[Function]}
+  >
+    Grammar
+  </ErrorFile>
+  <ErrorType
+    onClick={[Function]}
+  >
+    mockedName
+    :
+  </ErrorType>
+  <ErrorShortMessage
+    onClick={[Function]}
+  >
+    mockedShortMessage
+  </ErrorShortMessage>
+</ErrorComponent>
+`;

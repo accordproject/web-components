@@ -1,0 +1,69 @@
+a {
+    color: #0f52ba;
+}
+
+.parseError {
+    background-color: #e98181;
+}
+
+.conditional {
+    cursor: pointer;
+}
+
+.conditional:hover {
+    cursor: pointer;
+    background-color: #d4d8e1;
+    border-radius: 2px;
+}
+
+.conditionalTooltip {
+    opacity: 1 !important;
+    border: 1px solid #141F3C;
+    border-radius: 2px;
+    background-color: #141F3C;
+    transition-duration: 0.25s;
+    color: #FFFFFF;
+    padding: 1px 3px;
+    position: absolute;
+}
+
+.conditionalIcon {
+    position: absolute;
+    display: inline-block;
+    transition-duration: 0.2s;
+    margin-left: -5px;
+    margin-top: -8px;
+    width: 18px;
+    height: 18px;
+}
+
+.conditionalIcon:hover,
+.listIcon:hover {
+    cursor: pointer;
+}
+
+.listIcon {
+    position: absolute;
+    display: inline-block;
+    transition-duration: 0.2s;
+    margin-left: -35px;
+    margin-top: 4px;
+    width: 18px;
+    height: 16px;
+}
+.addListIcon{
+    display: block;
+    margin-top: 23px;
+}
+
+.variable {
+    border: #A4BBE7 1px solid;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.conditional {   
+    border: #FFDDA0 1px solid;
+    border-radius: 2px;
+    background-color: #fff;
+}

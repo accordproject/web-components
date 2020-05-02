@@ -6,7 +6,7 @@ Use the interactive [Storybook](https://accordproject.github.io/web-components) 
 
 ## Repository Structure
 
-This repository is a monorepo, built using [lerna](https://lerna.js.org). The packages have all been created using the `create-react-library` npm module.
+This repository is a monorepo, built using [lerna](https://lerna.js.org). The packages have all been created using the `yarn create react-app %PROJECT_NAME% --template npm-library` npm modules.
 
 The `storybook` package is a [React Storybook](https://storybook.js.org), and contains all the stories for all the sub-packages, as well as some external packages.
 

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorLogger /> on initialization renders page correctly with errors 1`] = `
+<div>
+  <ErrorsHeader
+    errors={true}
+    id="ErrorComponentHeader"
+    onClick={[Function]}
+  >
+    <ErrorSymbol
+      name="exclamation triangle"
+      size="small"
+    />
+    1
+     
+    Error
+    <ErrorBarArrow
+      errorDisplay={false}
+    />
+  </ErrorsHeader>
+</div>
+`;
+
+exports[`<ErrorLogger /> on initialization renders page correctly without errors 1`] = `
+<div>
+  <ErrorsHeader
+    errors={false}
+    id="ErrorComponentHeader"
+    onClick={[Function]}
+  >
+    No
+     
+    Error
+    <ErrorBarArrow
+      errorDisplay={false}
+    />
+  </ErrorsHeader>
+</div>
+`;

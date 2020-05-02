@@ -10,5 +10,14 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^3.20.2"
+  },
+  "dependencies": {
+    "react-dom": ">=16.8.0",
+    "slate": "^0.57.2",
+    "slate-history": "^0.57.2",
+    "slate-react": "^0.57.2",
+    "styled-components": "^5.1.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2"
   }
 }
