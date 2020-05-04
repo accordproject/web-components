@@ -8,8 +8,7 @@ module.exports = {
         modules: false,
         targets: pkg.browserslist.production,
       },
-    ],
-    '@babel/preset-react',
+    ]  
   ],
   ignore: ['node_modules/**'],
 };

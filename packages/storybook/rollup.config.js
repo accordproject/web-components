@@ -35,7 +35,7 @@ const config = outputs.map(({file, format}) => ({
   output: {
     file,
     format,
-    name: 'ReactCalendarToolkit',
+    name: 'AccordProjectWebComponentsStorybook',
     globals: {
       react: 'React',
       'react-dom': 'ReactDOM',

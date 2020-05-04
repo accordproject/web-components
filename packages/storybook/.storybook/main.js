@@ -1,5 +1,13 @@
 const path = require("path");
 const webpack = require("webpack");
+const nodeExternals = require('webpack-node-externals');
+
+disableEsLint = (e) => {
+  return e.module.rules.filter(e =>
+    e.use && e.use.some(e => e.options && void 0 !== e.options.useEslintrc)).forEach(s => {
+      e.module.rules = e.module.rules.filter(e => e !== s)
+    }), e
+}
 
 module.exports = {
   stories: ['../src/**/*.stories.js'],
@@ -12,6 +20,9 @@ module.exports = {
     '@storybook/addon-notes/register'
   ],
   webpackFinal: async (config, { configType }) => {
+
+    config = disableEsLint(config);
+
     config.module.rules.push({
       test: /\.scss$/,
       use: ["style-loader", "css-loader", "sass-loader"],

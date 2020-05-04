@@ -1,33 +1,95 @@
 {
-  "parser": "babel-eslint",
   "extends": [
-    "standard",
-    "standard-react",
-    "plugin:prettier/recommended",
-    "prettier/standard",
+    "airbnb",
+    "react-app",
+    "prettier",
+    "prettier/flowtype",
     "prettier/react"
   ],
-  "env": {
-    "node": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "ecmaFeatures": {
-      "legacyDecorators": true,
-      "jsx": true
-    }
-  },
-  "settings": {
-    "react": {
-      "version": "16"
-    }
-  },
   "rules": {
-    "space-before-function-paren": 0,
-    "react/prop-types": 0,
-    "react/jsx-handler-names": 0,
-    "react/jsx-fragments": 0,
-    "react/no-unused-prop-types": 0,
-    "import/export": 0
-  }
+    // Allow jsx tags inside .js files.
+    "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
+    // Disable props spreading (<App {...props} />) warning.
+    "react/jsx-props-no-spreading": 0,
+    // Throw warning instead of error when using array index as a key.
+    "react/no-array-index-key": 1,
+    // Allow modules with named exports only.
+    "import/prefer-default-export": 0,
+    // Force {foo: 'bar'} object literal syntax.
+    "object-curly-spacing": ["error", "never"],
+    // Throw warning instead of error. Feel free to choose your favorite option https://eslint.org/docs/rules/arrow-body-style
+    "arrow-body-style": ["warn", "as-needed"],
+    // Make prettier code formatting suggestions more verbose.
+    "prettier/prettier": ["warn"],
+    // Throw warning when <a href="#"> or <a href="javascript:void(0)"> are used. Use <button> instead.
+    "jsx-a11y/anchor-is-valid": ["warn", {"aspects": ["invalidHref"]}],
+    // Allow using (props) => <Component /> and ({propName}) => <Component /> syntax.
+    "react/destructuring-assignment": "off",
+    // Disable <Fragment> => <> replacement. Feel free to change
+    "react/jsx-fragments": "off",
+    // Below is the set of functional rules to warn developer about accidental mutations, which may cause error in reducers etc.
+    // No delete operator.
+    "fp/no-delete": "warn",
+    // Warning when Object.assign(a, b) used, since it mutates first argument. Object.assign({}, a, b) is ok.
+    "fp/no-mutating-assign": "warn",
+    // Warning when mutating method (pop, push, reverse, shift, sort, splice, unshift, etc) is used. Ramda and lodash/fp are allowed (_.pop, R.push)
+    "fp/no-mutating-methods": [
+      "warn",
+      {
+        "allowedObjects": ["_", "R"]
+      }
+    ],
+    // Warning when mutating operators (++, --, etc) are used, object = {} also. `Component.propTypes`, `Component.defaultProps`, common.js (`module.exports`) and `ref.current` are ok.
+    "fp/no-mutation": [
+      "warn",
+      {
+        "commonjs": true,
+        "allowThis": true,
+        "exceptions": [
+          {"property": "propTypes"},
+          {"property": "defaultProps"},
+          {"property": "current"}
+        ]
+      }
+    ]
+  },
+  "plugins": ["prettier", "fp"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "./src"]
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": ["./*.js", "setupTests.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true,
+            "optionalDependencies": false,
+            "peerDependencies": false
+          }
+        ],
+        "global-require": 0
+      }
+    },
+    {
+      "files": ["**/*.spec.js"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    },
+    {
+      "files": ["src/lib/**/*.js"],
+      "rules": {
+        "import/no-restricted-paths": [
+          "error",
+          {"zones": [{"target": "./src/lib", "from": "./src/environment"}]}
+        ]
+      }
+    }
+  ]
 }
