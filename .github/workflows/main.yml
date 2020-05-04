@@ -27,6 +27,7 @@ jobs:
       run: |
         sudo npm install -g lerna
         lerna bootstrap
+        lerna run build
         cd ./packages/storybook
         npm run build-storybook --quiet
     
