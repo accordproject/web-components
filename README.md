@@ -33,7 +33,7 @@ The source code for libraries should be placed in the `src/lib` folder.
 
 ```
 npm install -g lerna
-lerna clean && lerna bootstrap
+lerna clean && lerna bootstrap && lerna run build
 ```
 
 ## View Storybook
