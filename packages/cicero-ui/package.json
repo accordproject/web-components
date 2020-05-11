@@ -1,9 +1,9 @@
 {
   "name": "@accordproject/cicero-ui",
-  "version": "1.0.0",
+  "version": "0.90.0",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-editor" : "1.0.0",
+    "@accordproject/markdown-editor" : "0.90.0",
     "@accordproject/markdown-html": "^0.11.2",
     "@accordproject/markdown-slate": "^0.11.2",
     "lodash": "^4.17.15",
@@ -98,8 +98,8 @@
     "stylelint-order": "4.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1",
     "slate": "^0.57.2",
     "slate-react": "^0.57.2",
     "styled-components": "^5.1.0"

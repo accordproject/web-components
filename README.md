@@ -40,5 +40,5 @@ lerna clean && lerna bootstrap && lerna run build
 
 ```
 cd packages/storybook
-yarn storybook
+npm run storybook
 ```

@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/markdown-editor",
-  "version": "1.0.0",
+  "version": "0.90.0",
   "private": false,
   "dependencies": {
     "@accordproject/markdown-cicero": "^0.11.2",
@@ -97,8 +97,8 @@
     "stylelint-order": "4.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1",
     "slate": "^0.57.2",
     "slate-history": "^0.57.2",
     "slate-react": "^0.57.2",

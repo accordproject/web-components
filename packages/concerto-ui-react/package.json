@@ -1,13 +1,13 @@
 {
   "name": "@accordproject/concerto-ui-react",
-  "version": "1.0.0",
+  "version": "0.90.0",
   "private": false,
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "@accordproject/concerto-core": "^0.82.7",
-    "@accordproject/concerto-ui-core": "1.0.0",
+    "@accordproject/concerto-ui-core": "0.90.0",
     "semantic-ui-react": "^0.88.2",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
@@ -100,8 +100,8 @@
     "stylelint-order": "4.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1"
   },
   "files": [
     "lib"

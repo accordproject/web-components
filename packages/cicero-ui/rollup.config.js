@@ -6,7 +6,6 @@ import filesize from 'rollup-plugin-filesize';
 import includePaths from 'rollup-plugin-includepaths';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import autoprefixer from 'autoprefixer';
-import stylelint from 'rollup-plugin-stylelint';
 import postcssPresetEnv from 'postcss-preset-env';
 import {terser} from 'rollup-plugin-terser';
 import pkg from './package.json';
@@ -59,9 +58,6 @@ const config = outputs.map(({file, format}) => ({
       paths: ['src'],
       external: Object.keys(pkg.dependencies),
       extensions: ['.js', '.json', '.html'],
-    }),
-    stylelint({
-      throwOnError: true,
     }),
     postcss({
       extract: process.env.REACT_APP_PKG_STYLE || pkg.style,

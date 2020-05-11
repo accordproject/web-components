@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/concerto-ui-core",
-  "version": "1.0.0",
+  "version": "0.90.0",
   "private": false,
   "dependencies": {
     "prop-types": "^15.7.2",
@@ -94,8 +94,8 @@
     "stylelint-order": "4.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1"
   },
   "files": [
     "lib"
