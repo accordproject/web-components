@@ -21,6 +21,7 @@
     "semantic-ui-react": "^0.88.2"
   },
   "scripts": {
+    "storybook": "lerna exec --scope storybook build-storybook",
     "postinstall": "npm run pkgcheck && npm run bootstrap",
     "bootstrap": "lerna bootstrap",
     "pretest": "npm run doc && npm run licchk",
