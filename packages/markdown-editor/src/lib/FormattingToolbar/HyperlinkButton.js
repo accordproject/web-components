@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup } from 'semantic-ui-react';
-import { useEditor } from 'slate-react';
-import { BUTTON_COLORS, POPUP_STYLE } from '../utilities/constants';
+import {Popup} from 'semantic-ui-react';
+import {useEditor} from 'slate-react';
+import {BUTTON_COLORS, POPUP_STYLE} from '../utilities/constants';
 import Button from '../components/Button';
-
 
 const HyperlinkButton = ({
   showLinkModal,
@@ -33,18 +32,16 @@ const HyperlinkButton = ({
     <Popup
       content={label}
       style={POPUP_STYLE}
-      position='bottom center'
+      position="bottom center"
       trigger={
-          <Button
-              ref={ref}
-              aria-label={type}
-              onMouseDown={onMouseDown}
-              isActive={isActive}
-              background={backgroundColor}
-              {...props}
-          >
-              {icon(iconColor)}
-          </ Button>
+        <Button
+          aria-label={type}
+          onMouseDown={onMouseDown}
+          isActive={isActive}
+          background={backgroundColor}
+          {...props}>
+          {icon(iconColor)}
+        </Button>
       }
     />
   );
