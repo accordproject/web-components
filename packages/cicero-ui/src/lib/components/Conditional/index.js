@@ -16,7 +16,7 @@ import ConditionalSwitch from './ConditionalSwitch';
  * This will have an id property of the Slate key
  * @param {*} props
  */
-const Conditional = (props) => {
+const Conditional = React.forwardRef((props, ref) => {
   const {
     attributes,
     children,
@@ -67,6 +67,7 @@ const Conditional = (props) => {
     onMouseLeave: () => setHovering(false),
     onClick: () => toggleConditional(conditionalPath),
     ...attributes,
+    ref
   };
 
   const conditionalSwitchProps = {
@@ -86,15 +87,15 @@ const Conditional = (props) => {
         <span {...conditionalProps}>{children}</span>
     </>
   );
-};
+});
+
+Conditional.displayName = 'Conditional';
 
 Conditional.propTypes = {
   attributes: PropTypes.PropTypes.shape({
     'data-key': PropTypes.string,
   }),
-  children: PropTypes.arrayOf(
-    PropTypes.object
-  ).isRequired,
+  children: PropTypes.object.isRequired,
   editor: PropTypes.any,
   node: PropTypes.shape({
     key: PropTypes.string,

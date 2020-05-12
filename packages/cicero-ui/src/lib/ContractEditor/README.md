@@ -74,7 +74,7 @@ render(<ContractEditorRenderer />, document.getElementById('root'));
 
 ### Available Functionality
 
-- `clauseProps`: An `object` for the clauses in the editor which contains a deletion, edit, and test function, see below.
+- `clauseProps`: An `object` for the clauses in the editor which contains a deletion, edit, and test function, as well as a header title string and color for clause icons on hover see below.
 
 #### Specifications
 
@@ -85,5 +85,7 @@ clauseProps = {
     CLAUSE_DELETE_FUNCTION,  // (Function)
     CLAUSE_EDIT_FUNCTION,    // (Function)
     CLAUSE_TEST_FUNCTION,    // (Function)
+    HEADER_TITLE,            // (String)
+    ICON_HOVER_COLOR,        // (String)
 }
 ```

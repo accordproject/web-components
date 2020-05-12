@@ -20,8 +20,7 @@ export const ClauseConditional = styled.svg`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
 `;
 
-export const ClauseConditionalTooltip = styled.div`
-  display: inline;
+export const ClauseConditionalTooltip = styled.span`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
   margin-top: -${props => props.tooltipHeight}em;
 
@@ -82,9 +81,9 @@ export const ClauseBody = styled.div`
   .computed {
     color: #f1baff;
   }
-  li{
-    transition:none;
-  },
+  li {
+    transition: none;
+  }
   font-family: serif;
   grid-area: sixteen / sixteen / twenty / twenty;
   margin: 2px 0 10px;
@@ -142,7 +141,8 @@ export const HeaderToolTipWrapper = styled.div`
 `;
 
 export const HeaderToolTip = styled.div.attrs({
-  contentEditable: 'false'
+  contentEditable: 'false',
+  suppressContentEditableWarning: 'true'
 })`
   background-color: #121212;
   padding: 10px;
