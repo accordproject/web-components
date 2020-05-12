@@ -20,9 +20,10 @@ const Menu = styled.div`
   }
 `;
 
-// eslint-disable-next-line react/display-name
 const ToolbarMenu = React.forwardRef(
   ({ ...props }, ref) => (<Menu {...props} ref={ref} />)
 );
+
+ToolbarMenu.displayName = 'ToolbarMenu';
 
 export default ToolbarMenu;

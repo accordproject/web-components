@@ -3,13 +3,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
-import {
-  Editor, Transforms, Node
-} from 'slate';
+import { Editor, Transforms, Node } from 'slate';
 import styled from 'styled-components';
-import {
-  Form, Input, Popup
-} from 'semantic-ui-react';
+import { Form, Input, Popup } from 'semantic-ui-react';
 
 import { insertLink, isSelectionLink, unwrapLink } from '../plugins/withLinks';
 import Portal from '../components/Portal';
@@ -42,6 +38,7 @@ const HyperlinkWrapper = styled.div`
         display: inline-block;
     }
 `;
+
 const HyperlinkCaret = styled.div`
     position: absolute;
     z-index: 4000;
@@ -110,6 +107,8 @@ const HyperlinkMenu = React.forwardRef(
   ({ ...props }, ref) => <HyperlinkWrapper ref={ref} {...props} />
 );
 
+HyperlinkMenu.displayName = 'HyperlinkMenu';
+
 // eslint-disable-next-line react/display-name
 const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
   const refHyperlinkTextInput = useRef();
@@ -142,7 +141,7 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     }
   }, [editor]);
 
-  const defaultLinkValue = isSelectionLink(editor)
+  const defaultLinkValue = (editor.selection && isSelectionLink(editor))
     ? Node.parent(editor, editor.selection.focus.path).data.href
     : '';
 
@@ -151,7 +150,10 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     if (props.showLinkModal) {
       setOriginalSelection(editor.selection);
       setApplyStatus(!!refHyperlinkTextInput.current.props.defaultValue);
+      const x = window.scrollX;
+      const y = window.scrollY;
       refHyperlinkTextInput.current.focus();
+      window.scrollTo(x, y);
     }
   }, [editor, props.showLinkModal]);
 
@@ -163,9 +165,18 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     props.setShowLinkModal(false);
   };
 
+  const validateUrl = (url) => {
+    const isUrlInvalid = !(url.startsWith('http://') || url.startsWith('https://'));
+    if (isUrlInvalid) {
+      return `https://${url}`;
+    }
+    return url;
+  };
+
   const applyLink = (event) => {
+    const newUrl = validateUrl(event.target.url.value);
     Transforms.select(editor, originalSelection);
-    insertLink(editor, event.target.url.value, event.target.text.value);
+    insertLink(editor, newUrl, event.target.text.value);
     Transforms.collapse(editor, { edge: 'end' });
     ReactEditor.focus(editor);
     props.setShowLinkModal(false);
@@ -242,7 +253,7 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
               <Popup
                 trigger={
                   <LinkIconHolder
-                    onClick={isSelectionLink(editor) ? removeLink : null}
+                    onClick={removeLink}
                     aria-label="Remove hyperlink"
                   >
                     <DeleteIcon />
@@ -273,6 +284,8 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     </Portal>
   );
 });
+
+HyperlinkModal.displayName = 'HyperlinkModal';
 
 HyperlinkModal.propTypes = {
   setShowLinkModal: PropTypes.func,

@@ -19,9 +19,9 @@ const StyleDropdownItem = ({
 );
 
 StyleDropdownItem.propTypes = {
-  editor: PropTypes.obj,
+  editor: PropTypes.object,
   type: PropTypes.string,
-  style: PropTypes.obj,
+  style: PropTypes.object,
   canBeFormatted: PropTypes.func
 };
 

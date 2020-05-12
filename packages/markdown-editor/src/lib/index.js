@@ -28,9 +28,14 @@ export const markdownToSlate = (markdown) => {
 }
 
 export const MarkdownEditor = (props) => {
+  const {
+    canCopy,
+    canKeyDown,
+    augmentEditor,
+    isEditable,
+    canBeFormatted
+  } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
-  const { augmentEditor } = props;
-  const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
@@ -45,6 +50,7 @@ export const MarkdownEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {
     const elementProps = { ...slateProps, customElements: props.customElements };
     return (<Element {...elementProps} />);
@@ -68,12 +74,13 @@ export const MarkdownEditor = (props) => {
     },
   };
 
-  const { isEditable, canBeFormatted } = props;
-
   const onKeyDown = useCallback((event) => {
-    const canFormat = canBeFormatted(editor);
+    if (!canKeyDown(editor, event)) {
+      event.preventDefault();
+      return;
+    }
     const isFormatEvent = () => formattingHotKeys.some(hotkey => isHotkey(hotkey, event));
-    if (!canFormat && isFormatEvent()) {
+    if (!canBeFormatted(editor) && isFormatEvent()) {
       event.preventDefault();
       return;
     }
@@ -86,7 +93,7 @@ export const MarkdownEditor = (props) => {
         hotkeyActions[type](code);
       }
     });
-  }, [canBeFormatted, editor, hotkeyActions]);
+  }, [canBeFormatted, canKeyDown, editor, hotkeyActions]);
 
   const onBeforeInput = useCallback((event) => {
     const canEdit = isEditable(editor, event);
@@ -97,14 +104,10 @@ export const MarkdownEditor = (props) => {
 
   const handleCopyOrCut = useCallback((event, cut) => {
     event.preventDefault();
+    if (!canCopy(editor)) return;
     const slateTransformer = new SlateTransformer();
     const htmlTransformer = new HtmlTransformer();
     const ciceroMarkTransformer = new CiceroMarkTransformer();
-
-    // The "JSON" from Slate is immutable
-    // https://github.com/ianstormtaylor/slate/issues/3577
-    // We need to take a functional approach
-    // https://github.com/accordproject/markdown-transform/issues/203
     const SLATE_CHILDREN = Node.fragment(editor, editor.selection);
     const SLATE_DOM = {
       object: 'value',
@@ -114,7 +117,6 @@ export const MarkdownEditor = (props) => {
         children: SLATE_CHILDREN
       }
     };
-
     const CICERO_MARK_DOM = slateTransformer.toCiceroMark(SLATE_DOM);
     const HTML_DOM = htmlTransformer.toHtml(CICERO_MARK_DOM);
     const MARKDOWN_TEXT = ciceroMarkTransformer.toMarkdown(CICERO_MARK_DOM);
@@ -125,7 +127,7 @@ export const MarkdownEditor = (props) => {
     if (cut && editor.selection && Range.isExpanded(editor.selection)) {
       Editor.deleteFragment(editor);
     }
-  }, [editor]);
+  }, [canCopy, editor]);
 
   const onChange = (value) => {
     if (props.readOnly) return;
@@ -145,16 +147,16 @@ export const MarkdownEditor = (props) => {
         setShowLinkModal={setShowLinkModal}
         /> }
       <Editable
-        className="ap-rich-text-editor"
+        id="ap-rich-text-editor"
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
+        placeholder={props.placeholder || 'Enter some rich text...'}
         spellCheck
         autoFocus
         onKeyDown={onKeyDown}
         onDOMBeforeInput={onBeforeInput}
-        onCopy={event => handleCopyOrCut(event)}
+        onCopy={handleCopyOrCut}
         onCut={event => handleCopyOrCut(event, true)}
       />
     </Slate>
@@ -167,23 +169,29 @@ export const MarkdownEditor = (props) => {
 MarkdownEditor.propTypes = {
   /* Initial contents for the editor (markdown text) */
   value: PropTypes.array.isRequired,
-  /* Props for the editor */
-  editorProps: PropTypes.object.isRequired,
   /* A callback that receives the markdown text */
   onChange: PropTypes.func.isRequired,
   /* Boolean to make editor read-only (uneditable) or not (editable) */
   readOnly: PropTypes.bool,
   /* Higher order function to augment the editor methods */
   augmentEditor: PropTypes.func,
-  /* Array of plugins passed in for the editor */
-  customElements: PropTypes.object,
+  /* Function for extending elements rendered by editor */
+  customElements: PropTypes.func,
   /* A method that determines if current edit should be allowed */
   isEditable: PropTypes.func,
   /* A method that determines if current formatting change should be allowed */
   canBeFormatted: PropTypes.func,
+  /* A method that determines if current selection copy should be allowed */
+  canCopy: PropTypes.func,
+  /* A method that determines if current key event should be allowed */
+  canKeyDown: PropTypes.func,
+  /* Placeholder text when the editor is blank */
+  placeholder: PropTypes.string,
 };
 
 MarkdownEditor.defaultProps = {
   isEditable: () => true,
   canBeFormatted: () => true,
+  canCopy: () => true,
+  canKeyDown: () => true,
 };

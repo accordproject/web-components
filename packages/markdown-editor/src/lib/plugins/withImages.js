@@ -112,18 +112,20 @@ InsertImageButton.propTypes = {
   canBeFormatted: PropTypes.func
 };
 
-const ImageElement = ({ attributes, children, element }) => {
+const ImageElement = (({ attributes, children, element }) => {
   const selected = useSelected();
   const focused = useFocused();
   return (
-    <div {...attributes}>
-      <div contentEditable={false}>
+    <span {...attributes}>
+      <span contentEditable={false}>
         <StyledImage src={element.data.href} shadow={selected && focused} />
-      </div>
+      </span>
       {children}
-    </div>
+    </span>
   );
-};
+});
+
+ImageElement.displayName = 'ImageElement';
 
 ImageElement.propTypes = {
   children: PropTypes.node,
