@@ -36,7 +36,7 @@ export function TextEditor({onChange, markdown, readOnly}) {
   /**
    * Render the component, based on showSlate
    */
-  const card = <Card className="ap-text-editor" fluid>
+  const card = <Card id="ap-text-editor" fluid>
     <Card.Content>
     <TextareaAutosize
       className={'textarea'}

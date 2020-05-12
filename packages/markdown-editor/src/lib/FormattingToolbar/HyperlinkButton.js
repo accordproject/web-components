@@ -6,32 +6,30 @@ import { BUTTON_COLORS, POPUP_STYLE } from '../utilities/constants';
 import Button from '../components/Button';
 
 
-// eslint-disable-next-line react/display-name
-const HyperlinkButton = React.forwardRef(
-  ({
-    showLinkModal,
-    setShowLinkModal,
-    type,
-    label,
-    icon,
-    canBeFormatted,
-    ...props
-  }, ref) => {
-    const isActive = showLinkModal;
-    const iconColor = isActive
-      ? BUTTON_COLORS.HYPERLINK_ACTIVE
-      : BUTTON_COLORS.SYMBOL_INACTIVE;
-    const backgroundColor = isActive
-      ? BUTTON_COLORS.BACKGROUND_ACTIVE
-      : BUTTON_COLORS.BACKGROUND_INACTIVE;
+const HyperlinkButton = ({
+  showLinkModal,
+  setShowLinkModal,
+  type,
+  label,
+  icon,
+  canBeFormatted,
+  ...props
+}) => {
+  const isActive = showLinkModal;
+  const iconColor = isActive
+    ? BUTTON_COLORS.HYPERLINK_ACTIVE
+    : BUTTON_COLORS.SYMBOL_INACTIVE;
+  const backgroundColor = isActive
+    ? BUTTON_COLORS.BACKGROUND_ACTIVE
+    : BUTTON_COLORS.BACKGROUND_INACTIVE;
 
-    const editor = useEditor();
-    const onMouseDown = () => {
-      if (!canBeFormatted(editor)) return;
-      if (editor.selection) setShowLinkModal(true);
-    };
+  const editor = useEditor();
+  const onMouseDown = () => {
+    if (!canBeFormatted(editor)) return;
+    if (editor.selection) setShowLinkModal(true);
+  };
 
-    return (
+  return (
     <Popup
       content={label}
       style={POPUP_STYLE}
@@ -49,12 +47,13 @@ const HyperlinkButton = React.forwardRef(
           </ Button>
       }
     />
-    );
-  }
-);
+  );
+};
+
+HyperlinkButton.displayName = 'HyperlinkButton';
 
 HyperlinkButton.propTypes = {
-  showLinkModal: PropTypes.func,
+  showLinkModal: PropTypes.bool,
   setShowLinkModal: PropTypes.func,
   icon: PropTypes.func,
   type: PropTypes.string,

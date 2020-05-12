@@ -1,5 +1,5 @@
 import React from 'react';
-import {MarkdownEditor} from 'lib';
+import { MarkdownEditor } from 'lib';
 import classes from './App.module.css';
 
 const App = () => (
