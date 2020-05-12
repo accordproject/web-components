@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Library /> on initialization renders page correctly 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.div>
+      <ImportComponent
+        onImportItem={[MockFunction]}
+      />
+      <UploadComponent
+        onUploadItem={[MockFunction]}
+      />
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    <Input
+      className="cicero-ui__library-search-input"
+      fluid={true}
+      icon="search"
+      onChange={[Function]}
+      placeholder="Search..."
+      style={
+        Object {
+          "borderRadius": "3px",
+          "boxShadow": "inset 0 0 4px 0 #ABABAB",
+          "margin": "5px 0",
+          "maxHeight": "40px",
+          "width": "100%",
+        }
+      }
+      type="text"
+    />
+    <NewItemComponent
+      onAddItem={[MockFunction]}
+    />
+  </styled.div>
+  <styled.div>
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "This clause allows the receiver of goods to inspect them for a given time period after delivery.",
+          "name": "acceptance-of-delivery",
+          "uri": "ap://acceptance-of-delivery@0.11.0#311de48109cce10e6b2e33ef183ccce121886d0b76754d649d5054d1084f93cd",
+          "version": "0.11.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://acceptance-of-delivery@0.11.0#311de48109cce10e6b2e33ef183ccce121886d0b76754d649d5054d1084f93cd"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "a Simple Car Rental Contract in Turkish Language",
+          "name": "car-rental-tr",
+          "uri": "ap://car-rental-tr@0.8.0#1d6de2328745fe4bae726e0fb887fee6d3fbd00b3d717e30e38dc7bffd7222fa",
+          "version": "0.8.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://car-rental-tr@0.8.0#1d6de2328745fe4bae726e0fb887fee6d3fbd00b3d717e30e38dc7bffd7222fa"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "This clause is a copyright license agreement.",
+          "name": "copyright-license",
+          "uri": "ap://copyright-license@0.12.0#55d73ab5dacc642d8a7cd0bc95c7da5580bd031e00b955616837abd50be08b6b",
+          "version": "0.12.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://copyright-license@0.12.0#55d73ab5dacc642d8a7cd0bc95c7da5580bd031e00b955616837abd50be08b6b"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "A sample demandforecast clause.",
+          "name": "demandforecast",
+          "uri": "ap://demandforecast@0.11.0#ac252106feb1f685f5ecceb12b967bb8210ca5283660b5bf72aeb5b397342f87",
+          "version": "0.11.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://demandforecast@0.11.0#ac252106feb1f685f5ecceb12b967bb8210ca5283660b5bf72aeb5b397342f87"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "Counts events from DocuSign connect with a given envelope status.",
+          "name": "docusign-connect",
+          "uri": "ap://docusign-connect@0.5.0#4b44811f4f3e4899c026c35f4180d6c555f9101e8fcca35a13ad09aa2e28b7f7",
+          "version": "0.5.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://docusign-connect@0.5.0#4b44811f4f3e4899c026c35f4180d6c555f9101e8fcca35a13ad09aa2e28b7f7"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+    <LibraryItemCard
+      item={
+        Object {
+          "description": "This is a clause enforcing healthy eating habits in employees.",
+          "name": "eat-apples",
+          "uri": "ap://eat-apples@0.8.0#5d04f0bb8698e1e7565e496aa97beb055b1f3e7fb353d0b0447aeaac59729ed2",
+          "version": "0.8.0",
+        }
+      }
+      itemTypeName="ITEM"
+      key="ap://eat-apples@0.8.0#5d04f0bb8698e1e7565e496aa97beb055b1f3e7fb353d0b0447aeaac59729ed2"
+      onPrimaryButtonClick={[MockFunction]}
+      onSecondaryButtonClick={[MockFunction]}
+    />
+  </styled.div>
+</styled.div>
+`;
