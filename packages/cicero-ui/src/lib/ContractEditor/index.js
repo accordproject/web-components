@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +16,7 @@
 /* React */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Editor, Node, Point } from 'slate';
 
 /* Components */
 import { MarkdownEditor } from '@accordproject/markdown-editor';
@@ -22,9 +24,9 @@ import ClauseComponent from '../components/Clause';
 import Conditional from '../components/Conditional';
 
 /* Plugins */
-import withClauseSchema, { COMPUTED, VARIABLE } from './plugins/withClauseSchema';
-import withClauses from './plugins/withClauses';
-import withVariables, { isEditable } from './plugins/withVariables';
+import withClauseSchema, { CLAUSE, COMPUTED, VARIABLE } from './plugins/withClauseSchema';
+import withClauses, { isEditableClause } from './plugins/withClauses';
+import withVariables, { isEditableVariable } from './plugins/withVariables';
 
 /**
  * Adds the current value to local storage
@@ -76,7 +78,9 @@ const ContractEditor = (props) => {
         <ClauseComponent
           templateUri={element.data.src}
           clauseId={element.data.clauseid}
-          {...attributes}>
+          clauseProps={props.clauseProps}
+          {...attributes}
+        >
             {children}
         </ClauseComponent>
       ),
@@ -100,25 +104,40 @@ const ContractEditor = (props) => {
       : withVariables(withClauses(withClauseSchema(editor), withClausesProps))
   );
 
+  const isEditable = (...args) => isEditableClause(...args)
+  && isEditableVariable(props.lockText, ...args);
+
+  const canCopy = editor => (!((
+    editor.isInsideClause(editor.selection.anchor)
+    || editor.isInsideClause(editor.selection.focus)
+  )));
+
+  const canKeyDown = (editor, event) => {
+    if (
+      (event.keyCode || event.charCode) === 8
+      && Node.get(editor, editor.selection.focus.path).text.length === 0
+      && Point.equals(Editor.end(editor, []), editor.selection.anchor)
+    ) {
+      const [match] = Editor
+        .nodes(editor, { at: Editor.previous(editor)[1], match: n => n.type === CLAUSE });
+      return !match;
+    }
+    return true;
+  };
+
   return (
     <MarkdownEditor
       augmentEditor={augmentEditor}
-      isEditable={(...args) => isEditable(props.lockText, ...args)}
+      isEditable={isEditable}
       value={props.value || contractProps.value}
       onChange={props.onChange || contractProps.onChange}
       customElements={customElements}
       lockText={props.lockText}
       readOnly={props.readOnly}
       canBeFormatted={editor => !props.lockText || !editor.isInsideClause()}
-      // editorProps={{ ...props.editorProps, onUndoOrRedo: props.onUndoOrRedo }}
+      canCopy={canCopy}
+      canKeyDown={canKeyDown}
       data-testid='editor'
-      // clausePluginProps={{
-      //   loadTemplateObject: props.loadTemplateObject,
-      //   onClauseUpdated: props.onClauseUpdated,
-      //   pasteToContract: props.pasteToContract,
-      //   clauseProps: props.clauseProps,
-      //   clauseMap: props.clauseMap
-      // }}
   />
   );
 };
@@ -128,7 +147,7 @@ const ContractEditor = (props) => {
  */
 ContractEditor.propTypes = {
   augmentEditor: PropTypes.func,
-  value: PropTypes.object,
+  value: PropTypes.array,
   onChange: PropTypes.func,
   lockText: PropTypes.bool,
   readOnly: PropTypes.bool,

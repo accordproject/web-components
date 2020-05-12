@@ -24,7 +24,7 @@ export const ClauseContext = createContext(null);
  * This will have an id property of the clauseid
  * @param {*} props
  */
-const ClauseComponent = (props) => {
+const ClauseComponent = React.forwardRef((props, ref) => {
   const clauseProps = props.clauseProps || Object.create(null);
 
   // Tooltip visibility controls
@@ -40,6 +40,9 @@ const ClauseComponent = (props) => {
 
   const iconWrapperProps = {
     currentHover: hovering,
+    contentEditable: false,
+    suppressContentEditableWarning: true,
+    style: { userSelect: 'none' },
   };
 
   const testIconProps = {
@@ -47,6 +50,7 @@ const ClauseComponent = (props) => {
     width: '19px',
     height: '19px',
     viewBox: '0 0 16 20',
+    clauseIconColor: clauseProps.ICON_HOVER_COLOR,
   };
 
   const editIconProps = {
@@ -54,6 +58,7 @@ const ClauseComponent = (props) => {
     width: '19px',
     height: '19px',
     viewBox: '0 0 19 19',
+    clauseIconColor: clauseProps.ICON_HOVER_COLOR,
   };
 
   const deleteIconProps = {
@@ -61,6 +66,7 @@ const ClauseComponent = (props) => {
     width: '19px',
     height: '19px',
     viewBox: '0 0 12 15',
+    clauseIconColor: clauseProps.ICON_HOVER_COLOR,
   };
 
   return (
@@ -68,7 +74,7 @@ const ClauseComponent = (props) => {
       <S.ClauseWrapper
         src={props.templateUri}
         id={props.clauseId}
-        className='clause'
+        className='cicero-ui__clause'
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
@@ -84,8 +90,15 @@ const ClauseComponent = (props) => {
               />
         ))
       } */}
-        <S.ClauseBackground contentEditable={false}/>
-        <S.ClauseHeader currentHover={hovering} contentEditable={false}>
+        <S.ClauseBackground className='cicero-ui__clause-background'/>
+        <S.ClauseHeader
+          className='cicero-ui__clause-header'
+          currentHover={hovering}
+          contentEditable={false}
+          suppressContentEditableWarning={true}
+          style={{ userSelect: 'none' }}
+          
+        >
           {(hoveringHeader && header.length > 54)
             && <S.HeaderToolTipWrapper>
               <S.HeaderToolTip>
@@ -164,19 +177,21 @@ const ClauseComponent = (props) => {
             </S.DeleteWrapper>
           </>
         }
-        <S.ClauseBody {...props.attributes}>
+        <S.ClauseBody {...props.attributes} ref={ref}>
             {props.children}
         </S.ClauseBody>
     </S.ClauseWrapper>
     </ClauseContext.Provider>
   );
-};
+});
+
+ClauseComponent.displayName = 'ClauseComponent';
 
 ClauseComponent.propTypes = {
   attributes: PropTypes.PropTypes.shape({
     'data-key': PropTypes.string,
   }),
-  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.PropTypes.object.isRequired,
   clauseId: PropTypes.string,
   clauseProps: PropTypes.shape({
     CLAUSE_DELETE_FUNCTION: PropTypes.func,
