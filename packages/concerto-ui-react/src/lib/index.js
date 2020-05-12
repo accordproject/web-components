@@ -13,4 +13,5 @@
  */
 import ConcertoFormWrapper from './concertoFormWrapper';
 import ReactFormVisitor from './reactformvisitor';
-export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor }
+import * as Utilities from './utilities';
+export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor, Utilities } 
