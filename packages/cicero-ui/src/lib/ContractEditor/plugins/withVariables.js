@@ -30,7 +30,7 @@ const withVariables = (editor) => {
   return editor;
 };
 
-export const isEditable = (lockText, editor, event) => {
+export const isEditableVariable = (lockText, editor, event) => {
   if (!lockText || !editor.isInsideClause()) return true;
   const { selection } = editor;
   const textLength = Node.get(editor, editor.selection.focus.path).text.length;

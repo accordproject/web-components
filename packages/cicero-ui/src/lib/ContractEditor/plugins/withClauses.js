@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import { Editor } from 'slate';
+import { Editor, Node } from 'slate';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { HtmlTransformer } from '@accordproject/markdown-html';
 import _ from 'lodash';
@@ -52,9 +52,16 @@ function _recursive(params, children) {
   });
 }
 
-const isEditable = (editor, format) => {
-  const [match] = Editor.nodes(editor, { match: n => n.type === format });
-  return !!match;
+export const isEditableClause = (editor, event) => {
+  if (
+    event.inputType === 'deleteContentForward'
+    && Node.get(editor, editor.selection.focus.path).text.length === editor.selection.focus.offset
+  ) {
+    const [match] = Editor
+      .nodes(editor, { at: Editor.next(editor)[1], match: n => n.type === CLAUSE });
+    return !match;
+  }
+  return true;
 };
 
 /* eslint no-param-reassign: 0 */
@@ -62,7 +69,10 @@ const withClauses = (editor, withClausesProps) => {
   const { insertData, onChange } = editor;
   const { onClauseUpdated, pasteToContract } = withClausesProps;
 
-  editor.isInsideClause = () => isEditable(editor, CLAUSE);
+  editor.isInsideClause = (input = editor.selection) => {
+      const [match] = Editor.nodes(editor, { match: n => n.type === CLAUSE, at: input });
+    return !!match;
+  };
 
   editor.onChange = () => {
     if (onClauseUpdated && editor.isInsideClause()) {
@@ -87,7 +97,6 @@ const withClauses = (editor, withClausesProps) => {
         const NEW_SLATE_CHILDREN = SLATE_DOM.document.children.map(
           (child) => {
             if (child.type === CLAUSE) {
-              console.log('child', child);
               child.data.clauseid = uuid();
               clausesToParseAndPaste.push(child);
             }
@@ -103,10 +112,10 @@ const withClauses = (editor, withClausesProps) => {
           }
         };
 
-        // clausesToParseAndPaste.forEach((clause) => {
-        //   pasteToContract(clause);
-        //   onClauseUpdated(editor, clause);
-        // });
+        clausesToParseAndPaste.forEach((clause) => {
+          pasteToContract(clause.data.clauseid, clause.data.src);
+          onClauseUpdated(editor, clause);
+        });
 
         const NEW_HTML_DOM = htmlTransformer
           .toHtml(slateTransformer.toCiceroMark(NEW_SLATE_DOM));
@@ -116,13 +125,13 @@ const withClauses = (editor, withClausesProps) => {
             ? NEW_HTML_DOM
             : data.getData('text/plain')),
         });
-        return editor;
+        return;
       } catch (err) { console.error(err); }
     }
     insertData(data);
   };
 
-  editor.isClauseSupported = (editor, clauseNode) => {
+  editor.isClauseSupported = (clauseNode) => {
     const params = { depth: 0 };
     let children;
     if (clauseNode.document) {
