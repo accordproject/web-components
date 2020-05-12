@@ -42,3 +42,11 @@ lerna clean && lerna bootstrap && lerna run build
 cd packages/storybook
 npm run storybook
 ```
+
+## Build Storybook (Static)
+
+```
+lerna run storybook
+open packages/storybook/storybook-static/index.html
+```
+
