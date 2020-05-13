@@ -115,7 +115,7 @@ export const Demo = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: '10px' }}>
       <MarkdownEditor
         readOnly={readOnly}
         value={slateValue}

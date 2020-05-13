@@ -121,6 +121,7 @@ class ReactFormVisitor extends HTMLFormVisitor {
       id={key}
       value={value}
       field={enumDeclaration}
+      readOnly={parameters.disabled}
       onFieldValueChange={parameters.onFieldValueChange}
       options={enumDeclaration.getProperties().map((property) => ({
         key: property.getName(),
@@ -139,7 +140,7 @@ class ReactFormVisitor extends HTMLFormVisitor {
      */
   visitField(field, parameters) {
     const { 
-      readOnly, skipLabel, disabled, addElement, removeElement, onFieldValueChange, stack
+      skipLabel, disabled, addElement, removeElement, onFieldValueChange, stack
      } = parameters;
 
     stack.push(field.getName());
@@ -159,8 +160,7 @@ class ReactFormVisitor extends HTMLFormVisitor {
       value,
       type: this.toFieldType(field.getType()),
       required: !field.isOptional(),
-      transparent: disabled,
-      readOnly, disabled,
+      readOnly: disabled,
       addElement, removeElement, onFieldValueChange
     };
 
@@ -226,7 +226,7 @@ class ReactFormVisitor extends HTMLFormVisitor {
    */
   visitRelationship(relationship, parameters) {
     const { 
-      readOnly, skipLabel, disabled, addElement, removeElement, onFieldValueChange, stack
+      skipLabel, disabled, addElement, removeElement, onFieldValueChange, stack
     } = parameters;
     stack.push(relationship.getName());
 
@@ -244,8 +244,7 @@ class ReactFormVisitor extends HTMLFormVisitor {
       value,
       type: 'text',
       required: !relationship.isOptional(),
-      transparent: disabled,
-      readOnly, disabled, addElement, removeElement, onFieldValueChange
+      readOnly: disabled, addElement, removeElement, onFieldValueChange
     };
 
     let component;
