@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Popup} from 'semantic-ui-react';
-import {useEditor} from 'slate-react';
-import {BUTTON_COLORS, POPUP_STYLE} from '../utilities/constants';
+import { Popup } from 'semantic-ui-react';
+import { useEditor } from 'slate-react';
+import { BUTTON_COLORS, POPUP_STYLE } from '../utilities/constants';
 import Button from '../components/Button';
 
 const HyperlinkButton = ({
@@ -55,7 +55,6 @@ HyperlinkButton.propTypes = {
   icon: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.string,
-  ref: PropTypes.any,
   canBeFormatted: PropTypes.func,
 };
 
