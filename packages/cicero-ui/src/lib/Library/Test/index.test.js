@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-import TemplateCard from '../Components/TemplateCard';
-import TemplateLibrary from '../index';
+import LibraryItemCard from '../Components/LibraryItemCard';
+import Library from '../index';
 
-const templateArray = [
+const libraryItemsArray = [
   {
     description: 'This clause allows the receiver of goods to inspect them for a given time period after delivery.',
     name: 'acceptance-of-delivery',
@@ -47,30 +47,22 @@ const templateArray = [
 const mockUpload = jest.fn();
 const mockImport = jest.fn();
 const addNewTemplate = jest.fn();
-const mockAddToCont = jest.fn();
+const mockPrimaryButtonClick = jest.fn();
+const mockSecondaryButtonClick = jest.fn();
 
 const propInput = {
-  templates: templateArray,
-  upload: mockUpload,
-  import: mockImport,
-  addTemp: addNewTemplate,
-  addToCont: mockAddToCont,
+  items: libraryItemsArray,
+  onUploadItem: mockUpload,
+  onImportItem: mockImport,
+  onAddItem: addNewTemplate,
+  onPrimaryButtonClick: mockPrimaryButtonClick,
+  onSecondaryButtonClick: mockSecondaryButtonClick,
 };
 
-const libraryProps = {
-  ACTION_BUTTON: 'red',
-  ACTION_BUTTON_BG: 'red',
-  ACTION_BUTTON_BORDER: 'red',
-  HEADER_TITLE: 'red',
-  TEMPLATE_BACKGROUND: 'red',
-  TEMPLATE_DESCRIPTION: 'red',
-  TEMPLATE_TITLE: 'red',
-};
-
-describe('<TemplateLibrary />', () => {
+describe('<Library />', () => {
   describe('on initialization', () => {
     it('renders page correctly', () => {
-      const component = shallow(<TemplateLibrary {...propInput} libraryProps={libraryProps} />);
+      const component = shallow(<Library {...propInput} />);
       const tree = toJson(component);
       expect(tree).toMatchSnapshot();
     });
@@ -78,31 +70,34 @@ describe('<TemplateLibrary />', () => {
 
   describe('renders conditional buttons', () => {
     it('with functions passed in', () => {
-      const component = shallow(<TemplateLibrary libraryProps={libraryProps} {...propInput} />);
+      const component = shallow(<Library {...propInput} />);
       expect(component.find('UploadComponent')).toHaveLength(1);
       expect(component.find('ImportComponent')).toHaveLength(1);
-      expect(component.find('NewClauseComponent')).toHaveLength(1);
+      expect(component.find('NewItemComponent')).toHaveLength(1);
     });
 
     it('without functions passed in', () => {
-      const component = shallow(<TemplateLibrary libraryProps={libraryProps} />);
+      const component = shallow(<Library
+        items={libraryItemsArray}
+        onPrimaryButtonClick={mockPrimaryButtonClick}
+        onSecondaryButtonClick={mockSecondaryButtonClick}
+      />);
       expect(component.find('UploadComponent')).toHaveLength(0);
       expect(component.find('ImportComponent')).toHaveLength(0);
-      expect(component.find('NewClauseComponent')).toHaveLength(0);
+      expect(component.find('NewItemComponent')).toHaveLength(1);
     });
   });
 
   describe('runs functions passed into it', () => {
     it('add To Contract function runs', () => {
       const component = shallow(
-        <TemplateCard
-          key={templateArray[0].uri}
-          template={templateArray[0]}
-          addToCont={mockAddToCont}
-          libraryProps={libraryProps}
+        <LibraryItemCard
+          item={libraryItemsArray[0]}
+          onPrimaryButtonClick={mockPrimaryButtonClick}
+          onSecondaryButtonClick={mockSecondaryButtonClick}
         />
       );
-      expect(component.find('.templateAction').prop('addToCont')).toEqual(mockAddToCont);
+      expect(component.find('CardActions').prop('onPrimaryButtonClick')).toEqual(mockPrimaryButtonClick);
     });
   });
 });
