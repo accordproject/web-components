@@ -51,7 +51,7 @@ export const ConcertoDateTime = ({
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
     <Input 
       type={type}
-      disabled={readOnly}
+      readOnly={readOnly}
       value={new Date(value).toISOString().slice(0,19)}
       onChange={(e, data) => onFieldValueChange(data, id)}
       key={id} />
@@ -95,14 +95,19 @@ export const ConcertoDropdown = ({
   id, field, readOnly, value, onFieldValueChange, options
 }) => 
   <Form.Field required key={field.getName().toLowerCase()}>
-    <Select 
+    { !readOnly ? <Select 
       fluid
-      readOnly={readOnly}
       value={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
       key={id}
       options={options}
     />
+    : <Input 
+      type='text'
+      readOnly
+      value={value}
+      key={id}
+    />}
   </Form.Field>;
 
 const BinaryField = ({ className, children }) => <div className={className}>

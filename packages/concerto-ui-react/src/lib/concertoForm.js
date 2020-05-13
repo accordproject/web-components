@@ -44,7 +44,6 @@ class ConcertoForm extends Component {
       includeOptionalFields: true,
       includeSampleData: 'sample',
       disabled: props.readOnly,
-      readOnly: false,
       visitor: new ReactFormVisitor(),
       onFieldValueChange: (e, key) => {
         this.onFieldValueChange(e, key);
@@ -99,7 +98,7 @@ class ConcertoForm extends Component {
         json = this.generateJSON(fqn);
         return { types, json };
       }
-      json = this.generateJSON(this.props.type);  
+      json = this.generateJSON(this.props.type);
     }
     catch(err) {
       console.log(err);
@@ -133,9 +132,9 @@ class ConcertoForm extends Component {
   }
 
   addElement(e, key, value){
-    const array = get(this.state.value, key);
+    const array = get(this.state.value, key) || [];
     const valueClone = set({ ...this.state.value}, [...key, array.length], value);
-    this.setState(valueClone);
+    this.setState({ value: valueClone });
     this.props.onValueChange(valueClone);
   }
 
@@ -164,11 +163,11 @@ class ConcertoForm extends Component {
   onFieldValueChange(e, key) {
     const value = e.type === 'checkbox' ? e.checked : (e.value || e.target.value);
     const valueClone = set({ ...this.state.value}, key, value);
-    this.setState(valueClone);
+    this.setState({ value: valueClone });
     this.props.onValueChange(valueClone);
   }
 
-  renderForm(){
+  render(){
     if (this.state.loading){
       return <Dimmer active inverted>
         <Loader inverted>Loading</Loader>
@@ -177,7 +176,9 @@ class ConcertoForm extends Component {
 
     if (this.props.type && this.state.value) {
       try {
-        return this.generator.generateHTML(this.props.type, this.state.value);
+        return <Form style={{ minHeight: '100px', ...this.props.style }}>
+          {this.generator.generateHTML(this.props.type, this.state.value)}
+        </Form>;
       }
       catch(err) {
         console.error(err);
@@ -193,11 +194,6 @@ class ConcertoForm extends Component {
     </Message>;
   }
 
-  render() {
-    return <Form style={{ minHeight: '100px', ...this.props.style }}>
-      {this.renderForm()}
-    </Form>;
-  }
 }
 
 ConcertoForm.propTypes = {
