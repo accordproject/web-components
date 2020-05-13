@@ -1,38 +1,14 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import 'semantic-ui-css/semantic.min.css';
 import { withA11y } from '@storybook/addon-a11y';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { text, select, boolean, object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import { ContractEditor } from '@accordproject/cicero-ui';
+import { Template, Clause } from '@accordproject/cicero-core';
 
 const slateTransformer = new SlateTransformer();
-
-const templateUri = 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta';
-const clauseText = `Late Delivery and Penalty.
-----
-
-In case of delayed delivery<if id="forceMajeure" value="%20except%20for%20Force%20Majeure%20cases%2C" whenTrue="%20except%20for%20Force%20Majeure%20cases%2C" whenFalse=""/>
-<variable id="seller" value="%22Dan%22"/> (the Seller) shall pay to <variable id="buyer" value="%22Steve%22"/> (the Buyer) for every <variable id="penaltyDuration" value="2%20days"/>
-of delay penalty amounting to <variable id="penaltyPercentage" value="10.5"/>% of the total value of the Equipment
-whose delivery has been delayed. Any fractional part of a <variable id="fractionalPart" value="days"/> is to be
-considered a full <variable id="fractionalPart" value="days"/>. The total amount of penalty shall not however,
-exceed <variable id="capPercentage" value="55.0"/>% of the total value of the Equipment involved in late delivery.
-If the delay is more than <variable id="termination" value="15%20days"/>, the Buyer is entitled to terminate this Contract.`;
-
-const getContractSlateVal = () => {
-  const Clause = `\`\`\` <clause src="${templateUri}" clauseid="123">
-${clauseText}
-\`\`\`
-`;
-
-  const defaultContractMarkdown = `# Heading One
-This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
-${Clause}
-`;
-
-  return slateTransformer.fromMarkdown(defaultContractMarkdown);
-};
 
 const Wrapper = styled.div`
   border-radius: 3px;
@@ -52,28 +28,49 @@ const Wrapper = styled.div`
 
 export default { title: 'Contract Editor' };
 
+const templates = {
+  'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta',
+  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta'
+};
+
 export const contractEditor = () => {
+  const markdownText = text( 'Markdown', `# Heading One
+This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
+`);
+  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta');
   const refUse = useRef(null);
-  const [templateObj, setTemplateObj] = useState({});
-  const [lockText, setLockText] = useState(true);
+  const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
-  const [slateValue, setSlateValue] = useState(() => {
-    const slate = getContractSlateVal();
-    return slate.document.children;
+  const [slateValue, setSlateValue] = useState( () => {
+    return slateTransformer.fromMarkdown(markdownText).document.children;
   });
+
+  useEffect( () => {
+      Template.fromUrl(templateUrl)
+      .then((template) => {
+        const clause = new Clause(template);
+        clause.parse(template.getMetadata().getSample());
+        clause.draft({ wrapVariables: true })
+        .then((drafted) => {
+          const clauseMarkdown = `${markdownText}
+\`\`\` <clause src="${templateUrl}" clauseid="123">
+${drafted}
+\`\`\``;
+          const slateValue = slateTransformer.fromMarkdown(clauseMarkdown);
+          setSlateValue(slateValue.document.children);
+        });
+      });
+  }, [templateUrl, markdownText]);
 
   const onContractChange = useCallback((value) => {
     setSlateValue(value);
+    action('contract-changed')(value);
   }, []);
 
-  const parseClauseFunction = () => console.log('parseClauseFunction');
-  const loadTemplateObjectFunction = () => console.log('loadTemplateObjectFunction');
-  const pasteToContractFunction = () => console.log('pasteToContractFunction');
-
   const clausePropsObject = {
-    CLAUSE_DELETE_FUNCTION: () => console.log('CLAUSE_DELETE_FUNCTION'),
-    CLAUSE_EDIT_FUNCTION: () => console.log('CLAUSE_EDIT_FUNCTION'),
-    CLAUSE_TEST_FUNCTION: () => console.log('CLAUSE_TEST_FUNCTION')
+    CLAUSE_DELETE_FUNCTION: action('clause-deleted'),
+    CLAUSE_EDIT_FUNCTION: action('clause-edit'),
+    CLAUSE_TEST_FUNCTION: action('clause-test')
   };
 
   return (
@@ -85,9 +82,9 @@ export const contractEditor = () => {
         readOnly={readOnly}
         ref={refUse}
         clauseProps={clausePropsObject}
-        loadTemplateObject={loadTemplateObjectFunction}
-        pasteToContract={pasteToContractFunction}
-        onClauseUpdated={parseClauseFunction}
+        loadTemplateObject={action('load-template')}
+        pasteToContract={action('paste-to-contract')}
+        onClauseUpdated={action('clause-updated')}
       />
     </Wrapper>
   );
@@ -95,7 +92,7 @@ export const contractEditor = () => {
 
 contractEditor.story = {
   component: contractEditor,
-  decorators: [withA11y, withKnobs],
+  decorators: [withA11y],
   parameters: {
     notes: "Notes ...."
   }
