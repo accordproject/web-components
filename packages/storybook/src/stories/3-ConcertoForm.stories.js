@@ -30,13 +30,15 @@ export const Demo = () => {
     o Country country
   }
   `);
-  return <ConcertoForm 
-    readOnly={readOnly} 
-    models={[model]} 
-    options = {options}
-    type={type} 
-    json = "{}"
-    onModelChange={action("model changed")} 
-    onValueChange={action("value changed")}
-  />
+  return <div style={{ padding: '10px' }}>
+    <ConcertoForm 
+      readOnly={readOnly} 
+      models={[model]} 
+      options = {options}
+      type={type} 
+      json = "{}"
+      onModelChange={action("model changed")} 
+      onValueChange={action("value changed")}
+    />
+  </div>
 };
