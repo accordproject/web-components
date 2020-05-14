@@ -57,6 +57,9 @@ export const isEditableVariable = (lockText, editor, event) => {
   const nextNode = Editor.next(editor, { at: editor.selection.focus.path });
   // if the current focus is at the end of a node & the next node is a variable allow editing
   if (nextNode && nextNode[0].type === VARIABLE && textLength === editor.selection.focus.offset) {
+    if (event.inputType === 'deleteContentBackward') {
+      return false;
+    }
     return true;
   }
   return inVariable(editor);

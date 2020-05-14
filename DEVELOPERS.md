@@ -36,4 +36,15 @@ cd packages/storybook
 npm run storybook
 ```
 
+### Develop inside Storybook
+
+While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:
+
+```
+cd packages/<PACKAGE>
+npm run build
+```
+
+Storybook will reload with the applied changes.
+
 [apdev]: https://github.com/accordproject/techdocs/blob/master/DEVELOPERS.md
