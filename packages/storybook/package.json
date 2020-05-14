@@ -57,7 +57,7 @@
     "stylelint-config-standard": "20.0.0",
     "stylelint-order": "4.0.0",
     "@accordproject/cicero-ui": "0.90.0",
-    "@accordproject/concerto-ui-react": "0.90.0",
+    "@accordproject/concerto-ui": "0.90.0",
     "@accordproject/markdown-editor": "0.90.0",
     "@accordproject/text-editor": "0.90.0"
   },
