@@ -11,7 +11,36 @@ The editor is based on React, [Slate](https://www.slatejs.org), and the Accord P
 ### Installation
 
 ```sh
-npm install @accordproject/markdown-editor
+npm install @accordproject/markdown-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react
+```
+
+### Implementation
+
+```js
+import React, { useState, useCallback } from 'react';
+import ReactDOM from 'react-dom';
+import { SlateTransformer } from '@accordproject/markdown-slate';
+import { MarkdownEditor } from '@accordproject/markdown-editor';
+
+const slateTransformer = new SlateTransformer();
+const defaultMarkdown = `This is text. You can edit it.`;
+
+const App = () => {
+  const [slateValue, setSlateValue] = useState(() => {
+    const slate = slateTransformer.fromMarkdown(defaultMarkdown);
+    return slate.document.children;
+  });
+
+  const onSlateValueChange = useCallback((slateChildren) => {
+    localStorage.setItem('slate-editor-value', JSON.stringify(slateChildren));
+    const slateValue = { document: { children: slateChildren } };
+    setSlateValue(slateValue.document.children);
+  }, []);
+
+  return (<MarkdownEditor readOnly={false} value={slateValue} onChange={onSlateValueChange} />);
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ### Develop inside Storybook
