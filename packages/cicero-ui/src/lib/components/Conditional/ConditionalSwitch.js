@@ -27,7 +27,10 @@ const ConditionalSwitch = (props) => {
 
   return (
     <>
-      <ClauseConditionalTooltip {...conditionalTooltip}>
+      <ClauseConditionalTooltip
+        contentEditable={false}
+        {...conditionalTooltip}
+      >
         {tooltipInstructions}
       </ClauseConditionalTooltip>
     </>

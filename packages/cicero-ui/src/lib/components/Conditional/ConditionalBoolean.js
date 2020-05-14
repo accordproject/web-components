@@ -43,10 +43,17 @@ const ConditionalBoolean = (props) => {
   return (
     <ClauseContext.Consumer>
       { hoveringClause => (<>
-        <ClauseConditionalTooltip {...conditionalTooltip}>
+        <ClauseConditionalTooltip
+          contentEditable={false}
+          {...conditionalTooltip}
+        >
           Show text: "{props.whenTrue}"
         </ClauseConditionalTooltip>
-        <ClauseConditional currentHover={hoveringClause} {...conditionalIconProps}>
+        <ClauseConditional
+          contentEditable={false}
+          currentHover={hoveringClause}
+          {...conditionalIconProps}
+        >
           {conditionalIcon.icon(hoveringConditional)}
         </ClauseConditional>
       </>) }
