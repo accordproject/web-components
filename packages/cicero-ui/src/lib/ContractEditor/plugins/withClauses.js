@@ -5,7 +5,7 @@ import { HtmlTransformer } from '@accordproject/markdown-html';
 import _ from 'lodash';
 import { CLAUSE, VARIABLE } from './withClauseSchema';
 
-import '../../styles.module.css';
+import '../../styles.css';
 
 /**
    * Check if UI valid (depth first traversal)
