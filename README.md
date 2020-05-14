@@ -1,13 +1,24 @@
 # Accord Project Web Components
 
 [![Build Status](https://travis-ci.org/accordproject/web-components.svg?branch=master)](https://travis-ci.org/accordproject/web-components) 
-[![downloads](https://img.shields.io/npm/dm/@accordproject/web-components)](https://www.npmjs.com/package/@accordproject/web-components)
-[![npm version](https://badge.fury.io/js/%40accordproject%2Fweb-components.svg)](https://badge.fury.io/js/%40accordproject%2Fweb-components)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains a library of user interface components that can be used to create web-applications based on Accord Project technology. The components use the [React](https://reactjs.org) web application framework.
 
-Use the interactive [Storybook](https://accordproject.github.io/web-components) to discover the components and their properties.
+Use the interactive [Storybook][storybook] to discover the components and their properties.
+
+## View the Live Demo or Run Locally
+
+### Visit the [Storybook Demo][storybook]
+
+### Run Locally
+
+```sh
+npm install -g lerna
+lerna clean && lerna bootstrap && lerna run build
+cd packages/storybook
+npm run storybook
+```
 
 ## Repository Structure
 
@@ -62,6 +73,8 @@ Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respec
 [apblog]: https://medium.com/@accordhq
 [apdoc]: https://docs.accordproject.org/
 [apslack]: https://accord-project-slack-signup.herokuapp.com
+
+[storybook]: https://accordproject.github.io/web-components
 
 [contributing]: https://github.com/accordproject/web-components/blob/master/CONTRIBUTING.md
 [developers]: https://github.com/accordproject/web-components/blob/master/DEVELOPERS.md
