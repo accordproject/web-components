@@ -4,6 +4,12 @@
 [![npm version](https://badge.fury.io/js/%40accordproject%2Ftext-editor.svg)](https://badge.fury.io/js/%40accordproject%2Ftext-editor)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
+### Installation
+
+```sh
+npm install @accordproject/text-editor
+```
+
 ### Develop inside Storybook
 
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:

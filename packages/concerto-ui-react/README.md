@@ -6,6 +6,12 @@
 
 This repository contains web UI components for models written in the [Concerto Modeling Language](https://github.com/accordproject/concerto).
 
+### Installation
+
+```sh
+npm install @accordproject/concerto-ui
+```
+
 ### Develop inside Storybook
 
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:

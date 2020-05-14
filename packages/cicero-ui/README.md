@@ -6,6 +6,12 @@
 
 This repository contains tools for implementing React components in your contract editing studio.
 
+### Installation
+
+```sh
+npm install @accordproject/cicero-ui
+```
+
 ### Develop inside Storybook
 
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:

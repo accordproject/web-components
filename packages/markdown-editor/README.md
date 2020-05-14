@@ -8,6 +8,12 @@ This repository contains a WYSIWYG editor for markdown that conforms to the [Com
 
 The editor is based on React, [Slate](https://www.slatejs.org), and the Accord Project [`markdown-transform` project](https://github.com/accordproject/markdown-transform).
 
+### Installation
+
+```sh
+npm install @accordproject/markdown-editor
+```
+
 ### Develop inside Storybook
 
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:

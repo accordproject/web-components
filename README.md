@@ -24,7 +24,7 @@ npm run storybook
 
 This repository is a monorepo, built using [lerna](https://lerna.js.org). Each package is published as an independent npm module.
 
-- [Markdown Editor](packages/markdown-editor): A WYSIWYG editor for markdown that conforms to the [CommonMark](https://spec.commonmark.org) specification.
+- [Markdown Editor](packages/markdown-editor): A WYSIWYG editor based on [Slate](https://www.slatejs.org) for markdown that conforms to the [CommonMark](https://spec.commonmark.org) specification.
 - [Text Editor](packages/text-editor): A basic text editor.
 - [Concerto UI](packages/concerto-ui): React components for models written in the [Concerto Modeling Language](https://github.com/accordproject/concerto).
 - [Cicero UI](packages/cicero-ui): Tools for implementing React components in your contract editing studio.
