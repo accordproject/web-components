@@ -18,7 +18,7 @@ import { Card } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 import PropTypes from 'prop-types';
 
-import './styles.module.css';
+import './styles.css';
 
 /**
  * A Markdown editor that can convert the markdown contents
