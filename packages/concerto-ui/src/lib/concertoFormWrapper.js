@@ -13,27 +13,26 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import ErrorBoundary from './errorBoundary';
 import ConcertoForm from './concertoForm';
-import PropTypes from 'prop-types';
 
 /**
  * This React component generates a React object for a bound model.
  */
-const ConcertoFormWrapper = (props) => <ErrorBoundary>
+const ConcertoFormWrapper = props => (
+  <ErrorBoundary>
     <ConcertoForm key={props.type} {...props} />
-  </ErrorBoundary>;
+  </ErrorBoundary>
+);
 
 ConcertoFormWrapper.propTypes = {
   models: PropTypes.arrayOf(PropTypes.string).isRequired,
   type: PropTypes.string,
-  json: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-  ]),
+  json: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   onModelChange: PropTypes.func.isRequired,
   onValueChange: PropTypes.func.isRequired,
-  options: PropTypes.object,
+  options: PropTypes.shape(),
   readOnly: PropTypes.bool,
 };
 
