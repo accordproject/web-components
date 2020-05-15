@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, boolean, object } from '@storybook/addon-knobs';
-import { ConcertoForm } from '@accordproject/concerto-ui-react';
+import { ConcertoForm } from '@accordproject/concerto-ui';
 
 export default {
   title: 'Concerto Form',
