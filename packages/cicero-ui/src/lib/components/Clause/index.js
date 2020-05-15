@@ -97,7 +97,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           contentEditable={false}
           suppressContentEditableWarning={true}
           style={{ userSelect: 'none' }}
-          
         >
           {(hoveringHeader && header.length > 54)
             && <S.HeaderToolTipWrapper>

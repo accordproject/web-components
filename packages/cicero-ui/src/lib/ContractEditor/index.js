@@ -79,6 +79,7 @@ const ContractEditor = (props) => {
           templateUri={element.data.src}
           clauseId={element.data.clauseid}
           clauseProps={props.clauseProps}
+          readOnly={props.readOnly}
           {...attributes}
         >
             {children}
