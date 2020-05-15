@@ -1,9 +1,9 @@
 {
   "name": "@accordproject/cicero-ui",
-  "version": "0.91.0",
+  "version": "0.92.0",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-editor": "0.91.0",
+    "@accordproject/markdown-editor": "0.92.0",
     "@accordproject/markdown-html": "^0.11.2",
     "@accordproject/markdown-slate": "^0.11.2",
     "lodash": "^4.17.15",
