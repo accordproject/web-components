@@ -143,6 +143,13 @@ const withClauses = (editor, withClausesProps) => {
     return true;
   };
 
+  editor.canAddClause = () => {
+    // do not allow adding a clause in nested elements (ie. lists, other clauses)
+    if (editor.selection) return (editor.selection.anchor.path.length <= 2);
+    // do allow adding a clause if no selection (can add it to end of doc)
+    return true;
+  };
+
   return editor;
 };
 
