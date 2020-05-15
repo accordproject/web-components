@@ -5,6 +5,9 @@ export const ClauseWrapper = styled.div`
   position: relative;
   margin: 10px -10px;
   display: grid;
+  background-color: #F4F6FC;
+  border: 1px solid #19C6C7;
+  border-radius: 3px;
   grid-template-columns: 10px 375px 1fr 25px 25px 25px 10px;
   grid-template-rows: 11px 11px 1fr;
   grid-template-areas: "one two three four five six seven"
@@ -45,13 +48,6 @@ export const ClauseConditionalTooltip = styled.span`
   }
 `;
 
-export const ClauseBackground = styled.div`
-  background-color: #F4F6FC;
-  border: 1px solid #19C6C7;
-  border-radius: 3px;
-  grid-area: eight / eight / twentyone / twentyone;
-`;
-
 export const ClauseHeader = styled.div`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
   font-family: serif;
@@ -60,7 +56,8 @@ export const ClauseHeader = styled.div`
   background: linear-gradient(180deg, #FFFFFF 0%, #F4F6FC 100%);
   align-self: center;
   justify-self: start;
-  margin: 6px 0;
+  margin-top: -16px;
+  margin-bottom: 6px;
   padding: 3px;
   color: #696969;
   line-height: 14px;
@@ -104,6 +101,7 @@ const IconWrapper = styled.div`
   background: linear-gradient(180deg, #FFF 0%, #F4F6FC 100%);
   position: relative;
   z-index: 1;
+  margin-top: -18px;
   padding: 4px;
   place-self: center;
   transition-duration: 0.5s;
