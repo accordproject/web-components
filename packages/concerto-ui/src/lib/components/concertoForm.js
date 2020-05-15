@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
@@ -23,17 +22,6 @@ import isEqual from 'lodash.isequal';
 
 import ReactFormVisitor from '../reactformvisitor';
 import FormGenerator from '../formgenerator';
-=======
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash.get';
-import set from 'lodash.set';
-import {Form, Dimmer, Loader, Message} from 'semantic-ui-react';
-import isEqual from 'lodash.isequal';
-
-import ReactFormVisitor from './reactformvisitor';
-import FormGenerator from './formgenerator';
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
 import './concertoForm.css';
 
 /**
@@ -92,7 +80,6 @@ class ConcertoForm extends Component {
     if (typeof props.json === 'string') {
       try {
         shadowValue = JSON.parse(props.json);
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
       } catch {
         // Do nothing
       }
@@ -100,30 +87,17 @@ class ConcertoForm extends Component {
       shadowValue = { ...props.json };
     }
     return { value: shadowValue };
-=======
-      } catch {}
-    } else if (typeof props.json === 'object') {
-      shadowValue = {...props.json};
-    }
-    return {value: shadowValue};
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
   }
 
   onFieldValueChange(e, key) {
     const value = e.type === 'checkbox' ? e.checked : e.value || e.target.value;
     // eslint-disable-next-line react/no-access-state-in-setstate
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
     const valueClone = set({ ...this.state.value }, key, value);
     this.setState({ value: valueClone });
-=======
-    const valueClone = set({...this.state.value}, key, value);
-    this.setState({value: valueClone});
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
     this.props.onValueChange(valueClone);
   }
 
   async _loadAsyncData() {
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
     this.setState({ loading: true });
     const modelProps = await this.loadModelFiles(this.props.models, 'text');
     this.setState({ loading: false });
@@ -131,15 +105,6 @@ class ConcertoForm extends Component {
   }
 
   async loadModelFiles(files) {
-=======
-    this.setState({loading: true});
-    const modelProps = await this.loadModelFiles(this.props.models, 'text');
-    this.setState({loading: false});
-    return modelProps;
-  }
-
-  async loadModelFiles(files, type) {
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
     let types;
     let json;
     let fqn = this.props.type;
@@ -154,11 +119,7 @@ class ConcertoForm extends Component {
     }
 
     if (types.length === 0) {
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
       return { types: [] };
-=======
-      return {types: []};
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
     }
 
     try {
@@ -173,11 +134,7 @@ class ConcertoForm extends Component {
     } catch (err) {
       console.log(err);
     }
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
     return { types, json };
-=======
-    return {types, json};
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
   }
 
   removeElement(e, key, index) {
@@ -189,19 +146,11 @@ class ConcertoForm extends Component {
   addElement(e, key, value) {
     const array = get(this.state.value, key) || [];
     const valueClone = set(
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
       { ...this.state.value },
       [...key, array.length],
       value
     );
     this.setState({ value: valueClone });
-=======
-      {...this.state.value},
-      [...key, array.length],
-      value
-    );
-    this.setState({value: valueClone});
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
     this.props.onValueChange(valueClone);
   }
 
@@ -238,11 +187,7 @@ class ConcertoForm extends Component {
     if (this.props.type && this.state.value) {
       try {
         return (
-<<<<<<< HEAD:packages/concerto-ui/src/lib/components/concertoForm.js
           <Form style={{ minHeight: '100px', ...this.props.style }}>
-=======
-          <Form style={{minHeight: '100px', ...this.props.style}}>
->>>>>>> 53e80f454edcd45e0764755d853bc5ad3f40da6b:packages/concerto-ui/src/lib/concertoForm.js
             {this.generator.generateHTML(this.props.type, this.state.value)}
           </Form>
         );
