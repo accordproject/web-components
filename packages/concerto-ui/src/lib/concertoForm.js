@@ -22,6 +22,7 @@ import isEqual from 'lodash.isequal';
 
 import ReactFormVisitor from '../reactformvisitor';
 import FormGenerator from '../formgenerator';
+
 import './concertoForm.css';
 
 /**
@@ -104,7 +105,7 @@ class ConcertoForm extends Component {
     return modelProps;
   }
 
-  async loadModelFiles(files) {
+  async loadModelFiles(files, type) {
     let types;
     let json;
     let fqn = this.props.type;
