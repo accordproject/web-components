@@ -77,6 +77,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         className='cicero-ui__clause'
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
+        style={{ userSelect: 'none' }}
       >
       {/*
       {
@@ -90,7 +91,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               />
         ))
       } */}
-        <S.ClauseBackground className='cicero-ui__clause-background'/>
         <S.ClauseHeader
           className='cicero-ui__clause-header'
           currentHover={hovering}
