@@ -1,6 +1,6 @@
 {
   "name": "storybook",
-  "version": "0.92.0",
+  "version": "0.92.1",
   "private": true,
   "dependencies": {
     "@accordproject/cicero-core": "^0.20.10",
@@ -46,10 +46,10 @@
     "stylelint": "13.3.3",
     "stylelint-config-standard": "20.0.0",
     "stylelint-order": "4.0.0",
-    "@accordproject/cicero-ui": "0.92.0",
-    "@accordproject/concerto-ui": "0.92.0",
-    "@accordproject/markdown-editor": "0.92.0",
-    "@accordproject/text-editor": "0.92.0"
+    "@accordproject/cicero-ui": "0.92.1",
+    "@accordproject/concerto-ui": "0.92.1",
+    "@accordproject/markdown-editor": "0.92.1",
+    "@accordproject/text-editor": "0.92.1"
   },
   "scripts": {
     "storybook": "start-storybook -p 9009 -s public",
