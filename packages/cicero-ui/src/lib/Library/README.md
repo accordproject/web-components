@@ -41,6 +41,7 @@ Optional keys are: `displayName`, `logoUrl` and `itemType` (for heterogeneous li
 The component provides classes which can be used to apply custom styles to its individual parts.
 
 - `cicero-ui__library-search-input` : search input.
+- `cicero-ui__library-cards-wrapper` : library cards wrapper element.
 - `cicero-ui__library-card` : library card. An additional class of `item.itemType` will be added to the card,
 so different CSS selectors can be used based on the item's `itemType` value.
 - `cicero-ui__library-card-content` : content element inside a library item card.
