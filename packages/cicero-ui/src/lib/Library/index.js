@@ -169,7 +169,7 @@ const LibraryComponent = (props) => {
         />
         <NewItemComponent onAddItem={props.onAddItem} />
       </Functionality>
-      <LibraryItemCards>
+      <LibraryItemCards className="cicero-ui__library-cards-wrapper">
         {
           filtered.length
             ? filtered.map(item => (
