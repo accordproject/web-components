@@ -21,7 +21,6 @@ npm run storybook
 ```
 
 ## Repository Structure
-
 This repository is a monorepo, built using [lerna](https://lerna.js.org). Each package is published as an independent npm module.
 
 - [Markdown Editor](packages/markdown-editor): A WYSIWYG editor based on [Slate](https://www.slatejs.org) for markdown that conforms to the [CommonMark](https://spec.commonmark.org) specification.
