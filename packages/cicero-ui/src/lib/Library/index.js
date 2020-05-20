@@ -80,8 +80,9 @@ const LibraryItemCards = styled.div`
 
 const LibraryComponent = (props) => {
   const [query, setQuery] = useState([]);
-  const [itemTypeFilter, setItemTypeFilter] =
-    useState(props.itemTypes.reduce((acc, el) => ({ ...acc, [el.type]: true }), {}));
+  const [itemTypeFilter, setItemTypeFilter] = useState(
+    props.itemTypes.reduce((acc, el) => ({ ...acc, [el.type]: true }), {})
+  );
 
   const onQueryChange = (e, input) => {
     const inputQuery = input.value.toLowerCase().trim().split(' ').filter(q => q.length);
@@ -93,7 +94,7 @@ const LibraryComponent = (props) => {
   const renderHeader = useCallback(() => {
     if (!props.onUploadItem && !props.onImportItem) return null;
 
-    return(
+    return (
       <Header>
         <HeaderImports>
           <ImportComponent onImportItem={props.onImportItem} />
@@ -130,7 +131,7 @@ const LibraryComponent = (props) => {
   const renderItemTypeFilter = useCallback(() => {
     if (props.itemTypes.length === 1) return null;
 
-    return(
+    return (
       <ItemTypeFilterContainer>
         {
           props.itemTypes.map((itemType, idx) => (
@@ -151,8 +152,10 @@ const LibraryComponent = (props) => {
   }, [itemTypeFilter]);
 
   const filtered = filterItems();
-  const dislayedItemTypes =
-    props.itemTypes.reduce((acc, el) => ({ ...acc, [el.type]: el.name }), {});
+  const dislayedItemTypes = props.itemTypes.reduce(
+    (acc, el) => ({ ...acc, [el.type]: el.name }),
+    {}
+  );
 
   return (
     <Wrapper>
@@ -180,7 +183,7 @@ const LibraryComponent = (props) => {
                   onPrimaryButtonClick={props.onPrimaryButtonClick}
                   onSecondaryButtonClick={props.onSecondaryButtonClick}
                 />
-              ))
+            ))
             : <p style={{ textAlign: 'center' }}>No results found</p>
         }
       </LibraryItemCards>

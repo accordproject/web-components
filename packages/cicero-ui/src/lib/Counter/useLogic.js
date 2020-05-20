@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 const useLogic = initialState => {
   const [count, setCount] = useState(initialState);
