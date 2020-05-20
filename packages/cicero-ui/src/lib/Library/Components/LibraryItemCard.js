@@ -12,14 +12,14 @@ const cardStyle = {
   backgroundColor: '#fff',
   textAlign: 'left',
   boxShadow: '0 1px 9px 0 rgba(0,0,0,0.1)',
-}
+};
 
 const itemLogoStyle = {
   position: 'absolute',
   top: '13px',
   right: '16px',
   maxHeight: '23px',
-}
+};
 
 const DescriptionContainer = styled(Card.Description)`
 `;
@@ -68,6 +68,7 @@ LibraryItemCard.propTypes = {
   item: PropTypes.object.isRequired,
   onPrimaryButtonClick: PropTypes.func.isRequired,
   onSecondaryButtonClick: PropTypes.func.isRequired,
+  itemTypeName: PropTypes.string.isRequired,
 };
 
 export default LibraryItemCard;

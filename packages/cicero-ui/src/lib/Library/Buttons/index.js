@@ -37,7 +37,7 @@ const ActionButton = styled.button.attrs({
 export const ImportComponent = props => {
   if (!props.onImportItem) return null;
 
-  return(
+  return (
     <ActionButton
       onClick={props.onImportItem}
       aria-label='Upload Button'
@@ -46,12 +46,12 @@ export const ImportComponent = props => {
       Import from VS Code
     </ActionButton>
   );
-}
+};
 
 export const UploadComponent = props => {
   if (!props.onUploadItem) return null;
 
-  return(
+  return (
     <ActionButton
       onClick={props.onUploadItem}
       aria-label='Import Button'
@@ -60,12 +60,12 @@ export const UploadComponent = props => {
       Add a new library item
     </ActionButton>
   );
-}
+};
 
 export const NewItemComponent = props => {
   if (!props.onAddItem) return null;
 
-  return(
+  return (
     <Button
       content="New library Item"
       aria-label='Add Library Item Button'
@@ -77,7 +77,7 @@ export const NewItemComponent = props => {
       style={{ margin: '5px 0' }}
     />
   );
-}
+};
 
 ImportComponent.propTypes = { onImportItem: PropTypes.func };
 UploadComponent.propTypes = { onUploadItem: PropTypes.func };

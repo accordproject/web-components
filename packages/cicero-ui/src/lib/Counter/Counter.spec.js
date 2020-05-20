@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent} from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Counter from './Counter';
 
 describe('lib > Counter', () => {
@@ -16,7 +16,7 @@ describe('lib > Counter', () => {
      * `baseElement`:
      * @see https://testing-library.com/docs/react-testing-library/api#baseelement
      */
-    const {asFragment, baseElement} = render(<Counter initialValue={6} />);
+    const { asFragment, baseElement } = render(<Counter initialValue={6} />);
 
     /**
      * Basic snapshot test to make sure, that rendered component
@@ -35,7 +35,7 @@ describe('lib > Counter', () => {
      * `getByRole`:
      * @see https://testing-library.com/docs/dom-testing-library/api-queries#byrole
      */
-    const {getByRole, baseElement} = render(<Counter initialValue={value} />);
+    const { getByRole, baseElement } = render(<Counter initialValue={value} />);
 
     /**
      * Search for the button and make testing library click on it

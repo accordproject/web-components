@@ -13,4 +13,3 @@ export const icon = hovering => (
         </g>
     </g>
 );
-
