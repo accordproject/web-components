@@ -64,6 +64,8 @@ render(<ContractEditorRenderer />, document.getElementById('root'));
 - `value`: An `object` which is the initial contents of the editor.
 - `lockText`: A `boolean` to lock all non variable text.
 - `readOnly`: A `boolean` to lock all text and remove the formatting toolbar.
+- `activeButton`: Optional `object` to change formatting button active state color
+  - `{ background: '#FFF', symbol: '#000' }`
 
 #### Functionality
 
