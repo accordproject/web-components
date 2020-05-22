@@ -138,6 +138,7 @@ const ContractEditor = (props) => {
       canBeFormatted={editor => !props.lockText || !editor.isInsideClause()}
       canCopy={canCopy}
       canKeyDown={canKeyDown}
+      activeButton={props.activeButton}
       data-testid='editor'
   />
   );
@@ -147,6 +148,7 @@ const ContractEditor = (props) => {
  * The property types for this component
  */
 ContractEditor.propTypes = {
+  activeButton: PropTypes.object,
   augmentEditor: PropTypes.func,
   value: PropTypes.array,
   onChange: PropTypes.func,

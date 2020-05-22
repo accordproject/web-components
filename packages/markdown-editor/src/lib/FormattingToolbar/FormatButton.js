@@ -12,6 +12,7 @@ const FormatButton = ({
   label,
   icon,
   canBeFormatted,
+  activeButton,
   ...props
 }) => {
   const editor = useSlate();
@@ -22,10 +23,10 @@ const FormatButton = ({
   };
   const isActive = activeFunc(editor, type);
   const iconColor = isActive
-    ? BUTTON_COLORS.SYMBOL_ACTIVE
+    ? activeButton.symbol
     : BUTTON_COLORS.SYMBOL_INACTIVE;
   const backgroundColor = isActive
-    ? BUTTON_COLORS.BACKGROUND_ACTIVE
+    ? activeButton.background
     : BUTTON_COLORS.BACKGROUND_INACTIVE;
 
   return (
@@ -55,6 +56,7 @@ FormatButton.propTypes = {
   icon: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.string,
+  activeButton: PropTypes.object,
 };
 
 export default FormatButton;

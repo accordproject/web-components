@@ -25,9 +25,19 @@ const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
 const block = { toggleFunc: toggleBlock, activeFunc: isBlockActive };
 const history = { toggleFunc: toggleHistory };
 
-const FormattingToolbar = ({ canBeFormatted, showLinkModal, setShowLinkModal }) => {
+const FormattingToolbar = ({
+  canBeFormatted,
+  showLinkModal,
+  setShowLinkModal,
+  activeButton
+}) => {
   const editor = useEditor();
   const linkModalRef = useRef();
+
+  const buttonProps = {
+    canBeFormatted,
+    activeButton
+  }
 
   const linkProps = {
     showLinkModal,
@@ -54,22 +64,18 @@ const FormattingToolbar = ({ canBeFormatted, showLinkModal, setShowLinkModal }) 
     <ToolbarMenu id="ap-rich-text-editor-toolbar">
       <StyleDropdown canBeFormatted={canBeFormatted}/>
       <Separator />
-      <FormatButton {...mark} {...bold} canBeFormatted={canBeFormatted} />
-      <FormatButton {...mark} {...italic} canBeFormatted={canBeFormatted} />
-      <FormatButton {...mark} {...code} canBeFormatted={canBeFormatted} />
+      <FormatButton {...mark} {...bold} {...buttonProps} />
+      <FormatButton {...mark} {...italic} {...buttonProps} />
+      <FormatButton {...mark} {...code} {...buttonProps} />
       <Separator />
-      <FormatButton {...block} {...quote} canBeFormatted={canBeFormatted} />
-      <FormatButton {...block} {...olist} canBeFormatted={canBeFormatted} />
-      <FormatButton {...block} {...ulist} canBeFormatted={canBeFormatted} />
+      <FormatButton {...block} {...quote} {...buttonProps} />
+      <FormatButton {...block} {...olist} {...buttonProps} />
+      <FormatButton {...block} {...ulist} {...buttonProps} />
       <Separator />
       <HistoryButton {...history} {...undo} />
       <HistoryButton {...history} {...redo} />
       <Separator />
-      <HyperlinkButton
-        {...linkProps}
-        {...link}
-        canBeFormatted={canBeFormatted}
-      />
+      <HyperlinkButton {...linkProps} {...link} {...buttonProps} />
       <InsertImageButton {...image} canBeFormatted={canBeFormatted} />
       { showLinkModal && <HyperlinkModal ref={linkModalRef} {...linkProps} /> }
     </ToolbarMenu>
@@ -80,6 +86,7 @@ FormattingToolbar.propTypes = {
   canBeFormatted: PropTypes.func,
   showLinkModal: PropTypes.bool,
   setShowLinkModal: PropTypes.func,
+  activeButton: PropTypes.object,
 };
 
 

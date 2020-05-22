@@ -54,6 +54,37 @@ npm run build
 
 Storybook will reload with the applied changes.
 
+## Props
+
+### Required Properties
+
+#### Values
+
+- `value`: An `array` which is the initial contents of the editor (markdown text)
+
+#### Functionality
+
+- `onChange`: A callback `function` called when contents of the editor change, receives the markdown text
+
+### Optional Properties
+
+#### Values
+
+- `readOnly`: A `boolean` to lock all text and remove the formatting toolbar
+- `placeholder`: Placeholder `string` for text when the editor is blank
+- `activeButton`: Optional `object` to change formatting button active state color
+  - `{ background: '#FFF', symbol: '#000' }`
+
+#### Functionality
+
+- `onChange`: A callback `function` called when contents of the editor change, receives the markdown text
+- `augmentEditor`: A higher order function to augment the methods on the Slate editor
+- `customElements`: A `function` for extending elements rendered by editor
+- `isEditable`: A `function` for determining if the current edit should be allowed
+- `canBeFormatted`: A `function` that determines if current formatting change should be allowed
+- `canCopy`: A `function` that determines if current selection copy should be allowed
+- `canKeyDown`: A `function` that determines if current key event should be allowed
+
 ---
 
 <a href="https://www.accordproject.org/">
