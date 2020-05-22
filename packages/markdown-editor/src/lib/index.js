@@ -12,6 +12,7 @@ import {
 import { withHistory } from 'slate-history';
 import PropTypes from 'prop-types';
 import HOTKEYS, { formattingHotKeys } from './utilities/hotkeys';
+import { BUTTON_ACTIVE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
@@ -145,6 +146,7 @@ export const MarkdownEditor = (props) => {
         canBeFormatted={props.canBeFormatted}
         showLinkModal={showLinkModal}
         setShowLinkModal={setShowLinkModal}
+        activeButton={props.activeButton || BUTTON_ACTIVE}
         /> }
       <Editable
         id="ap-rich-text-editor"
@@ -187,6 +189,8 @@ MarkdownEditor.propTypes = {
   canKeyDown: PropTypes.func,
   /* Placeholder text when the editor is blank */
   placeholder: PropTypes.string,
+  /* Optional object to change formatting button active state color */
+  activeButton: PropTypes.object,
 };
 
 MarkdownEditor.defaultProps = {

@@ -12,14 +12,15 @@ const HyperlinkButton = ({
   label,
   icon,
   canBeFormatted,
+  activeButton,
   ...props
 }) => {
   const isActive = showLinkModal;
   const iconColor = isActive
-    ? BUTTON_COLORS.HYPERLINK_ACTIVE
+    ? activeButton.symbol
     : BUTTON_COLORS.SYMBOL_INACTIVE;
   const backgroundColor = isActive
-    ? BUTTON_COLORS.BACKGROUND_ACTIVE
+    ? activeButton.background
     : BUTTON_COLORS.BACKGROUND_INACTIVE;
 
   const editor = useEditor();
@@ -57,6 +58,7 @@ HyperlinkButton.propTypes = {
   label: PropTypes.string,
   ref: PropTypes.any,
   canBeFormatted: PropTypes.func,
+  activeButton: PropTypes.object,
 };
 
 export default HyperlinkButton;
