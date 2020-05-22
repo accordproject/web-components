@@ -67,8 +67,6 @@ Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respec
 [apdoc]: https://docs.accordproject.org/
 [apslack]: https://accord-project-slack-signup.herokuapp.com
 
-[storybook]: https://ap-web-components.netlify.app/
-
 [contributing]: https://github.com/accordproject/web-components/blob/master/CONTRIBUTING.md
 [developers]: https://github.com/accordproject/web-components/blob/master/DEVELOPERS.md
 
