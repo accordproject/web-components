@@ -24,7 +24,7 @@ const Element = (props) => {
     [H4]: () => (<Heading id={headingId} as="h4" {...attributes}>{children}</Heading>),
     [H5]: () => (<Heading id={headingId} as="h5" {...attributes}>{children}</Heading>),
     [H6]: () => (<Heading id={headingId} as="h6" {...attributes}>{children}</Heading>),
-    [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}>{children}</span>),
+    [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
     [LINEBREAK]: () => (<br className={LINEBREAK} {...attributes} />),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
