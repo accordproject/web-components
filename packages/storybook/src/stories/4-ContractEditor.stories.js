@@ -55,7 +55,8 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
           const clauseMarkdown = `${markdownText}
 \`\`\` <clause src="${templateUrl}" clauseid="123">
 ${drafted}
-\`\`\``;
+\`\`\`
+This is more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text and more text.`;
           const slateValue = slateTransformer.fromMarkdown(clauseMarkdown);
           setSlateValue(slateValue.document.children);
         });

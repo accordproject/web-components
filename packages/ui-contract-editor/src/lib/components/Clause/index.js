@@ -78,6 +78,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         style={{ userSelect: 'none' }}
+        {...props.attributes}
       >
       {/*
       {
@@ -97,10 +98,11 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           contentEditable={false}
           suppressContentEditableWarning={true}
           style={{ userSelect: 'none' }}
+          {...props.attributes}
         >
           {(hoveringHeader && header.length > 54)
-            && <S.HeaderToolTipWrapper>
-              <S.HeaderToolTip>
+            && <S.HeaderToolTipWrapper {...props.attributes}>
+              <S.HeaderToolTip {...props.attributes}>
                 {title + clauseProps.HEADER_TITLE}
               </S.HeaderToolTip>
             </S.HeaderToolTipWrapper>
@@ -108,6 +110,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           <S.HeaderToolTipText
             onMouseEnter={() => setHoveringHeader(true)}
             onMouseLeave={() => setHoveringHeader(false)}
+            {...props.attributes}
           >
             {header}
           </S.HeaderToolTipText>
@@ -119,16 +122,18 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringTestIcon(true)}
               onMouseLeave={() => setHoveringTestIcon(false)}
               onClick={() => clauseProps.CLAUSE_TEST_FUNCTION(props)}
+              {...props.attributes}
             >
               <S.ClauseIcon
                 {...testIconProps}
                 hovering={hoveringTestIcon}
+                {...props.attributes}
               >
                 {testIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringTestIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
+                && <S.HeaderToolTipWrapper {...props.attributes}>
+                  <S.HeaderToolTip {...props.attributes}>
                     Test
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -139,16 +144,18 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringEditIcon(true)}
               onMouseLeave={() => setHoveringEditIcon(false)}
               onClick={() => clauseProps.CLAUSE_EDIT_FUNCTION(props)}
+              {...props.attributes}
             >
               <S.ClauseIcon
                 {...editIconProps}
                 hovering={hoveringEditIcon}
+                {...props.attributes}
               >
                 {editIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringEditIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
+                && <S.HeaderToolTipWrapper {...props.attributes}>
+                  <S.HeaderToolTip {...props.attributes}>
                     Edit
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -159,16 +166,18 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringDeleteIcon(true)}
               onMouseLeave={() => setHoveringDeleteIcon(false)}
               onClick={() => clauseProps.CLAUSE_DELETE_FUNCTION(props)}
+              {...props.attributes}
             >
               <S.ClauseIcon
                 {...deleteIconProps}
                 hovering={hoveringDeleteIcon}
+                {...props.attributes}
               >
                 {deleteIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringDeleteIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
+                && <S.HeaderToolTipWrapper {...props.attributes}>
+                  <S.HeaderToolTip {...props.attributes}>
                     Delete
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -176,10 +185,14 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             </S.DeleteWrapper>
           </>
         }
-        <S.ClauseBody {...props.attributes} ref={ref}>
+        <S.ClauseBody
+          {...props.attributes}
+          ref={ref}
+          // draggable="true"
+        >
             {props.children}
         </S.ClauseBody>
-    </S.ClauseWrapper>
+      </S.ClauseWrapper>
     </ClauseContext.Provider>
   );
 });
