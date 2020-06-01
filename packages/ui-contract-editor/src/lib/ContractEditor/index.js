@@ -75,15 +75,17 @@ const ContractEditor = (props) => {
   const customElements = (attributes, children, element) => {
     const returnObject = {
       clause: () => (
-        <ClauseComponent
-          templateUri={element.data.src}
-          clauseId={element.data.clauseid}
-          clauseProps={props.clauseProps}
-          readOnly={props.readOnly}
-          {...attributes}
-        >
-            {children}
-        </ClauseComponent>
+        <div draggable="true" {...attributes}>
+          <ClauseComponent
+            templateUri={element.data.src}
+            clauseId={element.data.clauseid}
+            clauseProps={props.clauseProps}
+            readOnly={props.readOnly}
+            attributes={attributes}
+          >
+              {children}
+          </ClauseComponent>
+        </div>
       ),
       variable: () => (
         <span id={element.data.id} {...attributes} className={VARIABLE}>{children}</span>

@@ -5,9 +5,9 @@ import { CiceroMarkTransformer } from '@accordproject/markdown-cicero';
 import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import isHotkey from 'is-hotkey';
-import { Editable, withReact, Slate } from 'slate-react';
+import { Editable, withReact, Slate, ReactEditor } from 'slate-react';
 import {
-  Editor, Range, Node, createEditor
+  Editor, Range, Node, createEditor, Transforms
 } from 'slate';
 import { withHistory } from 'slate-history';
 import PropTypes from 'prop-types';
@@ -26,7 +26,7 @@ import FormatBar from './FormattingToolbar';
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
   return slateTransformer.fromMarkdown(markdown);
-}
+};
 
 export const MarkdownEditor = (props) => {
   const {
@@ -139,6 +139,65 @@ export const MarkdownEditor = (props) => {
     }
   };
 
+  const onDragStart = event => {
+    console.log('onDragStart', event.target);
+
+    const node = ReactEditor.toSlateNode(editor, event.target);
+    const path = ReactEditor.findPath(editor, node);
+    const range = Editor.range(editor, path);
+
+    const fragment = Node.fragment(editor, range);
+    const string = JSON.stringify(fragment);
+    const encoded = window.btoa(encodeURIComponent(string));
+    event.dataTransfer.setData('application/x-slate-fragment', encoded);
+    console.log('node ---- ', node);
+    // editor.deleteFragment(fragment);
+    // Transforms.removeNodes(editor, { at: range });
+    // event.dataTransfer.setData('text', path[0]);
+    event.dataTransfer.setData('text', JSON.stringify(range));
+  };
+
+  const onDragOver = event => {
+    console.log('onDragOver');
+
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  };
+
+  const onDrop = event => {
+    const fragment = event.dataTransfer.getData('application/x-slate-fragment');
+    // const sourcePath = event.dataTransfer.getData('text');
+    const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
+    console.log('sourceRange', JSON.stringify(sourceRange, null, 2));
+    Transforms.removeNodes(editor, { at: sourceRange });
+
+
+    const range = ReactEditor.findEventRange(editor, event);
+
+    // const data = event.dataTransfer;
+
+    Transforms.select(editor, range);
+    const decoded = decodeURIComponent(window.atob(fragment));
+    const parsed = JSON.parse(decoded);
+    console.log('fragment', parsed);
+
+    Transforms.insertFragment(editor, parsed);
+    // ReactEditor.insertData(editor, event.dataTransfer);
+
+    // const node = ReactEditor.toSlateNode(editor, event.target);
+    // const path = ReactEditor.findPath(editor, node);
+    // console.log('destination path --- ', path);
+    // Transforms.moveNodes(editor, {
+    //   at: [Number(sourcePath)],
+    //   to: path
+    // });
+    // console.log('on drop node - ', node);
+    // const range = Editor.range(editor, path);
+
+    // const fragment = Node.fragment(editor, range);
+    // editor.deleteFragment(fragment);
+  };
+
   return (
     <Slate editor={editor} value={props.value} onChange={onChange}>
       { !props.readOnly
@@ -160,6 +219,9 @@ export const MarkdownEditor = (props) => {
         onDOMBeforeInput={onBeforeInput}
         onCopy={handleCopyOrCut}
         onCut={event => handleCopyOrCut(event, true)}
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
       />
     </Slate>
   );
