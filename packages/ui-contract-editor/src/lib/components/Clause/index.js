@@ -78,6 +78,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         style={{ userSelect: 'none' }}
+        draggable="true"
         {...props.attributes}
       >
       {/*
@@ -98,7 +99,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           contentEditable={false}
           suppressContentEditableWarning={true}
           style={{ userSelect: 'none' }}
-          {...props.attributes}
+
         >
           {(hoveringHeader && header.length > 54)
             && <S.HeaderToolTipWrapper {...props.attributes}>
@@ -110,7 +111,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           <S.HeaderToolTipText
             onMouseEnter={() => setHoveringHeader(true)}
             onMouseLeave={() => setHoveringHeader(false)}
-            {...props.attributes}
+
           >
             {header}
           </S.HeaderToolTipText>
@@ -122,12 +123,12 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringTestIcon(true)}
               onMouseLeave={() => setHoveringTestIcon(false)}
               onClick={() => clauseProps.CLAUSE_TEST_FUNCTION(props)}
-              {...props.attributes}
+
             >
               <S.ClauseIcon
                 {...testIconProps}
                 hovering={hoveringTestIcon}
-                {...props.attributes}
+
               >
                 {testIcon.icon()}
               </ S.ClauseIcon>
@@ -144,12 +145,12 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringEditIcon(true)}
               onMouseLeave={() => setHoveringEditIcon(false)}
               onClick={() => clauseProps.CLAUSE_EDIT_FUNCTION(props)}
-              {...props.attributes}
+
             >
               <S.ClauseIcon
                 {...editIconProps}
                 hovering={hoveringEditIcon}
-                {...props.attributes}
+
               >
                 {editIcon.icon()}
               </ S.ClauseIcon>
@@ -166,12 +167,12 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringDeleteIcon(true)}
               onMouseLeave={() => setHoveringDeleteIcon(false)}
               onClick={() => clauseProps.CLAUSE_DELETE_FUNCTION(props)}
-              {...props.attributes}
+
             >
               <S.ClauseIcon
                 {...deleteIconProps}
                 hovering={hoveringDeleteIcon}
-                {...props.attributes}
+
               >
                 {deleteIcon.icon()}
               </ S.ClauseIcon>
@@ -188,7 +189,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         <S.ClauseBody
           {...props.attributes}
           ref={ref}
-          // draggable="true"
         >
             {props.children}
         </S.ClauseBody>
