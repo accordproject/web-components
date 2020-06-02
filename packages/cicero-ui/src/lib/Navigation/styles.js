@@ -29,7 +29,9 @@ export const Title = styled.a`
 `;
 
 export const Navigation = styled(Title)`
-    display: grid;
+    display: ${props => (props.navState === 'NAVIGATION'
+    ? 'grid'
+    : 'none')};
     grid-area: navigation;
     color: ${props => (props.navState === 'NAVIGATION'
     ? '#19C6C7'
@@ -37,7 +39,9 @@ export const Navigation = styled(Title)`
 `;
 
 export const Files = styled(Title)`
-    display: grid;
+    display: ${props => (props.navState === 'FILES'
+    ? 'grid'
+    : 'none')};
     grid-area: files;
     color: ${props => (props.navState === 'FILES'
     ? '#19C6C7'
