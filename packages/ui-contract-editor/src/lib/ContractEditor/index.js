@@ -75,7 +75,6 @@ const ContractEditor = (props) => {
   const customElements = (attributes, children, element) => {
     const returnObject = {
       clause: () => (
-        <div draggable="true" {...attributes}>
           <ClauseComponent
             templateUri={element.data.src}
             clauseId={element.data.clauseid}
@@ -85,7 +84,6 @@ const ContractEditor = (props) => {
           >
               {children}
           </ClauseComponent>
-        </div>
       ),
       variable: () => (
         <span id={element.data.id} {...attributes} className={VARIABLE}>{children}</span>
