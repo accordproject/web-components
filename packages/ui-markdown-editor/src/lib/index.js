@@ -167,12 +167,13 @@ export const MarkdownEditor = (props) => {
   };
 
   const onDrop = event => {
+    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
+
+    if (!clauseNode) return;
+
     // const fragment = event.dataTransfer.getData('application/x-slate-fragment');
     // const sourcePath = JSON.parse(event.dataTransfer.getData('text'));
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
-    // console.log('sourceRange', JSON.stringify(sourceRange, null, 2));
-    // Transforms.removeNodes(editor, { at: sourceRange });
-
 
     const range = ReactEditor.findEventRange(editor, event);
 
@@ -182,27 +183,23 @@ export const MarkdownEditor = (props) => {
     Transforms.select(editor, sourceRange);
     console.log('selection - ', editor.selection);
 
-    const node = Node.parent(editor, editor.selection.anchor.path);
-    console.log('node - ', node);
-    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
-    console.log('clauseNode', clauseNode);
-
-
     // const node = Node.get(editor, sourcePath);
 
     Transforms.select(editor, range);
     Transforms.splitNodes(editor);
     console.log('selection ---', editor.selection);
-    // Transforms.moveNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause', to: [editor.selection.focus.path] });
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
-    Transforms.insertNodes(editor, clauseNode);
+    Transforms.insertNodes(editor, clauseNode[0]);
 
+
+    // Transforms.moveNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause', to: [editor.selection.focus.path] });
 
     // Transforms.insertNodes(editor, node);
 
     // Transforms.moveNodes(editor, {
-    //   at: sourcePath,
-    //   to: editor.selection.path
+    //   at: sourceRange,
+    //   match: n => n.type === 'clause',
+    //   to: editor.selection.focus.path
     // });
 
     // Transforms.removeNodes(editor);
