@@ -14,7 +14,6 @@ import ErrorComponent from './Error';
 const ErrorLogger = (props) => {
   const { errors, errorNav } = props;
   const errorLength = Object.keys(errors).length ? Object.keys(errors).length : 0;
-  const errorsProps = props.errorsProps || Object.create(null);
 
   const [errorsVisible, setErrorsVisible] = useState(false);
 
@@ -23,27 +22,19 @@ const ErrorLogger = (props) => {
   };
 
   const headerProps = {
-    id: 'ErrorComponentHeader',
+    className: 'cicero-ui__error-header',
     errors: ACT.errorsExist(errors),
     onClick: handleClickErrorsBar,
-    headerBackground: errorsProps.ERRORS_HEADER_BACKGROUND,
-    headerBackgroundHover: errorsProps.ERRORS_HEADER_BACKGROUND_HOVER,
-    headerShadow: errorsProps.ERRORS_HEADER_SHADOW,
-    headerTop: errorsProps.ERRORS_HEADER_BORDER_TOP,
-    zIndexInput: errorsProps.ERRORS_DISPLAY_Z_INDEX,
   };
 
   const displayProps = {
-    id: 'ErrorComponentDisplay',
+    className: 'cicero-ui__error-display',
     errorDisplay: errorsVisible,
-    displayBackground: errorsProps.ERRORS_DISPLAY_BACKGROUND,
-    displayShadow: errorsProps.ERRORS_DISPLAY_SHADOW,
-    zIndexInput: errorsProps.ERRORS_DISPLAY_Z_INDEX,
   };
 
   const barArrowProps = {
     errorDisplay: errorsVisible,
-    headerBarArrow: errorsProps.ERRORS_HEADER_EXPAND_ARROW,
+    className: 'cicero-ui__error-bar-arrow',
   };
 
   const symbolProps = {
@@ -53,13 +44,12 @@ const ErrorLogger = (props) => {
 
   const errorComponentGenerator = errors => Object.values(errors)
     .map(errorValue => <ErrorComponent
-      errorProps={errorsProps}
       error={errorValue}
       errorNav={errorNav}
       key={ACT.keySwitchCase(errorValue)} />);
 
   return (
-    <div>
+    <div className="cicero-ui__error-wrapper">
       {errorsVisible
         && <SC.ErrorDisplay {...displayProps} >
             {errorComponentGenerator(errors)}
@@ -78,23 +68,6 @@ const ErrorLogger = (props) => {
 ErrorLogger.propTypes = {
   errors: PropTypes.object.isRequired,
   errorNav: PropTypes.func,
-  errorsProps: PropTypes.shape({
-    ERRORS_HEADER_BACKGROUND: PropTypes.string,
-    ERRORS_HEADER_BACKGROUND_HOVER: PropTypes.string,
-    ERRORS_HEADER_EXPAND_ARROW: PropTypes.string,
-    ERRORS_HEADER_BORDER_TOP: PropTypes.string,
-    ERRORS_HEADER_SHADOW: PropTypes.string,
-    ERRORS_DISPLAY_BACKGROUND: PropTypes.string,
-    ERRORS_DISPLAY_SHADOW: PropTypes.string,
-    ERRORS_DISPLAY_Z_INDEX: PropTypes.string,
-    ERROR_BORDER_BOTTOM: PropTypes.string,
-    ERROR_EXPAND_ARROW: PropTypes.string,
-    ERROR_FILE: PropTypes.string,
-    ERROR_FILE_HOVER: PropTypes.string,
-    ERROR_TYPE: PropTypes.string,
-    ERROR_FULL_MESSAGE: PropTypes.string,
-    ERROR_SHORT_MESSAGE: PropTypes.string,
-  }),
 };
 
 export default ErrorLogger;

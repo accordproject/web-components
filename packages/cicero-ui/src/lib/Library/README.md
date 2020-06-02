@@ -37,7 +37,7 @@ const LibraryComponent = props => (
   - `type` field corresponds to `item.itemType` attribute and is used to match a given `item` to its itemType in the `itemTypes` array
   - `filterName` field is shown as a label for the type filter checkbox. This filter is ommited if the library is homogeneous
 
-### Custom styling
+### Custom Styling
 
 The component provides classes which can be used to apply custom styles to its individual parts.
 
