@@ -22,11 +22,11 @@ const ErrorContainer = props => (
 
 #### Values
 
-- `errors` : An `object` with unique key and error's data.
+- `errors` [REQUIRED]: An `object` with unique key and error's data
 
 #### Functionality
 
-- `errorNav` : An optional `function` which will navigate to the corresponding error.
+- `errorNav` [OPTIONAL]: An optional `function` which will navigate to the corresponding error
 
 ### Custom Styling
 

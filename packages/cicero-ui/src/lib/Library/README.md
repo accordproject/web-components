@@ -22,20 +22,27 @@ const LibraryComponent = props => (
 );
 ```
 
-### Props
+## Props
+
+### Expected Properties
+
+#### Values
 
 - `items` [REQUIRED]: An `array` which contains library item objects. Required keys are: `uri`, `name`, `version` and `description`
   - Optional keys are: `displayName`, `logoUrl` and `itemType` (for heterogeneous libraries)
-- `onPrimaryButtonClick` [REQUIRED]: A `function` callback which is called when a primary button in a library item card is clicked. A single argument is passed - the item object
-- `onSecondaryButtonClick` [REQUIRED]: A `function` callback which is called when a secondary button in a library item card is clicked. A single argument is passed - the item object
-- `onUploadItem` [OPTIONAL]: A `function` callback which is called when a link to upload a new library item is clicked
-- `onImportItem` [OPTIONAL]: A `function` callback which is called when a link to import a new library item is clicked
-- `onAddItem` [OPTIONAL]: A `function` callback which is called when a link to add a new library item is clicked
 - `itemTypes` [OPTIONAL]: An `array` of item types, default
   - `[{ name: 'CLAUSE TEMPLATE', type: 'template', filterName: 'Templates' }]`
   - `name` field is shown on the second line of the library card
   - `type` field corresponds to `item.itemType` attribute and is used to match a given `item` to its itemType in the `itemTypes` array
   - `filterName` field is shown as a label for the type filter checkbox. This filter is ommited if the library is homogeneous
+
+#### Functionality
+
+- `onPrimaryButtonClick` [REQUIRED]: A `function` callback which is called when a primary button in a library item card is clicked. A single argument is passed - the item object
+- `onSecondaryButtonClick` [REQUIRED]: A `function` callback which is called when a secondary button in a library item card is clicked. A single argument is passed - the item object
+- `onUploadItem` [OPTIONAL]: A `function` callback which is called when a link to upload a new library item is clicked
+- `onImportItem` [OPTIONAL]: A `function` callback which is called when a link to import a new library item is clicked
+- `onAddItem` [OPTIONAL]: A `function` callback which is called when a link to add a new library item is clicked
 
 ### Custom Styling
 

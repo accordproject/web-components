@@ -25,7 +25,7 @@ const NavigationContainer = props => (
 
 #### Values
 
-- `headers` : An `array` which contains header objects, each appearing as such:
+- `headers` [REQUIRED]: An `array` which contains header objects, each appearing as such:
 
 ```js
     {
@@ -37,7 +37,7 @@ const NavigationContainer = props => (
 
 #### Functionality
 
-- `navigateHeader` : An optional `function` which will navigate to the corresponding header
+- `navigateHeader` [OPTIONAL]: An optional `function` which will navigate to the corresponding header
 
 ### Custom Styling
 

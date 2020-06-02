@@ -48,7 +48,7 @@ const NavigationComponent = (props) => {
 };
 
 NavigationComponent.propTypes = {
-  headers: PropTypes.array,
+  headers: PropTypes.array.isRequired,
   navigateHeader: PropTypes.func,
 };
 
