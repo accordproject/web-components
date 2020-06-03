@@ -5,10 +5,8 @@ import { CiceroMarkTransformer } from '@accordproject/markdown-cicero';
 import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import isHotkey from 'is-hotkey';
-import { Editable, withReact, Slate, ReactEditor } from 'slate-react';
-import {
-  Editor, Range, Node, createEditor, Transforms
-} from 'slate';
+import { Editable, withReact, Slate } from 'slate-react';
+import { Editor, Range, Node, createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import PropTypes from 'prop-types';
 import HOTKEYS, { formattingHotKeys } from './utilities/hotkeys';
@@ -139,94 +137,9 @@ export const MarkdownEditor = (props) => {
     }
   };
 
-  const onDragStart = event => {
-    console.log('onDragStart', event.target);
-
-    const node = ReactEditor.toSlateNode(editor, event.target);
-    const path = ReactEditor.findPath(editor, node);
-    const range = Editor.range(editor, path);
-
-    const fragment = Node.fragment(editor, range);
-    const string = JSON.stringify(fragment);
-    const encoded = window.btoa(encodeURIComponent(string));
-    // event.dataTransfer.setData('application/x-slate-fragment', encoded);
-    console.log('start range ---- ', range);
-    console.log('start fragment ---- ', fragment);
-    console.log('path ---- ', path);
-
-    // editor.deleteFragment(fragment);
-    // Transforms.removeNodes(editor, { at: range });
-    event.dataTransfer.setData('text', JSON.stringify(range));
-  };
-
   const onDragOver = event => {
-    console.log('onDragOver');
-
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
-  };
-
-  const onDrop = event => {
-    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
-
-    if (!clauseNode) return;
-
-    // const fragment = event.dataTransfer.getData('application/x-slate-fragment');
-    // const sourcePath = JSON.parse(event.dataTransfer.getData('text'));
-    const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
-
-    const range = ReactEditor.findEventRange(editor, event);
-
-    // console.log('node - ', ReactEditor.toSlateNode(editor, event.target));
-
-    console.log('range - ', sourceRange);
-    Transforms.select(editor, sourceRange);
-    console.log('selection - ', editor.selection);
-
-    // const node = Node.get(editor, sourcePath);
-
-    Transforms.select(editor, range);
-    Transforms.splitNodes(editor);
-    console.log('selection ---', editor.selection);
-    Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
-    Transforms.insertNodes(editor, clauseNode[0]);
-
-
-    // Transforms.moveNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause', to: [editor.selection.focus.path] });
-
-    // Transforms.insertNodes(editor, node);
-
-    // Transforms.moveNodes(editor, {
-    //   at: sourceRange,
-    //   match: n => n.type === 'clause',
-    //   to: editor.selection.focus.path
-    // });
-
-    // Transforms.removeNodes(editor);
-    // Transforms.select(editor, range);
-    // Transforms.splitNodes(editor);
-    // ReactEditor.insertData(editor, event.dataTransfer);
-
-    // Transforms.select(editor, range);
-    // const decoded = decodeURIComponent(window.atob(fragment));
-    // const parsed = JSON.parse(decoded);
-    // console.log('fragment', parsed);
-
-    // Transforms.insertFragment(editor, parsed);
-    // ReactEditor.insertData(editor, event.dataTransfer);
-
-    // const node = ReactEditor.toSlateNode(editor, event.target);
-    // const path = ReactEditor.findPath(editor, node);
-    // console.log('destination path --- ', path);
-    // Transforms.moveNodes(editor, {
-    //   at: [Number(sourcePath)],
-    //   to: path
-    // });
-    // console.log('on drop node - ', node);
-    // const range = Editor.range(editor, path);
-
-    // const fragment = Node.fragment(editor, range);
-    // editor.deleteFragment(fragment);
   };
 
   return (
@@ -240,6 +153,7 @@ export const MarkdownEditor = (props) => {
         /> }
       <Editable
         id="ap-rich-text-editor"
+        style={{ padding: '20px' }}
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
@@ -250,9 +164,9 @@ export const MarkdownEditor = (props) => {
         onDOMBeforeInput={onBeforeInput}
         onCopy={handleCopyOrCut}
         onCut={event => handleCopyOrCut(event, true)}
-        onDragStart={onDragStart}
+        onDragStart={event => props.onDragStart ? props.onDragStart(editor, event) : null}
         onDragOver={onDragOver}
-        onDrop={onDrop}
+        onDrop={event => props.onDrop ? props.onDrop(editor, event) : null}
       />
     </Slate>
   );
@@ -284,6 +198,10 @@ MarkdownEditor.propTypes = {
   placeholder: PropTypes.string,
   /* Optional object to change formatting button active state color */
   activeButton: PropTypes.object,
+  /* Optional function to replace Slate's default onDragStart which will receive editor and event */
+  onDragStart: PropTypes.func,
+  /* Optional function to replace Slate's default onDrop which will receive editor and event */
+  onDrop: PropTypes.func,
 };
 
 MarkdownEditor.defaultProps = {

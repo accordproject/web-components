@@ -16,7 +16,8 @@
 /* React */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Editor, Node, Point } from 'slate';
+import { ReactEditor } from 'slate-react';
+import { Editor, Node, Point, Transforms } from 'slate';
 
 /* Components */
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
@@ -126,6 +127,25 @@ const ContractEditor = (props) => {
     return true;
   };
 
+  const onDragStart = (editor, event) => {
+    const node = ReactEditor.toSlateNode(editor, event.target);
+    const path = ReactEditor.findPath(editor, node);
+    const range = Editor.range(editor, path);
+    event.dataTransfer.setData('text', JSON.stringify(range));
+  };
+
+  const onDrop = (editor, event) => {
+    const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
+    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
+    if (!clauseNode) return;
+    const range = ReactEditor.findEventRange(editor, event);
+
+    Transforms.select(editor, range);
+    Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
+    Transforms.splitNodes(editor);
+    Transforms.insertNodes(editor, clauseNode[0]);
+  };
+
   return (
     <MarkdownEditor
       augmentEditor={augmentEditor}
@@ -138,6 +158,8 @@ const ContractEditor = (props) => {
       canBeFormatted={editor => !props.lockText || !editor.isInsideClause()}
       canCopy={canCopy}
       canKeyDown={canKeyDown}
+      onDragStart={onDragStart}
+      onDrop={onDrop}
       activeButton={props.activeButton}
       data-testid='editor'
   />
