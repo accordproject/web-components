@@ -61,7 +61,7 @@ render(<ContractEditorRenderer />, document.getElementById('root'));
 
 #### Values
 
-- `value` [OPTIONAL]: An `object` which is the initial contents of the editor.
+- `value` [OPTIONAL]: An `array` which is the initial contents of the editor.
 - `lockText` [OPTIONAL]: A `boolean` to lock all non variable text.
 - `readOnly` [OPTIONAL]: A `boolean` to lock all text and remove the formatting toolbar.
 - `activeButton` [OPTIONAL]: Optional `object` to change formatting button active state color
@@ -69,10 +69,16 @@ render(<ContractEditorRenderer />, document.getElementById('root'));
 
 #### Functionality
 
-- `onChange` [OPTIONAL]: A callback `function` called when the contents of the editor change.
-- `loadTemplateObject` [OPTIONAL]: A callback `function` to load a template.
-- `onClauseUpdated` [OPTIONAL]: A callback `function` called when text inside of a clause is changed.
-- `pasteToContract` [OPTIONAL]: A callback `function` to load a clause template via copy/paste.
+- `onChange` [OPTIONAL]: A callback `function` called when the contents of the editor change. Argument:
+  - `value`: The Slate nodes `array` representing all the rich text
+- `loadTemplateObject` [OPTIONAL]: A callback `function` to load a template. Argument:
+  - `uri`: URI `string` source for loading the template
+- `onClauseUpdated` [OPTIONAL]: A callback `function` called when text inside of a clause is changed. Arguments:
+  - `clause`: The Slate node `object` representation of the clause
+  - `justAdded`:  A `boolean` indicating if this was just added (likely via a paste action)
+- `pasteToContract` [OPTIONAL]: A callback `function` to load a clause template via copy/paste. Arguments:
+  - `clauseid`: Data `string` from the clause in Slate to indicate a `uuid`
+  - `src`: URI `string` source for loading the template
 
 ### Available Functionality
 
