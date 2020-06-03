@@ -61,24 +61,22 @@ render(<ContractEditorRenderer />, document.getElementById('root'));
 
 #### Values
 
-- `value`: An `object` which is the initial contents of the editor.
-- `lockText`: A `boolean` to lock all non variable text.
-- `readOnly`: A `boolean` to lock all text and remove the formatting toolbar.
-- `activeButton`: Optional `object` to change formatting button active state color
+- `value` [OPTIONAL]: An `object` which is the initial contents of the editor.
+- `lockText` [OPTIONAL]: A `boolean` to lock all non variable text.
+- `readOnly` [OPTIONAL]: A `boolean` to lock all text and remove the formatting toolbar.
+- `activeButton` [OPTIONAL]: Optional `object` to change formatting button active state color
   - `{ background: '#FFF', symbol: '#000' }`
 
 #### Functionality
 
-- `onChange`: A callback `function` called when the contents of the editor change.
-- `loadTemplateObject`: A callback `function` to load a template.
-- `onClauseUpdated`: A callback `function` called when text inside of a clause is changed.
-- `pasteToContract`: A callback `function` to load a clause template via copy/paste.
+- `onChange` [OPTIONAL]: A callback `function` called when the contents of the editor change.
+- `loadTemplateObject` [OPTIONAL]: A callback `function` to load a template.
+- `onClauseUpdated` [OPTIONAL]: A callback `function` called when text inside of a clause is changed.
+- `pasteToContract` [OPTIONAL]: A callback `function` to load a clause template via copy/paste.
 
 ### Available Functionality
 
 - `clauseProps`: An `object` for the clauses in the editor which contains a deletion, edit, and test function, as well as a header title string and color for clause icons on hover see below.
-
-#### Specifications
 
 `clauseProps`:
 You can support deletion, editing, and testing of the Clause Components within the `ContractEditor`. An object may be passed down this component with the following possible functions:

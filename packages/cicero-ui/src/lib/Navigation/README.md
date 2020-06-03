@@ -10,46 +10,22 @@ npm install @accordproject/cicero-ui
 import { Navigation } from '@accordproject/cicero-ui';
 
 const navigateToHeader = // Insert your navigation function here
-const navigationPropsInput = {
-    NAVIGATE_SWITCH_TITLE_ACTIVE_COLOR (string),
-    NAVIGATE_SWITCH_TITLE_INACTIVE_COLOR (string),
-    NAVIGATE_SWITCH_TITLE_FONT_FAMILY (string),
-    NAVIGATE_SWITCH_FILES_VISIBLE (boolean) (REQUIRED),
-
-    NAVIGATION_POSITION (string),
-    NAVIGATION_TOP_VALUE (string),
-    NAVIGATION_MAX_HEIGHT (string),
-    NAVIGATION_WIDTH (string),
-    NAVIGATION_BACKGROUND_COLOR (string),
-
-    CONTRACT_NAVIGATION_HEADER_COLOR (string),
-    CONTRACT_NAVIGATION_CLAUSE_COLOR (string),
-    CONTRACT_NAVIGATION_CLAUSE_HEADER_COLOR (string),
-
-    CLAUSE_NAVIGATION_TITLE_COLOR (string),
-    CLAUSE_NAVIGATION_TITLE_HOVER_COLOR (string),
-    CLAUSE_NAVIGATION_EXPANSION_ARROW_COLOR (string),
-    CLAUSE_NAVIGATION_EXPANSION_ARROW_HOVER_COLOR (string),
-    CLAUSE_NAVIGATION_FILE_DELETE_COLOR (string),
-    CLAUSE_NAVIGATION_FILE_DELETE_HOVER_COLOR (string),
-    CLAUSE_NAVIGATION_FILE_ADD_COLOR (string),
-    CLAUSE_NAVIGATION_FILE_ADD_HOVER_COLOR (string),
-}
 
 const NavigationContainer = props => (
     <Navigation
         headers={props.headers}
         navigateHeader={navigateToHeader}
-        navigationProps={navigationPropsInput}
     >
 );
 ```
 
-### Props
+## Props
 
-#### Expected to be Provided
+### Expected Properties
 
-- `headers` : An `array` which contains header objects, each appearing as such:
+#### Values
+
+- `headers` [REQUIRED]: An `array` which contains header objects, each appearing as such:
 
 ```js
     {
@@ -59,37 +35,20 @@ const NavigationContainer = props => (
     };
 ```
 
-#### Require Provision
+#### Functionality
 
-- `navigationProps` : An optional `object`, see below.
-- `navigateHeader` : An optional `function` which will navigate to the corresponding header.
+- `navigateHeader` [OPTIONAL]: An optional `function` which will navigate to the corresponding header
 
-### Specifications
+### Custom Styling
 
-The `FILES` section of the navigation requires a `boolean` to render or not:
-- `NAVIGATE_SWITCH_FILES_VISIBLE`
+The component provides classes which can be used to apply custom styles to its individual parts.
 
-You can style the navigation component, as well as the individual headers. An object may be passed down this component with the following possible CSS inputs as strings:
-- `NAVIGATE_SWITCH_TITLE_ACTIVE_COLOR`
-- `NAVIGATE_SWITCH_TITLE_INACTIVE_COLOR`
-- `NAVIGATE_SWITCH_TITLE_FONT_FAMILY`
-- `NAVIGATE_SWITCH_FILES_VISIBLE`
-
-- `NAVIGATION_POSITION`
-- `NAVIGATION_TOP_VALUE`
-- `NAVIGATION_MAX_HEIGHT`
-- `NAVIGATION_WIDTH`
-- `NAVIGATION_BACKGROUND_COLOR`
-
-- `CONTRACT_NAVIGATION_HEADER_COLOR`
-- `CONTRACT_NAVIGATION_CLAUSE_COLOR`
-- `CONTRACT_NAVIGATION_CLAUSE_HEADER_COLOR`
-
-- `CLAUSE_NAVIGATION_TITLE_COLOR`
-- `CLAUSE_NAVIGATION_TITLE_HOVER_COLOR`
-- `CLAUSE_NAVIGATION_EXPANSION_ARROW_COLOR`
-- `CLAUSE_NAVIGATION_EXPANSION_ARROW_HOVER_COLOR`
-- `CLAUSE_NAVIGATION_FILE_DELETE_COLOR`
-- `CLAUSE_NAVIGATION_FILE_DELETE_HOVER_COLOR`
-- `CLAUSE_NAVIGATION_FILE_ADD_COLOR`
-- `CLAUSE_NAVIGATION_FILE_ADD_HOVER_COLOR`
+- `cicero-ui__navigation-wrapper`: Component wrapper
+- `cicero-ui__navigation-contract`: Contract navigation component
+- `cicero-ui__navigation-file`: File navigation component
+- `cicero-ui__navigation-switch-title-active`: Title for active component
+- `cicero-ui__navigation-switch-title-inactive`: Title for inactive component
+- `cicero-ui__navigation-header-clause`: Clause template heading
+- `cicero-ui__navigation-header-one`: Header one heading
+- `cicero-ui__navigation-header-two`: Header two heading
+- `cicero-ui__navigation-header-three`: Header three heading

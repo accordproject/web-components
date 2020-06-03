@@ -23,7 +23,7 @@ export const headerGenerator = (props) => {
           <SC.HeaderClause
               key={key}
               onClick={() => navigateHeader(key, type)}
-              {...props.styleProps}
+              className='cicero-ui__navigation-header-clause'
           >
               {text}
           </ SC.HeaderClause>
@@ -33,7 +33,7 @@ export const headerGenerator = (props) => {
           <SC.HeaderOne
               key={key}
               onClick={() => navigateHeader(key, type)}
-              {...props.styleProps}
+              className='cicero-ui__navigation-header-one'
           >
               {text}
           </ SC.HeaderOne>
@@ -43,7 +43,7 @@ export const headerGenerator = (props) => {
           <SC.HeaderTwo
               key={key}
               onClick={() => navigateHeader(key, type)}
-              {...props.styleProps}
+              className='cicero-ui__navigation-header-two'
           >
               {text}
           </ SC.HeaderTwo>
@@ -53,7 +53,7 @@ export const headerGenerator = (props) => {
           <SC.HeaderThree
               key={key}
               onClick={() => navigateHeader(key, type)}
-              {...props.styleProps}
+              className='cicero-ui__navigation-header-three'
           >
               {text}
           </ SC.HeaderThree>

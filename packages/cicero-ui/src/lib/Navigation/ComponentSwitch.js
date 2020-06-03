@@ -15,23 +15,19 @@ import { NAVIGATION, FILES } from './constants';
  * @param {*} props
  */
 const NavigationComponent = (props) => {
-  const navigationSwitchProps = {
-    headerFont: props.headerFont,
-    titleActive: props.titleActive,
-    titleInactive: props.titleInactive,
-    filesVisible: props.filesVisible,
-    navState: props.navState,
-  };
-
   const navigationProps = {
-    id: 'ContractNavigationSwitchComponent',
-    ...navigationSwitchProps,
+    className: props.navState === 'NAVIGATION'
+      ? 'cicero-ui__navigation-switch-title-active'
+      : 'cicero-ui__navigation-switch-title-inactive',
+    navState: props.navState,
     onClick: () => props.setNavState(NAVIGATION),
   };
 
   const fileProps = {
-    id: 'ContractFilesSwitchComponent',
-    ...navigationSwitchProps,
+    className: props.navState === 'FILES'
+      ? 'cicero-ui__navigation-switch-title-active'
+      : 'cicero-ui__navigation-switch-title-inactive',
+    navState: props.navState,
     onClick: () => props.setNavState(FILES),
   };
 
@@ -50,10 +46,6 @@ const NavigationComponent = (props) => {
 NavigationComponent.propTypes = {
   setNavState: PropTypes.func.isRequired,
   navState: PropTypes.string.isRequired,
-  filesVisible: PropTypes.bool,
-  headerFont: PropTypes.string,
-  titleActive: PropTypes.string,
-  titleInactive: PropTypes.string,
 };
 
 export default NavigationComponent;

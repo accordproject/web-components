@@ -4,11 +4,9 @@ import styled from 'styled-components';
 /* Overall Navigation Component */
 
 export const NavigationWrapper = styled.div`
-    position: ${props => props.positionValue || 'static'};
-    top: ${props => props.topValue || 'auto'};
-    max-height: ${props => props.navMaxHeight || '80vh'};
-    width: ${props => props.navWidth || 'inherit'};
-    background-color: ${props => props.backgroundColor || 'inherit'};
+    position: static;
+    max-height: 80vh;
+    background-color: inherit;
     overflow-y: inherit;
 
     display: grid;
@@ -23,34 +21,36 @@ export const Title = styled.a`
     color: #FFFFFF;
     font-size: 1em;
     font-weight: bold;
-    font-family: ${props => props.headerFont || 'serif'};
+    font-family: serif;
     &:hover {
-        cursor: ${props => (props.filesVisible ? 'pointer' : 'auto')};
-        color: ${props => props.titleActive || '#19C6C7'};
+        cursor: pointer;
+        color: #19C6C7;
     }
 `;
 
 export const Navigation = styled(Title)`
-    display: grid;
+    display: ${props => (props.navState === 'NAVIGATION'
+    ? 'grid'
+    : 'none')};
     grid-area: navigation;
     color: ${props => (props.navState === 'NAVIGATION'
-    ? (props.titleActive || '#19C6C7')
-    : (props.titleInactive || '#86888D'))};
+    ? '#19C6C7'
+    : '#86888D')};
 `;
 
 export const Files = styled(Title)`
-    display: ${props => (props.filesVisible ? 'grid' : 'none')};
+    display: ${props => (props.navState === 'FILES'
+    ? 'grid'
+    : 'none')};
     grid-area: files;
     color: ${props => (props.navState === 'FILES'
-    ? (props.titleActive || '#19C6C7')
-    : (props.titleInactive || '#86888D'))};
+    ? '#19C6C7'
+    : '#86888D')};
 `;
 
 /* Contract Navigation */
 
 export const ContractHeaders = styled.div`
-    overflow: hidden;
-    white-space: nowrap;
     padding-top: 10px;
 
     grid-area: body;
@@ -61,16 +61,13 @@ export const ContractHeaders = styled.div`
 `;
 
 export const HeaderOne = styled.div`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    height: 24px;
-    color: ${props => props.headerColor || '#B9BCC4'};
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    color: #B9BCC4;
     font-family: "IBM Plex Sans";
     font-size: 1em;
     letter-spacing: -0.5px;
-    line-height: 24px;
+    line-height: 18px;
     &:hover {
         cursor: pointer;
         text-decoration: underline;
@@ -86,6 +83,6 @@ export const HeaderThree = styled(HeaderOne)`
 `;
 
 export const HeaderClause = styled(HeaderOne)`
-    color: ${props => props.clauseColor || '#FFFFFF'} !important;
+    color: #FFFFFF !important;
     font-weight: bold;
 `;
