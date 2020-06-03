@@ -114,7 +114,7 @@ const withClauses = (editor, withClausesProps) => {
 
         clausesToParseAndPaste.forEach((clause) => {
           pasteToContract(clause.data.clauseid, clause.data.src);
-          onClauseUpdated(editor, clause);
+          onClauseUpdated(clause, true);
         });
 
         const NEW_HTML_DOM = htmlTransformer
