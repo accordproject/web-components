@@ -1,7 +1,7 @@
-# Accord Project Web Components Concerto UI
+# Accord Project Web Components for Concerto
 
-[![downloads](https://img.shields.io/npm/dm/@accordproject/concerto-ui)](https://www.npmjs.com/package/@accordproject/concerto-ui)
-[![npm version](https://badge.fury.io/js/%40accordproject%2Fconcerto-ui.svg)](https://badge.fury.io/js/%40accordproject%2Fconcerto-ui)
+[![downloads](https://img.shields.io/npm/dm/@accordproject/ui-concerto)](https://www.npmjs.com/package/@accordproject/ui-concerto)
+[![npm version](https://badge.fury.io/js/%40accordproject%2Fui-concerto.svg)](https://badge.fury.io/js/%40accordproject%2Fui-concerto)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains React components for models written in the [Concerto Modeling Language](https://github.com/accordproject/concerto).
@@ -9,7 +9,7 @@ This repository contains React components for models written in the [Concerto Mo
 ### Installation
 
 ```sh
-npm install @accordproject/concerto-ui
+npm install @accordproject/ui-concerto
 ```
 
 ### Develop inside Storybook
@@ -17,7 +17,7 @@ npm install @accordproject/concerto-ui
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:
 
 ```sh
-cd packages/concerto-ui
+cd packages/ui-concerto
 npm run build
 ```
 

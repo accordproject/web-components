@@ -1,5 +1,5 @@
 {
-  "name": "@accordproject/concerto-ui",
+  "name": "@accordproject/ui-concerto",
   "version": "0.92.2",
   "private": false,
   "dependencies": {
