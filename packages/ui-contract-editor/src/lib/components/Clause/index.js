@@ -9,6 +9,7 @@ import * as S from '../styles';
 import * as deleteIcon from '../../icons/trash';
 import * as editIcon from '../../icons/edit';
 import * as testIcon from '../../icons/testIcon';
+import * as dragIcon from '../../icons/drag';
 
 /* Actions */
 import { headerGenerator, titleGenerator } from '../actions';
@@ -33,6 +34,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
   const [hoveringTestIcon, setHoveringTestIcon] = useState(false);
   const [hoveringEditIcon, setHoveringEditIcon] = useState(false);
   const [hoveringDeleteIcon, setHoveringDeleteIcon] = useState(false);
+  const [hoveringDragIcon, setHoveringDragIcon] = useState(false);
+
   // const [listVariables, setListVariables] = useState({});
 
   const title = titleGenerator(props.templateUri);
@@ -65,6 +68,14 @@ const ClauseComponent = React.forwardRef((props, ref) => {
     'aria-label': deleteIcon.type,
     width: '19px',
     height: '19px',
+    viewBox: '0 0 12 15',
+    clauseIconColor: clauseProps.ICON_HOVER_COLOR,
+  };
+
+  const dragIconProps = {
+    'aria-label': dragIcon.type,
+    width: '8px',
+    height: '18px',
     viewBox: '0 0 12 15',
     clauseIconColor: clauseProps.ICON_HOVER_COLOR,
   };
@@ -118,6 +129,16 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         </S.ClauseHeader>
         { !props.readOnly
           && <>
+              <S.DragWrapper
+              {...iconWrapperProps}
+              onMouseEnter={() => setHoveringDragIcon(true)}
+              onMouseLeave={() => setHoveringDragIcon(false)}
+            >
+              <S.ClauseIcon {...dragIconProps}>
+                {dragIcon.icon()}
+              </ S.ClauseIcon>
+              { hoveringDragIcon && <S.HeaderToolTipWrapper {...props.attributes} /> }
+            </S.DragWrapper>
             <S.TestWrapper
               {...iconWrapperProps}
               onMouseEnter={() => setHoveringTestIcon(true)}
