@@ -8,7 +8,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import autoprefixer from 'autoprefixer';
 import stylelint from 'rollup-plugin-stylelint';
 import postcssPresetEnv from 'postcss-preset-env';
-import {terser} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const outputs = [
@@ -30,7 +30,7 @@ const postcssPlugins = [
   autoprefixer(),
 ];
 
-const config = outputs.map(({file, format}) => ({
+const config = outputs.map(({ file, format }) => ({
   input: 'src/lib/index.js',
   output: {
     file,
@@ -40,16 +40,16 @@ const config = outputs.map(({file, format}) => ({
       react: 'React',
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      '@accordproject/markdown-cicero' : 'markdownCicero',
-      'styled-components' : 'styled',
-      'slate' : 'slate',
-      'slate-react' : 'slateReact',
-      'slate-history' : 'slateHistory',
-      'is-hotkey' : 'isHotKey',
-      '@accordproject/markdown-slate' : 'markdownSlate',
-      '@accordproject/markdown-html' : 'markdownHtml',
-      'image-extensions' : 'imageExtension',
-      'semantic-ui-react' : 'semanticUiReact'
+      '@accordproject/markdown-cicero': 'markdownCicero',
+      'styled-components': 'styled',
+      slate: 'slate',
+      'slate-react': 'slateReact',
+      'slate-history': 'slateHistory',
+      'is-hotkey': 'isHotKey',
+      '@accordproject/markdown-slate': 'markdownSlate',
+      '@accordproject/markdown-html': 'markdownHtml',
+      'image-extensions': 'imageExtension',
+      'semantic-ui-react': 'semanticUiReact'
     },
     exports: 'named',
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@accordproject/markdown-editor",
+  "name": "@accordproject/ui-markdown-editor",
   "version": "0.92.2",
   "private": false,
   "dependencies": {

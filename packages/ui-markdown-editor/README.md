@@ -1,7 +1,7 @@
 # Accord Project Web Components Markdown Editor
 
-[![downloads](https://img.shields.io/npm/dm/@accordproject/markdown-editor)](https://www.npmjs.com/package/@accordproject/markdown-editor)
-[![npm version](https://badge.fury.io/js/%40accordproject%2Fmarkdown-editor.svg)](https://badge.fury.io/js/%40accordproject%2Fmarkdown-editor)
+[![downloads](https://img.shields.io/npm/dm/@accordproject/ui-markdown-editor)](https://www.npmjs.com/package/@accordproject/ui-markdown-editor)
+[![npm version](https://badge.fury.io/js/%40accordproject%2Fui-markdown-editor.svg)](https://badge.fury.io/js/%40accordproject%2Fui-markdown-editor)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains a WYSIWYG editor for markdown that conforms to the [CommonMark](https://spec.commonmark.org) specification.
@@ -11,7 +11,7 @@ The editor is based on React, [Slate](https://www.slatejs.org), and the Accord P
 ### Installation
 
 ```sh
-npm install @accordproject/markdown-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react
+npm install @accordproject/ui-markdown-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react
 ```
 
 ### Implementation
@@ -20,7 +20,7 @@ npm install @accordproject/markdown-editor @accordproject/markdown-slate slate s
 import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { SlateTransformer } from '@accordproject/markdown-slate';
-import { MarkdownEditor } from '@accordproject/markdown-editor';
+import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 
 const slateTransformer = new SlateTransformer();
 const defaultMarkdown = `This is text. You can edit it.`;
@@ -48,7 +48,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:
 
 ```sh
-cd packages/markdown-editor
+cd packages/ui-markdown-editor
 npm run build
 ```
 
