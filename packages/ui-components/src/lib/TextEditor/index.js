@@ -27,7 +27,7 @@ import './styles.css';
  * @param {*} props the props for the component. See the declared PropTypes
  * for details.
  */
-export function TextEditor({ onChange, markdown, readOnly }) {
+export default function TextEditor({ onChange, markdown, readOnly }) {
   const onChangeHandler = (evt) => {
     onChange(evt.target.value);
   };
