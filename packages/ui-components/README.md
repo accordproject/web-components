@@ -1,7 +1,7 @@
-# Accord Project Web Components Cicero UI
+# Accord Project Web Components
 
-[![downloads](https://img.shields.io/npm/dm/@accordproject/cicero-ui)](https://www.npmjs.com/package/@accordproject/cicero-ui)
-[![npm version](https://badge.fury.io/js/%40accordproject%2Fcicero-ui.svg)](https://badge.fury.io/js/%40accordproject%2Fcicero-ui)
+[![downloads](https://img.shields.io/npm/dm/@accordproject/ui-components)](https://www.npmjs.com/package/@accordproject/ui-components)
+[![npm version](https://badge.fury.io/js/%40accordproject%2Fui-components.svg)](https://badge.fury.io/js/%40accordproject%2Fui-components)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains tools for implementing React components in your contract editing studio.
@@ -9,7 +9,7 @@ This repository contains tools for implementing React components in your contrac
 ### Installation
 
 ```sh
-npm install @accordproject/cicero-ui
+npm install @accordproject/ui-components
 ```
 
 ### Develop inside Storybook
@@ -17,7 +17,7 @@ npm install @accordproject/cicero-ui
 While Storybook is running, if you make a change in a package that you want to see reflected in the demo, in a new terminal:
 
 ```sh
-cd packages/cicero-ui
+cd packages/ui-components
 npm run build
 ```
 
