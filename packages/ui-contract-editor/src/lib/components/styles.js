@@ -119,6 +119,12 @@ export const DeleteWrapper = styled(IconWrapper)`
   grid-area: six / six / thirteen / thirteen;
 `;
 
+export const DragWrapper = styled(IconWrapper)`
+  grid-area: fifteen;
+  background: linear-gradient(to right, #FFF 0%, #F4F6FC 100%);
+  margin-right: 9px;
+`;
+
 export const ClauseAdd = styled.svg`
   fill: #46608E;
   cursor: pointer;
