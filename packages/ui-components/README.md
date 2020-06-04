@@ -9,7 +9,7 @@ This repository contains tools for implementing React components in your contrac
 ### Installation
 
 ```sh
-npm install @accordproject/ui-components
+npm install @accordproject/ui-components styled-components
 ```
 
 ### Develop inside Storybook
