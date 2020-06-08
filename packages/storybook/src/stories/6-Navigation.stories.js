@@ -1,7 +1,7 @@
 import React from "react";
 import { withA11y } from "@storybook/addon-a11y";
 import { withKnobs, text } from "@storybook/addon-knobs";
-import { Navigation } from '@accordproject/cicero-ui';
+import { Navigation } from '@accordproject/ui-components';
 
 export default { title: 'Navigation' };
 export const navigation = () => {

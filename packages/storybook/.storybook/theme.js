@@ -12,7 +12,7 @@ export default create ({
     appBorderColor: 'grey',
     appBorderRadius: 4,
 
-    brandTitle: 'Cicero-UI',
-    brandUrl: 'https://github.com/accordproject/cicero-ui',
+    brandTitle: 'Web Components',
+    brandUrl: 'https://github.com/accordproject/web-components',
     brandImage: 'https://raw.githubusercontent.com/accordproject/techdocs/master/website/static/img/accord_logo.png'
 });
