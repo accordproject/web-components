@@ -1,15 +1,15 @@
-## Cicero-UI - ContractEditor
+## Contract Editor
 
 ### Usage
 
 ```shell
-npm install @accordproject/cicero-ui
+npm install @accordproject/ui-contract-editor
 ```
 
 ```js
 import { render } from 'react-dom';
 import React, { useCallback, useState } from 'react';
-import { ContractEditor } from '@accordproject/cicero-ui';
+import { ContractEditor } from '@accordproject/ui-contract-editor';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 
 const slateTransformer = new SlateTransformer();

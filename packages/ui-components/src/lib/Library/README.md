@@ -1,13 +1,13 @@
-## Cicero-UI - Library
+## UI Components - Library
 
 ### Usage
 
 ```shell
-npm install @accordproject/cicero-ui
+npm install @accordproject/ui-components
 ```
 
 ```js
-import { Library } from '@accordproject/cicero-ui';
+import { Library } from '@accordproject/ui-components';
 
 const LibraryComponent = props => (
     <Library
@@ -48,19 +48,19 @@ const LibraryComponent = props => (
 
 The component provides classes which can be used to apply custom styles to its individual parts.
 
-- `cicero-ui__library-search-input`: Search input
-- `cicero-ui__library-cards-wrapper`: Library cards wrapper element
-- `cicero-ui__library-card`: Library card. An additional class of `item.itemType` will be added to the card,
+- `ui-components__library-search-input`: Search input
+- `ui-components__library-cards-wrapper`: Library cards wrapper element
+- `ui-components__library-card`: Library card. An additional class of `item.itemType` will be added to the card,
 so different CSS selectors can be used based on the item's `itemType` value
-- `cicero-ui__library-card-content`: Content element inside a library item card
-- `cicero-ui__library-card-logo`: Logo element inside a library item card
-- `cicero-ui__library-card-header`: Header element inside a library item card
-- `cicero-ui__library-card-meta`: Meta element inside a library item card
-- `cicero-ui__library-card-type`: Item type name element inside a library item card
-- `cicero-ui__library-card-item-version`: Version element inside a library item card
-- `cicero-ui__library-card-actions`: Actions element inside a library item card
-- `cicero-ui__library-card-primary-btn`: Primary button inside a library item card
-- `cicero-ui__library-card-secondary-btn`: Secondary button inside a library item card
-- `cicero-ui__library-add-item-button`: Add new library item button
-- `cicero-ui__library-upload-button`: Upload new library item button
-- `cicero-ui__library-import-button`: Import new library item button
+- `ui-components__library-card-content`: Content element inside a library item card
+- `ui-components__library-card-logo`: Logo element inside a library item card
+- `ui-components__library-card-header`: Header element inside a library item card
+- `ui-components__library-card-meta`: Meta element inside a library item card
+- `ui-components__library-card-type`: Item type name element inside a library item card
+- `ui-components__library-card-item-version`: Version element inside a library item card
+- `ui-components__library-card-actions`: Actions element inside a library item card
+- `ui-components__library-card-primary-btn`: Primary button inside a library item card
+- `ui-components__library-card-secondary-btn`: Secondary button inside a library item card
+- `ui-components__library-add-item-button`: Add new library item button
+- `ui-components__library-upload-button`: Upload new library item button
+- `ui-components__library-import-button`: Import new library item button

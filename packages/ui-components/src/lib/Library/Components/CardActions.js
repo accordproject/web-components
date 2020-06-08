@@ -38,16 +38,16 @@ const SecondaryBtn = styled(Btn)`
  * A Card Actions component that renders buttons inside Library Item Card.
  */
 const CardActions = props => (
-  <ActionsContainer className='cicero-ui__library-card-actions'>
+  <ActionsContainer className='ui-components__library-card-actions'>
     <PrimaryBtn
       onClick={() => props.onPrimaryButtonClick(props.item)}
-      className='cicero-ui__library-card-primary-btn'
+      className='ui-components__library-card-primary-btn'
     >
        + Add to contract
     </PrimaryBtn>
     <SecondaryBtn
       onClick={() => props.onSecondaryButtonClick(props.item)}
-      className='cicero-ui__library-card-secondary-btn'
+      className='ui-components__library-card-secondary-btn'
     >
       Details
     </SecondaryBtn>

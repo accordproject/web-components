@@ -17,16 +17,16 @@ import { NAVIGATION, FILES } from './constants';
 const NavigationComponent = (props) => {
   const navigationProps = {
     className: props.navState === 'NAVIGATION'
-      ? 'cicero-ui__navigation-switch-title-active'
-      : 'cicero-ui__navigation-switch-title-inactive',
+      ? 'ui-components__navigation-switch-title-active'
+      : 'ui-components__navigation-switch-title-inactive',
     navState: props.navState,
     onClick: () => props.setNavState(NAVIGATION),
   };
 
   const fileProps = {
     className: props.navState === 'FILES'
-      ? 'cicero-ui__navigation-switch-title-active'
-      : 'cicero-ui__navigation-switch-title-inactive',
+      ? 'ui-components__navigation-switch-title-active'
+      : 'ui-components__navigation-switch-title-inactive',
     navState: props.navState,
     onClick: () => props.setNavState(FILES),
   };

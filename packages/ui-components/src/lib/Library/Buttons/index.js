@@ -41,7 +41,7 @@ export const ImportComponent = props => {
     <ActionButton
       onClick={props.onImportItem}
       aria-label='Upload Button'
-      className='cicero-ui__library-import-button'
+      className='ui-components__library-import-button'
     >
       Import from VS Code
     </ActionButton>
@@ -55,7 +55,7 @@ export const UploadComponent = props => {
     <ActionButton
       onClick={props.onUploadItem}
       aria-label='Import Button'
-      className='cicero-ui__library-upload-button'
+      className='ui-components__library-upload-button'
     >
       Add a new library item
     </ActionButton>
@@ -73,7 +73,7 @@ export const NewItemComponent = props => {
       fluid
       icon="plus"
       onClick={props.onAddItem}
-      className='cicero-ui__library-add-item-button'
+      className='ui-components__library-add-item-button'
       style={{ margin: '5px 0' }}
     />
   );

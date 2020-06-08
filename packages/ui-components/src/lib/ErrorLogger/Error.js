@@ -18,7 +18,7 @@ const ErrorComponent = (props) => {
 
   const typeProps = {
     onClick: handleClickSpecError,
-    className: 'cicero-ui__error-type'
+    className: 'ui-components__error-type'
   };
 
   const shortMessageProps = {
@@ -29,15 +29,15 @@ const ErrorComponent = (props) => {
     expanded: specErrorVisible,
     onClick: handleClickSpecError,
     className: specErrorVisible
-      ? 'cicero-ui__error-arrow-expanded'
-      : 'cicero-ui__error-arrow-collapsed'
+      ? 'ui-components__error-arrow-expanded'
+      : 'ui-components__error-arrow-collapsed'
   };
 
   return (
-    <SC.ErrorComponent className="cicero-ui__error-component">
+    <SC.ErrorComponent className="ui-components__error-component">
 
       <SC.ArrowDiv {...errorArrowProps} />
-      <SC.ErrorFile onClick={() => errorNav(error)} className="cicero-ui__error-file">
+      <SC.ErrorFile onClick={() => errorNav(error)} className="ui-components__error-file">
         {ACT.typeSwitchCase(error || {})}
       </SC.ErrorFile>
 
@@ -45,12 +45,12 @@ const ErrorComponent = (props) => {
         {ACT.overalltypeSwitchCase(error).name || 'Unknown Error'}:
       </SC.ErrorType>
 
-      <SC.ErrorShortMessage {...shortMessageProps} className="cicero-ui__error-short-message" >
+      <SC.ErrorShortMessage {...shortMessageProps} className="ui-components__error-short-message" >
         {ACT.truncateMessage(ACT.overalltypeSwitchCase(error).shortMessage || 'Unknown Error')}
       </SC.ErrorShortMessage>
 
       {specErrorVisible
-        && <SC.ErrorFullMessage className="cicero-ui__error-full-message" >
+        && <SC.ErrorFullMessage className="ui-components__error-full-message" >
             {ACT.overalltypeSwitchCase(error).message || 'Unknown Error'}
           </SC.ErrorFullMessage>}
     </SC.ErrorComponent>

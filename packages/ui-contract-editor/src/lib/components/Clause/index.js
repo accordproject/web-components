@@ -74,7 +74,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
       <S.ClauseWrapper
         src={props.templateUri}
         id={props.clauseId}
-        className='cicero-ui__clause'
+        className='ui-contract-editor__clause'
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         style={{ userSelect: 'none' }}
@@ -92,7 +92,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         ))
       } */}
         <S.ClauseHeader
-          className='cicero-ui__clause-header'
+          className='ui-contract-editor__clause-header'
           currentHover={hovering}
           contentEditable={false}
           suppressContentEditableWarning={true}

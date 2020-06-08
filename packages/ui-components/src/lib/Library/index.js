@@ -163,7 +163,7 @@ const LibraryComponent = (props) => {
       <Functionality>
         { renderItemTypeFilter() }
         <Input
-          className="cicero-ui__library-search-input"
+          className="ui-components__library-search-input"
           fluid
           icon="search"
           placeholder="Search..."
@@ -172,7 +172,7 @@ const LibraryComponent = (props) => {
         />
         <NewItemComponent onAddItem={props.onAddItem} />
       </Functionality>
-      <LibraryItemCards className="cicero-ui__library-cards-wrapper">
+      <LibraryItemCards className="ui-components__library-cards-wrapper">
         {
           filtered.length
             ? filtered.map(item => (

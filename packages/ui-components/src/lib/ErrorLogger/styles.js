@@ -13,7 +13,7 @@ export const ErrorDisplay = styled.div`
     box-shadow: 0 -2px 20px 0 rgba(20,31,60,0.65);
 `;
 
-ErrorDisplay.displayName = 'cicero-ui__error-display';
+ErrorDisplay.displayName = 'ui-components__error-display';
 
 export const ErrorsHeader = styled.div`
     width: 100%;
@@ -40,13 +40,13 @@ export const ErrorsHeader = styled.div`
     }
 `;
 
-ErrorsHeader.displayName = 'cicero-ui__error-header';
+ErrorsHeader.displayName = 'ui-components__error-header';
 
 export const ErrorSymbol = styled(Icon)`
     vertical-align: middle;
 `;
 
-ErrorSymbol.displayName = 'cicero-ui__error-symbol';
+ErrorSymbol.displayName = 'ui-components__error-symbol';
 
 export const ErrorBarArrow = styled.div`
     float: right;
@@ -63,7 +63,7 @@ export const ErrorBarArrow = styled.div`
     ? '0' : ('7px solid #7B9AD1'))};
 `;
 
-ErrorBarArrow.displayName = 'cicero-ui__error-bar-arrow';
+ErrorBarArrow.displayName = 'ui-components__error-bar-arrow';
 
 export const ErrorComponent = styled.div`
     width: 100%;
@@ -79,7 +79,7 @@ export const ErrorComponent = styled.div`
     grid-template-rows: min-content auto;
 `;
 
-ErrorComponent.displayName = 'cicero-ui__error-component';
+ErrorComponent.displayName = 'ui-components__error-component';
 
 export const ErrorFile = styled.a`
     text-decoration: underline;
@@ -97,7 +97,7 @@ export const ErrorFile = styled.a`
     }
 `;
 
-ErrorFile.displayName = 'cicero-ui__error-file';
+ErrorFile.displayName = 'ui-components__error-file';
 
 export const ErrorType = styled.div`
     grid-area: errorType;
@@ -109,7 +109,7 @@ export const ErrorType = styled.div`
     padding: 5px;
 `;
 
-ErrorType.displayName = 'cicero-ui__error-type';
+ErrorType.displayName = 'ui-components__error-type';
 
 export const ErrorShortMessage = styled.div`
     grid-area: errorMessage;
@@ -121,7 +121,7 @@ export const ErrorShortMessage = styled.div`
     padding: 5px;
 `;
 
-ErrorShortMessage.displayName = 'cicero-ui__error-short-message';
+ErrorShortMessage.displayName = 'ui-components__error-short-message';
 
 export const ErrorFullMessage = styled.div`
     grid-area: errorFull;
@@ -131,7 +131,7 @@ export const ErrorFullMessage = styled.div`
     line-height: 13px;
 `;
 
-ErrorFullMessage.displayName = 'cicero-ui__error-full-message';
+ErrorFullMessage.displayName = 'ui-components__error-full-message';
 
 export const ArrowDiv = styled.div`
     grid-area: errorArrow;
@@ -155,4 +155,4 @@ export const ArrowDiv = styled.div`
     }
 `;
 
-ArrowDiv.displayName = 'cicero-ui__error-arrow-div';
+ArrowDiv.displayName = 'ui-components__error-arrow-div';

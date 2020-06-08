@@ -34,7 +34,7 @@ const config = outputs.map(({ file, format }) => ({
   output: {
     file,
     format,
-    name: 'CiceroUI',
+    name: 'ContractEditor',
     globals: {
       react: 'React',
       'react-dom': 'ReactDOM',

@@ -32,23 +32,23 @@ const LibraryItemCard = props => (
     fluid
     key={props.item.uri}
     style={cardStyle}
-    className={`cicero-ui__library-card ${props.item.itemType}`}
+    className={`ui-components__library-card ${props.item.itemType}`}
   >
-    <Card.Content className='cicero-ui__library-card-content'>
+    <Card.Content className='ui-components__library-card-content'>
       <Image
         style={itemLogoStyle}
         src={props.item.logoUrl}
-        className='cicero-ui__library-card-logo'
+        className='ui-components__library-card-logo'
       />
-      <Card.Header className='cicero-ui__library-card-header'>
+      <Card.Header className='ui-components__library-card-header'>
         { props.item.displayName || props.item.name }
       </Card.Header>
-      <Card.Meta className='cicero-ui__library-card-meta'>
-        <span className='cicero-ui__library-card-item-type'>
+      <Card.Meta className='ui-components__library-card-meta'>
+        <span className='ui-components__library-card-item-type'>
           {props.itemTypeName}
         </span>
         &nbsp;|&nbsp;
-        <span className='cicero-ui__library-card-item-version'>
+        <span className='ui-components__library-card-item-version'>
           Version {props.item.version}
         </span>
       </Card.Meta>

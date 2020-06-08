@@ -22,19 +22,19 @@ const ErrorLogger = (props) => {
   };
 
   const headerProps = {
-    className: 'cicero-ui__error-header',
+    className: 'ui-components__error-header',
     errors: ACT.errorsExist(errors),
     onClick: handleClickErrorsBar,
   };
 
   const displayProps = {
-    className: 'cicero-ui__error-display',
+    className: 'ui-components__error-display',
     errorDisplay: errorsVisible,
   };
 
   const barArrowProps = {
     errorDisplay: errorsVisible,
-    className: 'cicero-ui__error-bar-arrow',
+    className: 'ui-components__error-bar-arrow',
   };
 
   const symbolProps = {
@@ -49,7 +49,7 @@ const ErrorLogger = (props) => {
       key={ACT.keySwitchCase(errorValue)} />);
 
   return (
-    <div className="cicero-ui__error-wrapper">
+    <div className="ui-components__error-wrapper">
       {errorsVisible
         && <SC.ErrorDisplay {...displayProps} >
             {errorComponentGenerator(errors)}

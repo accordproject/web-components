@@ -1,13 +1,13 @@
-## Cicero-UI - Navigation
+## UI Components - Navigation
 
 ### Usage
 
 ```
-npm install @accordproject/cicero-ui
+npm install @accordproject/ui-components
 ```
 
 ```js
-import { Navigation } from '@accordproject/cicero-ui';
+import { Navigation } from '@accordproject/ui-components';
 
 const navigateToHeader = // Insert your navigation function here
 
@@ -43,12 +43,12 @@ const NavigationContainer = props => (
 
 The component provides classes which can be used to apply custom styles to its individual parts.
 
-- `cicero-ui__navigation-wrapper`: Component wrapper
-- `cicero-ui__navigation-contract`: Contract navigation component
-- `cicero-ui__navigation-file`: File navigation component
-- `cicero-ui__navigation-switch-title-active`: Title for active component
-- `cicero-ui__navigation-switch-title-inactive`: Title for inactive component
-- `cicero-ui__navigation-header-clause`: Clause template heading
-- `cicero-ui__navigation-header-one`: Header one heading
-- `cicero-ui__navigation-header-two`: Header two heading
-- `cicero-ui__navigation-header-three`: Header three heading
+- `ui-components__navigation-wrapper`: Component wrapper
+- `ui-components__navigation-contract`: Contract navigation component
+- `ui-components__navigation-file`: File navigation component
+- `ui-components__navigation-switch-title-active`: Title for active component
+- `ui-components__navigation-switch-title-inactive`: Title for inactive component
+- `ui-components__navigation-header-clause`: Clause template heading
+- `ui-components__navigation-header-one`: Header one heading
+- `ui-components__navigation-header-two`: Header two heading
+- `ui-components__navigation-header-three`: Header three heading

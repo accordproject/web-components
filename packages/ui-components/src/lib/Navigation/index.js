@@ -31,16 +31,16 @@ const NavigationComponent = (props) => {
 
   const navigationGenerator = (props) => {
     if (navigationState()) {
-      return <ContractNavigation className="cicero-ui__navigation-contract" {...props} />;
+      return <ContractNavigation className="ui-components__navigation-contract" {...props} />;
     }
     if (filesState()) {
-      return <FilesNavigation className="cicero-ui__navigation-file" {...props} />;
+      return <FilesNavigation className="ui-components__navigation-file" {...props} />;
     }
     return 'Select Navigation or Files';
   };
 
   return (
-    <NavigationWrapper className="cicero-ui__navigation-wrapper" >
+    <NavigationWrapper className="ui-components__navigation-wrapper" >
         <ComponentSwitch {...switchProps} />
         {navigationGenerator(props)}
     </NavigationWrapper>
