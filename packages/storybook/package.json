@@ -46,10 +46,10 @@
     "stylelint": "13.3.3",
     "stylelint-config-standard": "20.0.0",
     "stylelint-order": "4.0.0",
-    "@accordproject/cicero-ui": "0.92.2",
-    "@accordproject/concerto-ui": "0.92.2",
-    "@accordproject/markdown-editor": "0.92.2",
-    "@accordproject/text-editor": "0.92.2"
+    "@accordproject/ui-components": "0.92.2",
+    "@accordproject/ui-concerto": "0.92.2",
+    "@accordproject/ui-markdown-editor": "0.92.2",
+    "@accordproject/ui-contract-editor": "0.92.2"
   },
   "scripts": {
     "storybook": "start-storybook -p 9009 -s public",

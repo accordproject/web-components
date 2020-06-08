@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, boolean } from '@storybook/addon-knobs';
-import { TextEditor } from '@accordproject/text-editor';
+import { TextEditor } from '@accordproject/ui-components';
 
 export default {
   title: 'Text Editor',
