@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageElement from '../plugins/withImages';
@@ -12,7 +13,7 @@ import generateId from '../utilities/generateId';
 
 const Element = (props) => {
   const {
-    attributes, children, element, customElements
+    attributes, children, element, customElements, editor
   } = props;
   const { type, data } = element;
   const headingId = HEADINGS.includes(type) ? generateId(element) : null;
@@ -44,7 +45,7 @@ const Element = (props) => {
     }
   };
   const elementRenderer = customElements
-    ? { ...baseElementRenderer, ...customElements(attributes, children, element) }
+    ? { ...baseElementRenderer, ...customElements(attributes, children, element, editor) }
     : baseElementRenderer;
   return (elementRenderer[type] || elementRenderer.default)();
 };
@@ -55,7 +56,8 @@ Element.propTypes = {
     data: PropTypes.object,
     type: PropTypes.string
   }),
-  attributes: PropTypes.any
+  attributes: PropTypes.any,
+  editor: PropTypes.any
 };
 
 export default Element;
