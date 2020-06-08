@@ -5,7 +5,7 @@ import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { text, select, boolean, object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { ContractEditor } from '@accordproject/ui-contract-editor';
+import ContractEditor from '@accordproject/ui-contract-editor';
 import { Template, Clause } from '@accordproject/cicero-core';
 
 const slateTransformer = new SlateTransformer();
