@@ -123,6 +123,8 @@ export const DragWrapper = styled(IconWrapper)`
   grid-area: fifteen;
   background: linear-gradient(to right, #FFF 0%, #F4F6FC 100%);
   margin-right: 9px;
+  padding: 4px 0 0 0;
+  cursor: text;
 `;
 
 export const ClauseAdd = styled.svg`

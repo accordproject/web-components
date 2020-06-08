@@ -73,7 +73,7 @@ const ContractEditor = (props) => {
     pasteToContract: props.pasteToContract
   };
 
-  const customElements = (attributes, children, element) => {
+  const customElements = (attributes, children, element, editor) => {
     const returnObject = {
       clause: () => (
           <ClauseComponent
@@ -82,6 +82,7 @@ const ContractEditor = (props) => {
             clauseProps={props.clauseProps}
             readOnly={props.readOnly}
             attributes={attributes}
+            editor={editor}
           >
               {children}
           </ClauseComponent>
@@ -137,12 +138,12 @@ const ContractEditor = (props) => {
   const onDrop = (editor, event) => {
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
-    if (!clauseNode) return;
+    if (!clauseNode) return; // only allow dropping of clause nodes
     const range = ReactEditor.findEventRange(editor, event);
-
+    const [inClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: range });
+    if (inClause) return; // do not allow dropping a clause in another clause
     Transforms.select(editor, range);
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
-    Transforms.splitNodes(editor);
     Transforms.insertNodes(editor, clauseNode[0]);
   };
 

@@ -51,7 +51,7 @@ export const MarkdownEditor = (props) => {
 
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {
-    const elementProps = { ...slateProps, customElements: props.customElements };
+    const elementProps = { ...slateProps, customElements: props.customElements, editor };
     return (<Element {...elementProps} />);
   }, [props.customElements]);
 

@@ -1,5 +1,7 @@
 /* React */
 import React, { useState, createContext } from 'react';
+import { Editor, Transforms } from 'slate';
+import { ReactEditor } from 'slate-react';
 import PropTypes from 'prop-types';
 
 /* Styling */
@@ -10,6 +12,8 @@ import * as deleteIcon from '../../icons/trash';
 import * as editIcon from '../../icons/edit';
 import * as testIcon from '../../icons/testIcon';
 import * as dragIcon from '../../icons/drag';
+import * as upIcon from '../../icons/move_up';
+import * as downIcon from '../../icons/move_down';
 
 /* Actions */
 import { headerGenerator, titleGenerator } from '../actions';
@@ -34,8 +38,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
   const [hoveringTestIcon, setHoveringTestIcon] = useState(false);
   const [hoveringEditIcon, setHoveringEditIcon] = useState(false);
   const [hoveringDeleteIcon, setHoveringDeleteIcon] = useState(false);
-  const [hoveringDragIcon, setHoveringDragIcon] = useState(false);
-
   // const [listVariables, setListVariables] = useState({});
 
   const title = titleGenerator(props.templateUri);
@@ -74,10 +76,38 @@ const ClauseComponent = React.forwardRef((props, ref) => {
 
   const dragIconProps = {
     'aria-label': dragIcon.type,
-    width: '8px',
-    height: '18px',
-    viewBox: '0 0 12 15',
-    clauseIconColor: clauseProps.ICON_HOVER_COLOR,
+    width: '12px',
+    height: '22px',
+    viewBox: '0 0 12 22',
+  };
+
+  const upIconProps = {
+    'aria-label': upIcon.type,
+    width: '16px',
+    height: '12px',
+    viewBox: '0 0 16 12',
+  };
+
+  const downIconProps = {
+    'aria-label': downIcon.type,
+    width: '16px',
+    height: '12px',
+    viewBox: '0 0 16 12',
+  };
+
+  const handleClick = (event, down) => {
+    const node = ReactEditor.toSlateNode(props.editor, event.target);
+    const path = ReactEditor.findPath(props.editor, node);
+    const range = Editor.range(props.editor, path);
+    const documentEnd = Editor.end(props.editor, []);
+    const newPath = down
+      ? [Math.max(range.anchor.path[0], range.focus.path[0]) + 1]
+      : [Math.max(range.anchor.path[0], range.focus.path[0]) - 1];
+    if (newPath[0] >= 0 && newPath[0] <= documentEnd.path[0]) {
+      Transforms.moveNodes(props.editor, { at: path, to: newPath });
+      Transforms.select(props.editor, newPath);
+      Transforms.collapse(props.editor, { edge: 'end' });
+    }
   };
 
   return (
@@ -110,7 +140,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           contentEditable={false}
           suppressContentEditableWarning={true}
           style={{ userSelect: 'none' }}
-
         >
           {(hoveringHeader && header.length > 54)
             && <S.HeaderToolTipWrapper {...props.attributes}>
@@ -122,7 +151,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           <S.HeaderToolTipText
             onMouseEnter={() => setHoveringHeader(true)}
             onMouseLeave={() => setHoveringHeader(false)}
-
           >
             {header}
           </S.HeaderToolTipText>
@@ -131,25 +159,32 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           && <>
               <S.DragWrapper
               {...iconWrapperProps}
-              onMouseEnter={() => setHoveringDragIcon(true)}
-              onMouseLeave={() => setHoveringDragIcon(false)}
             >
-              <S.ClauseIcon {...dragIconProps}>
+              <S.ClauseIcon
+                {...upIconProps}
+                onClick={handleClick}
+              >
+                {upIcon.icon()}
+              </ S.ClauseIcon>
+              <S.ClauseIcon {...dragIconProps} style={{ margin: '6px 0 0 2px' }}>
                 {dragIcon.icon()}
               </ S.ClauseIcon>
-              { hoveringDragIcon && <S.HeaderToolTipWrapper {...props.attributes} /> }
+              <S.ClauseIcon
+                {...downIconProps}
+                onClick={(e) => handleClick(e, true)}
+              >
+                {downIcon.icon()}
+              </ S.ClauseIcon>
             </S.DragWrapper>
             <S.TestWrapper
               {...iconWrapperProps}
               onMouseEnter={() => setHoveringTestIcon(true)}
               onMouseLeave={() => setHoveringTestIcon(false)}
               onClick={() => clauseProps.CLAUSE_TEST_FUNCTION(props)}
-
             >
               <S.ClauseIcon
                 {...testIconProps}
                 hovering={hoveringTestIcon}
-
               >
                 {testIcon.icon()}
               </ S.ClauseIcon>
@@ -166,12 +201,10 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringEditIcon(true)}
               onMouseLeave={() => setHoveringEditIcon(false)}
               onClick={() => clauseProps.CLAUSE_EDIT_FUNCTION(props)}
-
             >
               <S.ClauseIcon
                 {...editIconProps}
                 hovering={hoveringEditIcon}
-
               >
                 {editIcon.icon()}
               </ S.ClauseIcon>
@@ -188,12 +221,10 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseEnter={() => setHoveringDeleteIcon(true)}
               onMouseLeave={() => setHoveringDeleteIcon(false)}
               onClick={() => clauseProps.CLAUSE_DELETE_FUNCTION(props)}
-
             >
               <S.ClauseIcon
                 {...deleteIconProps}
                 hovering={hoveringDeleteIcon}
-
               >
                 {deleteIcon.icon()}
               </ S.ClauseIcon>
@@ -207,10 +238,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             </S.DeleteWrapper>
           </>
         }
-        <S.ClauseBody
-          {...props.attributes}
-          ref={ref}
-        >
+        <S.ClauseBody {...props.attributes} ref={ref}>
             {props.children}
         </S.ClauseBody>
       </S.ClauseWrapper>
