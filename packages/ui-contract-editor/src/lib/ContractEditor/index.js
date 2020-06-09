@@ -135,6 +135,10 @@ const ContractEditor = (props) => {
     event.dataTransfer.setData('text', JSON.stringify(range));
   };
 
+  const onDragOver = (editor, event) => {
+    event.dataTransfer.dropEffect = 'move';
+  };
+
   const onDrop = (editor, event) => {
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
@@ -160,6 +164,7 @@ const ContractEditor = (props) => {
       canCopy={canCopy}
       canKeyDown={canKeyDown}
       onDragStart={onDragStart}
+      onDragOver={onDragOver}
       onDrop={onDrop}
       activeButton={props.activeButton}
       data-testid='editor'
