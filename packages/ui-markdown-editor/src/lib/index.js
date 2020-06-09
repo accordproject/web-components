@@ -137,11 +137,6 @@ export const MarkdownEditor = (props) => {
     }
   };
 
-  const onDragOver = event => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-  };
-
   return (
     <Slate editor={editor} value={props.value} onChange={onChange}>
       { !props.readOnly
@@ -165,7 +160,7 @@ export const MarkdownEditor = (props) => {
         onCopy={handleCopyOrCut}
         onCut={event => handleCopyOrCut(event, true)}
         onDragStart={event => props.onDragStart ? props.onDragStart(editor, event) : null}
-        onDragOver={onDragOver}
+        onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
         onDrop={event => props.onDrop ? props.onDrop(editor, event) : null}
       />
     </Slate>
@@ -202,6 +197,8 @@ MarkdownEditor.propTypes = {
   onDragStart: PropTypes.func,
   /* Optional function to replace Slate's default onDrop which will receive editor and event */
   onDrop: PropTypes.func,
+  /* Optional function to replace Slate's default onDragOver which will receive editor and event */
+  onDragOver: PropTypes.func,
 };
 
 MarkdownEditor.defaultProps = {
