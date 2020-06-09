@@ -95,6 +95,13 @@ export const ClauseIcon = styled.svg`
   fill: ${props => (props.hovering ? props.clauseIconColor || '#19C6C7' : '#696969')};
 `;
 
+export const DragIcon = styled(ClauseIcon)`
+  fill: #949CA2;
+  &:hover {
+    fill: #414F58;
+  }
+`;
+
 const IconWrapper = styled.div`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
   background: linear-gradient(180deg, #FFF 0%, #F4F6FC 100%);

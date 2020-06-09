@@ -160,21 +160,21 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               <S.DragWrapper
               {...iconWrapperProps}
             >
-              <S.ClauseIcon
+              <S.DragIcon
                 {...upIconProps}
                 onClick={handleClick}
               >
                 {upIcon.icon()}
-              </ S.ClauseIcon>
-              <S.ClauseIcon {...dragIconProps} style={{ margin: '6px 0 0 2px' }}>
+              </ S.DragIcon>
+              <S.DragIcon {...dragIconProps} style={{ margin: '6px 0 0 2px' }}>
                 {dragIcon.icon()}
-              </ S.ClauseIcon>
-              <S.ClauseIcon
+              </ S.DragIcon>
+              <S.DragIcon
                 {...downIconProps}
                 onClick={(e) => handleClick(e, true)}
               >
                 {downIcon.icon()}
-              </ S.ClauseIcon>
+              </ S.DragIcon>
             </S.DragWrapper>
             <S.TestWrapper
               {...iconWrapperProps}

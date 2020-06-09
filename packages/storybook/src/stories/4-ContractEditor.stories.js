@@ -55,6 +55,10 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
           const clauseMarkdown = `${markdownText}
 \`\`\` <clause src="${templateUrl}" clauseid="123">
 ${drafted}
+\`\`\`
+This is some more text and below is another clause. Test moving a clause by dragging it or by using the up and down arrows.
+\`\`\` <clause src="${templateUrl}" clauseid="456">
+${drafted}
 \`\`\``;
           const slateValue = slateTransformer.fromMarkdown(clauseMarkdown);
           setSlateValue(slateValue.document.children);
