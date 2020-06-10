@@ -81,11 +81,11 @@ const Conditional = React.forwardRef((props, ref) => {
   };
 
   return (
-    <>
+    <span {...attributes}>
         { isNotReadOnly && isNotEmptyString && <ConditionalSwitch {...conditionalSwitchProps} /> }
         { isNotReadOnly && isEmptyString && <ConditionalBoolean {...conditionalIconProps} /> }
         <span {...conditionalProps}>{children}</span>
-    </>
+    </span>
   );
 });
 

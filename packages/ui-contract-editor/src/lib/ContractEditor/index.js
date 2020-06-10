@@ -91,7 +91,7 @@ const ContractEditor = (props) => {
         <span id={element.data.id} {...attributes} className={VARIABLE}>{children}</span>
       ),
       conditional: () => (
-        <Conditional readOnly={props.readOnly} {...attributes}>{children}</Conditional>
+        <Conditional readOnly={props.readOnly} attributes={attributes}>{children}</Conditional>
       ),
       computed: () => (
         <span id={element.data.id} {...attributes} className={COMPUTED}>{children}</span>
