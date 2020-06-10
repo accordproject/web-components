@@ -120,6 +120,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         onMouseLeave={() => setHovering(false)}
         style={{ userSelect: 'none' }}
         draggable="true"
+        ref={ref}
         {...props.attributes}
       >
       {/*
@@ -142,8 +143,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           style={{ userSelect: 'none' }}
         >
           {(hoveringHeader && header.length > 54)
-            && <S.HeaderToolTipWrapper {...props.attributes}>
-              <S.HeaderToolTip {...props.attributes}>
+            && <S.HeaderToolTipWrapper>
+              <S.HeaderToolTip>
                 {title + clauseProps.HEADER_TITLE}
               </S.HeaderToolTip>
             </S.HeaderToolTipWrapper>
@@ -189,8 +190,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
                 {testIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringTestIcon)
-                && <S.HeaderToolTipWrapper {...props.attributes}>
-                  <S.HeaderToolTip {...props.attributes}>
+                && <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>
                     Test
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -209,8 +210,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
                 {editIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringEditIcon)
-                && <S.HeaderToolTipWrapper {...props.attributes}>
-                  <S.HeaderToolTip {...props.attributes}>
+                && <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>
                     Edit
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -229,8 +230,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
                 {deleteIcon.icon()}
               </ S.ClauseIcon>
               {(hoveringDeleteIcon)
-                && <S.HeaderToolTipWrapper {...props.attributes}>
-                  <S.HeaderToolTip {...props.attributes}>
+                && <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>
                     Delete
                   </S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
@@ -238,7 +239,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             </S.DeleteWrapper>
           </>
         }
-        <S.ClauseBody {...props.attributes} ref={ref}>
+        <S.ClauseBody>
             {props.children}
         </S.ClauseBody>
       </S.ClauseWrapper>
