@@ -129,6 +129,7 @@ const ContractEditor = (props) => {
   };
 
   const onDragStart = (editor, event) => {
+    event.stopPropagation();
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
     const range = Editor.range(editor, path);
@@ -136,17 +137,51 @@ const ContractEditor = (props) => {
   };
 
   const onDragOver = (editor, event) => {
+    event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   };
 
   const onDrop = (editor, event) => {
+    event.preventDefault();
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
     if (!clauseNode) return; // only allow dropping of clause nodes
-    const range = ReactEditor.findEventRange(editor, event);
-    const [inClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: range });
-    if (inClause) return; // do not allow dropping a clause in another clause
-    Transforms.select(editor, range);
+    // const range = ReactEditor.findEventRange(editor, event);
+    // const [inClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: range });
+    // if (inClause) return; // do not allow dropping a clause in another clause
+
+    const node = ReactEditor.toSlateNode(editor, event.target);
+    const path = ReactEditor.findPath(editor, node);
+    const range = Editor.range(editor, path);
+    console.log('node --- ', node);
+    console.log('node from path --- ', Node.get(editor, range.focus.path));
+
+    // if (node.type === 'clause') return;
+
+    console.log('in here');
+    // console.log('ancestor -- ', Node.ancestor(editor, path));
+    // console.log('ancestors -- ', Node.ancestors(editor, path).next());
+
+    // let topNodes = [node, null];
+    // const getAncestor = (iterator) => {
+    //   const next = iterator.next();
+    //   console.log(next);
+    //   if (next.done) return;
+    //   topNodes = [topNodes[0], next.value];
+    //   return getAncestor(iterator);
+    // };
+    // getAncestor(Node.ancestors(editor, path, { reverse: false }));
+
+    // const topLevelNode = topNodes[0];
+
+    const nodes = [...Node.ancestors(editor, path, { reverse: false })];
+    // first node is root editor so second will be top level after root editor
+    const topLevelNodeAndPath = nodes[1];
+    console.log('top level - ', topLevelNodeAndPath);
+    // if no top level after editor then the node was already a top level node so use original path
+    const topLevelPath = topLevelNodeAndPath ? topLevelNodeAndPath[1] : path;
+    Transforms.select(editor, topLevelPath);
+    Transforms.collapse(editor, { edge: 'end' });
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
     Transforms.insertNodes(editor, clauseNode[0]);
   };
