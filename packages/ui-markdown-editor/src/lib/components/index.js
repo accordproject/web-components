@@ -13,20 +13,20 @@ import generateId from '../utilities/generateId';
 
 const Element = (props) => {
   const {
-    attributes, children, element, customElements, editor
+    attributes, children, element, customElements, editor, onDragEnter
   } = props;
   const { type, data } = element;
   const headingId = HEADINGS.includes(type) ? generateId(element) : null;
   const baseElementRenderer = {
-    [PARAGRAPH]: () => (<p {...attributes}>{children}</p>),
-    [H1]: () => (<Heading id={headingId} as="h1" {...attributes}>{children}</Heading>),
-    [H2]: () => (<Heading id={headingId} as="h2" {...attributes}>{children}</Heading>),
-    [H3]: () => (<Heading id={headingId} as="h3" {...attributes}>{children}</Heading>),
-    [H4]: () => (<Heading id={headingId} as="h4" {...attributes}>{children}</Heading>),
-    [H5]: () => (<Heading id={headingId} as="h5" {...attributes}>{children}</Heading>),
-    [H6]: () => (<Heading id={headingId} as="h6" {...attributes}>{children}</Heading>),
+    [PARAGRAPH]: () => (<p {...attributes} onDragEnter={onDragEnter}>{children}</p>),
+    [H1]: () => (<Heading id={headingId} as="h1" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
+    [H2]: () => (<Heading id={headingId} as="h2" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
+    [H3]: () => (<Heading id={headingId} as="h3" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
+    [H4]: () => (<Heading id={headingId} as="h4" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
+    [H5]: () => (<Heading id={headingId} as="h5" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
+    [H6]: () => (<Heading id={headingId} as="h6" {...attributes} onDragEnter={onDragEnter}>{children}</Heading>),
     [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
-    [LINEBREAK]: () => (<br className={LINEBREAK} {...attributes} />),
+    [LINEBREAK]: () => (<br className={LINEBREAK} {...attributes} onDragEnter={onDragEnter} />),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
     [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
