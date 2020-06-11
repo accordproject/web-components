@@ -54,15 +54,15 @@ export const MarkdownEditor = (props) => {
     const range = ReactEditor.findEventRange(editor, event);
     const nodes = [...Node.ancestors(editor, range.focus.path)];
     console.log('nodes - ', nodes);
-    const topLevelNode = nodes.length === 2;
-    if (topLevelNode) {
-      Transforms.insertNodes(editor, {
-        object: 'block',
-        type: 'horizontal_rule',
-        hr: true,
-        children: []
-      }, { at: range });
-    }
+    // const topLevelNode = nodes.length === 2;
+    // if (topLevelNode) {
+    //   Transforms.insertNodes(editor, {
+    //     object: 'block',
+    //     type: 'horizontal_rule',
+    //     hr: true,
+    //     children: []
+    //   }, { at: range });
+    // }
   };
 
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
