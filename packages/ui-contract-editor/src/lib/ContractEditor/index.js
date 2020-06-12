@@ -146,15 +146,15 @@ const ContractEditor = (props) => {
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
     if (!clauseNode) return; // only allow dropping of clause nodes
-    // const range = ReactEditor.findEventRange(editor, event);
+    const targetRange = ReactEditor.findEventRange(editor, event);
     // const [inClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: range });
     // if (inClause) return; // do not allow dropping a clause in another clause
 
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
-    const range = Editor.range(editor, path);
+    // const range = Editor.range(editor, path);
     console.log('node --- ', node);
-    console.log('node from path --- ', Node.get(editor, range.focus.path));
+    // console.log('node from path --- ', Node.get(editor, range.focus.path));
 
     // if (node.type === 'clause') return;
 
@@ -177,11 +177,33 @@ const ContractEditor = (props) => {
     const nodes = [...Node.ancestors(editor, path, { reverse: false })];
     // first node is root editor so second will be top level after root editor
     const topLevelNodeAndPath = nodes[1];
-    console.log('top level - ', topLevelNodeAndPath);
     // if no top level after editor then the node was already a top level node so use original path
     const topLevelPath = topLevelNodeAndPath ? topLevelNodeAndPath[1] : path;
-    Transforms.select(editor, topLevelPath);
-    Transforms.collapse(editor, { edge: 'end' });
+    if (topLevelPath.length) {
+      Transforms.select(editor, topLevelPath);
+    } else {
+      // if no top level after editor then we are at the editor level & should use the target range
+      Transforms.select(editor, targetRange);
+    }
+
+
+    // if at the top level node, use the offset to determine which half in
+    if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
+      const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
+      if (targetRange.focus.offset < midpoint) {
+        Transforms.collapse(editor, { edge: 'start' });
+      } else {
+        Transforms.collapse(editor, { edge: 'end' });
+      }
+    } else { // if not at the top level node
+      // divy up the children & see where the target child is in relation to middle child
+      const midChild = [...Node.children(editor, topLevelPath)].length / 2;
+      if (path[1] < midChild) {
+        Transforms.collapse(editor, { edge: 'start' });
+      } else {
+        Transforms.collapse(editor, { edge: 'end' });
+      }
+    }
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
     Transforms.insertNodes(editor, clauseNode[0]);
   };
