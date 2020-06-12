@@ -18,6 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor } from 'slate-react';
 import { Editor, Node, Point, Transforms } from 'slate';
+import _ from 'lodash';
 
 /* Components */
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
@@ -139,6 +140,48 @@ const ContractEditor = (props) => {
   const onDragOver = (editor, event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
+    console.log('DOM target -- ', event.target);
+
+    // const targetRange = ReactEditor.findEventRange(editor, event);
+    // const node = ReactEditor.toSlateNode(editor, event.target);
+    // const path = ReactEditor.findPath(editor, node);
+    // const nodes = [...Node.ancestors(editor, path, { reverse: false })];
+    // // first node is root editor so second will be top level after root editor
+    // const topLevelNodeAndPath = nodes[1];
+    // // if no top level after editor then the node was already a top level node so use original path
+    // const topLevelPath = topLevelNodeAndPath ? topLevelNodeAndPath[1] : path;
+    // if (topLevelPath.length) {
+    //   Transforms.select(editor, topLevelPath);
+    // } else {
+    //   // if no top level after editor then we are at the editor level & should use the target range
+    //   Transforms.select(editor, targetRange);
+    // }
+    // let edge = 'end';
+    // // if at the top level node, use the offset to determine which half we are in
+    // if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
+    //   const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
+    //   if (targetRange.focus.offset < midpoint) edge = 'start';
+    // } else { // if not at the top level node
+    //   // divy up the children & see where the target child is in relation to middle child
+    //   const midChild = [...Node.children(editor, topLevelPath)].length / 2;
+    //   if (path[1] < midChild) Transforms.collapse(editor, { edge: 'start' });
+    // }
+
+    // if (topLevelPath.length) {
+    //   if (edge === 'start') {
+    //     ReactEditor.toDOMNode(editor, topLevelNodeAndPath[0]).style.borderTop = '1px solid #000';
+    //   } else {
+    //     ReactEditor.toDOMNode(editor, topLevelNodeAndPath[0]).style.borderBottom = '1px solid #000';
+    //   }
+    // }
+  };
+
+  const throttledDragOver = _.throttle(onDragOver, 500);
+
+  const handleDragOver = (editor, event) => {
+    event.preventDefault();
+    event.persist();
+    throttledDragOver(editor, event);
   };
 
   const onDrop = (editor, event) => {
@@ -196,7 +239,7 @@ const ContractEditor = (props) => {
       canCopy={canCopy}
       canKeyDown={canKeyDown}
       onDragStart={onDragStart}
-      onDragOver={onDragOver}
+      onDragOver={handleDragOver}
       onDrop={onDrop}
       activeButton={props.activeButton}
       data-testid='editor'

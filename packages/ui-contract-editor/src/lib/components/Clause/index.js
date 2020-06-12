@@ -157,8 +157,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         { !props.readOnly
           && <>
               <S.DragWrapper
-              {...iconWrapperProps}
-            >
+                {...iconWrapperProps}
+              >
               <S.DragIcon
                 {...upIconProps}
                 onClick={handleClick}
