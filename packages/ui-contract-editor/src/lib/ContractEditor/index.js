@@ -205,23 +205,22 @@ const ContractEditor = (props) => {
       Transforms.select(editor, targetRange);
     }
 
+    let edge = 'end';
     // if at the top level node, use the offset to determine which half we are in
     if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
       const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
       if (targetRange.focus.offset < midpoint) {
-        Transforms.collapse(editor, { edge: 'start' });
-      } else {
-        Transforms.collapse(editor, { edge: 'end' });
+        edge = 'start';
       }
     } else { // if not at the top level node
       // divy up the children & see where the target child is in relation to middle child
       const midChild = [...Node.children(editor, topLevelPath)].length / 2;
       if (path[1] < midChild) {
-        Transforms.collapse(editor, { edge: 'start' });
-      } else {
-        Transforms.collapse(editor, { edge: 'end' });
+        edge = 'start';
       }
     }
+    Transforms.collapse(editor, { edge });
+
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
     Transforms.insertNodes(editor, clauseNode[0]);
   };
