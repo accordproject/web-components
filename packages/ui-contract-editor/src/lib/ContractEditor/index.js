@@ -147,32 +147,8 @@ const ContractEditor = (props) => {
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
     if (!clauseNode) return; // only allow dropping of clause nodes
     const targetRange = ReactEditor.findEventRange(editor, event);
-    // const [inClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: range });
-    // if (inClause) return; // do not allow dropping a clause in another clause
-
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
-    // const range = Editor.range(editor, path);
-    console.log('node --- ', node);
-    // console.log('node from path --- ', Node.get(editor, range.focus.path));
-
-    // if (node.type === 'clause') return;
-
-    console.log('in here');
-    // console.log('ancestor -- ', Node.ancestor(editor, path));
-    // console.log('ancestors -- ', Node.ancestors(editor, path).next());
-
-    // let topNodes = [node, null];
-    // const getAncestor = (iterator) => {
-    //   const next = iterator.next();
-    //   console.log(next);
-    //   if (next.done) return;
-    //   topNodes = [topNodes[0], next.value];
-    //   return getAncestor(iterator);
-    // };
-    // getAncestor(Node.ancestors(editor, path, { reverse: false }));
-
-    // const topLevelNode = topNodes[0];
 
     const nodes = [...Node.ancestors(editor, path, { reverse: false })];
     // first node is root editor so second will be top level after root editor
@@ -186,8 +162,7 @@ const ContractEditor = (props) => {
       Transforms.select(editor, targetRange);
     }
 
-
-    // if at the top level node, use the offset to determine which half in
+    // if at the top level node, use the offset to determine which half we are in
     if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
       const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
       if (targetRange.focus.offset < midpoint) {

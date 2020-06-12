@@ -49,25 +49,9 @@ export const MarkdownEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDragEnter = (event) => {
-    console.log(event.target);
-    const range = ReactEditor.findEventRange(editor, event);
-    const nodes = [...Node.ancestors(editor, range.focus.path)];
-    console.log('nodes - ', nodes);
-    // const topLevelNode = nodes.length === 2;
-    // if (topLevelNode) {
-    //   Transforms.insertNodes(editor, {
-    //     object: 'block',
-    //     type: 'horizontal_rule',
-    //     hr: true,
-    //     children: []
-    //   }, { at: range });
-    // }
-  };
-
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {
-    const elementProps = { ...slateProps, customElements: props.customElements, editor, onDragEnter };
+    const elementProps = { ...slateProps, customElements: props.customElements, editor };
     return (<Element {...elementProps} />);
   }, [props.customElements]);
 
