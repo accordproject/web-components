@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "react-dom": "^16.13.1",
-    "slate": "^0.58.1",
-    "slate-history": "^0.58.1",
-    "slate-react": "^0.58.1",
+    "slate": "^0.58.3",
+    "slate-history": "^0.58.3",
+    "slate-react": "^0.58.3",
     "styled-components": "^5.1.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"

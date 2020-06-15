@@ -103,8 +103,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
     const newPath = [Math.max(range.anchor.path[0], range.focus.path[0]) + (down ? 1 : -1)];
     if (newPath[0] >= 0 && newPath[0] <= documentEnd.path[0]) {
       Transforms.moveNodes(props.editor, { at: path, to: newPath });
-      Transforms.select(props.editor, newPath);
-      Transforms.collapse(props.editor, { edge: 'end' });
     }
   };
 
