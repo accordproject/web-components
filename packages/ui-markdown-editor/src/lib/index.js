@@ -193,11 +193,11 @@ MarkdownEditor.propTypes = {
   placeholder: PropTypes.string,
   /* Optional object to change formatting button active state color */
   activeButton: PropTypes.object,
-  /* Optional function to replace Slate's default onDragStart which will receive editor and event */
+  /* Optional function to call when onDragStart event fires which will receive editor and event */
   onDragStart: PropTypes.func,
-  /* Optional function to replace Slate's default onDrop which will receive editor and event */
+  /* Optional function to call when onDrop event fires which will receive editor and event */
   onDrop: PropTypes.func,
-  /* Optional function to replace Slate's default onDragOver which will receive editor and event */
+  /* Optional function to call when onDragOver event fires which will receive editor and event */
   onDragOver: PropTypes.func,
 };
 
