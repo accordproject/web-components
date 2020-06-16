@@ -106,6 +106,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
     }
   };
 
+  const setDraggable = (event, draggable) => event.target.closest('.ui-contract-editor__clause').setAttribute('draggable', draggable);
+
   return (
     <ClauseContext.Provider value={hovering}>
       <S.ClauseWrapper
@@ -235,7 +237,10 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             </S.DeleteWrapper>
           </>
         }
-        <S.ClauseBody>
+        <S.ClauseBody
+          onMouseEnter={(e) => setDraggable(e, false)}
+          onMouseLeave={(e) => setDraggable(e, true)}
+        >
             {props.children}
         </S.ClauseBody>
       </S.ClauseWrapper>
