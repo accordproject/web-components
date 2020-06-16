@@ -26,7 +26,7 @@ import ClauseComponent from '../components/Clause';
 import Conditional from '../components/Conditional';
 
 /* Plugins */
-import withClauseSchema, { CLAUSE, COMPUTED, VARIABLE } from './plugins/withClauseSchema';
+import withClauseSchema, { CLAUSE, FORMULA, VARIABLE } from './plugins/withClauseSchema';
 import withClauses, { isEditableClause } from './plugins/withClauses';
 import withVariables, { isEditableVariable } from './plugins/withVariables';
 
@@ -79,7 +79,7 @@ const ContractEditor = (props) => {
       clause: () => (
           <ClauseComponent
             templateUri={element.data.src}
-            clauseId={element.data.clauseid}
+            name={element.data.name}
             clauseProps={props.clauseProps}
             readOnly={props.readOnly}
             attributes={attributes}
@@ -94,8 +94,8 @@ const ContractEditor = (props) => {
       conditional: () => (
         <Conditional readOnly={props.readOnly} attributes={attributes}>{children}</Conditional>
       ),
-      computed: () => (
-        <span id={element.data.id} {...attributes} className={COMPUTED}>{children}</span>
+      formula: () => (
+        <span id={element.data.id} {...attributes} className={FORMULA}>{children}</span>
       )
     };
     return returnObject;
