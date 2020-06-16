@@ -64,26 +64,20 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         const extraMarkdown = `This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows.`;
         const extraText = slateTransformer.fromMarkdown(extraMarkdown);
 
-        const slateValueNewNew = {
-          document: {
-            data: {},
-            object: 'document',
-            children: [
-              ...slateValue,
-              {
-                children: slateValueNew.document.children,
-                data: {
-                  src: templateUrl,
-                  name: '123',
-                },
-                object: 'block',
-                type: 'clause',
-              },
-              ...extraText.document.children
-            ]
-          }
-        };
-        setSlateValue(slateValueNewNew.document.children);
+        const slateValueWithClauseTemplate = [
+          ...slateValue,
+          {
+            children: slateValueNew.document.children,
+            data: {
+              src: templateUrl,
+              name: '123',
+            },
+            object: 'block',
+            type: 'clause',
+          },
+          ...extraText.document.children
+        ]
+        setSlateValue(slateValueWithClauseTemplate);
       });
     }
   }, [templateUrl, markdownText, editor]);
