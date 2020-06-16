@@ -63,7 +63,6 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
         const extraMarkdown = `This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows.`;
         const extraText = slateTransformer.fromMarkdown(extraMarkdown);
-        setSlateValue(slateValue.document.children);
 
         const slateValueNewNew = {
           document: {
