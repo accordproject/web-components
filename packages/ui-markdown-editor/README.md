@@ -84,6 +84,9 @@ Storybook will reload with the applied changes.
 - `canBeFormatted`: A `function` that determines if current formatting change should be allowed
 - `canCopy`: A `function` that determines if current selection copy should be allowed
 - `canKeyDown`: A `function` that determines if current key event should be allowed
+- `onDragStart`: A `function` to call when onDragStart event fires which will receive editor and event
+- `onDrop`: A `function` to call when onDrop event fires which will receive editor and event
+- `onDragOver`: A `function` to call when onDragOver event fires which will receive editor and event
 
 ---
 
