@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import 'semantic-ui-css/semantic.min.css';
 import { withA11y } from '@storybook/addon-a11y';
@@ -7,6 +7,8 @@ import { text, select, boolean, object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import ContractEditor from '@accordproject/ui-contract-editor';
 import { Template, Clause } from '@accordproject/cicero-core';
+import { Editor, Transforms } from 'slate';
+import { uuid } from 'uuidv4';
 
 const slateTransformer = new SlateTransformer();
 
@@ -38,12 +40,12 @@ export const contractEditor = () => {
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
   const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta');
-  const refUse = useRef(null);
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
     return slateTransformer.fromMarkdown(markdownText).document.children;
   });
+  const [editor, setEditor] = useState(null);
 
   useEffect( () => {
       Template.fromUrl(templateUrl)
@@ -52,17 +54,17 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         clause.parse(template.getMetadata().getSample());
         clause.draft({ wrapVariables: true })
         .then((drafted) => {
-          const clauseMarkdown = `${markdownText}
-\`\`\` <clause src="${templateUrl}" clauseid="123">
+          const clauseMarkdown = `
+\`\`\` <clause src="${templateUrl}" clauseid="${uuid()}">
 ${drafted}
 \`\`\`
-This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows.
 `;
-          const slateValue = slateTransformer.fromMarkdown(clauseMarkdown);
-          setSlateValue(slateValue.document.children);
+          const generatedSlateValue = slateTransformer.fromMarkdown(clauseMarkdown);
+          const clauseNode = generatedSlateValue.document.children.find(n => n.type === 'clause');
+          if (editor) Transforms.insertNodes(editor, clauseNode, { at: Editor.end(editor, [])});
         });
       });
-  }, [templateUrl, markdownText]);
+  }, [templateUrl, markdownText, editor]);
 
   const onContractChange = useCallback((value) => {
     setSlateValue(value);
@@ -75,6 +77,11 @@ This is some more text. Test moving a clause by dragging it or by using the up a
     CLAUSE_TEST_FUNCTION: action('clause-test')
   };
 
+  const augmentEditor = useCallback((slateEditor) => {
+    setEditor(slateEditor);
+    return slateEditor;
+  }, []);
+
   return (
     <Wrapper>
       <ContractEditor
@@ -82,11 +89,11 @@ This is some more text. Test moving a clause by dragging it or by using the up a
         onChange={onContractChange}
         lockText={lockText}
         readOnly={readOnly}
-        ref={refUse}
         clauseProps={clausePropsObject}
         loadTemplateObject={action('load-template')}
         pasteToContract={action('paste-to-contract')}
         onClauseUpdated={action('clause-updated')}
+        augmentEditor={augmentEditor}
       />
     </Wrapper>
   );
