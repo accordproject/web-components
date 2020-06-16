@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SlateTransformer } from '@accordproject/markdown-slate';
+import { TemplateMarkTransformer } from '@accordproject/markdown-template';
 import 'semantic-ui-css/semantic.min.css';
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
@@ -10,6 +11,7 @@ import { Template, Clause } from '@accordproject/cicero-core';
 import { Editor, Transforms } from 'slate';
 import { uuid } from 'uuidv4';
 
+const templateMarkTransformer = new TemplateMarkTransformer();
 const slateTransformer = new SlateTransformer();
 
 const Wrapper = styled.div`
@@ -47,25 +49,42 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   });
   const [editor, setEditor] = useState(null);
 
-  useEffect( () => {
-    if (editor) {
+  useEffect(async () => {
       Template.fromUrl(templateUrl)
-      .then((template) => {
-        const clause = new Clause(template);
-        clause.parse(template.getMetadata().getSample());
-        clause.draft({ wrapVariables: true })
-        .then((drafted) => {
-          const clauseMarkdown = `
-This is some text before a clause.
-\`\`\` <clause src="${templateUrl}" clauseid="${uuid()}">
-${drafted}
-\`\`\`
-This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.
-`;
-          const generatedSlateValue = slateTransformer.fromMarkdown(clauseMarkdown);
-          const nodes = generatedSlateValue.document.children;
-          Transforms.insertNodes(editor, nodes, { at: Editor.end(editor, [])});
-        });
+      .then(async (template) => {
+        const sample = template.getMetadata().getSample();
+        const templatizedGrammar = template.getParserManager().getTemplatizedGrammar();
+        const modelManager = await template.getModelManager();
+        const data = templateMarkTransformer
+          .dataFromMarkdown(sample, templatizedGrammar, modelManager, 'contract');
+        const ciceroMark = templateMarkTransformer
+          .dataToCiceroMark(data, templatizedGrammar, modelManager, 'contract');
+        const slateValueNew = slateTransformer.fromCiceroMark(ciceroMark);
+
+        const extraMarkdown = `This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows.`;
+        const extraText = slateTransformer.fromMarkdown(extraMarkdown);
+        setSlateValue(slateValue.document.children);
+
+        const slateValueNewNew = {
+          document: {
+            data: {},
+            object: 'document',
+            children: [
+              ...slateValue,
+              {
+                children: slateValueNew.document.children,
+                data: {
+                  src: templateUrl,
+                  name: '123',
+                },
+                object: 'block',
+                type: 'clause',
+              },
+              ...extraText.document.children
+            ]
+          }
+        };
+        setSlateValue(slateValueNewNew.document.children);
       });
     }
   }, [templateUrl, markdownText, editor]);
