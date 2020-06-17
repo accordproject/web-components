@@ -48,6 +48,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   const [editor, setEditor] = useState(null);
 
   useEffect( () => {
+    if (editor) {
       Template.fromUrl(templateUrl)
       .then((template) => {
         const clause = new Clause(template);
@@ -55,15 +56,18 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         clause.draft({ wrapVariables: true })
         .then((drafted) => {
           const clauseMarkdown = `
+This is some text before a clause.
 \`\`\` <clause src="${templateUrl}" clauseid="${uuid()}">
 ${drafted}
 \`\`\`
+This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.
 `;
           const generatedSlateValue = slateTransformer.fromMarkdown(clauseMarkdown);
-          const clauseNode = generatedSlateValue.document.children.find(n => n.type === 'clause');
-          if (editor) Transforms.insertNodes(editor, clauseNode, { at: Editor.end(editor, [])});
+          const nodes = generatedSlateValue.document.children;
+          Transforms.insertNodes(editor, nodes, { at: Editor.end(editor, [])});
         });
       });
+    }
   }, [templateUrl, markdownText, editor]);
 
   const onContractChange = useCallback((value) => {
