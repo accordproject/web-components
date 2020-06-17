@@ -49,7 +49,8 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   });
   const [editor, setEditor] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
+    if (editor) {
       Template.fromUrl(templateUrl)
       .then(async (template) => {
         const sample = template.getMetadata().getSample();
@@ -61,23 +62,21 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
           .dataToCiceroMark(data, templatizedGrammar, modelManager, 'contract');
         const slateValueNew = slateTransformer.fromCiceroMark(ciceroMark);
 
-        const extraMarkdown = `This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows. This is some more text. Test moving a clause by dragging it or by using the up and down arrows.`;
+        const extraMarkdown = `This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.`;
         const extraText = slateTransformer.fromMarkdown(extraMarkdown);
-
-        const slateValueWithClauseTemplate = [
-          ...slateValue,
+        const slateClause = [
           {
             children: slateValueNew.document.children,
             data: {
               src: templateUrl,
-              name: '123',
+              name: uuid(),
             },
             object: 'block',
             type: 'clause',
           },
           ...extraText.document.children
         ]
-        setSlateValue(slateValueWithClauseTemplate);
+        Transforms.insertNodes(editor, slateClause, { at: Editor.end(editor, [])});
       });
     }
   }, [templateUrl, markdownText, editor]);
