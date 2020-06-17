@@ -138,16 +138,19 @@ const ContractEditor = (props) => {
   };
 
   const onDragOver = (editor, event) => {
-    event.preventDefault();
+    event.stopPropagation();
     event.dataTransfer.dropEffect = 'move';
   };
 
+  // return true if should continue through to next handler, else return false
   const onDrop = (editor, event) => {
     event.preventDefault();
+    const targetRange = ReactEditor.findEventRange(editor, event);
+    const [targetIsClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: targetRange });
+    if (targetIsClause) return false; // do not allow dropping inside of a clause
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
     const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
-    if (!clauseNode) return; // only allow dropping of clause nodes
-    const targetRange = ReactEditor.findEventRange(editor, event);
+    if (!clauseNode) return true; // continue to next handler if not a clause
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
 
@@ -180,6 +183,7 @@ const ContractEditor = (props) => {
     Transforms.collapse(editor, { edge });
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
     Transforms.insertNodes(editor, clauseNode[0]);
+    return false;
   };
 
   return (
@@ -202,6 +206,7 @@ const ContractEditor = (props) => {
   />
   );
 };
+
 
 /**
  * The property types for this component
