@@ -53,7 +53,7 @@ export const MarkdownEditor = (props) => {
   const renderElement = useCallback((slateProps) => {
     const elementProps = { ...slateProps, customElements: props.customElements, editor };
     return (<Element {...elementProps} />);
-  }, [props.customElements]);
+  }, [props.customElements, editor]);
 
   const hotkeyActions = {
     mark: code => toggleMark(editor, code),
@@ -137,6 +137,34 @@ export const MarkdownEditor = (props) => {
     }
   };
 
+  const handleDragStart = (event) => {
+    event.stopPropagation();
+    if (props.onDragStart) {
+      props.onDragStart(editor, event);
+    }
+    const node = ReactEditor.toSlateNode(editor, event.target);
+    const path = ReactEditor.findPath(editor, node);
+    const range = Editor.range(editor, path);
+    event.dataTransfer.setData('text', JSON.stringify(range));
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    if (props.onDrop) {
+      const shouldContinue = props.onDrop(editor, event);
+      if (!shouldContinue) return;
+    }
+    const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
+    const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image', at: sourceRange });
+    const targetRange = ReactEditor.findEventRange(editor, event);
+    if (imageNode) {
+      Transforms.select(editor, targetRange);
+      Transforms.collapse(editor);
+      Transforms.removeNodes(editor, { at: sourceRange, match: n => n.type === 'image' });
+      Transforms.insertNodes(editor, imageNode[0]);
+    }
+  };
+
   return (
     <Slate editor={editor} value={props.value} onChange={onChange}>
       { !props.readOnly
@@ -159,9 +187,9 @@ export const MarkdownEditor = (props) => {
         onDOMBeforeInput={onBeforeInput}
         onCopy={handleCopyOrCut}
         onCut={event => handleCopyOrCut(event, true)}
-        onDragStart={event => props.onDragStart ? props.onDragStart(editor, event) : null}
+        onDragStart={handleDragStart}
         onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
-        onDrop={event => props.onDrop ? props.onDrop(editor, event) : null}
+        onDrop={handleDrop}
       />
     </Slate>
   );

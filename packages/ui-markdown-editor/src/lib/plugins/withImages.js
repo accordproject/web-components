@@ -15,7 +15,6 @@ import { POPUP_STYLE } from '../utilities/constants';
 import Button from '../components/Button';
 
 const StyledImage = styled.img`
-  display: block;
   max-width: 100%;
   max-height: 20em;
   box-shadow: ${props => (props.shadow ? '0 0 0 3px #B4D5FF' : 'none')};
