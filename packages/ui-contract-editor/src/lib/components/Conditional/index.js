@@ -7,6 +7,9 @@ import { ReactEditor, useEditor } from 'slate-react';
 /* Plugins */
 import { CONDITIONAL } from '../../ContractEditor/plugins/withClauseSchema';
 
+/* Actions */
+import { childReducer } from '../actions';
+
 /* Components */
 import ConditionalBoolean from './ConditionalBoolean';
 import ConditionalSwitch from './ConditionalSwitch';
@@ -27,32 +30,21 @@ const Conditional = React.forwardRef((props, ref) => {
   const [hovering, setHovering] = useState(false);
   const conditionalPath = ReactEditor.findPath(editor, node);
   const isNotReadOnly = !props.readOnly;
-  const isNotEmptyString = node.children[0].text !== '';
-  const isEmptyString = node.children[0].text === '';
-  const conditional = {
-    id: data.id,
-    whenTrue: data.whenTrue,
-    whenFalse: data.whenFalse,
-    isFalse: (
-      node.children[0].text === data.whenFalse
-    ),
-  };
+  const isContentShowing = data.isTrue
+    ? !!childReducer(data.whenTrue).length
+    : !!childReducer(data.whenFalse).length;
 
   const toggleConditional = (path) => {
     const newConditional = {
       object: 'inline',
       type: CONDITIONAL,
       data: {
-        id: conditional.id,
-        whenTrue: conditional.whenTrue,
-        whenFalse: conditional.whenFalse
+        name: data.name,
+        whenTrue: data.whenTrue,
+        whenFalse: data.whenFalse,
+        isTrue: !data.isTrue,
       },
-      children: [{
-        object: 'text',
-        text: conditional.isFalse
-          ? conditional.whenTrue
-          : conditional.whenFalse
-      }]
+      children: data.isTrue ? data.whenFalse : data.whenTrue
     };
     Editor.withoutNormalizing(editor, () => {
       Transforms.removeNodes(editor, { at: path });
@@ -61,8 +53,8 @@ const Conditional = React.forwardRef((props, ref) => {
   };
 
   const conditionalProps = {
-    id: conditional.id,
-    className: node.children[0].text === '' ? '' : CONDITIONAL,
+    id: data.name,
+    className: isContentShowing ? CONDITIONAL : '',
     onMouseEnter: () => setHovering(true),
     onMouseLeave: () => setHovering(false),
     onClick: () => toggleConditional(conditionalPath),
@@ -72,18 +64,20 @@ const Conditional = React.forwardRef((props, ref) => {
 
   const conditionalSwitchProps = {
     currentHover: hovering,
-    ...conditional,
+    isContentShowing,
+    ...data,
   };
   const conditionalIconProps = {
     currentHover: hovering,
-    whenTrue: conditional.whenTrue,
+    whenTrue: childReducer(data.whenTrue),
     toggleConditional: () => toggleConditional(conditionalPath),
   };
 
   return (
     <span {...attributes}>
-        { isNotReadOnly && isNotEmptyString && <ConditionalSwitch {...conditionalSwitchProps} /> }
-        { isNotReadOnly && isEmptyString && <ConditionalBoolean {...conditionalIconProps} /> }
+    { isNotReadOnly && (isContentShowing
+      ? <ConditionalSwitch {...conditionalSwitchProps} />
+      : <ConditionalBoolean {...conditionalIconProps} />) }
         <span {...conditionalProps}>{children}</span>
     </span>
   );
@@ -98,9 +92,7 @@ Conditional.propTypes = {
   children: PropTypes.object.isRequired,
   editor: PropTypes.any,
   node: PropTypes.shape({
-    key: PropTypes.string,
     data: PropTypes.obj,
-    text: PropTypes.string,
   }),
   readOnly: PropTypes.bool,
 };

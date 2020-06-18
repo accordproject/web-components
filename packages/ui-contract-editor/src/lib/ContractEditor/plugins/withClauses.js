@@ -22,7 +22,7 @@ function _recursive(params, children) {
       default: {
         // eslint-disable-next-line default-case
         switch (childType) {
-          case 'computed':
+          case 'formula':
             throw new Error('Computed variable not supported');
           case 'image':
             throw new Error('Image not supported');

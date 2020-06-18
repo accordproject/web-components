@@ -112,7 +112,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
     <ClauseContext.Provider value={hovering}>
       <S.ClauseWrapper
         src={props.templateUri}
-        id={props.clauseId}
+        id={props.name}
         className='ui-contract-editor__clause'
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
@@ -255,7 +255,7 @@ ClauseComponent.propTypes = {
     'data-key': PropTypes.string,
   }),
   children: PropTypes.PropTypes.object.isRequired,
-  clauseId: PropTypes.string,
+  name: PropTypes.string,
   clauseProps: PropTypes.shape({
     CLAUSE_DELETE_FUNCTION: PropTypes.func,
     CLAUSE_EDIT_FUNCTION: PropTypes.func,

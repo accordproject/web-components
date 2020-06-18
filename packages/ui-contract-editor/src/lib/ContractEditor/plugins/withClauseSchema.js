@@ -1,7 +1,7 @@
 export const CLAUSE = 'clause';
 export const VARIABLE = 'variable';
 export const CONDITIONAL = 'conditional';
-export const COMPUTED = 'computed';
+export const FORMULA = 'formula';
 
 const INLINES = { [VARIABLE]: true, [CONDITIONAL]: true };
 const VOIDS = {};

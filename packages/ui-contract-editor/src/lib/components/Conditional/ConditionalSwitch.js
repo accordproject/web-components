@@ -14,14 +14,12 @@ const ConditionalSwitch = (props) => {
   const conditionalTooltip = {
     className: 'conditionalTooltip',
     currentHover: props.currentHover,
-    caretTop: 1.45,
+    caretTop: 21,
     caretLeft: 2,
     tooltipHeight: 1.85,
   };
-  const tooltipText = props.isFalse
-    ? props.whenTrue
-    : props.whenFalse;
-  const tooltipInstructions = props.whenFalse === ''
+  const tooltipText = props.isTrue ? props.whenFalse : props.whenTrue;
+  const tooltipInstructions = props.isContentShowing
     ? 'Hide text'
     : `Change to: "${tooltipText}"`;
 
@@ -39,9 +37,10 @@ const ConditionalSwitch = (props) => {
 
 ConditionalSwitch.propTypes = {
   currentHover: PropTypes.bool,
+  isContentShowing: PropTypes.bool,
   whenTrue: PropTypes.string,
   whenFalse: PropTypes.string,
-  isFalse: PropTypes.bool,
+  isTrue: PropTypes.bool,
 };
 
 export default ConditionalSwitch;

@@ -40,7 +40,7 @@ export const ClauseConditionalTooltip = styled.span`
   &:after {
     content: '';
     position: absolute;
-    top: ${props => props.caretTop}em;
+    top: ${props => props.caretTop}px;
     left: ${props => props.caretLeft}px;
     border-top: 4px solid #141F3C;
     border-left: 4px solid transparent;

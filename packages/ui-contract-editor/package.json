@@ -4,8 +4,9 @@
   "private": false,
   "dependencies": {
     "@accordproject/ui-markdown-editor": "0.93.1",
-    "@accordproject/markdown-html": "^0.11.2",
-    "@accordproject/markdown-slate": "^0.11.2",
+    "@accordproject/markdown-html": "^0.11.4-20200618165656",
+    "@accordproject/markdown-slate": "^0.11.4-20200618165656",
+    "@accordproject/markdown-transform": "^0.11.4-20200618165656",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "uuidv4": "^6.0.8",

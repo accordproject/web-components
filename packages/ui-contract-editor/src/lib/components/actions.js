@@ -17,3 +17,5 @@ export const headerGenerator = (templateTitle, inputTitle) => {
   const truncatedTitle = ((header.length > 54) ? (`${header.slice(0, 54)}...`) : header);
   return truncatedTitle;
 };
+
+export const childReducer = (children) => children.reduce((acc, cur) => `${acc}${cur.text}`, '');
