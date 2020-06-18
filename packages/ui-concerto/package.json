@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ui-concerto",
-  "version": "0.93.0",
+  "version": "0.93.1",
   "private": false,
   "dependencies": {
     "prop-types": "^15.7.2",
