@@ -3,14 +3,15 @@
 ### Usage
 
 ```shell
-npm install @accordproject/ui-contract-editor
+npm install @accordproject/ui-contract-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react semantic-ui-css
 ```
 
 ```js
 import { render } from 'react-dom';
 import React, { useCallback, useState } from 'react';
-import { ContractEditor } from '@accordproject/ui-contract-editor';
+import ContractEditor from '@accordproject/ui-contract-editor';
 import { SlateTransformer } from '@accordproject/markdown-slate';
+import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 const getContractSlateVal = () => {
