@@ -11,7 +11,7 @@ The editor is based on React, [Slate](https://www.slatejs.org), and the Accord P
 ### Installation
 
 ```sh
-npm install @accordproject/ui-markdown-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react
+npm install @accordproject/ui-markdown-editor @accordproject/markdown-slate slate slate-history slate-react semantic-ui-react semantic-ui-css
 ```
 
 ### Implementation
@@ -21,6 +21,7 @@ import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
+import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 const defaultMarkdown = `This is text. You can edit it.`;
