@@ -91,7 +91,8 @@
     "react-dom": ">=16.13.1",
     "slate": ">=0.58.3",
     "slate-react": ">=0.58.3",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "semantic-ui-css": "^2.4.1"
   },
   "files": [
     "lib"
