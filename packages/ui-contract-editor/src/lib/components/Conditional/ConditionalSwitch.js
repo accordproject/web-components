@@ -12,7 +12,7 @@ import { ClauseConditionalTooltip } from '../styles';
  */
 const ConditionalSwitch = (props) => {
   const conditionalTooltip = {
-    className: 'conditionalTooltip',
+    className: 'variableTooltip',
     currentHover: props.currentHover,
     caretTop: 21,
     caretLeft: 2,
