@@ -34,7 +34,7 @@ const ConditionalBoolean = (props) => {
   const conditionalTooltip = {
     ref,
     currentHover: hoveringConditional,
-    className: 'conditionalTooltip',
+    className: 'variableTooltip',
     style: { marginTop: `-${tooltipHeight + 10}px` },
     caretTop: tooltipHeight - 2,
     caretLeft: 2,
