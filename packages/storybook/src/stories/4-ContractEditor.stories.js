@@ -8,7 +8,7 @@ import { text, select, boolean, object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import ContractEditor from '@accordproject/ui-contract-editor';
 import { Template, Clause } from '@accordproject/cicero-core';
-import { Editor, Transforms } from 'slate';
+import { Editor, Node, Transforms } from 'slate';
 import { uuid } from 'uuidv4';
 
 const slateTransformer = new SlateTransformer();
@@ -42,7 +42,7 @@ export const contractEditor = () => {
   const markdownText = text( 'Markdown', `# Heading One
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
-  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/fixed-interests@0.4.1.cta');
+  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/fixed-interests@0.2.0.cta');
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
@@ -80,7 +80,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   const onContractChange = useCallback((value) => {
     setSlateValue(value);
     action('contract-changed')(value);
-  }, []);
+  }, [editor]);
 
   const clausePropsObject = {
     CLAUSE_DELETE_FUNCTION: action('clause-deleted'),
@@ -93,6 +93,15 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
     return slateEditor;
   }, []);
 
+  const parseClause = useCallback((val) => {
+    console.log('<<>>')
+  }, []);
+
+  const onClauseUpdatedHandler = useCallback((val) => {
+    parseClause(val);
+    action('clause-updated')(val);
+  }, [])
+
   return (
     <Wrapper>
       <ContractEditor
@@ -103,7 +112,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         clauseProps={clausePropsObject}
         loadTemplateObject={action('load-template')}
         pasteToContract={action('paste-to-contract')}
-        onClauseUpdated={action('clause-updated')}
+        onClauseUpdated={onClauseUpdatedHandler}
         augmentEditor={augmentEditor}
       />
     </Wrapper>

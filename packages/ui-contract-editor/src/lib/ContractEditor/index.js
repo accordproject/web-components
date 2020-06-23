@@ -14,7 +14,7 @@
  */
 
 /* React */
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor } from 'slate-react';
 import { Editor, Node, Point, Transforms } from 'slate';
@@ -25,9 +25,15 @@ import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 import ClauseComponent from '../components/Clause';
 import Conditional from '../components/Conditional';
 import Optional from '../components/Optional';
+import Formula from '../components/Formula';
 
 /* Plugins */
-import withClauseSchema, { CLAUSE, FORMULA, VARIABLE } from './plugins/withClauseSchema';
+import withClauseSchema, {
+  CLAUSE,
+  CONDITIONAL,
+  FORMULA,
+  VARIABLE
+} from './plugins/withClauseSchema';
 import withClauses, { isEditableClause } from './plugins/withClauses';
 import withVariables, { isEditableVariable } from './plugins/withVariables';
 
@@ -70,37 +76,82 @@ const contractProps = {
  * @param {*} props the properties for the component
  */
 const ContractEditor = (props) => {
+  // const [search, setSearch] = useState();
+  const [hoveringFormulaContract, setHoveringFormulaContract] = useState(false);
+  const [formulaDependents, setFormulaDependents] = useState({});
   const withClausesProps = {
     onClauseUpdated: props.onClauseUpdated,
     pasteToContract: props.pasteToContract
   };
+  const customDecorate = useCallback(([node, path]) => {
+    const ranges = [];
+
+    console.log('customDecorate node', node);
+    console.log('customDecorate path', path);
+    if (hoveringFormulaContract) {
+      // do stuff
+      console.log('customDecorate formulaDependents', formulaDependents);
+      // is this a variable
+    } else {
+      // set highlight to false
+    }
+    // if (search && Text.isText(node)) {
+    //   const { text } = node;
+    //   const parts = text.split(search);
+    //   let offset = 0;
+
+    //   parts.forEach((part, i) => {
+    //     if (i !== 0) {
+    //       ranges.push({
+    //         anchor: { path, offset: offset - search.length },
+    //         focus: { path, offset },
+    //         highlight: true,
+    //       });
+    //     }
+
+    //     offset = offset + part.length + search.length;
+    //   });
+    // }
+
+    return ranges;
+  }, [hoveringFormulaContract, formulaDependents]);
 
   const customElements = (attributes, children, element, editor) => {
+    const CLAUSE_PROPS = {
+      templateUri: element.data.src,
+      name: element.data.name,
+      clauseProps: props.clauseProps,
+      readOnly: props.readOnly,
+      attributes,
+      editor,
+    };
+    const VARIABLE_PROPS = {
+      name: element.data.name,
+      className: VARIABLE,
+      ...attributes
+    };
+    const CONDITIONAL_PROPS = {
+      readOnly: props.readOnly,
+      attributes
+    };
+    const FORMULA_PROPS = {
+      name: element.data.name,
+      className: FORMULA,
+      setHoveringFormulaContract,
+      setFormulaDependents,
+      attributes,
+      editor,
+    };
+    const OPTIONAL_PROPS = {
+      readOnly: props.readOnly,
+      attributes,
+    };
     const returnObject = {
-      clause: () => (
-          <ClauseComponent
-            templateUri={element.data.src}
-            name={element.data.name}
-            clauseProps={props.clauseProps}
-            readOnly={props.readOnly}
-            attributes={attributes}
-            editor={editor}
-          >
-              {children}
-          </ClauseComponent>
-      ),
-      variable: () => (
-        <span id={element.data.id} {...attributes} className={VARIABLE}>{children}</span>
-      ),
-      conditional: () => (
-        <Conditional readOnly={props.readOnly} attributes={attributes}>{children}</Conditional>
-      ),
-      optional: () => (
-        <Optional readOnly={props.readOnly} attributes={attributes}>{children}</Optional>
-      ),
-      formula: () => (
-        <span id={element.data.id} {...attributes} className={FORMULA}>{children}</span>
-      )
+      [CLAUSE]: () => (<ClauseComponent {...CLAUSE_PROPS}>{children}</ClauseComponent>),
+      [VARIABLE]: () => (<span {...VARIABLE_PROPS}>{children}</span>),
+      [CONDITIONAL]: () => (<Conditional {...CONDITIONAL_PROPS}>{children}</Conditional>),
+      [FORMULA]: () => (<Formula {...FORMULA_PROPS}>{children}</Formula>),
+      [OPTIONAL]: () => (<Optional {...OPTIONAL_PROPS}>{children}</Optional>),
     };
     return returnObject;
   };
@@ -195,6 +246,7 @@ const ContractEditor = (props) => {
       isEditable={isEditable}
       value={props.value || contractProps.value}
       onChange={props.onChange || contractProps.onChange}
+      customDecorate={customDecorate}
       customElements={customElements}
       lockText={props.lockText}
       readOnly={props.readOnly}
