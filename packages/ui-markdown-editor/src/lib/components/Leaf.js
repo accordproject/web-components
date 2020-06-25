@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 /* eslint no-param-reassign: 0 */
 const Leaf = ({ attributes, children, leaf }) => {
-  console.log('Leaf', leaf);
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
