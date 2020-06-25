@@ -84,37 +84,47 @@ const ContractEditor = (props) => {
     pasteToContract: props.pasteToContract
   };
   const customDecorate = useCallback(([node, path]) => {
-    const ranges = [];
+    // const ranges = [];
 
-    console.log('customDecorate node', node);
-    console.log('customDecorate path', path);
-    if (hoveringFormulaContract) {
-      // do stuff
-      console.log('customDecorate formulaDependents', formulaDependents);
-      // is this a variable
-    } else {
-      // set highlight to false
+    // console.log('customDecorate node', node);
+    // console.log('customDecorate path', path);
+    // if (hoveringFormulaContract) {
+    if (node.type === 'variable' && formulaDependents[node.data.name]) {
+      // console.log('---------------------------');
+      // console.log('node', node);
+      // console.log('path', path);
+      // console.log('---------------------------');
+      const offset = 0;
+      // return [{
+      //   anchor: { path, offset: 0 - node.children[0].text.length },
+      //   focus: { path, offset: 0 },
+      //   highlight: true,
+      // }];
+
+      const [NODE_ONE, PATH_ONE] = Node.descendants(node);
+      // console.log('[...path, 0]', [...path, 0]);
+      //   NODE_ONE : 0: [
+      //     {object: "text", text: "2.5"}
+      //   1: [0]
+      // ]
+
+      // console.log('TRIAL', Node.fragment(node, {
+      //   anchor: { path: [0], offset: 0 },
+      //   focus: { path: [0], offset: node.children[0].text.length }
+      // }));
+
+
+      return [{
+        anchor: { path: [...path, 0], offset: 0 },
+        focus: { path: [...path, 0], offset: node.children[0].text.length },
+        bold: true,
+      }];
+      // }
     }
-    // if (search && Text.isText(node)) {
-    //   const { text } = node;
-    //   const parts = text.split(search);
-    //   let offset = 0;
 
-    //   parts.forEach((part, i) => {
-    //     if (i !== 0) {
-    //       ranges.push({
-    //         anchor: { path, offset: offset - search.length },
-    //         focus: { path, offset },
-    //         highlight: true,
-    //       });
-    //     }
 
-    //     offset = offset + part.length + search.length;
-    //   });
-    // }
-
-    return ranges;
-  }, [hoveringFormulaContract, formulaDependents]);
+    return [];
+  }, [formulaDependents]);
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
@@ -148,7 +158,13 @@ const ContractEditor = (props) => {
     };
     const returnObject = {
       [CLAUSE]: () => (<ClauseComponent {...CLAUSE_PROPS}>{children}</ClauseComponent>),
-      [VARIABLE]: () => (<span {...VARIABLE_PROPS}>{children}</span>),
+      [VARIABLE]: () => {
+        console.log('--------------------');
+        // console.log('render editor', editor);
+        // console.log('render element', element);
+        // console.log('||||||||||||||||||||');
+        return (<span {...VARIABLE_PROPS}>{children}</span>);
+      },
       [CONDITIONAL]: () => (<Conditional {...CONDITIONAL_PROPS}>{children}</Conditional>),
       [FORMULA]: () => (<Formula {...FORMULA_PROPS}>{children}</Formula>),
       [OPTIONAL]: () => (<Optional {...OPTIONAL_PROPS}>{children}</Optional>),
@@ -239,6 +255,8 @@ const ContractEditor = (props) => {
     Transforms.insertNodes(editor, clauseNode[0]);
     return false;
   };
+
+  // console.log('value: ', JSON.stringify(props.value));
 
   return (
     <MarkdownEditor
