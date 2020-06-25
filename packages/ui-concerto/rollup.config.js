@@ -9,6 +9,7 @@ import autoprefixer from 'autoprefixer';
 import stylelint from 'rollup-plugin-stylelint';
 import postcssPresetEnv from 'postcss-preset-env';
 import { terser } from 'rollup-plugin-terser';
+import builtins from 'rollup-plugin-node-builtins';
 import pkg from './package.json';
 
 const outputs = [
@@ -43,6 +44,7 @@ const config = outputs.map(({ file, format }) => ({
     exports: 'named',
   },
   plugins: [
+    builtins(),
     peerDepsExternal(),
     includePaths({
       include: {},
@@ -59,17 +61,16 @@ const config = outputs.map(({ file, format }) => ({
       plugins: postcssPlugins,
     }),
     babel({
-      babelHelpers: 'bundled',
+      babelHelpers: 'runtime',
       exclude: 'node_modules/**',
       configFile: './babel.config.rollup.js',
     }),
-    resolve({
-      browser: true,
-    }),
+    resolve(),
     commonjs(),
     terser(),
     filesize(),
   ],
+  external: ['@babel/runtime']
 }));
 
 export default config;
