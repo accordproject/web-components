@@ -65,7 +65,7 @@ const config = outputs.map(({ file, format }) => ({
       plugins: postcssPlugins,
     }),
     babel({
-      babelHelpers: 'bundled',
+      babelHelpers: 'runtime',
       exclude: 'node_modules/**',
       configFile: './babel.config.rollup.js',
     }),
@@ -76,6 +76,7 @@ const config = outputs.map(({ file, format }) => ({
     terser(),
     filesize(),
   ],
+  external: ['@babel/runtime']
 }));
 
 export default config;

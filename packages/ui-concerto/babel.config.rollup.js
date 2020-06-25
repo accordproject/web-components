@@ -7,9 +7,13 @@ module.exports = {
       {
         modules: false,
         targets: pkg.browserslist.production,
+        loose: true,
       },
     ],
     '@babel/preset-react',
+  ],
+  plugins: [
+    '@babel/plugin-transform-runtime',
   ],
   ignore: ['node_modules/**'],
 };
