@@ -119,8 +119,7 @@ const ContractEditor = (props) => {
   const canKeyDown = (editor, event) => {
     if (
       (event.keyCode || event.charCode) === 8
-      && Node.get(editor, editor.selection.focus.path).text.length === 0
-      && Point.equals(Editor.end(editor, []), editor.selection.anchor)
+      && Point.equals(Editor.start(editor, editor.selection.anchor.path), editor.selection.anchor)
     ) {
       const [match] = Editor
         .nodes(editor, { at: Editor.previous(editor)[1], match: n => n.type === CLAUSE });
