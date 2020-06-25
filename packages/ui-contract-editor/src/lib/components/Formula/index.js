@@ -49,10 +49,16 @@ const Formula = React.forwardRef((props, ref) => {
   } = props;
   const [hoveringFormula, setHoveringFormula] = useState(false);
 
+  const currDeps = {
+    loanAmount: true,
+    rate: true,
+    loanDuration: true,
+  };
+
   const handlerIn = () => {
     setHoveringFormula(true);
     setHoveringFormulaContract(true);
-    setFormulaDependents({ one: 'hello' });
+    setFormulaDependents(currDeps);
   };
 
   const handlerOut = () => {
