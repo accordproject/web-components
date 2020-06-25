@@ -31,7 +31,6 @@ export const MarkdownEditor = (props) => {
     canCopy,
     canKeyDown,
     augmentEditor,
-    customDecorate,
     isEditable,
     canBeFormatted
   } = props;
@@ -167,8 +166,6 @@ export const MarkdownEditor = (props) => {
     }
   };
 
-  const decorate = useCallback(([node, path]) => customDecorate([node, path]), [customDecorate]);
-
   return (
     <Slate editor={editor} value={props.value} onChange={onChange}>
       { !props.readOnly
@@ -181,7 +178,6 @@ export const MarkdownEditor = (props) => {
       <Editable
         id="ap-rich-text-editor"
         style={{ padding: '20px' }}
-        decorate={decorate}
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
@@ -212,8 +208,6 @@ MarkdownEditor.propTypes = {
   readOnly: PropTypes.bool,
   /* Higher order function to augment the editor methods */
   augmentEditor: PropTypes.func,
-  /* Function for extending editor decoration capabilities */
-  customDecorate: PropTypes.func,
   /* Function for extending elements rendered by editor */
   customElements: PropTypes.func,
   /* A method that determines if current edit should be allowed */
@@ -241,5 +235,4 @@ MarkdownEditor.defaultProps = {
   canBeFormatted: () => true,
   canCopy: () => true,
   canKeyDown: () => true,
-  customDecorate: () => [],
 };

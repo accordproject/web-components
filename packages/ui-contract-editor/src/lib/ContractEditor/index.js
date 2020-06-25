@@ -14,7 +14,7 @@
  */
 
 /* React */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor } from 'slate-react';
 import { Editor, Node, Point, Transforms } from 'slate';
@@ -83,48 +83,15 @@ const ContractEditor = (props) => {
     onClauseUpdated: props.onClauseUpdated,
     pasteToContract: props.pasteToContract
   };
-  const customDecorate = useCallback(([node, path]) => {
+
+  useEffect(() => {
     // const ranges = [];
-
-    // console.log('customDecorate node', node);
-    // console.log('customDecorate path', path);
-    // if (hoveringFormulaContract) {
-    if (node.type === 'variable' && formulaDependents[node.data.name]) {
-      // console.log('---------------------------');
-      // console.log('node', node);
-      // console.log('path', path);
-      // console.log('---------------------------');
-      const offset = 0;
-      // return [{
-      //   anchor: { path, offset: 0 - node.children[0].text.length },
-      //   focus: { path, offset: 0 },
-      //   highlight: true,
-      // }];
-
-      const [NODE_ONE, PATH_ONE] = Node.descendants(node);
-      // console.log('[...path, 0]', [...path, 0]);
-      //   NODE_ONE : 0: [
-      //     {object: "text", text: "2.5"}
-      //   1: [0]
-      // ]
-
-      // console.log('TRIAL', Node.fragment(node, {
-      //   anchor: { path: [0], offset: 0 },
-      //   focus: { path: [0], offset: node.children[0].text.length }
-      // }));
-
-
-      return [{
-        anchor: { path: [...path, 0], offset: 0 },
-        focus: { path: [...path, 0], offset: node.children[0].text.length },
-        bold: true,
-      }];
-      // }
+    if (hoveringFormulaContract) {
+      console.log('useEffect formulaDependents', formulaDependents);
+      console.log('useEffect props.value', props.value);
     }
-
-
-    return [];
-  }, [formulaDependents]);
+    // return [];
+  }, [hoveringFormulaContract, formulaDependents]);
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
@@ -132,12 +99,15 @@ const ContractEditor = (props) => {
       name: element.data.name,
       clauseProps: props.clauseProps,
       readOnly: props.readOnly,
+      hoveringFormulaContract,
       attributes,
       editor,
     };
     const VARIABLE_PROPS = {
       name: element.data.name,
       className: VARIABLE,
+      style = formulaDependents[element.data.name] ? certainStyle : normal,
+      // also look for if this variables parent clause is the clause on formulaDependents state
       ...attributes
     };
     const CONDITIONAL_PROPS = {
@@ -158,13 +128,7 @@ const ContractEditor = (props) => {
     };
     const returnObject = {
       [CLAUSE]: () => (<ClauseComponent {...CLAUSE_PROPS}>{children}</ClauseComponent>),
-      [VARIABLE]: () => {
-        console.log('--------------------');
-        // console.log('render editor', editor);
-        // console.log('render element', element);
-        // console.log('||||||||||||||||||||');
-        return (<span {...VARIABLE_PROPS}>{children}</span>);
-      },
+      [VARIABLE]: () => (<span {...VARIABLE_PROPS}>{children}</span>),
       [CONDITIONAL]: () => (<Conditional {...CONDITIONAL_PROPS}>{children}</Conditional>),
       [FORMULA]: () => (<Formula {...FORMULA_PROPS}>{children}</Formula>),
       [OPTIONAL]: () => (<Optional {...OPTIONAL_PROPS}>{children}</Optional>),
@@ -264,7 +228,6 @@ const ContractEditor = (props) => {
       isEditable={isEditable}
       value={props.value || contractProps.value}
       onChange={props.onChange || contractProps.onChange}
-      customDecorate={customDecorate}
       customElements={customElements}
       lockText={props.lockText}
       readOnly={props.readOnly}
