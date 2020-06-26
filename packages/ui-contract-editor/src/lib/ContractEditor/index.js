@@ -18,7 +18,6 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor } from 'slate-react';
 import { Editor, Node, Point, Transforms } from 'slate';
-import _ from 'lodash';
 
 /* Components */
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
@@ -85,34 +84,26 @@ const ContractEditor = (props) => {
   };
 
   const isFormulaDependency = useCallback((editor, variableNode) => {
-    if (!hoveringFormulaContract) return false;
-    console.log('isFormulaDependency variableNode', variableNode);
-
-    const path222 = ReactEditor.findPath(editor, formulaDependents.node);
-    const parent = Node.parent(editor, path222).type === 'clause';
-
-    /*
-    this will be a formual which returns a boolean to tell if
-    this variable relates to the currently hovered formula
-
-    formulaDependents will look as such:
-
-    formulaDependents = {
-      node,
-      dependencies: {
-        loanAmount: true,
-        rate: true,
-        loanDuration: true,
+    let formulaClauseName;
+    let isVariableFormulaDependency = false;
+    if (!hoveringFormulaContract) return isVariableFormulaDependency;
+    const forumaPATH = ReactEditor.findPath(editor, formulaDependents.node);
+    const variablePATH = ReactEditor.findPath(editor, formulaDependents.node);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [n] of Node.ancestors(editor, forumaPATH, { reverse: true })) {
+      if (n.type === CLAUSE) { formulaClauseName = n.data.name; }
+    }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [n] of Node.ancestors(editor, variablePATH, { reverse: true })) {
+      if (
+        n.type === CLAUSE
+        && n.data.name === formulaClauseName
+        && formulaDependents.dependencies[variableNode.data.name]
+      ) {
+        isVariableFormulaDependency = true;
       }
-    };
-
-    Take the formula node and the variableNode, compare to ensure same parent clause
-    If so, check the variableNode name to the dependencies name keys
-
-    stale notes:
-    style = formulaDependents[element.data.name] ? certainStyle : normal,
-    also look for if this variables parent clause is the clause on formulaDependents state
-    */
+    }
+    return isVariableFormulaDependency;
   }, [hoveringFormulaContract, formulaDependents]);
 
   const customElements = (attributes, children, element, editor) => {
@@ -201,10 +192,11 @@ const ContractEditor = (props) => {
   const onDrop = (editor, event) => {
     event.preventDefault();
     const targetRange = ReactEditor.findEventRange(editor, event);
-    const [targetIsClause] = Editor.nodes(editor, { match: n => n.type === 'clause', at: targetRange });
+    const [targetIsClause] = Editor
+      .nodes(editor, { match: n => n.type === CLAUSE, at: targetRange });
     if (targetIsClause) return false; // do not allow dropping inside of a clause
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
-    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === 'clause', at: sourceRange });
+    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE, at: sourceRange });
     if (!clauseNode) return true; // continue to next handler if not a clause
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
@@ -236,7 +228,7 @@ const ContractEditor = (props) => {
       }
     }
     Transforms.collapse(editor, { edge });
-    Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === 'clause' });
+    Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === CLAUSE });
     Transforms.insertNodes(editor, clauseNode[0]);
     return false;
   };
