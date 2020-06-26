@@ -14,7 +14,7 @@
  */
 
 /* React */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor } from 'slate-react';
 import { Editor, Node, Point, Transforms } from 'slate';
@@ -23,6 +23,7 @@ import _ from 'lodash';
 /* Components */
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 import ClauseComponent from '../components/Clause';
+import Variable from '../components/Variable';
 import Conditional from '../components/Conditional';
 import Optional from '../components/Optional';
 import Formula from '../components/Formula';
@@ -76,7 +77,6 @@ const contractProps = {
  * @param {*} props the properties for the component
  */
 const ContractEditor = (props) => {
-  // const [search, setSearch] = useState();
   const [hoveringFormulaContract, setHoveringFormulaContract] = useState(false);
   const [formulaDependents, setFormulaDependents] = useState({});
   const withClausesProps = {
@@ -84,13 +84,35 @@ const ContractEditor = (props) => {
     pasteToContract: props.pasteToContract
   };
 
-  useEffect(() => {
-    // const ranges = [];
-    if (hoveringFormulaContract) {
-      console.log('useEffect formulaDependents', formulaDependents);
-      console.log('useEffect props.value', props.value);
-    }
-    // return [];
+  const isFormulaDependency = useCallback((editor, variableNode) => {
+    if (!hoveringFormulaContract) return false;
+    console.log('isFormulaDependency variableNode', variableNode);
+
+    const path222 = ReactEditor.findPath(editor, formulaDependents.node);
+    const parent = Node.parent(editor, path222).type === 'clause';
+
+    /*
+    this will be a formual which returns a boolean to tell if
+    this variable relates to the currently hovered formula
+
+    formulaDependents will look as such:
+
+    formulaDependents = {
+      node,
+      dependencies: {
+        loanAmount: true,
+        rate: true,
+        loanDuration: true,
+      }
+    };
+
+    Take the formula node and the variableNode, compare to ensure same parent clause
+    If so, check the variableNode name to the dependencies name keys
+
+    stale notes:
+    style = formulaDependents[element.data.name] ? certainStyle : normal,
+    also look for if this variables parent clause is the clause on formulaDependents state
+    */
   }, [hoveringFormulaContract, formulaDependents]);
 
   const customElements = (attributes, children, element, editor) => {
@@ -104,10 +126,9 @@ const ContractEditor = (props) => {
       editor,
     };
     const VARIABLE_PROPS = {
-      name: element.data.name,
-      className: VARIABLE,
-      style = formulaDependents[element.data.name] ? certainStyle : normal,
-      // also look for if this variables parent clause is the clause on formulaDependents state
+      element,
+      editor,
+      isFormulaDependency,
       ...attributes
     };
     const CONDITIONAL_PROPS = {
@@ -128,7 +149,7 @@ const ContractEditor = (props) => {
     };
     const returnObject = {
       [CLAUSE]: () => (<ClauseComponent {...CLAUSE_PROPS}>{children}</ClauseComponent>),
-      [VARIABLE]: () => (<span {...VARIABLE_PROPS}>{children}</span>),
+      [VARIABLE]: () => (<Variable {...VARIABLE_PROPS}>{children}</Variable>),
       [CONDITIONAL]: () => (<Conditional {...CONDITIONAL_PROPS}>{children}</Conditional>),
       [FORMULA]: () => (<Formula {...FORMULA_PROPS}>{children}</Formula>),
       [OPTIONAL]: () => (<Optional {...OPTIONAL_PROPS}>{children}</Optional>),
@@ -223,6 +244,7 @@ const ContractEditor = (props) => {
   // console.log('value: ', JSON.stringify(props.value));
 
   return (
+    // <ClauseContext.Provider value={hoveringFormulaContract}>
     <MarkdownEditor
       augmentEditor={augmentEditor}
       isEditable={isEditable}
@@ -240,6 +262,7 @@ const ContractEditor = (props) => {
       activeButton={props.activeButton}
       data-testid='editor'
   />
+  // </ClauseContext.Provider>
   );
 };
 
