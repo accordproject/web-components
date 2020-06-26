@@ -49,9 +49,10 @@ const Formula = React.forwardRef((props, ref) => {
   } = props;
   const [hoveringFormula, setHoveringFormula] = useState(false);
 
+
   const currDeps = {
-    clause: {},
-    formula: {
+    node,
+    dependencies: {
       loanAmount: true,
       rate: true,
       loanDuration: true,
