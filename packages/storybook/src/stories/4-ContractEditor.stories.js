@@ -54,7 +54,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         .then(async (template) => {
           const clause = new Clause(template);
           clause.parse(template.getMetadata().getSample());
-          const slateValueNew = clause.draft({ format: 'slate' });
+          const slateValueNew = await clause.draft({ format: 'slate' });
 
           const extraMarkdown = `This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.`;
           const extraText = slateTransformer.fromMarkdown(extraMarkdown);
