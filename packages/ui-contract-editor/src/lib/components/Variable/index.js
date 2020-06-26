@@ -1,9 +1,14 @@
 /* React */
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /* Plugins */
 import { VARIABLE } from '../../ContractEditor/plugins/withClauseSchema';
+
+const VariableWrapper = styled.span`
+  border: ${props => props.formulaDependency ? '#AF54C4' : '#A4BBE7'} 1px solid !important;
+`;
 
 const Variable = React.forwardRef((props, ref) => {
   const {
@@ -17,16 +22,12 @@ const Variable = React.forwardRef((props, ref) => {
   const VARIABLE_PROPS = {
     className: VARIABLE,
     name: element.data.name,
-    styleCustom: isFormulaDependency(editor, element),
+    formulaDependency: isFormulaDependency(editor, element),
     ...attributes,
     ref
   };
-  /*
-  styleCustom will rename. but will indicate if this element needs to be highlighted
-  as the dependency of a formula which is currently hovered over
-  */
 
-  return (<span {...VARIABLE_PROPS}>{children}</span>);
+  return (<VariableWrapper {...VARIABLE_PROPS}>{children}</VariableWrapper>);
 });
 
 Variable.displayName = 'Variable';
