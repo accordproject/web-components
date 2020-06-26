@@ -52,32 +52,29 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   useEffect(() => {
     if (editor) {
       Template.fromUrl(templateUrl)
-      .then(async (template) => {
-        const sample = template.getMetadata().getSample();
-        const templatizedGrammar = template.getParserManager().getTemplatizedGrammar();
-        const modelManager = await template.getModelManager();
-        const data = templateMarkTransformer
-          .dataFromMarkdown(sample, templatizedGrammar, modelManager, 'contract');
-        const ciceroMark = templateMarkTransformer
-          .dataToCiceroMark(data, templatizedGrammar, modelManager, 'contract');
-        const slateValueNew = slateTransformer.fromCiceroMark(ciceroMark);
+        .then(async (template) => {
+          const clause = new Clause(template);
+          clause.parse(template.getMetadata().getSample());
+          const ciceroMark = templateMarkTransformer
+            .draftCiceroMark(clause.getData(), template.getParserManager(), 'contract');
+          const slateValueNew = slateTransformer.fromCiceroMark(ciceroMark);
 
-        const extraMarkdown = `This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.`;
-        const extraText = slateTransformer.fromMarkdown(extraMarkdown);
-        const slateClause = [
-          {
-            children: slateValueNew.document.children,
-            data: {
-              src: templateUrl,
-              name: uuid(),
+          const extraMarkdown = `This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.`;
+          const extraText = slateTransformer.fromMarkdown(extraMarkdown);
+          const slateClause = [
+            {
+              children: slateValueNew.document.children,
+              data: {
+                src: templateUrl,
+                name: uuid(),
+              },
+              object: 'block',
+              type: 'clause',
             },
-            object: 'block',
-            type: 'clause',
-          },
-          ...extraText.document.children
-        ]
-        Transforms.insertNodes(editor, slateClause, { at: Editor.end(editor, [])});
-      });
+            ...extraText.document.children
+          ]
+          Transforms.insertNodes(editor, slateClause, { at: Editor.end(editor, [])});
+        });
     }
   }, [templateUrl, markdownText, editor]);
 

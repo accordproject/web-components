@@ -3,9 +3,9 @@
   "version": "0.93.1",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-cicero": "^0.11.4-20200618165656",
-    "@accordproject/markdown-html": "^0.11.4-20200618165656",
-    "@accordproject/markdown-slate": "^0.11.4-20200618165656",
+    "@accordproject/markdown-cicero": "^0.11.4-20200626055423",
+    "@accordproject/markdown-html": "^0.11.4-20200626055423",
+    "@accordproject/markdown-slate": "^0.11.4-20200626055423",
     "@babel/runtime": "^7.10.3",
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.1.6",
