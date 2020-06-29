@@ -40,13 +40,21 @@ const SecondaryBtn = styled(Btn)`
 const CardActions = props => (
   <ActionsContainer className='ui-components__library-card-actions'>
     <PrimaryBtn
-      onClick={() => props.onPrimaryButtonClick(props.item)}
+    onMouseDown={(e) => {
+      // we use onMouseDown here so as not to lose Slate selection
+      // https://slate-js.slack.com/archives/C1RH7AXSS/p1587510249444700
+      e.preventDefault();
+      props.onPrimaryButtonClick(props.item);
+    }}
       className='ui-components__library-card-primary-btn'
     >
        + Add to contract
     </PrimaryBtn>
     <SecondaryBtn
-      onClick={() => props.onSecondaryButtonClick(props.item)}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        props.onSecondaryButtonClick(props.item);
+      }}
       className='ui-components__library-card-secondary-btn'
     >
       Details
