@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const nodeExternals = require('webpack-node-externals');
 
-disableEsLint = (e) => {
+const disableEsLint = (e) => {
   return e.module.rules.filter(e =>
     e.use && e.use.some(e => e.options && void 0 !== e.options.useEslintrc)).forEach(s => {
       e.module.rules = e.module.rules.filter(e => e !== s)

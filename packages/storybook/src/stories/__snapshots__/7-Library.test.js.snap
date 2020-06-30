@@ -1,0 +1,804 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Library Storyshots Library Heterogeneous 1`] = `
+<div
+  className="sc-fzqPZZ eKDrmd"
+>
+  <div
+    className="sc-fzoxKX haoLUQ"
+  >
+    <div
+      className="sc-fzoKki iDUUbW"
+    >
+      <button
+        aria-label="Upload Button"
+        className="sc-fzqBkg lmruii ui-components__library-import-button"
+        onClick={[Function]}
+      >
+        Import from VS Code
+      </button>
+      <button
+        aria-label="Upload Button"
+        className="sc-fzqBkg lmruii ui-components__library-upload-button"
+        onClick={[Function]}
+      >
+        Add a new library item
+      </button>
+    </div>
+  </div>
+  <div
+    className="sc-fzoYkl ezjjOD"
+  >
+    <div
+      className="sc-fzpkJw ihaTlU"
+    >
+      <div
+        className="ui checked checkbox"
+        onChange={[Function]}
+        onClick={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+      >
+        <input
+          checked={true}
+          className="hidden"
+          readOnly={true}
+          tabIndex={0}
+          type="checkbox"
+        />
+        <label>
+          Templates
+        </label>
+      </div>
+      <div
+        className="ui checked checkbox"
+        onChange={[Function]}
+        onClick={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+      >
+        <input
+          checked={true}
+          className="hidden"
+          readOnly={true}
+          tabIndex={0}
+          type="checkbox"
+        />
+        <label>
+          Variables
+        </label>
+      </div>
+      <div
+        className="ui checked checkbox"
+        onChange={[Function]}
+        onClick={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+      >
+        <input
+          checked={true}
+          className="hidden"
+          readOnly={true}
+          tabIndex={0}
+          type="checkbox"
+        />
+        <label>
+          Files
+        </label>
+      </div>
+    </div>
+    <div
+      className="ui fluid icon input ui-components__library-search-input"
+      style={
+        Object {
+          "borderRadius": "3px",
+          "boxShadow": "inset 0 0 4px 0 #ABABAB",
+          "margin": "5px 0",
+          "maxHeight": "40px",
+          "width": "100%",
+        }
+      }
+    >
+      <input
+        onChange={[Function]}
+        placeholder="Search..."
+        type="text"
+      />
+      <i
+        aria-hidden="true"
+        className="search icon"
+        onClick={[Function]}
+      />
+    </div>
+    <button
+      aria-label="Add Library Item Button"
+      className="ui blue fluid button ui-components__library-add-item-button"
+      onClick={[Function]}
+      style={
+        Object {
+          "margin": "5px 0",
+        }
+      }
+    >
+      <i
+        aria-hidden="true"
+        className="plus icon"
+        onClick={[Function]}
+      />
+      New library Item
+    </button>
+  </div>
+  <div
+    className="sc-fznzOf gOcuPz ui-components__library-cards-wrapper"
+  >
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Acceptance of Delivery
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.10
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This clause allows the receiver of goods to inspect them for a given time period after delivery.
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card variable"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          First variable item
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            VARIABLE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.1
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This is a sample variable item
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Car Rental (TR)
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.10
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          Ta Simple Car Rental Contract in Turkish Language
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card file"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          First file item
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            FILE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.0.1
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This is a sample file item
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Library Storyshots Library Homogeneous 1`] = `
+<div
+  className="sc-fzqPZZ eKDrmd"
+>
+  <div
+    className="sc-fzoxKX haoLUQ"
+  >
+    <div
+      className="sc-fzoKki iDUUbW"
+    >
+      <button
+        aria-label="Upload Button"
+        className="sc-fzqBkg lmruii ui-components__library-import-button"
+        onClick={[Function]}
+      >
+        Import from VS Code
+      </button>
+      <button
+        aria-label="Upload Button"
+        className="sc-fzqBkg lmruii ui-components__library-upload-button"
+        onClick={[Function]}
+      >
+        Add a new library item
+      </button>
+    </div>
+  </div>
+  <div
+    className="sc-fzoYkl ezjjOD"
+  >
+    <div
+      className="ui fluid icon input ui-components__library-search-input"
+      style={
+        Object {
+          "borderRadius": "3px",
+          "boxShadow": "inset 0 0 4px 0 #ABABAB",
+          "margin": "5px 0",
+          "maxHeight": "40px",
+          "width": "100%",
+        }
+      }
+    >
+      <input
+        onChange={[Function]}
+        placeholder="Search..."
+        type="text"
+      />
+      <i
+        aria-hidden="true"
+        className="search icon"
+        onClick={[Function]}
+      />
+    </div>
+    <button
+      aria-label="Add Library Item Button"
+      className="ui blue fluid button ui-components__library-add-item-button"
+      onClick={[Function]}
+      style={
+        Object {
+          "margin": "5px 0",
+        }
+      }
+    >
+      <i
+        aria-hidden="true"
+        className="plus icon"
+        onClick={[Function]}
+      />
+      New library Item
+    </button>
+  </div>
+  <div
+    className="sc-fznzOf gOcuPz ui-components__library-cards-wrapper"
+  >
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Acceptance of Delivery
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            CLAUSE TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.10
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This clause allows the receiver of goods to inspect them for a given time period after delivery.
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Car Rental (TR)
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            CLAUSE TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.10
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          Ta Simple Car Rental Contract in Turkish Language
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Certificate Of Incorporation
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            CLAUSE TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.20.10
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This is a sample Certificate of Incorporation.
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+    <div
+      className="ui fluid card ui-components__library-card template"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "border": "1px solid #7B8084",
+          "borderRadius": "6px",
+          "boxShadow": "0 1px 9px 0 rgba(0,0,0,0.1)",
+          "margin": "10px 0",
+          "textAlign": "left",
+        }
+      }
+    >
+      <div
+        className="content ui-components__library-card-content"
+      >
+        <img
+          className="ui image ui-components__library-card-logo"
+          style={
+            Object {
+              "maxHeight": "23px",
+              "position": "absolute",
+              "right": "16px",
+              "top": "13px",
+            }
+          }
+        />
+        <div
+          className="header ui-components__library-card-header"
+        >
+          Eat Apples
+        </div>
+        <div
+          className="meta ui-components__library-card-meta"
+        >
+          <span
+            className="ui-components__library-card-item-type"
+          >
+            CLAUSE TEMPLATE
+          </span>
+           | 
+          <span
+            className="ui-components__library-card-item-version"
+          >
+            Version 
+            0.10.1
+          </span>
+        </div>
+        <div
+          className="description sc-fzolEj fbHTzo"
+        >
+          This is a sample Certificate of Incorporation.
+        </div>
+      </div>
+      <div
+        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+      >
+        <a
+          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          onMouseDown={[Function]}
+        >
+          + Add to contract
+        </a>
+        <a
+          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          onMouseDown={[Function]}
+        >
+          Details
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

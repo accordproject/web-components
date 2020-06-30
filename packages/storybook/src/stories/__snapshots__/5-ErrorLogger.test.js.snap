@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error Logger Storyshots Error Logger Error Logger 1`] = `
+<div
+  className="ui-components__error-wrapper"
+>
+  <div
+    className="sc-fznKkj egSgcl ui-components__error-header"
+    onClick={[Function]}
+  >
+    <i
+      aria-hidden="true"
+      className="exclamation triangle small icon sc-fznZeY dlmlqs"
+      onClick={[Function]}
+    />
+    1
+     
+    Error
+    <div
+      className="sc-fzokOt eogFYu ui-components__error-bar-arrow"
+    />
+  </div>
+</div>
+`;

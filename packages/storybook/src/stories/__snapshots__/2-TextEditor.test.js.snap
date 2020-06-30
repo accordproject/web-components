@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text Editor Storyshots Text Editor Demo 1`] = `
+<div>
+  <div
+    className="ui cards"
+  >
+    <div
+      className="ui fluid card"
+      id="ap-text-editor"
+      onClick={[Function]}
+    >
+      <div
+        className="content"
+      >
+        <textarea
+          className="textarea"
+          onChange={[Function]}
+          placeholder="This is the contents of the editor. Respond to the onChange notification to save updates."
+          readOnly={false}
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+          value="This is the contents of the editor. Respond to the onChange notification to save updates."
+          width="100%"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

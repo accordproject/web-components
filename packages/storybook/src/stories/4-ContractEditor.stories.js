@@ -36,7 +36,10 @@ const templates = {
   'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta'
 };
 
-export const contractEditor = () => {
+// https://github.com/storybookjs/storybook/issues/8177
+const storyshotsHack = (StoryFn) => () => <StoryFn />
+
+export const contractEditor = storyshotsHack(() => {
   const markdownText = text( 'Markdown', `# Heading One
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
@@ -106,7 +109,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
       />
     </Wrapper>
   );
-};
+});
 
 contractEditor.story = {
   component: contractEditor,
