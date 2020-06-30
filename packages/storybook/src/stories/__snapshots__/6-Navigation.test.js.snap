@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Storyshots Navigation Navigation 1`] = `
+<div
+  className="sc-fznxsB foekoE ui-components__navigation-wrapper"
+>
+  <a
+    className="sc-fznJRM sc-fznWqX jplvCD ui-components__navigation-switch-title-active"
+    onClick={[Function]}
+  >
+    NAVIGATION
+  </a>
+  <a
+    className="sc-fznJRM sc-fzoiQi ldXljb ui-components__navigation-switch-title-inactive"
+    onClick={[Function]}
+  >
+    FILES
+  </a>
+  <div
+    className="sc-fzqARJ eGqCTc"
+  >
+    <div
+      className="sc-fzqNqU sc-fzoXWK gqKYgY ui-components__navigation-header-clause"
+      onClick={[Function]}
+    >
+      This is a clause heading
+    </div>
+    <div
+      className="sc-fzqNqU fohfWZ ui-components__navigation-header-one"
+      onClick={[Function]}
+    >
+      This is a H1 heading
+    </div>
+    <div
+      className="sc-fzqNqU sc-fzoyTs fpGMpV ui-components__navigation-header-two"
+      onClick={[Function]}
+    >
+      This is a H2 heading
+    </div>
+    <div
+      className="sc-fzqNqU sc-fzoNJl lpedIt ui-components__navigation-header-three"
+      onClick={[Function]}
+    >
+      This is a H3 heading
+    </div>
+  </div>
+</div>
+`;

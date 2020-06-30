@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`lib > Counter > useLogic renders 1`] = `
-Object {
-  "count": 0,
-  "incrementCount": [Function],
-}
-`;

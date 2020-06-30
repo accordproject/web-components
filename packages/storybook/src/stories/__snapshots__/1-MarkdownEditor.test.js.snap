@@ -1,0 +1,1502 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
+<div
+  style={
+    Object {
+      "padding": "10px",
+    }
+  }
+>
+  <div
+    className="sc-AxhUy fglOYZ"
+    id="ap-rich-text-editor-toolbar"
+  >
+    <div
+      aria-expanded={false}
+      className="ui simple dropdown"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      role="listbox"
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#414F58",
+          "width": "100px",
+        }
+      }
+      tabIndex={0}
+    >
+      <div
+        aria-atomic={true}
+        aria-live="polite"
+        className="text"
+        role="alert"
+      >
+        Style
+      </div>
+      <i
+        aria-hidden="true"
+        className="dropdown icon"
+        onClick={[Function]}
+      />
+      <div
+        className="menu transition"
+      >
+        <div
+          className="item"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          role="option"
+          style={null}
+        >
+          <span
+            className="text"
+          >
+            Normal
+          </span>
+        </div>
+        <div
+          className="item"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          role="option"
+          style={
+            Object {
+              "color": "#122330",
+              "fontSize": "25px",
+              "fontWeight": "bold",
+              "lineHeight": "23px",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            Heading 1
+          </span>
+        </div>
+        <div
+          className="item"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          role="option"
+          style={
+            Object {
+              "color": "#122330",
+              "fontSize": "20px",
+              "fontWeight": "bold",
+              "lineHeight": "20px",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            Heading 2
+          </span>
+        </div>
+        <div
+          className="item"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          role="option"
+          style={
+            Object {
+              "color": "#122330",
+              "fontSize": "16px",
+              "fontWeight": "bold",
+              "lineHeight": "16px",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            Heading 3
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-fzplWN dRmgQU"
+    />
+    <svg
+      aria-label="bold"
+      className="sc-AxjAm kngdkt"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 11 13"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        fontFamily="IBMPlexSans-Bold, IBM Plex Sans"
+        fontSize="18"
+        fontWeight="bold"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          transform="translate(-440.000000, -48.000000)"
+        >
+          <text>
+            <tspan
+              x="439"
+              y="61"
+            >
+              B
+            </tspan>
+          </text>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="italic"
+      className="sc-AxjAm kngdkt"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 10 13"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        fontFamily="IBMPlexSans-BoldItalic, IBM Plex Sans"
+        fontSize="18"
+        fontStyle="italic"
+        fontWeight="bold"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          transform="translate(-477.000000, -48.000000)"
+        >
+          <text>
+            <tspan
+              x="478"
+              y="61"
+            >
+              I
+            </tspan>
+          </text>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="code"
+      className="sc-AxjAm dVgXNv"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 20 12"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          fillRule="nonzero"
+          transform="translate(-508.000000, -49.000000)"
+        >
+          <g
+            transform="translate(508.000000, 49.000000)"
+          >
+            <path
+              d="M19.609,6.787 C19.843431,6.5527408 19.9751474,6.23491402 19.9751474,5.9035 C19.9751474,5.57208598 19.843431,5.2542592 19.609,5.02 L15.609,1.02 C15.2952486,0.694966717 14.8305318,0.564516169 14.3934634,0.678786996 C13.956395,0.793057823 13.6149929,1.13426688 13.5004748,1.57127054 C13.3859567,2.0082742 13.5161443,2.47306473 13.841,2.787 L16.6,5.55 C16.795191,5.74524993 16.795191,6.06175007 16.6,6.257 L13.841,9.02 C13.3674216,9.51060731 13.3744161,10.2902393 13.8567205,10.7722709 C14.3390249,11.2543025 15.1186607,11.2608559 15.609,10.787 L19.609,6.787 Z"
+            />
+            <path
+              d="M6.609,1.02 C6.37470042,0.785262804 6.05665923,0.653351971 5.725,0.653351971 C5.39334077,0.653351971 5.07529958,0.785262804 4.841,1.02 L0.841,5.02 C0.606569022,5.2542592 0.474852621,5.57208598 0.474852621,5.9035 C0.474852621,6.23491402 0.606569022,6.5527408 0.841,6.787 L4.841,10.787 C5.15475142,11.1120333 5.61946823,11.2424838 6.05653661,11.128213 C6.49360499,11.0139422 6.83500715,10.6727331 6.94952523,10.2357295 C7.06404332,9.7987258 6.93385572,9.33393527 6.609,9.02 L3.846,6.257 C3.65080903,6.06175007 3.65080903,5.74524993 3.846,5.55 L6.609,2.787 C6.84343098,2.5527408 6.97514738,2.23491402 6.97514738,1.9035 C6.97514738,1.57208598 6.84343098,1.2542592 6.609,1.02 Z"
+            />
+            <path
+              d="M8.954,11.624 C9.04335066,11.6434777 9.13455123,11.6532012 9.226,11.653 C9.81127096,11.6522287 10.3179139,11.2460837 10.446,10.675 L12.446,1.675 C12.5959453,0.999555759 12.1699442,0.330445338 11.4945,0.180500032 C10.8190558,0.0305547247 10.1499453,0.456555767 10,1.132 L8,10.132 C7.92859204,10.456365 7.98899504,10.7958118 8.167915,11.0756321 C8.34683495,11.3554524 8.62960831,11.5527133 8.954,11.624 L8.954,11.624 Z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div
+      className="sc-fzplWN dRmgQU"
+    />
+    <svg
+      aria-label="block_quote"
+      className="sc-AxjAm cgHPQy"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 18 13"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          fillRule="nonzero"
+          transform="translate(-581.000000, -48.000000)"
+        >
+          <g
+            transform="translate(581.000000, 48.000000)"
+          >
+            <path
+              d="M7.44600458,0.540683605 L7.4460046,0.540683605 C3.43629213,0.653784413 0.274612689,3.93929933 0.375000251,7.88864267 L0.375000251,8.80676824 L0.375000175,8.80750625 C0.374999866,10.8235342 2.0344587,12.4578494 4.08150246,12.4578494 C6.12854622,12.4578497 7.78800474,10.8235342 7.78800474,8.80750625 C7.78800505,6.7914783 6.12854622,5.15716309 4.08150246,5.15716309 C4.08100251,5.15716309 4.08050256,5.15716319 4.0800026,5.15716339 L4.08000242,5.15716339 C3.79801349,5.15791161 3.51717657,5.19263931 3.2437519,5.26057255 L3.24375192,5.26057254 C3.14330586,5.28536873 3.0414678,5.22527619 3.01629028,5.12635189 C3.00441867,5.07970779 3.01149048,5.0303424 3.03600194,4.98875419 L3.03600178,4.98875449 C3.92604233,3.40558249 5.60871336,2.41297279 7.44600449,2.38727561 L7.44600445,2.38727561 C7.96377177,2.38727564 8.38350503,1.97390195 8.38350503,1.46397959 C8.38350505,0.954057232 7.96377177,0.540683568 7.44600445,0.540683568 L7.44600458,0.540683605 Z"
+            />
+            <path
+              d="M16.6875103,2.38727565 L16.6875102,2.38727565 C17.2052775,2.38727567 17.6250108,1.97390199 17.6250108,1.46397963 C17.6250108,0.954057269 17.2052775,0.540683605 16.6875102,0.540683605 L16.68751,0.540683611 C12.6779776,0.654185499 9.51653063,3.93946184 9.61650569,7.88864268 L9.61650569,8.80676824 L9.61650561,8.80750633 C9.61650531,10.8235343 11.2759641,12.4578495 13.3230079,12.4578495 C15.3700517,12.4578498 17.0295102,10.8235343 17.0295102,8.80750633 C17.0295105,6.79147838 15.3700517,5.15716317 13.3230079,5.15716317 C13.3227579,5.15716317 13.3225079,5.1571632 13.322258,5.15716325 L13.322258,5.15716325 C13.0400185,5.157866 12.7589281,5.19259396 12.4852574,5.2605724 L12.4852574,5.2605724 C12.4122924,5.27867912 12.3354209,5.25189054 12.2902573,5.19261781 L12.2902573,5.19261781 C12.245149,5.13323282 12.24014,5.05314176 12.2775073,4.98875405 L12.2775072,4.98875434 C13.1675477,3.40558234 14.8502187,2.41297264 16.6875099,2.38727546 L16.6875103,2.38727565 Z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="ol_list"
+      className="sc-AxjAm gabVJK"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 17 14"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          transform="translate(-617.000000, -48.000000)"
+        >
+          <g
+            transform="translate(616.000000, 45.000000)"
+          >
+            <g>
+              <path
+                d="M1.66666667,14.1666667 L3.33333333,14.1666667 L3.33333333,14.5833333 L2.5,14.5833333 L2.5,15.4166667 L3.33333333,15.4166667 L3.33333333,15.8333333 L1.66666667,15.8333333 L1.66666667,16.6666667 L4.16666667,16.6666667 L4.16666667,13.3333333 L1.66666667,13.3333333 L1.66666667,14.1666667 L1.66666667,14.1666667 Z M2.5,6.66666667 L3.33333333,6.66666667 L3.33333333,3.33333333 L1.66666667,3.33333333 L1.66666667,4.16666667 L2.5,4.16666667 L2.5,6.66666667 L2.5,6.66666667 Z M1.66666667,9.16666667 L3.16666667,9.16666667 L1.66666667,10.9166667 L1.66666667,11.6666667 L4.16666667,11.6666667 L4.16666667,10.8333333 L2.66666667,10.8333333 L4.16666667,9.08333333 L4.16666667,8.33333333 L1.66666667,8.33333333 L1.66666667,9.16666667 L1.66666667,9.16666667 Z M5.83333333,4.16666667 L5.83333333,5.83333333 L17.5,5.83333333 L17.5,4.16666667 L5.83333333,4.16666667 L5.83333333,4.16666667 Z M5.83333333,15.8333333 L17.5,15.8333333 L17.5,14.1666667 L5.83333333,14.1666667 L5.83333333,15.8333333 L5.83333333,15.8333333 Z M5.83333333,10.8333333 L17.5,10.8333333 L17.5,9.16666667 L5.83333333,9.16666667 L5.83333333,10.8333333 L5.83333333,10.8333333 Z"
+                fill="#949CA2"
+              />
+              <polygon
+                points="0 0 20 0 20 20 0 20"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="ul_list"
+      className="sc-AxjAm gabVJK"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 16 14"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          transform="translate(-582.000000, -48.000000)"
+        >
+          <g
+            transform="translate(580.000000, 45.000000)"
+          >
+            <g>
+              <path
+                d="M3.33333333,8.75 C2.64166667,8.75 2.08333333,9.30833333 2.08333333,10 C2.08333333,10.6916667 2.64166667,11.25 3.33333333,11.25 C4.025,11.25 4.58333333,10.6916667 4.58333333,10 C4.58333333,9.30833333 4.025,8.75 3.33333333,8.75 L3.33333333,8.75 Z M3.33333333,3.75 C2.64166667,3.75 2.08333333,4.30833333 2.08333333,5 C2.08333333,5.69166667 2.64166667,6.25 3.33333333,6.25 C4.025,6.25 4.58333333,5.69166667 4.58333333,5 C4.58333333,4.30833333 4.025,3.75 3.33333333,3.75 L3.33333333,3.75 Z M3.33333333,13.8916667 C2.71666667,13.8916667 2.225,14.3916667 2.225,15 C2.225,15.6083333 2.725,16.1083333 3.33333333,16.1083333 C3.94166667,16.1083333 4.44166667,15.6083333 4.44166667,15 C4.44166667,14.3916667 3.95,13.8916667 3.33333333,13.8916667 L3.33333333,13.8916667 Z M5.83333333,15.8333333 L17.5,15.8333333 L17.5,14.1666667 L5.83333333,14.1666667 L5.83333333,15.8333333 L5.83333333,15.8333333 Z M5.83333333,10.8333333 L17.5,10.8333333 L17.5,9.16666667 L5.83333333,9.16666667 L5.83333333,10.8333333 L5.83333333,10.8333333 Z M5.83333333,4.16666667 L5.83333333,5.83333333 L17.5,5.83333333 L17.5,4.16666667 L5.83333333,4.16666667 L5.83333333,4.16666667 Z"
+                fill="#949CA2"
+              />
+              <polygon
+                points="0 0 20 0 20 20 0 20"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div
+      className="sc-fzplWN dRmgQU"
+    />
+    <svg
+      aria-label="undo"
+      className="sc-AxjAm iJUrHh"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 16 11"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          fillRule="nonzero"
+          transform="translate(-692.000000, -49.000000)"
+        >
+          <g
+            transform="translate(692.000000, 49.000000)"
+          >
+            <path
+              d="M12.6900078,2.56651697 C10.3793397,1.21662262 7.20333777,1.40331718 3.9020024,3.06569321 L3.9020024,3.06569321 C3.83767696,3.09793767 3.75978898,3.0856688 3.70866895,3.03523948 L1.70466772,1.05309937 L1.70466772,1.05309938 C1.31280015,0.666625095 0.679640428,0.668791281 0.290460188,1.05793716 C0.104299407,1.24408355 -0.000123324148,1.49582065 -1.32407326e-06,1.75816755 L-1.32407326e-06,9.57020939 L-1.32407325e-06,9.57020949 C-1.26847808e-06,9.93584284 0.298475526,10.2322469 0.666665753,10.2322469 L8.52800392,10.2322469 L8.52800393,10.2322469 C9.08028893,10.2324955 9.52820454,9.78809065 9.52845788,9.23964095 C9.52857821,8.97599977 9.42312381,8.72313192 9.23533769,8.53676904 L7.56867,6.88167543 L7.56867001,6.88167544 C7.53082585,6.84450879 7.51322324,6.79157545 7.52133665,6.73933739 L7.52133664,6.73933741 C7.52975585,6.68706208 7.56265947,6.6418577 7.61000337,6.61752252 C9.50800453,5.65293397 11.5146724,5.49205887 12.9246733,6.24347137 C14.066674,6.84658748 14.6666744,7.99787059 14.6666744,9.56888545 L14.6666744,9.56888555 C14.6666744,9.9345189 14.9651512,10.230923 15.3333415,10.230923 C15.7015317,10.2309229 16.0000085,9.9345189 16.0000085,9.56888555 C16.0000085,6.30173076 14.8246745,3.81445608 12.6900065,2.5665155 L12.6900078,2.56651697 Z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="redo"
+      className="sc-AxjAm iJUrHh"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 16 11"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          fillRule="nonzero"
+          transform="translate(-798.000000, -49.000000)"
+        >
+          <g
+            transform="translate(806.000000, 54.500000) scale(-1, 1) translate(-806.000000, -54.500000) translate(798.000000, 49.000000)"
+          >
+            <path
+              d="M12.6900078,2.56651697 C10.3793397,1.21662262 7.20333777,1.40331718 3.9020024,3.06569321 L3.9020024,3.06569321 C3.83767696,3.09793767 3.75978898,3.0856688 3.70866895,3.03523948 L1.70466772,1.05309937 L1.70466772,1.05309938 C1.31280015,0.666625095 0.679640428,0.668791281 0.290460188,1.05793716 C0.104299407,1.24408355 -0.000123324148,1.49582065 -1.32407326e-06,1.75816755 L-1.32407326e-06,9.57020939 L-1.32407325e-06,9.57020949 C-1.26847808e-06,9.93584284 0.298475526,10.2322469 0.666665753,10.2322469 L8.52800392,10.2322469 L8.52800393,10.2322469 C9.08028893,10.2324955 9.52820454,9.78809065 9.52845788,9.23964095 C9.52857821,8.97599977 9.42312381,8.72313192 9.23533769,8.53676904 L7.56867,6.88167543 L7.56867001,6.88167544 C7.53082585,6.84450879 7.51322324,6.79157545 7.52133665,6.73933739 L7.52133664,6.73933741 C7.52975585,6.68706208 7.56265947,6.6418577 7.61000337,6.61752252 C9.50800453,5.65293397 11.5146724,5.49205887 12.9246733,6.24347137 C14.066674,6.84658748 14.6666744,7.99787059 14.6666744,9.56888545 L14.6666744,9.56888555 C14.6666744,9.9345189 14.9651512,10.230923 15.3333415,10.230923 C15.7015317,10.2309229 16.0000085,9.9345189 16.0000085,9.56888555 C16.0000085,6.30173076 14.8246745,3.81445608 12.6900065,2.5665155 L12.6900078,2.56651697 Z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div
+      className="sc-fzplWN dRmgQU"
+    />
+    <svg
+      aria-label="link"
+      className="sc-AxjAm bmiexi"
+      height="25px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 14 14"
+      width="25px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <g
+          fill="#949CA2"
+          fillRule="nonzero"
+          transform="translate(-727.000000, -48.000000)"
+        >
+          <g
+            transform="translate(727.000000, 48.000000)"
+          >
+            <path
+              d="M6.10050375,10.7181733 L4.50391944,12.3141742 L4.50391947,12.3141742 C3.86064824,12.9288446 2.84768928,12.9288446 2.20441806,12.3141743 L1.6840844,11.794424 L1.68408431,11.7944239 C1.04934725,11.1595585 1.04934725,10.1303712 1.68408449,9.49550578 L5.06741991,6.11217037 L5.06741988,6.11217039 C5.70262361,5.47769 6.73171758,5.47769 7.3669213,6.11217034 L7.88783829,6.63250399 L7.88783828,6.63250399 C8.11625426,6.86091996 8.48658948,6.86091996 8.71500546,6.63250399 C8.94342143,6.40408802 8.94342143,6.03375279 8.71500546,5.80533682 C8.71500546,5.80533682 8.71500546,5.80533682 8.71500546,5.80533682 L8.19408847,5.28500316 L8.19408844,5.28500313 C7.1029686,4.19532996 5.33545584,4.19532996 4.24433601,5.2850032 L0.86100059,8.66833862 L0.861000611,8.6683386 C-0.22953006,9.7588226 -0.229576727,11.5268837 0.860907423,12.6174144 C0.860938471,12.6174454 0.860969519,12.6174765 0.861000569,12.6175075 L1.38133422,13.1372578 L1.38133403,13.1372576 C2.4707447,14.2279516 4.23806496,14.2289958 5.32875896,13.1395851 C5.32953511,13.1388099 5.3303108,13.1380342 5.33108604,13.137258 L6.92708703,11.5418404 L6.92708703,11.5418404 C7.15501942,11.314069 7.15515009,10.9446467 6.92737869,10.7167149 C6.6996073,10.4887825 6.33018499,10.4886518 6.10225319,10.7164232 C6.10225318,10.7164232 6.10225318,10.7164232 6.10225318,10.7164232 L6.10050375,10.7181733 Z"
+            />
+            <path
+              d="M13.1401748,1.37841751 L12.6198411,0.858083861 L12.6198412,0.858083983 C11.5276014,-0.228316686 9.76291196,-0.228316686 8.67067212,0.85808374 L6.97608775,2.54975145 L6.97608774,2.54975146 C6.75227485,2.78148194 6.75869385,3.15077183 6.99042404,3.3745853 C7.21647926,3.5929166 7.57486606,3.5929166 7.80091954,3.37458528 L9.49258724,1.68291757 L9.49258715,1.68291767 C10.127855,1.04914894 11.1562373,1.04914894 11.7915052,1.68291747 L12.3124222,2.20383446 L12.3124222,2.20383442 C12.9474101,2.83818065 12.9479351,3.86718128 12.3135898,4.50216917 C12.3132008,4.50255856 12.3128116,4.50294774 12.3124223,4.50333673 L8.92908684,7.88667214 L8.92908689,7.8866721 C8.62488478,8.19273795 8.21086311,8.36435472 7.77933618,8.36325572 L7.77933618,8.36325572 L7.77933619,8.36325572 C7.34826076,8.36439236 6.93465733,8.1929847 6.63075215,7.88725543 L6.63075215,7.88725543 C6.41054193,7.65209846 6.04139262,7.63998203 5.80623914,7.86019208 C5.57108217,8.08040229 5.55896574,8.4495516 5.77917579,8.68470508 C5.78761627,8.69371846 5.79634091,8.70246159 5.80533638,8.71092121 L5.8053365,8.71092133 C6.32776607,9.23599516 7.03864393,9.530091 7.77933772,9.5275885 L7.77933772,9.5275885 L7.77933771,9.5275885 C8.520224,9.5301841 9.23131361,9.23608441 9.75392226,8.71092133 L13.1372577,5.32758592 L13.1372577,5.32758593 C14.2279517,4.23772026 14.2286225,2.47002667 13.1387594,1.37933267 C13.138259,1.3788319 13.1377585,1.37833133 13.1372577,1.37783095 L13.1401748,1.37841751 Z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <svg
+      aria-label="image"
+      className="sc-AxjAm hRvTEI"
+      height="18px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 18 18"
+      width="18px"
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        id="Page-1"
+        stroke="none"
+        strokeWidth="1"
+      >
+        <path
+          d="M16.333326,0 L2.5833315,0 L2.58333143,0 C1.6628568,0 0.916665427,0.746192202 0.916665427,1.666666 C0.916665427,1.666666 0.916665427,1.666666 0.916665427,1.666666 L0.916665427,15.4166605 L0.916665427,15.4166608 C0.916665427,16.3371354 1.66285763,17.0833268 2.58333143,17.0833268 L16.3333259,17.0833268 L16.3333259,17.0833268 C17.2538005,17.0833268 17.9999919,16.3371354 17.9999919,15.4166608 L17.9999919,1.66666625 L17.9999919,1.66666625 C17.9999919,0.74619162 17.2537997,0 16.3333259,0 L16.333326,0 Z M6.05583011,10.3608292 L6.05583007,10.3608293 C6.26131332,9.94901026 6.76173479,9.781742 7.17355463,9.98722441 C7.30359957,10.052112 7.41441286,10.1498818 7.49499616,10.2708293 L8.18666255,11.3091622 L8.18666254,11.3091622 C8.25071002,11.4047472 8.3801183,11.4303138 8.47570326,11.3662665 C8.50400616,11.347302 8.52722624,11.3216857 8.54332898,11.2916622 L10.5741615,7.51916371 L10.5741614,7.51916382 C10.7209472,7.23863144 11.0170554,7.06863734 11.3333278,7.08333067 L11.3333278,7.08333067 C11.6479819,7.09179583 11.9310168,7.27683226 12.0649942,7.56166381 L15.0466597,13.8949946 L15.0466597,13.8949946 C15.1446905,14.1031879 15.0553858,14.351432 14.8471923,14.4494627 C14.7915086,14.4756822 14.7307073,14.4892398 14.6691599,14.4891616 L4.66666386,14.4891616 L4.66666387,14.4891616 C4.43654563,14.4891616 4.25001153,14.3025996 4.25001153,14.0724806 C4.25001153,14.0076761 4.26513178,13.9437656 4.29416418,13.8858281 L6.05583011,10.3608292 Z M4.45833075,5.20583125 L4.45833075,5.2058315 C4.45833075,4.28535687 5.20452212,3.5391655 6.12499675,3.5391655 C7.04547138,3.5391655 7.79166275,4.28535687 7.79166275,5.2058315 C7.79166275,6.12630613 7.04547138,6.8724975 6.12499675,6.8724975 L6.12499682,6.8724975 C5.20452219,6.8724975 4.45833075,6.12630613 4.45833075,5.2058315 C4.45833075,5.20583142 4.45833075,5.20583134 4.45833075,5.20583125 L4.45833075,5.20583125 Z"
+          fill="#949CA2"
+          fillRule="nonzero"
+          id="Shape"
+        />
+      </g>
+    </svg>
+  </div>
+  <div
+    contentEditable={true}
+    data-gramm={false}
+    data-slate-editor={true}
+    data-slate-node="value"
+    id="ap-rich-text-editor"
+    onBeforeInput={[Function]}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onCompositionEnd={[Function]}
+    onCompositionStart={[Function]}
+    onCopy={[Function]}
+    onCut={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onPaste={[Function]}
+    role="textbox"
+    spellCheck={true}
+    style={
+      Object {
+        "outline": "none",
+        "padding": "20px",
+        "whiteSpace": "pre-wrap",
+        "wordWrap": "break-word",
+      }
+    }
+    suppressContentEditableWarning={true}
+  >
+    <h1
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="My-Heading"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            My Heading
+          </span>
+        </span>
+      </span>
+    </h1>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is text. This is 
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <em>
+            <span
+              data-slate-string={true}
+            >
+              italic
+            </span>
+          </em>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+             text. This is 
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <strong>
+            <span
+              data-slate-string={true}
+            >
+              bold
+            </span>
+          </strong>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+             text. This is a 
+          </span>
+        </span>
+      </span>
+      <a
+        data-slate-inline={true}
+        data-slate-node="element"
+        href="https://clause.io"
+      >
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-string={true}
+            >
+              link
+            </span>
+          </span>
+        </span>
+      </a>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            . This is 
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <code>
+            <span
+              data-slate-string={true}
+            >
+              inline code
+            </span>
+          </code>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            .
+          </span>
+        </span>
+      </span>
+    </p>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is 
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <em>
+            <strong>
+              <span
+                data-slate-string={true}
+              >
+                bold and italic
+              </span>
+            </strong>
+          </em>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+             text.
+          </span>
+        </span>
+      </span>
+    </p>
+    <h2
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="Breaks"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Breaks
+          </span>
+        </span>
+      </span>
+    </h2>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is a
+          </span>
+        </span>
+      </span>
+      <br
+        className="linebreak"
+        contentEditable={false}
+        data-slate-inline={true}
+        data-slate-node="element"
+        data-slate-void={true}
+      />
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            hard break.
+          </span>
+        </span>
+      </span>
+    </p>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is a
+          </span>
+        </span>
+      </span>
+      <span
+        className="softbreak"
+        contentEditable={false}
+        data-slate-inline={true}
+        data-slate-node="element"
+        data-slate-void={true}
+      >
+         
+        <span
+          data-slate-spacer={true}
+          style={
+            Object {
+              "color": "transparent",
+              "height": "0",
+              "outline": "none",
+              "position": "absolute",
+            }
+          }
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-length={0}
+                data-slate-zero-width="z"
+              >
+                ﻿
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            softbreak.
+          </span>
+        </span>
+      </span>
+    </p>
+    <div
+      className="sc-AxhCb bkrppD"
+      data-slate-node="element"
+      data-slate-void={true}
+    >
+      <div
+        data-slate-spacer={true}
+        style={
+          Object {
+            "color": "transparent",
+            "height": "0",
+            "outline": "none",
+            "position": "absolute",
+          }
+        }
+      >
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-length={0}
+              data-slate-zero-width="z"
+            >
+              ﻿
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This ^^^^ is a thematic break
+          </span>
+        </span>
+      </span>
+    </p>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-length={0}
+            data-slate-zero-width="z"
+          >
+            ﻿
+          </span>
+        </span>
+      </span>
+      <span
+        contentEditable={false}
+        data-slate-inline={true}
+        data-slate-node="element"
+        data-slate-void={true}
+      >
+        <span
+          contentEditable={false}
+        >
+          <img
+            className="sc-AxirZ AcePT"
+            src="https://docs.accordproject.org/docs/assets/020/template.png"
+          />
+        </span>
+        <span
+          data-slate-spacer={true}
+          style={
+            Object {
+              "color": "transparent",
+              "height": "0",
+              "outline": "none",
+              "position": "absolute",
+            }
+          }
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-length={0}
+                data-slate-zero-width="z"
+              >
+                ﻿
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </p>
+    <blockquote
+      data-slate-node="element"
+    >
+      <p
+        data-slate-node="element"
+      >
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-string={true}
+            >
+              This is a quote.
+            </span>
+          </span>
+        </span>
+      </p>
+    </blockquote>
+    <h2
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="Heading-Two"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Heading Two
+          </span>
+        </span>
+      </span>
+    </h2>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is more text.
+          </span>
+        </span>
+      </span>
+    </p>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Below is a code block:
+          </span>
+        </span>
+      </span>
+    </p>
+    <pre
+      data-slate-node="element"
+    >
+      <p
+        data-slate-node="element"
+      >
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-string={true}
+            >
+              this is my great
+code
+
+              
+
+            </span>
+          </span>
+        </span>
+      </p>
+    </pre>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Ordered lists:
+          </span>
+        </span>
+      </span>
+    </p>
+    <ol
+      data-slate-node="element"
+    >
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                one
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                two
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                three
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+    </ol>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Or:
+          </span>
+        </span>
+      </span>
+    </p>
+    <ul
+      data-slate-node="element"
+    >
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                apples
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                pears
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+      <li
+        data-slate-node="element"
+      >
+        <p
+          data-slate-node="element"
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-string={true}
+              >
+                peaches
+              </span>
+            </span>
+          </span>
+        </p>
+      </li>
+    </ul>
+    <h3
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="Sub-heading"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Sub heading
+          </span>
+        </span>
+      </span>
+    </h3>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            This is more text.
+          </span>
+        </span>
+      </span>
+    </p>
+    <pre
+      className="html_block"
+      data-slate-node="element"
+    >
+      <p
+        data-slate-node="element"
+      >
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-string={true}
+            >
+              &lt;custom&gt;
+This is an html block.
+&lt;/custom&gt;
+            </span>
+          </span>
+        </span>
+      </p>
+    </pre>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            And this is 
+          </span>
+        </span>
+      </span>
+      <span
+        className="html_inline"
+        data-slate-inline={true}
+        data-slate-node="element"
+      >
+        &lt;variable&gt;
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-length={0}
+              data-slate-zero-width="z"
+            >
+              ﻿
+            </span>
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            an HTML inline
+          </span>
+        </span>
+      </span>
+      <span
+        className="html_inline"
+        data-slate-inline={true}
+        data-slate-node="element"
+      >
+        &lt;/variable&gt;
+        <span
+          data-slate-node="text"
+        >
+          <span
+            data-slate-leaf={true}
+          >
+            <span
+              data-slate-length={0}
+              data-slate-zero-width="z"
+            >
+              ﻿
+            </span>
+          </span>
+        </span>
+      </span>
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            .
+          </span>
+        </span>
+      </span>
+    </p>
+    <h1
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H1"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H1
+          </span>
+        </span>
+      </span>
+    </h1>
+    <h2
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H2"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H2
+          </span>
+        </span>
+      </span>
+    </h2>
+    <h3
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H3"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H3
+          </span>
+        </span>
+      </span>
+    </h3>
+    <h4
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H4"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H4
+          </span>
+        </span>
+      </span>
+    </h4>
+    <h4
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H5"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H5
+          </span>
+        </span>
+      </span>
+    </h4>
+    <h5
+      className="sc-AxiKw cBJqoo"
+      data-slate-node="element"
+      id="H6"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            H6
+          </span>
+        </span>
+      </span>
+    </h5>
+    <p
+      data-slate-node="element"
+    >
+      <span
+        data-slate-node="text"
+      >
+        <span
+          data-slate-leaf={true}
+        >
+          <span
+            data-slate-string={true}
+          >
+            Fin.
+          </span>
+        </span>
+      </span>
+    </p>
+  </div>
+</div>
+`;

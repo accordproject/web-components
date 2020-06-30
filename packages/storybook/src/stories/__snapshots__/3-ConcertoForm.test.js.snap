@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Concerto Form Storyshots Concerto Form Demo 1`] = `
+<div
+  style={
+    Object {
+      "padding": "10px",
+    }
+  }
+>
+  <div
+    className="ui active transition visible inverted dimmer"
+    onClick={[Function]}
+  >
+    <div
+      className="content"
+    >
+      <div
+        className="ui inverted text loader"
+      >
+        Loading
+      </div>
+    </div>
+  </div>
+</div>
+`;
