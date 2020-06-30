@@ -80,7 +80,7 @@
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addon-notes": "^5.3.18",
-    "@storybook/addon-storyshots": "^5.3.17",
+    "@storybook/addon-storyshots": "6.0.0-alpha.43",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "babel-jest": "^26.1.0",

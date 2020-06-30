@@ -23,6 +23,13 @@ npm run build
 
 Storybook will reload with the applied changes.
 
+### Run tests
+
+```sh
+cd packages/storybook
+npm run test
+```
+
 ---
 
 <a href="https://www.accordproject.org/">
