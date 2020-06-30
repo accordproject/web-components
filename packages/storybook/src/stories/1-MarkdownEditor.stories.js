@@ -73,13 +73,10 @@ const propsObj = {
   WIDTH: '600px',
 };
 
-// https://github.com/storybookjs/storybook/issues/8177
-const storyshotsHack = (StoryFn) => () => <StoryFn />
-
 /**
  * MarkdownEditor demo
  */
-export const Demo = storyshotsHack(() => {
+export const Demo = () => {
 
   const readOnly = boolean('Read-only', false);
 
@@ -125,7 +122,7 @@ export const Demo = storyshotsHack(() => {
       />
     </div>
   );
-})
+}
 
 const intro = `
 The markdown editor implements a WYSIWYG editor for markdown that conforms to

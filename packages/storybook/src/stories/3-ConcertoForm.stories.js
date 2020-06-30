@@ -11,10 +11,7 @@ export default {
   }
 };
 
-// https://github.com/storybookjs/storybook/issues/8177
-const storyshotsHack = (StoryFn) => () => <StoryFn />
-
-export const Demo = storyshotsHack(() => {
+export const Demo = () => {
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Address');
   const options = object('Options', {
@@ -74,4 +71,4 @@ export const Demo = storyshotsHack(() => {
       }}
     />
   </div>
-});
+};
