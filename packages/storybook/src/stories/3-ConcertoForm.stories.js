@@ -63,7 +63,7 @@ export const Demo = () => {
       json={jsonValue}
       onModelChange={({ types, json }) => {
         setJsonValue(safeStringify(json));
-        return action("model changed")(({ types, json }));
+        return action("model changed")(json);
       }}
       onValueChange={(json) => {
         setJsonValue(safeStringify(json));
