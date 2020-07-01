@@ -90,7 +90,7 @@ class ConcertoForm extends Component {
   }
 
   onFieldValueChange(e, key) {
-    const value = e.type === 'checkbox' ? e.checked : e.value || e.target.value;
+    const value = e.type === 'checkbox' ? e.checked : e.value;
     // eslint-disable-next-line react/no-access-state-in-setstate
     const valueClone = set({ ...this.state.value }, key, value);
     this.setState({ value: valueClone });
@@ -115,7 +115,7 @@ class ConcertoForm extends Component {
       console.error(error.message);
       // Set default values to avoid trying to render a bad model
       // Don't change the JSON, it might be valid once the model file is fixed
-      return {types: []};
+      return { types: [] };
     }
 
     if (types.length === 0) {
@@ -128,7 +128,7 @@ class ConcertoForm extends Component {
       ) {
         fqn = types[0].getFullyQualifiedName();
         json = this.generateJSON(fqn);
-        return {types, json};
+        return { types, json };
       }
       json = this.generateJSON(this.props.type);
     } catch (err) {
