@@ -296,12 +296,12 @@ class ReactFormVisitor {
     const value = get(parameters.json, key);
     if (field.isPrimitive()) {
       if (field.getType() === 'Boolean') {
-        return <ConcertoCheckbox {...props} id={key} value={value} />;
+        return <ConcertoCheckbox {...props} id={key} key={key} value={value} />;
       }
       if (toFieldType(field.getType()) === 'datetime-local') {
-        return <ConcertoDateTime {...props} id={key} value={value} />;
+        return <ConcertoDateTime {...props} id={key} key={key} value={value} />;
       }
-      return <ConcertoInput {...props} id={key} value={value} />;
+      return <ConcertoInput {...props} id={key} key={key} value={value} />;
     }
     let type = parameters.modelManager.getType(
       field.getFullyQualifiedTypeName()
@@ -365,7 +365,7 @@ class ReactFormVisitor {
               const key = toPath(stack);
               const value = get(parameters.json, key);
               const arrayComponent = (
-                <ConcertoArrayElement {...commonProps} index={index}>
+                <ConcertoArrayElement key={key} {...commonProps} index={index}>
                   <ConcertoInput {...commonProps} id={key} value={value} />
                 </ConcertoArrayElement>
               );

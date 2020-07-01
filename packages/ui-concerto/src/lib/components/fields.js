@@ -75,18 +75,21 @@ export const ConcertoDateTime = ({
   onFieldValueChange,
   skipLabel,
   type,
-}) => (
+}) => {
+  const date = Date.parse(value) ? value : new Date().toISOString();
+  return (
   <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
     <Input
       type={type}
       readOnly={readOnly}
-      value={new Date(value).toISOString().slice(0, 19)}
+      value={date.slice(0, 16)}
       onChange={(e, data) => onFieldValueChange(data, id)}
       key={id}
     />
   </Form.Field>
-);
+  );
+};
 
 export const ConcertoArray = ({
   id,
