@@ -82,8 +82,9 @@ export const ConcertoDateTime = ({
       readOnly={readOnly}
       value={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
-      dateTimeFormat={'YYYY-MM-DD HH:mm'}
+      dateTimeFormat={'YYYY-MM-DDTHH:mm:ss.sssZ'}
       key={id}
+      animation='none'
     />
   </Form.Field>
 );
