@@ -8,6 +8,7 @@ import { VARIABLE } from '../../ContractEditor/plugins/withClauseSchema';
 
 const VariableWrapper = styled.span`
   border: ${props => props.formulaDependency ? '#AF54C4' : '#A4BBE7'} 1px solid !important;
+  background-color: ${props => props.formulaDependency ? '#BED3FC' : '#FFFFFF'} !important;
 `;
 
 const Variable = React.forwardRef((props, ref) => {
