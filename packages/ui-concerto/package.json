@@ -8,6 +8,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "@accordproject/concerto-core": "^0.82.7",
+    "semantic-ui-calendar-react": "^0.15.3",
     "semantic-ui-react": "^0.88.2",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",

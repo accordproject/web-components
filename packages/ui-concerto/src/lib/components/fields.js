@@ -14,6 +14,7 @@
  */
 import React from 'react';
 import { Checkbox, Input, Form, Button, Select } from 'semantic-ui-react';
+import { DateTimeInput } from 'semantic-ui-calendar-react';
 import { parseValue, normalizeLabel } from '../utilities';
 
 export const ConcertoLabel = ({ skip, name }) => !skip
@@ -74,22 +75,18 @@ export const ConcertoDateTime = ({
   value,
   onFieldValueChange,
   skipLabel,
-  type,
-}) => {
-  const date = Date.parse(value) ? value : new Date().toISOString();
-  return (
+}) => (
   <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
-    <Input
-      type={type}
+    <DateTimeInput
       readOnly={readOnly}
-      value={date.slice(0, 16)}
+      value={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
+      dateTimeFormat={'YYYY-MM-DD HH:mm'}
       key={id}
     />
   </Form.Field>
-  );
-};
+);
 
 export const ConcertoArray = ({
   id,
