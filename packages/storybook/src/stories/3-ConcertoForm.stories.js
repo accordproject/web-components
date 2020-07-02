@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, boolean, object } from '@storybook/addon-knobs';
 import { ConcertoForm } from '@accordproject/ui-concerto';
+import 'semantic-ui-css/semantic.min.css';
 
 export default {
   title: 'Concerto Form',
