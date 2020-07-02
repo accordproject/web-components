@@ -15,11 +15,6 @@ const Leaf = ({ attributes, children, leaf }) => {
     children = <em>{children}</em>;
   }
 
-  if (leaf.highlight) {
-    console.log('leaf.highlight');
-    children = <span style={{ backgroundColor: 'red' }}>{children}</span>;
-  }
-
   return <span {...attributes}>{children}</span>;
 };
 

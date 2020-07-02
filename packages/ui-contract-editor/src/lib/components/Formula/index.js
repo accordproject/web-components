@@ -91,18 +91,12 @@ const Formula = React.forwardRef((props, ref) => {
 
   const tooltipInstructions = 'FORMULA HERE';
 
-  /*
-
-  RELATED VARIABLES: #BED3FC fill
-
-  */
-
   return (
     <span {...attributes}>
         <FormulaTooltip {...formulaTooltip}>
-            {children}
+            {data.code}
         </FormulaTooltip>
-        <span {...formulaProps}>{tooltipInstructions}</span>
+        <span {...formulaProps}>{children}</span>
     </span>
   );
 });
