@@ -26,15 +26,25 @@ import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 
-const addTemplates = templates => ({ type: 'ADD_TEMPLATES', templates });
+const ADD_TEMPLATE = 'ADD_TEMPLATE';
+const ADD_EDITOR = 'ADD_EDITOR';
+
+const addTemplate = template => ({ type: ADD_TEMPLATE, template });
+const addEditor = editor => ({ type: ADD_EDITOR, editor });
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_TEMPLATES':
-      console.log('Added these templates to the store: ', action.templates);
+    case ADD_TEMPLATE:
+      console.log('Added these templates to the store: ', action.template);
       return {
         ...state,
-        ...action.templates
+        [action.template.metadata.packageJson.name]: action.template
+      };
+    case ADD_EDITOR:
+      console.log('Added editor to the store!');
+      return {
+        ...state,
+        editor: action.editor
       };
     default:
       return state;
@@ -102,7 +112,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
             },
             ...extraText.document.children
           ]
-          store.dispatch(addTemplates(template))
+          store.dispatch(addTemplate(template))
           Transforms.insertNodes(editor, slateClause, { at: Editor.end(editor, [])});
         });
     }
@@ -121,47 +131,44 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
   const augmentEditor = useCallback((slateEditor) => {
     setEditor(slateEditor);
-    // set editor on redux store
+    store.dispatch(addEditor(slateEditor))
     return slateEditor;
   }, []);
 
   const parseClause = useCallback(async (val) => {
     const newReduxState = store.getState();
-    console.log('newReduxState', newReduxState)
-    // get editor from redux state
-    // const newReduxState = store.getState();
-    console.log('<<>>', val)
     const value = {
       document: {
         children: val.children
       }
     };
     const text = slateTransformer.toMarkdown(value);
-    console.log('text', text)
 
-    // Template.fromUrl(templateUrl)
-    //   .then(async (template) => {
-        // const ciceroClause = new Clause(newReduxState);
-        newReduxState.parse(text);
-        const ast = ciceroClause.getData();
-        console.log('!!!!', ast)
-        const something = await ciceroClause.draft({format:'slate'});
-        console.log('????', something)
+    const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
+    const SLICE_INDEX_2 = val.data.src.indexOf('@');
+    const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
+    const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
 
-        const found = val.children[1].children.filter(element => element.type === 'variable' && element.data.name === 'loanAmount');
-        console.log('found', found)
-        console.log('editor', editor)
-        
-        const path = ReactEditor.findPath(editor, found[0]);
-        console.log('path', path)
-        const newConditional = {
-          object: 'inline',
-          type: 'variable',
-          data: { name: "rate222", elementType: "Double" },
-          children: [{ object: "text", text: "2.5" }]
-        };
-        Transforms.insertNodes(editor, newConditional, { at: path });
-      // });
+    ciceroClause.parse(text);
+
+    const ast = ciceroClause.getData();
+    const something = await ciceroClause.draft({format:'slate'});
+
+    const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
+    
+    const path = ReactEditor.findPath(newReduxState.editor, found[0]);
+    const newConditional = {
+      object: 'inline',
+      type: 'formula',
+      data: { name: "formula", elementType: "Double" },
+      children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
+    };
+
+    Editor.withoutNormalizing(newReduxState.editor, () => {
+      Transforms.removeNodes(newReduxState.editor, { at: path });
+      Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
+    });
+
   }, [editor]);
 
   const onClauseUpdatedHandler = useCallback((val) => {
