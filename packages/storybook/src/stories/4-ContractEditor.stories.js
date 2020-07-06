@@ -1,18 +1,47 @@
+/* React */
 import React, { useCallback, useEffect, useState } from 'react';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
+
+/* Accord Project */
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { TemplateMarkTransformer } from '@accordproject/markdown-template';
-import 'semantic-ui-css/semantic.min.css';
+import { Template, Clause } from '@accordproject/cicero-core';
+import ContractEditor from '@accordproject/ui-contract-editor';
+
+/* Storybook */
 import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { text, select, boolean, object } from '@storybook/addon-knobs';
-import styled from 'styled-components';
-import ContractEditor from '@accordproject/ui-contract-editor';
-import { Template, Clause } from '@accordproject/cicero-core';
+import { storiesOf } from '@storybook/react'
+
+/* Slate */
 import { Editor, Node, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
+
+/* Misc */
 import { uuid } from 'uuidv4';
+import styled from 'styled-components';
+import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
+
+const addTemplates = templates => ({ type: 'ADD_TEMPLATES', templates });
+
+const reducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_TEMPLATES':
+      console.log('Added these templates to the store: ', action.templates);
+      return {
+        ...state,
+        ...action.templates
+      };
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
 
 const Wrapper = styled.div`
   border-radius: 3px;
@@ -73,6 +102,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
             },
             ...extraText.document.children
           ]
+          store.dispatch(addTemplates(template))
           Transforms.insertNodes(editor, slateClause, { at: Editor.end(editor, [])});
         });
     }
@@ -95,7 +125,9 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
     return slateEditor;
   }, []);
 
-  const parseClause = useCallback((val) => {
+  const parseClause = useCallback(async (val) => {
+    const newReduxState = store.getState();
+    console.log('newReduxState', newReduxState)
     // get editor from redux state
     // const newReduxState = store.getState();
     console.log('<<>>', val)
@@ -107,10 +139,10 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
     const text = slateTransformer.toMarkdown(value);
     console.log('text', text)
 
-    Template.fromUrl(templateUrl)
-      .then(async (template) => {
-        const ciceroClause = new Clause(template);
-        ciceroClause.parse(text);
+    // Template.fromUrl(templateUrl)
+    //   .then(async (template) => {
+        // const ciceroClause = new Clause(newReduxState);
+        newReduxState.parse(text);
         const ast = ciceroClause.getData();
         console.log('!!!!', ast)
         const something = await ciceroClause.draft({format:'slate'});
@@ -129,7 +161,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
           children: [{ object: "text", text: "2.5" }]
         };
         Transforms.insertNodes(editor, newConditional, { at: path });
-      });
+      // });
   }, [editor]);
 
   const onClauseUpdatedHandler = useCallback((val) => {
@@ -161,3 +193,11 @@ contractEditor.story = {
     notes: "Notes ...."
   }
 };
+
+const withProvider = (story) => <Provider store={store}>{story()}</Provider>
+
+storiesOf("ContractEditor", module)
+  .addDecorator(withProvider)
+  .add("default", () => 
+    <ContractEditor />
+ );
