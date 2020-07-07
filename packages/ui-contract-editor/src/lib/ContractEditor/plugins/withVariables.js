@@ -50,7 +50,9 @@ export const isEditableVariable = (lockText, editor, event) => {
       return selection.anchor.offset > 0;
     }
     // do not allow hitting enter or pasting inside variables
-    if (event.inputType === 'insertFromPaste' || event.inputType === 'insertParagraph') {
+    if (event.inputType === 'insertFromPaste'
+    || event.inputType === 'insertParagraph'
+    || event.inputType === 'insertLineBreak') {
       return false;
     }
   }
