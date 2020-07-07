@@ -3,9 +3,9 @@
   "version": "0.93.1",
   "private": true,
   "dependencies": {
-    "@accordproject/cicero-core": "^0.20.11-20200626165149",
-    "@accordproject/markdown-slate": "^0.11.4-20200626164143",
-    "@accordproject/markdown-transform": "^0.11.4-20200626164143",
+    "@accordproject/cicero-core": "^0.20.11-20200707140253",
+    "@accordproject/markdown-slate": "^0.11.4-20200707133347",
+    "@accordproject/markdown-transform": "^0.11.4-20200707133347",
     "@accordproject/ui-components": "0.93.1",
     "@accordproject/ui-concerto": "0.93.1",
     "@accordproject/ui-markdown-editor": "0.93.1",

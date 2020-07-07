@@ -24,6 +24,7 @@ import _ from 'lodash';
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 import ClauseComponent from '../components/Clause';
 import Conditional from '../components/Conditional';
+import Optional from '../components/Optional';
 
 /* Plugins */
 import withClauseSchema, { CLAUSE, FORMULA, VARIABLE } from './plugins/withClauseSchema';
@@ -93,6 +94,9 @@ const ContractEditor = (props) => {
       ),
       conditional: () => (
         <Conditional readOnly={props.readOnly} attributes={attributes}>{children}</Conditional>
+      ),
+      optional: () => (
+        <Optional readOnly={props.readOnly} attributes={attributes}>{children}</Optional>
       ),
       formula: () => (
         <span id={element.data.id} {...attributes} className={FORMULA}>{children}</span>
