@@ -11,6 +11,10 @@ Use the interactive [Storybook][storybook] to discover the components and their 
 
 ### Visit the [Storybook Demo][storybook]
 
+### Sample Project
+
+To use there components refer to: https://github.com/accordproject/web-components-starter
+
 ### Run Locally
 
 ```sh
