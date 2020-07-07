@@ -16,7 +16,7 @@ export const BUTTON_COLORS = {
 export const BUTTON_ACTIVE = {
   background: BUTTON_COLORS.BACKGROUND_ACTIVE,
   symbol: BUTTON_COLORS.SYMBOL_ACTIVE
-}
+};
 
 export const BLOCK_STYLE = {
   paragraph: MISC_CONSTANTS.DROPDOWN_NORMAL,
@@ -51,6 +51,27 @@ export const DROPDOWN_STYLE_H2 = {
 export const DROPDOWN_STYLE_H3 = {
   fontSize: '16px',
   lineHeight: '16px',
+  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
+  color: MISC_CONSTANTS.DROPDOWN_COLOR,
+};
+
+export const DROPDOWN_STYLE_H4 = {
+  fontSize: '14px',
+  lineHeight: '14px',
+  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
+  color: MISC_CONSTANTS.DROPDOWN_COLOR,
+};
+
+export const DROPDOWN_STYLE_H5 = {
+  fontSize: '12px',
+  lineHeight: '12px',
+  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
+  color: MISC_CONSTANTS.DROPDOWN_COLOR,
+};
+
+export const DROPDOWN_STYLE_H6 = {
+  fontSize: '10px',
+  lineHeight: '10px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };

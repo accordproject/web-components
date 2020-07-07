@@ -9,6 +9,14 @@ import {
   CODE_BLOCK, HTML_BLOCK, BLOCK_QUOTE, UL_LIST, OL_LIST, LIST_ITEM,
   HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS
 } from '../utilities/schema';
+import {
+  DROPDOWN_STYLE_H1,
+  DROPDOWN_STYLE_H2,
+  DROPDOWN_STYLE_H3,
+  DROPDOWN_STYLE_H4,
+  DROPDOWN_STYLE_H5,
+  DROPDOWN_STYLE_H6
+} from '../utilities/constants';
 import generateId from '../utilities/generateId';
 
 const Element = (props) => {
@@ -19,12 +27,12 @@ const Element = (props) => {
   const headingId = HEADINGS.includes(type) ? generateId(element) : null;
   const baseElementRenderer = {
     [PARAGRAPH]: () => (<p {...attributes}>{children}</p>),
-    [H1]: () => (<Heading id={headingId} as="h1" {...attributes}>{children}</Heading>),
-    [H2]: () => (<Heading id={headingId} as="h2" {...attributes}>{children}</Heading>),
-    [H3]: () => (<Heading id={headingId} as="h3" {...attributes}>{children}</Heading>),
-    [H4]: () => (<Heading id={headingId} as="h4" {...attributes}>{children}</Heading>),
-    [H5]: () => (<Heading id={headingId} as="h5" {...attributes}>{children}</Heading>),
-    [H6]: () => (<Heading id={headingId} as="h6" {...attributes}>{children}</Heading>),
+    [H1]: () => (<Heading id={headingId} as="h1" style={DROPDOWN_STYLE_H1} {...attributes}>{children}</Heading>),
+    [H2]: () => (<Heading id={headingId} as="h2" style={DROPDOWN_STYLE_H2} {...attributes}>{children}</Heading>),
+    [H3]: () => (<Heading id={headingId} as="h3" style={DROPDOWN_STYLE_H3} {...attributes}>{children}</Heading>),
+    [H4]: () => (<Heading id={headingId} as="h4" style={DROPDOWN_STYLE_H4} {...attributes}>{children}</Heading>),
+    [H5]: () => (<Heading id={headingId} as="h5" style={DROPDOWN_STYLE_H5} {...attributes}>{children}</Heading>),
+    [H6]: () => (<Heading id={headingId} as="h6" style={DROPDOWN_STYLE_H6} {...attributes}>{children}</Heading>),
     [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
     [LINEBREAK]: () => (<br className={LINEBREAK} {...attributes} />),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),

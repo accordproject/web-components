@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as SCHEMA from '../../utilities/schema';
 
 const Heading = styled.div`
-  font-family: serif;
+  font-family: inherit;
 `;
 
 Heading.propTypes = {
