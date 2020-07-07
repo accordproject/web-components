@@ -63,8 +63,8 @@ And this is <variable>an HTML inline</variable>.
 ## H2
 ### H3
 #### H4
-#### H5
-##### H6
+##### H5
+###### H6
 
 Fin.
 `;
