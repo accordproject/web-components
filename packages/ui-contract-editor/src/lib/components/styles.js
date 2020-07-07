@@ -94,18 +94,6 @@ export const ClauseHeader = styled.div`
 `;
 
 export const ClauseBody = styled.div`
-  .variable {
-    color: #000;
-    padding: 0 3px 1px 3px;
-  }
-  .conditional {
-    color: #000;
-    padding: 0 3px 1px 3px;
-    margin-left: 2px;
-  }
-  .computed {
-    color: #f1baff;
-  }
   li {
     transition: none;
   }
