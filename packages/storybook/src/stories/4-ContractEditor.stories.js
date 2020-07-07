@@ -203,8 +203,4 @@ contractEditor.story = {
 
 const withProvider = (story) => <Provider store={store}>{story()}</Provider>
 
-storiesOf("ContractEditor", module)
-  .addDecorator(withProvider)
-  .add("default", () => 
-    <ContractEditor />
- );
+storiesOf("ContractEditor", module).addDecorator(withProvider);
