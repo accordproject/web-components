@@ -4,7 +4,12 @@ export const CONDITIONAL = 'conditional';
 export const OPTIONAL = 'optional';
 export const FORMULA = 'formula';
 
-const INLINES = { [VARIABLE]: true, [CONDITIONAL]: true, [OPTIONAL]: true };
+const INLINES = {
+  [VARIABLE]: true,
+  [CONDITIONAL]: true,
+  [OPTIONAL]: true,
+  [FORMULA]: true
+};
 const VOIDS = {};
 
 /* eslint no-param-reassign: 0 */
