@@ -1,9 +1,10 @@
 export const CLAUSE = 'clause';
 export const VARIABLE = 'variable';
 export const CONDITIONAL = 'conditional';
+export const OPTIONAL = 'optional';
 export const FORMULA = 'formula';
 
-const INLINES = { [VARIABLE]: true, [CONDITIONAL]: true };
+const INLINES = { [VARIABLE]: true, [CONDITIONAL]: true, [OPTIONAL]: true };
 const VOIDS = {};
 
 /* eslint no-param-reassign: 0 */

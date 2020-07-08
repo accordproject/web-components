@@ -6,17 +6,45 @@ a {
     background-color: #e98181;
 }
 
-.conditional {
-    cursor: pointer;
+.variable,
+.conditional,
+.optional {
+    border-radius: 2px;
+    background-color: #fff;
+    color: #000;
 }
 
+.variable {
+    border: #A4BBE7 1px solid;
+    padding: 0px 3px;
+}
+
+.computed {
+    color: #f1baff;
+}
+
+.conditional,
+.optional {
+    border: #FFDDA0 1px solid;
+    margin-left: 2px;
+    padding: 1px 3px;
+}
+
+.optional > .variable {
+    cursor: text;
+    box-shadow: inset 0px 0px 0px 1px #A4BBE7;
+    padding: 0px 2px;
+    border: #A4BBE7 0px solid;
+}
+
+.optional:hover,
 .conditional:hover {
     cursor: pointer;
     background-color: #d4d8e1;
-    border-radius: 2px;
 }
 
-.conditionalTooltip {
+.conditionalTooltip,
+.optionalTooltip {
     opacity: 1 !important;
     border: 1px solid #141F3C;
     border-radius: 2px;
@@ -27,7 +55,8 @@ a {
     position: absolute;
 }
 
-.conditionalIcon {
+.conditionalIcon,
+.optionalIcon {
     position: absolute;
     display: inline-block;
     transition-duration: 0.2s;
@@ -38,6 +67,7 @@ a {
 }
 
 .conditionalIcon:hover,
+.optionalIcon:hover,
 .listIcon:hover {
     cursor: pointer;
 }
@@ -54,16 +84,4 @@ a {
 .addListIcon{
     display: block;
     margin-top: 23px;
-}
-
-.variable {
-    border: #A4BBE7 1px solid;
-    border-radius: 2px;
-    background-color: #fff;
-}
-
-.conditional {   
-    border: #FFDDA0 1px solid;
-    border-radius: 2px;
-    background-color: #fff;
 }

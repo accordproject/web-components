@@ -48,6 +48,35 @@ export const ClauseConditionalTooltip = styled.span`
   }
 `;
 
+export const ClauseOptional = styled.svg`
+  visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
+`;
+
+export const ClauseOptionalTooltip = styled.span`
+  visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
+  margin-top: -${props => props.tooltipHeight}em;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: ${props => props.caretTop}px;
+    left: ${props => props.caretLeft - 1}px;
+    border-top: 5px solid #141F3C;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: ${props => props.caretTop}px;
+    left: ${props => props.caretLeft}px;
+    border-top: 4px solid #141F3C;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+`;
+
 export const ClauseHeader = styled.div`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
   font-family: serif;
@@ -65,18 +94,6 @@ export const ClauseHeader = styled.div`
 `;
 
 export const ClauseBody = styled.div`
-  .variable {
-    color: #000;
-    padding: 0 3px 1px 3px;
-  }
-  .conditional {
-    color: #000;
-    padding: 0 3px 1px 3px;
-    margin-left: 2px;
-  }
-  .computed {
-    color: #f1baff;
-  }
   li {
     transition: none;
   }

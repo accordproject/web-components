@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     margin: 10px auto;
     padding: 1.0em 10px 1.2em 15px;
     border-left: 3px solid #484848;
-    line-height: 1.4285em;
+    line-height: 1.5em;
     position: relative;
   }
 `;
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
 export default { title: 'Contract Editor' };
 
 const templates = {
+  'Optional Clause': 'https://parserv2--templates-accordproject.netlify.app/archives/latedeliveryandpenalty-optional@0.1.0.cta',
   'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta',
   'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta'
 };
@@ -40,7 +41,7 @@ export const contractEditor = () => {
   const markdownText = text( 'Markdown', `# Heading One
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
-  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta');
+  const templateUrl = select('Template Archive URL', templates, 'https://parserv2--templates-accordproject.netlify.app/archives/latedeliveryandpenalty-optional@0.1.0.cta');
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
