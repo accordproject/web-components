@@ -32,6 +32,7 @@ import withClauseSchema, {
   CLAUSE,
   CONDITIONAL,
   FORMULA,
+  OPTIONAL,
   VARIABLE
 } from './plugins/withClauseSchema';
 import withClauses, { isEditableClause } from './plugins/withClauses';
