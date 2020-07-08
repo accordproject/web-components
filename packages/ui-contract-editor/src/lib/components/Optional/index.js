@@ -20,6 +20,7 @@ const Optional = React.forwardRef((props, ref) => {
   const {
     attributes,
     children,
+    isOptionalVariable,
     children: { props: { node } },
     children: { props: { node: { data } } },
   } = props;
@@ -40,11 +41,17 @@ const Optional = React.forwardRef((props, ref) => {
     children: data.hasSome ? data.whenNone : data.whenSome
   };
 
-  const toggleOptional = (path) => {
+  const swapOptional = (path) => {
     Editor.withoutNormalizing(editor, () => {
       Transforms.removeNodes(editor, { at: path });
       Transforms.insertNodes(editor, optionalReverse, { at: path });
     });
+  };
+
+  const toggleOptional = (path, target) => {
+    if (!target || !isOptionalVariable(target, editor)) {
+      swapOptional(path);
+    }
   };
 
   const optionalProps = {
@@ -52,7 +59,7 @@ const Optional = React.forwardRef((props, ref) => {
     className: isContentShowing ? OPTIONAL : '',
     onMouseEnter: () => setHovering(true),
     onMouseLeave: () => setHovering(false),
-    onClick: () => toggleOptional(optionalPath),
+    onClick: (e) => toggleOptional(optionalPath, e.target),
     ...attributes,
     ref
   };
@@ -90,6 +97,7 @@ Optional.propTypes = {
     data: PropTypes.obj,
   }),
   readOnly: PropTypes.bool,
+  isOptionalVariable: PropTypes.func,
 };
 
 export default Optional;

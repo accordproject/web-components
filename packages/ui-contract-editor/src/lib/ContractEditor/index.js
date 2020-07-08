@@ -75,6 +75,16 @@ const ContractEditor = (props) => {
     pasteToContract: props.pasteToContract
   };
 
+  const isOptionalVariable = (target, editor) => {
+    const TARGET_NODE = ReactEditor.toSlateNode(editor, target);
+    const TARGET_PATH = ReactEditor.findPath(editor, TARGET_NODE);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [currNode] of Node.ancestors(editor, TARGET_PATH, { reverse: true })) {
+      if (currNode.type === 'variable') return true;
+    }
+    return false;
+  };
+
   const customElements = (attributes, children, element, editor) => {
     const returnObject = {
       clause: () => (
@@ -96,7 +106,12 @@ const ContractEditor = (props) => {
         <Conditional readOnly={props.readOnly} attributes={attributes}>{children}</Conditional>
       ),
       optional: () => (
-        <Optional readOnly={props.readOnly} attributes={attributes}>{children}</Optional>
+        <Optional
+          readOnly={props.readOnly}
+          isOptionalVariable={isOptionalVariable}
+          attributes={attributes}>
+            {children}
+        </Optional>
       ),
       formula: () => (
         <span id={element.data.id} {...attributes} className={FORMULA}>{children}</span>
