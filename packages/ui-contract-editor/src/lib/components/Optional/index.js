@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
 
 /* Plugins */
-import { OPTIONAL } from '../../ContractEditor/plugins/withClauseSchema';
+import { OPTIONAL, VARIABLE } from '../../ContractEditor/plugins/withClauseSchema';
 
 /* Components */
 import OptionalBoolean from './OptionalBoolean';
@@ -20,7 +20,6 @@ const Optional = React.forwardRef((props, ref) => {
   const {
     attributes,
     children,
-    isOptionalVariable,
     children: { props: { node } },
     children: { props: { node: { data } } },
   } = props;
@@ -41,6 +40,16 @@ const Optional = React.forwardRef((props, ref) => {
     children: data.hasSome ? data.whenNone : data.whenSome
   };
 
+  const isOptionalVariable = (target) => {
+    const TARGET_NODE = ReactEditor.toSlateNode(editor, target);
+    const TARGET_PATH = ReactEditor.findPath(editor, TARGET_NODE);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [currNode] of Node.ancestors(editor, TARGET_PATH, { reverse: true })) {
+      if (currNode.type === VARIABLE) return true;
+    }
+    return false;
+  };
+
   const swapOptional = (path) => {
     Editor.withoutNormalizing(editor, () => {
       Transforms.removeNodes(editor, { at: path });
@@ -49,7 +58,7 @@ const Optional = React.forwardRef((props, ref) => {
   };
 
   const toggleOptional = (path, target) => {
-    if (!target || !isOptionalVariable(target, editor)) {
+    if (!target || !isOptionalVariable(target)) {
       swapOptional(path);
     }
   };
@@ -97,7 +106,6 @@ Optional.propTypes = {
     data: PropTypes.obj,
   }),
   readOnly: PropTypes.bool,
-  isOptionalVariable: PropTypes.func,
 };
 
 export default Optional;
