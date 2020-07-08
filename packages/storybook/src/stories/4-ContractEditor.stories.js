@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     margin: 10px auto;
     padding: 1.0em 10px 1.2em 15px;
     border-left: 3px solid #484848;
-    line-height: 1.4285em;
+    line-height: 1.5em;
     position: relative;
   }
 `;
