@@ -1,5 +1,5 @@
 /* React */
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Editor, Transforms, Node } from 'slate';
 import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
@@ -63,10 +63,15 @@ const Optional = React.forwardRef((props, ref) => {
     }
   };
 
+  const handleMouseEnter = (target) => {
+    if (target.className === OPTIONAL) { setHovering(true); }
+    if (target.className === VARIABLE) { setHovering(false); }
+  };
+
   const optionalProps = {
     id: data.name,
     className: isContentShowing ? OPTIONAL : '',
-    onMouseEnter: () => setHovering(true),
+    onMouseEnter: (e) => handleMouseEnter(e.target),
     onMouseLeave: () => setHovering(false),
     onClick: (e) => toggleOptional(optionalPath, e.target),
     ...attributes,

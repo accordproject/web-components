@@ -31,6 +31,7 @@ a {
 
 .optional > .variable {
     padding: 0;
+    cursor: text;
 }
 
 .optional:hover,
