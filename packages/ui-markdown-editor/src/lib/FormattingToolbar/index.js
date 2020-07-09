@@ -69,7 +69,6 @@ const FormattingToolbar = ({
       <FormatButton {...mark} {...bold} {...buttonProps} />
       <FormatButton {...mark} {...italic} {...buttonProps} />
       <FormatButton {...mark} {...code} {...buttonProps} />
-      <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
       <Separator />
       <FormatButton {...block} {...quote} {...buttonProps} />
       <FormatButton {...block} {...olist} {...buttonProps} />
@@ -80,6 +79,7 @@ const FormattingToolbar = ({
       <Separator />
       <HyperlinkButton {...linkProps} {...link} {...buttonProps} />
       <InsertImageButton {...image} canBeFormatted={canBeFormatted} />
+      <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
       { showLinkModal && <HyperlinkModal ref={linkModalRef} {...linkProps} /> }
     </ToolbarMenu>
   );
