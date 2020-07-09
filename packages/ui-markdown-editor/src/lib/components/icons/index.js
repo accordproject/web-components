@@ -8,6 +8,7 @@ import image from './image';
 import link from './link';
 import undo from './undo';
 import redo from './redo';
+import tbreak from './tbreak';
 import Separator from './separator';
 
 export {
@@ -21,5 +22,6 @@ export {
   link,
   undo,
   redo,
+  tbreak,
   Separator
 };

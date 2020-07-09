@@ -14,7 +14,7 @@ import { BUTTON_ACTIVE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
-import { toggleMark, toggleBlock } from './utilities/toolbarHelpers';
+import { toggleMark, toggleBlock, insertThematicBreak } from './utilities/toolbarHelpers';
 import { withImages, insertImage } from './plugins/withImages';
 import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
@@ -71,6 +71,7 @@ export const MarkdownEditor = (props) => {
     link: () => {
       setShowLinkModal(true);
     },
+    horizontal_rule: (code) => insertThematicBreak(editor, code),
   };
 
   const onKeyDown = useCallback((event) => {
