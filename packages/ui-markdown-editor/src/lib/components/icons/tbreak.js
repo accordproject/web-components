@@ -24,7 +24,7 @@ const icon = () => (
 
 const tbreak = {
   type: 'horizontal_rule',
-  label: 'Thematic Break',
+  label: 'Page Break',
   height: '25px',
   width: '25px',
   padding: '5px 7px',

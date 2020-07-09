@@ -43,7 +43,7 @@ const Element = (props) => {
     [UL_LIST]: () => (<ul {...attributes}>{children}</ul>),
     [LIST_ITEM]: () => (<li {...attributes}>{children}</li>),
     [IMAGE]: () => (<ImageElement {...props} />),
-    [HR]: () => (<HorizontalRule {...attributes}>{children}</HorizontalRule>),
+    [HR]: () => (<HorizontalRule {...attributes} />),
     [HTML_INLINE]: () => (<span className={HTML_INLINE} {...attributes}>
       {data.content}{children}
     </span>),
