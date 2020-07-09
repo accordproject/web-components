@@ -39,11 +39,15 @@ const PageBreak = styled.span`
 `;
 
 const HorizontalRule = (props) => (
-    <HorizontalRuleWrapper contentEditable={false} {...props.attributes}>
-      <HorizontalLine />
-      <PageBreak contentEditable={false}>{props.children}PAGE BREAK</PageBreak>
-      <HorizontalLine />
-    </HorizontalRuleWrapper>
+  <div contentEditable={false} {...props.attributes}>
+    <br />
+      <HorizontalRuleWrapper contentEditable={false}>
+        <HorizontalLine />
+        <PageBreak contentEditable={false}>{props.children}PAGE BREAK</PageBreak>
+        <HorizontalLine />
+      </HorizontalRuleWrapper>
+    <br />
+  </div>
 );
 
 HorizontalRule.propTypes = {
