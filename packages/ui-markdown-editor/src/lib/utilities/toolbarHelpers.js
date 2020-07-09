@@ -26,7 +26,7 @@ export const toggleBlock = (editor, format) => {
   Transforms.unwrapNodes(editor, { match: n => isQuote(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => isListItem(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => LIST_TYPES.includes(n.type), split: true });
-  
+
   if (format === 'paragraph' || format.startsWith('heading')) {
     Transforms.setNodes(editor, { type: format });
     return;
@@ -67,4 +67,24 @@ export const toggleHistory = (editor, format) => {
   if (format === 'undo') {
     editor.undo();
   } else { editor.redo(); }
+};
+
+export const insertThematicBreak = (editor, type) => {
+  const text = { text: '' };
+  const tBreakNode = [
+    {
+      object: 'block',
+      type,
+      children: [text],
+      data: {},
+      hr: true
+    },
+    {
+      children: [text],
+      data: {},
+      object: 'block',
+      type: PARAGRAPH
+    },
+  ];
+  Transforms.insertNodes(editor, tBreakNode);
 };

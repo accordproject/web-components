@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
+import { Transforms } from 'slate';
 
 import { InsertImageButton } from '../plugins/withImages';
 import ToolbarMenu from './ToolbarMenu';
 import FormatButton from './FormatButton';
+import InsertButton from './InsertButton';
 import HistoryButton from './HistoryButton';
 import HyperlinkButton from './HyperlinkButton';
 import StyleDropdown from './StyleFormat';
@@ -12,18 +14,19 @@ import HyperlinkModal from './HyperlinkModal';
 import {
   toggleBlock, isBlockActive,
   toggleMark, isMarkActive,
-  toggleHistory
+  toggleHistory, insertThematicBreak
 } from '../utilities/toolbarHelpers';
 import {
   bold, italic, code,
   quote, olist, ulist,
   image, link, undo, redo,
-  Separator
+  tbreak, Separator
 } from '../components/icons';
 
 const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
 const block = { toggleFunc: toggleBlock, activeFunc: isBlockActive };
 const history = { toggleFunc: toggleHistory };
+const insert = { toggleFunc: insertThematicBreak };
 
 const FormattingToolbar = ({
   canBeFormatted,
@@ -37,7 +40,7 @@ const FormattingToolbar = ({
   const buttonProps = {
     canBeFormatted,
     activeButton
-  }
+  };
 
   const linkProps = {
     showLinkModal,
@@ -59,7 +62,6 @@ const FormattingToolbar = ({
     }
   }, [editor, showLinkModal]);
 
-
   return (
     <ToolbarMenu id="ap-rich-text-editor-toolbar">
       <StyleDropdown canBeFormatted={canBeFormatted}/>
@@ -67,6 +69,7 @@ const FormattingToolbar = ({
       <FormatButton {...mark} {...bold} {...buttonProps} />
       <FormatButton {...mark} {...italic} {...buttonProps} />
       <FormatButton {...mark} {...code} {...buttonProps} />
+      <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
       <Separator />
       <FormatButton {...block} {...quote} {...buttonProps} />
       <FormatButton {...block} {...olist} {...buttonProps} />
