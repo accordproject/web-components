@@ -12,7 +12,7 @@ const icon = () => (
 
 const tbreak = {
   type: 'horizontal_rule',
-  label: `Page Break (${MOD()}+Ctrl+Enter)`,
+  label: `Page Break (${MOD()}+Enter)`,
   height: '17px',
   width: '17px',
   viewBox: '0 0 19 19',

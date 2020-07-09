@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const SelectFreeZone = styled.div`
+  user-select: none
+`;
+
 const HorizontalRuleWrapper = styled.div`
   overflow: visible; /* For IE */
   padding: 0;
@@ -39,7 +43,7 @@ const PageBreak = styled.span`
 `;
 
 const HorizontalRule = (props) => (
-  <div contentEditable={false} {...props.attributes}>
+  <SelectFreeZone contentEditable={false} {...props.attributes}>
     <br />
       <HorizontalRuleWrapper contentEditable={false}>
         <HorizontalLine />
@@ -47,7 +51,7 @@ const HorizontalRule = (props) => (
         <HorizontalLine />
       </HorizontalRuleWrapper>
     <br />
-  </div>
+  </SelectFreeZone>
 );
 
 HorizontalRule.propTypes = {
