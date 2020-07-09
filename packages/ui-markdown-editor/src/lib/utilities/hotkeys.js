@@ -60,7 +60,7 @@ export const ENTER_BLOCK = {
   ...ENTER_LIST
 };
 
-export const formattingHotKeys = ['mod+b', 'mod+i', 'mod+shift+7', 'mod+shift+8', 'mod+shift+9', 'mod+shift+.', 'mod+shift+g', 'mod+k'];
+export const formattingHotKeys = ['mod+b', 'mod+i', 'mod+shift+7', 'mod+shift+8', 'mod+shift+9', 'mod+shift+.', 'mod+shift+g', 'mod+k', 'mod+enter'];
 
 export const ENTER = 'enter';
 export const ENTER_SHIFT = 'shift+enter';
