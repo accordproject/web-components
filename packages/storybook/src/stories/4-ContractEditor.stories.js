@@ -120,13 +120,13 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
   const onContractChange = useCallback((value) => {
     setSlateValue(value);
-    action('contract-changed')(value);
+    action('Contract -> Change: ')(value);
   }, [editor]);
 
   const clausePropsObject = {
-    CLAUSE_DELETE_FUNCTION: action('clause-deleted'),
-    CLAUSE_EDIT_FUNCTION: action('clause-edit'),
-    CLAUSE_TEST_FUNCTION: action('clause-test')
+    CLAUSE_DELETE_FUNCTION: action('Clause -> Deleted'),
+    CLAUSE_EDIT_FUNCTION: action('Clause -> Edit'),
+    CLAUSE_TEST_FUNCTION: action('Clause -> Test')
   };
 
   const augmentEditor = useCallback((slateEditor) => {
@@ -163,6 +163,11 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
       data: { name: "formula", elementType: "Double" },
       children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
     };
+    action('Clause -> Parse: ')({
+      'Clause': ciceroClause,
+      'AST': ast,
+      'Draft': something
+    });
 
     Editor.withoutNormalizing(newReduxState.editor, () => {
       Transforms.removeNodes(newReduxState.editor, { at: path });
@@ -173,7 +178,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
   const onClauseUpdatedHandler = useCallback((val) => {
     parseClause(val);
-    action('clause-updated')(val);
+    action('Clause -> Update: ')(val);
   }, [editor, parseClause])
 
   return (
@@ -184,8 +189,8 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         lockText={lockText}
         readOnly={readOnly}
         clauseProps={clausePropsObject}
-        loadTemplateObject={action('load-template')}
-        pasteToContract={action('paste-to-contract')}
+        loadTemplateObject={action('Template -> Load')}
+        pasteToContract={action('Contract -> Paste')}
         onClauseUpdated={onClauseUpdatedHandler}
         augmentEditor={augmentEditor}
       />
