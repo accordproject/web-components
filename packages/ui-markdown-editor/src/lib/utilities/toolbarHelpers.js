@@ -40,11 +40,29 @@ export const toggleBlock = (editor, format) => {
 
     if (isList(format)) {
       const listItemBlock = { type: LIST_ITEM, children: [], data: { tight: true } };
-      // eslint-disable-next-line no-restricted-syntax
+      let anchor = [];
+      let focus = [];
+      editor.selection.anchor.path.map((item,index)=>{
+      if(index===editor.selection.anchor.path.length-1){
+        anchor[index]=0
+        anchor[index+1]=item
+      }else{
+        anchor[index]=item
+      }
+       });
+      editor.selection.focus.path.map((item,index)=>{
+        if(index===editor.selection.focus.path.length-1){
+          focus[index]=0
+          focus[index+1]=item
+        }else{
+          focus[index]=item
+        }
+        });
+      // eslint-disable-next-line no-restricted-syntax  
       for (const [node, path] of Node.descendants(
         editor,
-        { from: editor.selection.anchor.path, to: editor.selection.focus.path }
-      )) {
+        { from: anchor, to: focus }
+      ))  {
         if (node.type === PARAGRAPH) {
           Transforms.wrapNodes(editor, listItemBlock, { at: path });
         }
