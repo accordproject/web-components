@@ -40,24 +40,8 @@ export const toggleBlock = (editor, format) => {
 
     if (isList(format)) {
       const listItemBlock = { type: LIST_ITEM, children: [], data: { tight: true } };
-      let anchor = [];
-      let focus = [];
-      editor.selection.anchor.path.map((item,index)=>{
-      if(index===editor.selection.anchor.path.length-1){
-        anchor[index]=0
-        anchor[index+1]=item
-      }else{
-        anchor[index]=item
-      }
-       });
-      editor.selection.focus.path.map((item,index)=>{
-        if(index===editor.selection.focus.path.length-1){
-          focus[index]=0
-          focus[index+1]=item
-        }else{
-          focus[index]=item
-        }
-        });
+      let anchor = editor.selection.anchor.path.slice(0, -1).concat(0, editor.selection.anchor.path[editor.selection.anchor.path.length - 1]);
+      let focus = editor.selection.focus.path.slice(0, -1).concat(0, editor.selection.focus.path[editor.selection.focus.path.length - 1]);
       // eslint-disable-next-line no-restricted-syntax  
       for (const [node, path] of Node.descendants(
         editor,
