@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/* Actions */
+import { childReducer } from '../actions';
+
 /* Styling */
 import { ClauseConditionalTooltip } from '../styles';
 
@@ -18,10 +21,14 @@ const ConditionalSwitch = (props) => {
     caretLeft: 2,
     tooltipHeight: 1.85,
   };
-  const tooltipText = props.isTrue ? props.whenFalse : props.whenTrue;
-  const tooltipInstructions = props.isContentShowing
-    ? 'Hide text'
-    : `Change to: "${tooltipText}"`;
+  const trueHasLength = childReducer(props.whenTrue).length;
+  const falseHasLength = childReducer(props.whenFalse).length;
+  const tooltipText = props.isTrue ? childReducer(props.whenFalse) : childReducer(props.whenTrue);
+  const tooltipInstructions = (text) => {
+    if (trueHasLength && falseHasLength) return `Change to: "${text}"`;
+    if (props.isContentShowing) return 'Hide text';
+    return `Change to: "${text}"`;
+  };
 
   return (
     <>
@@ -29,7 +36,7 @@ const ConditionalSwitch = (props) => {
         contentEditable={false}
         {...conditionalTooltip}
       >
-        {tooltipInstructions}
+        {tooltipInstructions(tooltipText)}
       </ClauseConditionalTooltip>
     </>
   );
