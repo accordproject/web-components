@@ -73,16 +73,16 @@ export default { title: 'Contract Editor' };
 
 const templates = {
   'Optional Clause': 'https://parserv2--templates-accordproject.netlify.app/archives/latedeliveryandpenalty-optional@0.1.0.cta',
-  'Fixed Interest': 'https://templates.accordproject.org/archives/fixed-interests@0.4.1.cta',
+  'Fixed Interest': 'https://parserv2--templates-accordproject.netlify.app/archives/fixed-interests@0.5.0.cta',
   'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta',
-  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta'
+  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta',
 };
 
 export const contractEditor = () => {
   const markdownText = text( 'Markdown', `# Heading One
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
-  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/fixed-interests@0.4.1.cta');
+  const templateUrl = select('Template Archive URL', templates, 'https://parserv2--templates-accordproject.netlify.app/archives/fixed-interests@0.5.0.cta');
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
@@ -95,8 +95,10 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
       Template.fromUrl(templateUrl)
         .then(async (template) => {
           const clause = new Clause(template);
+          // console.log('clause', clause);
           clause.parse(template.getMetadata().getSample());
           const slateValueNew = await clause.draft({ format: 'slate' });
+          console.log('slateValueNew', slateValueNew);
 
           const extraMarkdown = `This is some more text after a clause. Test moving a clause by dragging it or by using the up and down arrows.`;
           const extraText = slateTransformer.fromMarkdown(extraMarkdown);
