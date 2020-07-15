@@ -1,5 +1,5 @@
 /* React */
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Editor, Transforms, Node } from 'slate';
 import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
