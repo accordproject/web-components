@@ -53,7 +53,13 @@ export const UploadComponent = props => {
 
   return (
     <ActionButton
-      onClick={props.onUploadItem}
+      type='file'
+      onClick={(event) => {
+        // React doesn't automatically reset file input
+        event.persist();
+        event.target.value = null;
+      }}
+      onChange={props.onUploadItem}
       aria-label='Import Button'
       className='ui-components__library-upload-button'
     >
