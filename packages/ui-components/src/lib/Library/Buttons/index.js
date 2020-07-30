@@ -1,5 +1,5 @@
 /* React */
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /* Styling */
@@ -49,15 +49,27 @@ export const ImportComponent = props => {
 };
 
 export const UploadComponent = props => {
+  const fileInputRef = useRef(null);
+
   if (!props.onUploadItem) return null;
 
   return (
     <ActionButton
-      onClick={props.onUploadItem}
-      aria-label='Import Button'
+      onClick={() => fileInputRef.current.click()}
       className='ui-components__library-upload-button'
     >
-      Add a new library item
+      Upload your tempate
+      <input
+        ref={fileInputRef}
+        type="file"
+        hidden
+        onClick={event => {
+          // React doesn't automatically reset file input
+          event.persist();
+          event.target.value = null;
+        }}
+        onChange={props.onUploadItem}
+      />
     </ActionButton>
   );
 };
