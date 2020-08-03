@@ -9,10 +9,10 @@ export const homogeneous = () => {
     {
       uri: text(
         "First template's Uri",
-        "https://templates.accordproject.org/archives/acceptance-of-delivery@0.13.1.cta"
+        "https://templates.accordproject.org/archives/acceptance-of-delivery@0.14.0.cta"
       ),
       name: text("First template's Name", "Acceptance of Delivery"),
-      version: text("First template's Version", "0.20.10"),
+      version: text("First template's Version", "0.14.0"),
       description: text(
         "First template's Description",
         "This clause allows the receiver of goods to inspect them for a given time period after delivery."
@@ -21,26 +21,26 @@ export const homogeneous = () => {
     },
     {
       uri:
-        "https://templates.accordproject.org/archives/car-rental-tr@0.10.1.cta",
+        "https://templates.accordproject.org/archives/car-rental-tr@0.11.0.cta",
       name: "Car Rental (TR)",
-      version: "0.20.10",
+      version: "0.11.0",
       description: "Ta Simple Car Rental Contract in Turkish Language",
       itemType: 'template'
     },
     {
       uri:
-        "https://templates.accordproject.org/archives/certificate-of-incorporation@0.3.1.cta",
+        "https://templates.accordproject.org/archives/certificate-of-incorporation@0.4.0.cta",
       name: "Certificate Of Incorporation",
-      version: "0.20.10",
+      version: "0.4.0",
       description: "This is a sample Certificate of Incorporation.",
       itemType: 'template'
     },
     {
       uri:
-        "ap://eat-apples@0.10.1#fc26b60d5cb6c23c4e85ea643a6931bca96c42ec94e467df522d80fb79864353",
+        "ap://eat-apples@0.11.0#cecf1c8205a8f47bdbbade47046cf1661b4b8ba293f06a02dd43cf4481cc8639",
       displayName: "Eat Apples",
       name: 'eat-apples',
-      version: "0.10.1",
+      version: "0.11.0",
       description: "This is a sample Certificate of Incorporation.",
       itemType: 'template'
     }

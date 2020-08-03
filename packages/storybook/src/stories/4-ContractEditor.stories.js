@@ -72,17 +72,17 @@ const Wrapper = styled.div`
 export default { title: 'Contract Editor' };
 
 const templates = {
-  'Optional Clause': 'https://parserv2--templates-accordproject.netlify.app/archives/latedeliveryandpenalty-optional@0.1.0.cta',
-  'Fixed Interest': 'https://parserv2--templates-accordproject.netlify.app/archives/fixed-interests@0.5.0.cta',
-  'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.15.0.cta',
-  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.13.1.cta',
+  'Optional Clause': 'https://templates.accordproject.org/archives/latedeliveryandpenalty-optional@0.1.0.cta',
+  'Fixed Interest': 'https://templates.accordproject.org/archives/fixed-interests@0.5.0.cta',
+  'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.16.0.cta',
+  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.14.0.cta',
 };
 
 export const contractEditor = () => {
   const markdownText = text( 'Markdown', `# Heading One
 This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
 `);
-  const templateUrl = select('Template Archive URL', templates, 'https://parserv2--templates-accordproject.netlify.app/archives/fixed-interests@0.5.0.cta');
+  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.16.0.cta');
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
@@ -158,6 +158,13 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
     const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
     
+    action('Clause -> Parse: ')({
+      'Clause': ciceroClause,
+      'AST': ast,
+      'Draft': something
+    });
+
+    /* XXX What do we do with this? - JS
     const path = ReactEditor.findPath(newReduxState.editor, found[0]);
     const newConditional = {
       object: 'inline',
@@ -165,17 +172,12 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
       data: { name: "formula", elementType: "Double" },
       children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
     };
-    action('Clause -> Parse: ')({
-      'Clause': ciceroClause,
-      'AST': ast,
-      'Draft': something
-    });
 
     Editor.withoutNormalizing(newReduxState.editor, () => {
       Transforms.removeNodes(newReduxState.editor, { at: path });
       Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
     });
-
+    */
   }, [editor]);
 
   const onClauseUpdatedHandler = useCallback((val) => {
