@@ -69,8 +69,6 @@ const Wrapper = styled.div`
   }
 `;
 
-export default { title: 'Contract Editor' };
-
 const templates = {
   'Optional Clause': 'https://templates.accordproject.org/archives/latedeliveryandpenalty-optional@0.1.0.cta',
   'Fixed Interest': 'https://templates.accordproject.org/archives/fixed-interests@0.5.0.cta',
@@ -210,6 +208,6 @@ contractEditor.story = {
   }
 };
 
-const withProvider = (story) => <Provider store={store}>{story()}</Provider>
+const withProvider = (story) => <Provider store={store}>{story()}</Provider>;
 
-storiesOf("ContractEditor", module).addDecorator(withProvider);
+export default { title: 'Contract Editor', decorators: [withProvider] };
