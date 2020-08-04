@@ -1,9 +1,9 @@
 {
   "name": "@accordproject/ui-contract-editor",
-  "version": "0.93.1",
+  "version": "0.94.0",
   "private": false,
   "dependencies": {
-    "@accordproject/ui-markdown-editor": "0.93.1",
+    "@accordproject/ui-markdown-editor": "0.94.0",
     "@accordproject/markdown-html": "^0.12.0",
     "@accordproject/markdown-slate": "^0.12.0",
     "@accordproject/markdown-transform": "^0.12.0",
