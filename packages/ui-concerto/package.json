@@ -7,7 +7,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "@accordproject/concerto-core": "^0.82.7",
+    "@accordproject/concerto-core": "^0.82.8",
     "semantic-ui-calendar-react": "^0.15.3",
     "semantic-ui-react": "^0.88.2",
     "lodash.get": "^4.4.2",
