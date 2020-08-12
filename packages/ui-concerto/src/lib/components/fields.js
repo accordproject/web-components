@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import React from 'react';
-import { Checkbox, Input, Form, Button, Select } from 'semantic-ui-react';
+import { Checkbox, Input, Form, Button, Select, Popup, Label } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import URI from 'urijs';
 import { parseValue, normalizeLabel } from '../utilities';
@@ -80,12 +80,16 @@ export const ConcertoRelationship = ({
 }) => {
   const { fragment, path } = URI.parse(value);
   const typeName = path.split('.').pop();
+  const popup = <Popup
+    content={<span>A relationship reference to <pre>{value}</pre></span>}
+    position='top right'
+    trigger={<Label tag='true'>{normalizeLabel(typeName)}</Label>}
+  />;
   return <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
-    <span></span>
     <Input
       type={type}
-      label={{ tag: true, content: typeName }}
+      label={popup}
       icon='long arrow alternate right'
       iconPosition='left'
       labelPosition='right'
