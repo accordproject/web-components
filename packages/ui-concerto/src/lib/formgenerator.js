@@ -80,7 +80,7 @@ class FormGenerator {
     try {
       texts.forEach(text => {
         // Unescape URL encoded relationship symbols
-        const model = text.replace('--&gt;', '-->');
+        const model = text.replace(/--&gt;/g, '-->');
         this.modelManager.addModelFile(model, null, true);
       });
       if (this.options.updateExternalModels) {
