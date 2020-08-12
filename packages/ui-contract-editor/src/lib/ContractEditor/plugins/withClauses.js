@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import { Editor, Node } from 'slate';
+import { Editor, Node, Transforms } from 'slate';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { HtmlTransformer } from '@accordproject/markdown-html';
 import _ from 'lodash';
@@ -75,12 +75,17 @@ const withClauses = (editor, withClausesProps) => {
   };
 
   editor.onChange = () => {
-    if (onClauseUpdated && editor.isInsideClause()) {
-      const debouncedOnClauseUpdated = _.debounce(onClauseUpdated, 1000, { maxWait: 10000 });
-      const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE });
-      debouncedOnClauseUpdated(clauseNode[0]);
-    }
     onChange();
+    if (onClauseUpdated && editor.isInsideClause()) {
+      const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE });
+      onClauseUpdated(clauseNode[0]).then(success => {
+        if (success) {
+          Transforms.setNodes(editor, { error: false }, { at: clauseNode[1] });
+        } else {
+          Transforms.setNodes(editor, { error: true }, { at: clauseNode[1] });
+        }
+      });
+    }
   };
 
   editor.insertData = (data) => {
