@@ -111,6 +111,7 @@ const ContractEditor = (props) => {
     const CLAUSE_PROPS = {
       templateUri: element.data.src,
       name: element.data.name,
+      error: element.error,
       clauseProps: props.clauseProps,
       readOnly: props.readOnly,
       hoveringFormulaContract,

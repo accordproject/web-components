@@ -136,52 +136,58 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   }, []);
 
   const parseClause = useCallback(async (val) => {
-    const newReduxState = store.getState();
-    const value = {
-      document: {
-        children: val.children
-      }
-    };
-    const text = slateTransformer.toMarkdown(value);
-
     const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
     const SLICE_INDEX_2 = val.data.src.indexOf('@');
     const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
-    const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
 
-    ciceroClause.parse(text);
+    try {
+      const newReduxState = store.getState();
+      const value = {
+        document: {
+          children: val.children
+        }
+      };
+      const text = slateTransformer.toMarkdown(value);
+      const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
+      ciceroClause.parse(text)
+      const parseResult = ciceroClause.getData();
+      action('Clause -> Parse: ')({
+        clause: TEMPLATE_NAME,
+        parseResult,
+      });
+      return Promise.resolve(true);
 
-    const ast = ciceroClause.getData();
-    const something = await ciceroClause.draft({format:'slate'});
+      /* XXX What do we do with this? - JS
+      const something = await ciceroClause.draft({format:'slate'});
+      const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
 
-    const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
-    
-    action('Clause -> Parse: ')({
-      'Clause': ciceroClause,
-      'AST': ast,
-      'Draft': something
-    });
+      action('Clause -> Parse: ')({
+        'Clause': ciceroClause,
+        'AST': ast,
+        'Draft': something
+      });
+      const path = ReactEditor.findPath(newReduxState.editor, found[0]);
+      const newConditional = {
+        object: 'inline',
+        type: 'formula',
+        data: { name: "formula", elementType: "Double" },
+        children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
+      };
 
-    /* XXX What do we do with this? - JS
-    const path = ReactEditor.findPath(newReduxState.editor, found[0]);
-    const newConditional = {
-      object: 'inline',
-      type: 'formula',
-      data: { name: "formula", elementType: "Double" },
-      children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
-    };
+      Editor.withoutNormalizing(newReduxState.editor, () => {
+        Transforms.removeNodes(newReduxState.editor, { at: path });
+        Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
+      });
+      */
+    } catch (err) {
+      action('Clause -> Parse: ')({
+        clause: TEMPLATE_NAME,
+        parseError: err
+      });
+      return Promise.resolve(false);
+    }
 
-    Editor.withoutNormalizing(newReduxState.editor, () => {
-      Transforms.removeNodes(newReduxState.editor, { at: path });
-      Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
-    });
-    */
   }, [editor]);
-
-  const onClauseUpdatedHandler = useCallback((val) => {
-    parseClause(val);
-    action('Clause -> Update: ')(val);
-  }, [editor, parseClause])
 
   return (
     <Wrapper>
@@ -193,7 +199,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         clauseProps={clausePropsObject}
         loadTemplateObject={action('Template -> Load')}
         pasteToContract={action('Contract -> Paste')}
-        onClauseUpdated={onClauseUpdatedHandler}
+        onClauseUpdated={parseClause}
         augmentEditor={augmentEditor}
       />
     </Wrapper>

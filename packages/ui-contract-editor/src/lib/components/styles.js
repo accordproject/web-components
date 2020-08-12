@@ -6,7 +6,7 @@ export const ClauseWrapper = styled.div`
   margin: 10px -10px;
   display: grid;
   background-color: #F4F6FC;
-  border: 1px solid #19C6C7;
+  border: ${props => (props.error ? '1px solid #FF0000' : '1px solid #19C6C7')};
   border-radius: 3px;
   grid-template-columns: 10px 375px 1fr 25px 25px 25px 10px;
   grid-template-rows: 0px 10px 1fr;

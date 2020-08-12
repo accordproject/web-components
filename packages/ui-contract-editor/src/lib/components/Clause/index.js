@@ -113,12 +113,13 @@ const ClauseComponent = React.forwardRef((props, ref) => {
       <S.ClauseWrapper
         src={props.templateUri}
         id={props.name}
-        className='ui-contract-editor__clause'
+        className={`ui-contract-editor__clause ${props.error ? 'error' : ''}`}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         style={{ userSelect: 'none' }}
         draggable="true"
         ref={ref}
+        error={props.error}
         {...props.attributes}
       >
       {/*
@@ -262,6 +263,7 @@ ClauseComponent.propTypes = {
     CLAUSE_TEST_FUNCTION: PropTypes.func,
   }),
   editor: PropTypes.any,
+  error: PropTypes.bool,
   readOnly: PropTypes.bool,
   templateUri: PropTypes.string.isRequired,
 };
