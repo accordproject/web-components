@@ -557,7 +557,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
             className="ui-components__library-card-item-version"
           >
             Version 
-            0.20.10
+            0.14.0
           </span>
         </div>
         <div
@@ -629,7 +629,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
             className="ui-components__library-card-item-version"
           >
             Version 
-            0.20.10
+            0.11.0
           </span>
         </div>
         <div
@@ -701,7 +701,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
             className="ui-components__library-card-item-version"
           >
             Version 
-            0.20.10
+            0.4.0
           </span>
         </div>
         <div
@@ -773,7 +773,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
             className="ui-components__library-card-item-version"
           >
             Version 
-            0.10.1
+            0.11.0
           </span>
         </div>
         <div
