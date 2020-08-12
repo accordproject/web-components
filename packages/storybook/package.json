@@ -58,6 +58,7 @@
   "scripts": {
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -s public --quiet",
+    "build-storybook:watch": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -w -s public --quiet",
     "test": "NODE_ENV=test jest"
   },
   "browserslist": {

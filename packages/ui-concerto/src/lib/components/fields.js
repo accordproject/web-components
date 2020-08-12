@@ -15,6 +15,7 @@
 import React from 'react';
 import { Checkbox, Input, Form, Button, Select } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
+import URI from 'urijs';
 import { parseValue, normalizeLabel } from '../utilities';
 
 export const ConcertoLabel = ({ skip, name }) => !skip
@@ -66,6 +67,39 @@ export const ConcertoInput = ({
     />
   </Form.Field>
 );
+
+export const ConcertoRelationship = ({
+  id,
+  field,
+  readOnly,
+  required,
+  value = '',
+  onFieldValueChange,
+  skipLabel,
+  type,
+}) => {
+  const { fragment, path } = URI.parse(value);
+  const typeName = path.split('.').pop();
+  return <Form.Field required={required}>
+    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+    <span></span>
+    <Input
+      type={type}
+      label={{ tag: true, content: typeName }}
+      icon='long arrow alternate right'
+      iconPosition='left'
+      labelPosition='right'
+      readOnly={readOnly}
+      value={fragment}
+      onChange={(e, data) => onFieldValueChange(
+        { ...data, value: value.replace(fragment, parseValue(data.value, field.getType())) },
+        id
+      )
+      }
+      key={id}
+    />
+  </Form.Field>;
+};
 
 export const ConcertoDateTime = ({
   id,

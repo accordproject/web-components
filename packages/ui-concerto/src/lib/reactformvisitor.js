@@ -31,6 +31,7 @@ import * as util from 'util';
 
 import {
   ConcertoInput,
+  ConcertoRelationship,
   ConcertoArray,
   ConcertoArrayElement,
   ConcertoDropdown,
@@ -355,10 +356,19 @@ class ReactFormVisitor {
 
     let component;
     if (relationship.isArray()) {
+      const newResource = parameters.modelManager.getFactory().newResource(
+        relationship.getNamespace(),
+        relationship.getType(),
+        'resource1',
+        {
+          includeOptionalFields: parameters.includeOptionalFields,
+          generate: parameters.includeSampleData,
+        }
+      );
       component = (
         <ConcertoArray
           {...commonProps}
-          addElement={(e, id) => addElement(e, id, 'resource1')}>
+          addElement={(e, id) => addElement(e, id, newResource.toURI())}>
           {value
             && value.map((_element, index) => {
               stack.push(index);
@@ -366,7 +376,7 @@ class ReactFormVisitor {
               const value = get(parameters.json, key);
               const arrayComponent = (
                 <ConcertoArrayElement key={key} {...commonProps} index={index}>
-                  <ConcertoInput {...commonProps} id={key} value={value} />
+                  <ConcertoRelationship {...commonProps} id={key} value={value} />
                 </ConcertoArrayElement>
               );
               stack.pop();
@@ -375,7 +385,7 @@ class ReactFormVisitor {
         </ConcertoArray>
       );
     } else {
-      component = <ConcertoInput {...commonProps} />;
+      component = <ConcertoRelationship {...commonProps} />;
     }
 
     stack.pop();

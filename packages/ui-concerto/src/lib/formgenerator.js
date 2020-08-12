@@ -76,10 +76,13 @@ class FormGenerator {
    */
   async loadFromText(texts) {
     this.loaded = false;
-
     this.modelManager.clearModelFiles();
     try {
-      texts.forEach(text => this.modelManager.addModelFile(text, null, true));
+      texts.forEach(text => {
+        // Unescape URL encoded relationship symbols
+        const model = text.replace('--&gt;', '-->');
+        this.modelManager.addModelFile(model, null, true);
+      });
       if (this.options.updateExternalModels) {
         await this.modelManager.updateExternalModels();
       }
