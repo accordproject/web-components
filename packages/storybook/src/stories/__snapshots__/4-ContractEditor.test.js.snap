@@ -2,7 +2,7 @@
 
 exports[`Contract Editor Storyshots Contract Editor Contract Editor 1`] = `
 <div
-  className="sc-fzpisO hpwnfL"
+  className="sc-fzokvW dQPRKh"
 >
   <div
     className="sc-AxhUy fglOYZ"
@@ -523,17 +523,9 @@ exports[`Contract Editor Storyshots Contract Editor Contract Editor 1`] = `
     suppressContentEditableWarning={true}
   >
     <h1
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="Heading-One"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "25px",
-          "fontWeight": "bold",
-          "lineHeight": "23px",
-        }
-      }
     >
       <span
         data-slate-node="text"
