@@ -42,10 +42,3 @@
 .arrayButton {
     box-shadow: none !important;
 }
-
-.monospaced {
-    unicode-bidi: embed;
-    font-family: monospace;
-    white-space: pre;
-    font-size: 12px;
-}

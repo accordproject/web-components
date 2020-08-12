@@ -89,8 +89,6 @@ export const ConcertoRelationship = ({
     <Input
       type={type}
       label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
-      icon='long arrow alternate right'
-      iconPosition='left'
       labelPosition='right'
       readOnly={readOnly}
       value={relationship.getIdentifier()}
@@ -104,7 +102,6 @@ export const ConcertoRelationship = ({
       }
       key={id}
     />
-    <span className='monospaced'>{value}</span>
   </Form.Field>;
 };
 
