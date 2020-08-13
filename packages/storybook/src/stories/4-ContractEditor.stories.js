@@ -22,7 +22,6 @@ import { ReactEditor } from 'slate-react';
 /* Misc */
 import { uuid } from 'uuidv4';
 import styled from 'styled-components';
-import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 

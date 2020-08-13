@@ -85,6 +85,7 @@
     "@storybook/addon-notes": "^5.3.18",
     "@storybook/addon-storyshots": "6.0.0-alpha.43",
     "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
     "babel-jest": "^26.1.0",
     "identity-obj-proxy": "^3.0.0",
