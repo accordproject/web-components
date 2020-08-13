@@ -6,3 +6,7 @@ configureActions({
   // Limit the number of items logged into the actions panel
   limit: 20,
 });
+
+export const parameters = {
+  a11y: {},
+};

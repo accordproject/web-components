@@ -10,7 +10,6 @@ import { Template, Clause } from '@accordproject/cicero-core';
 import ContractEditor from '@accordproject/ui-contract-editor';
 
 /* Storybook */
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { text, select, boolean, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react'
@@ -213,14 +212,11 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   );
 };
 
-contractEditor.story = {
-  component: contractEditor,
-  decorators: [withA11y],
-  parameters: {
-    notes: "Notes ...."
-  }
+contractEditor.parameters = {
+  notes: "Notes ...."
 };
 
-const withProvider = (story) => <Provider store={store}>{story()}</Provider>;
+
+const withProvider = (contractEditor) => <Provider store={store}>{contractEditor()}</Provider>;
 
 export default { title: 'Contract Editor', decorators: [withProvider] };
