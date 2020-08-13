@@ -1,5 +1,4 @@
 import React from "react";
-import { withA11y } from "@storybook/addon-a11y";
 import { ErrorLogger } from '@accordproject/ui-components';
 import { withKnobs } from "@storybook/addon-knobs";
 
@@ -19,11 +18,8 @@ export const errorLogger = () => {
     />
   );
 };
-errorLogger.story = {
-  component: errorLogger,
-  decorators: [withA11y, withKnobs],
 
-  parameters: {
-    notes: "Notes ...."
-  }
+errorLogger.decorators =  [withKnobs];
+errorLogger.parameters = {
+  notes: "Notes ...."
 };

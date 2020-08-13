@@ -1,5 +1,4 @@
 import React from "react";
-import { withA11y } from "@storybook/addon-a11y";
 import { withKnobs, text } from "@storybook/addon-knobs";
 import { Navigation } from '@accordproject/ui-components';
 
@@ -38,10 +37,7 @@ export const navigation = () => {
   );
 };
 
-navigation.story = {
-  component: navigation,
-  decorators: [withA11y, withKnobs],
-  parameters: {
-    notes: "Notes ...."
-  }
+navigation.decorators = [withKnobs];
+navigation.parameters = {
+  notes: "Notes ...."
 };

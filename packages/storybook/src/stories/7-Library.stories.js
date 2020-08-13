@@ -1,5 +1,4 @@
 import React from "react";
-import { withA11y } from "@storybook/addon-a11y";
 import { withKnobs, text } from "@storybook/addon-knobs";
 import { Library } from '@accordproject/ui-components';
 
@@ -82,10 +81,7 @@ export const homogeneous = () => {
   );
 };
 
-homogeneous.story = {
-  component: homogeneous,
-  decorators: [withA11y, withKnobs]
-};
+homogeneous.decorators= [withKnobs];
 
 export const heterogeneous = () => {
   const items = [
@@ -170,7 +166,4 @@ export const heterogeneous = () => {
   );
 };
 
-heterogeneous.story = {
-  component: heterogeneous,
-  decorators: [withA11y, withKnobs]
-};
+heterogeneous.decorators= [withKnobs];
