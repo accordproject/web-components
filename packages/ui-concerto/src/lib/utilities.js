@@ -17,7 +17,7 @@
  * @param {string} labelName - the label text to be transformed
  * @returns {string} - The label text formatted for rendering
  */
-export const normalizeLabel = labelName => labelName
+export const normalizeLabel = (labelName = '') => labelName
   .replace(/([a-z])([A-Z])/g, '$1 $2')
   .replace(/([A-Z])([a-z])/g, ' $1$2')
   .replace(/ +/g, ' ')

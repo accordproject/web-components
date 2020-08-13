@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 import React from 'react';
-import { Checkbox, Input, Form, Button, Select } from 'semantic-ui-react';
+import { Relationship } from '@accordproject/concerto-core';
+import { Checkbox, Input, Form, Button, Select, Popup, Label, Icon } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import { parseValue, normalizeLabel } from '../utilities';
 
@@ -67,6 +68,43 @@ export const ConcertoInput = ({
   </Form.Field>
 );
 
+export const ConcertoRelationship = ({
+  id,
+  field,
+  readOnly,
+  required,
+  value = '',
+  onFieldValueChange,
+  skipLabel,
+  type,
+}) => {
+  if (!value) {
+    return null;
+  }
+
+  const relationship = Relationship.fromURI(field.getModelFile().getModelManager(), value);
+
+  return <Form.Field required={required}>
+    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+    <Input
+      type={type}
+      label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
+      labelPosition='right'
+      readOnly={readOnly}
+      value={relationship.getIdentifier()}
+      onChange={(e, data) => {
+        relationship.setIdentifier(parseValue(data.value || 'resource1', field.getType()));
+        return onFieldValueChange(
+          { ...data, value: relationship.toURI() },
+          id
+        );
+      }
+      }
+      key={id}
+    />
+  </Form.Field>;
+};
+
 export const ConcertoDateTime = ({
   id,
   field,
@@ -104,10 +142,16 @@ export const ConcertoArray = ({
       <div />
       <div>
         <Button
-          positive
           basic
-          icon="plus"
+          circular
+          aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
+          icon={<Popup
+            content='Add an element'
+            position='left center'
+            trigger={<Icon name='plus circle'/>}
+          />}
           disabled={readOnly}
+          className='arrayButton'
           onClick={e => {
             addElement(e, id);
             e.preventDefault();
@@ -129,9 +173,15 @@ export const ConcertoArrayElement = ({
     <div>{children}</div>
     <div>
       <Button
-        negative
         basic
-        icon="times"
+        circular
+        icon={<Popup
+          content='Remove this element'
+          position='left center'
+          trigger={<Icon name='minus circle'/>}
+        />}
+        aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
+        className='arrayButton'
         disabled={readOnly}
         onClick={e => {
           removeElement(e, id, index);
