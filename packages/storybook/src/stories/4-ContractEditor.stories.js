@@ -189,6 +189,14 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
 
   }, [editor]);
 
+  let timeoutId;
+  const debouncedParseClause = node => new Promise((resolve) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout((n) => {
+      resolve(parseClause(n));
+    }, 500, node);
+  });
+
   return (
     <Wrapper>
       <ContractEditor
@@ -199,7 +207,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         clauseProps={clausePropsObject}
         loadTemplateObject={action('Template -> Load')}
         pasteToContract={action('Contract -> Paste')}
-        onClauseUpdated={parseClause}
+        onClauseUpdated={debouncedParseClause}
         augmentEditor={augmentEditor}
       />
     </Wrapper>
