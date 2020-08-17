@@ -157,8 +157,13 @@ const ContractEditor = (props) => {
       : withVariables(withClauses(withClauseSchema(editor), withClausesProps))
   );
 
-  const isEditable = (...args) => isEditableClause(...args)
-  && isEditableVariable(props.lockText, ...args);
+  const isEditable = (editor, event) => {
+    if (editor.isInsideClause()) {
+      const [clauseNode] = editor.getClauseWithPath();
+      if (clauseNode.data.parseable === false) return true;
+    }
+    return isEditableClause(editor, event) && isEditableVariable(props.lockText, editor, event);
+  };
 
   const canCopy = editor => (!((
     editor.isInsideClause(editor.selection.anchor)
@@ -198,8 +203,8 @@ const ContractEditor = (props) => {
       .nodes(editor, { match: n => n.type === CLAUSE, at: targetRange });
     if (targetIsClause) return false; // do not allow dropping inside of a clause
     const sourceRange = JSON.parse(event.dataTransfer.getData('text'));
-    const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE, at: sourceRange });
-    if (!clauseNode) return true; // continue to next handler if not a clause
+    const clauseNodeAndPath = editor.getClauseWithPath(sourceRange);
+    if (!clauseNodeAndPath) return true; // continue to next handler if not a clause
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
 
@@ -231,7 +236,7 @@ const ContractEditor = (props) => {
     }
     Transforms.collapse(editor, { edge });
     Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === CLAUSE });
-    Transforms.insertNodes(editor, clauseNode[0]);
+    Transforms.insertNodes(editor, clauseNodeAndPath[0]);
     return false;
   };
 

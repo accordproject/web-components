@@ -70,15 +70,20 @@ const withClauses = (editor, withClausesProps) => {
   const { insertData, onChange } = editor;
   const { onClauseUpdated, pasteToContract } = withClausesProps;
 
-  editor.isInsideClause = (input = editor.selection) => {
-    const [match] = Editor.nodes(editor, { match: n => n.type === CLAUSE, at: input });
-    return !!match;
+  editor.getClauseWithPath = (location = editor.selection) => {
+    const [clauseNodeAndPath] = Editor.nodes(
+      editor,
+      { match: n => n.type === CLAUSE, at: location }
+    );
+    return clauseNodeAndPath;
   };
+
+  editor.isInsideClause = (location = editor.selection) => !!editor.getClauseWithPath(location);
 
   editor.onChange = () => {
     onChange();
     if (onClauseUpdated && editor.isInsideClause()) {
-      const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE });
+      const [clauseNode, path] = editor.getClauseWithPath();
       const [variable] = Editor.nodes(editor, { match: n => n.type === VARIABLE });
 
       // if we have edited a variable, then we ensure that all
@@ -88,7 +93,7 @@ const withClauses = (editor, withClausesProps) => {
         const variableName = variable[0].data.name;
         const variableIterator = Editor.nodes(editor, { match: n => n.type === VARIABLE
           && n.data.name === variableName,
-        at: clauseNode[1] });
+        at: path });
         let result = variableIterator.next();
         while (!result.done) {
           const entry = result.value;
@@ -109,11 +114,12 @@ const withClauses = (editor, withClausesProps) => {
         }
       }
 
-      onClauseUpdated(clauseNode[0]).then(success => {
-        if (success) {
-          Transforms.setNodes(editor, { error: false }, { at: clauseNode[1] });
+      onClauseUpdated(clauseNode).then(([success, newNode]) => {
+        if (newNode) {
+          Transforms.removeNodes(editor, { at: path });
+          Transforms.insertNodes(editor, newNode, { at: path });
         } else {
-          Transforms.setNodes(editor, { error: true }, { at: clauseNode[1] });
+          Transforms.setNodes(editor, { error: !success }, { at: path });
         }
       });
     }
