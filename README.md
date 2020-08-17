@@ -13,7 +13,8 @@ Use the interactive [Storybook][storybook] to discover the components and their 
 
 ### Sample Project
 
-To use there components refer to: https://github.com/accordproject/web-components-starter
+To use these components refer to: https://github.com/accordproject/web-components-starter
+If you are not already using semantic-ui-react in your project, be sure to include `import 'semantic-ui-css/semantic.min.css'` in the entry point of your react app.
 
 ### Run Locally
 

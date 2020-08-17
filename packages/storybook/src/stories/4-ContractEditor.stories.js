@@ -10,7 +10,6 @@ import { Template, Clause, TemplateLibrary, version } from '@accordproject/cicer
 import ContractEditor from '@accordproject/ui-contract-editor';
 
 /* Storybook */
-import { withA11y } from '@storybook/addon-a11y';
 import { action } from '@storybook/addon-actions';
 import { text, select, boolean, object } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react'
@@ -22,7 +21,6 @@ import { ReactEditor } from 'slate-react';
 /* Misc */
 import { uuid } from 'uuidv4';
 import styled from 'styled-components';
-import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 
@@ -145,42 +143,39 @@ export const contractEditor = () => {
   }, []);
 
   const parseClause = useCallback(async (val) => {
-    if(val.data.src) {
+
+    if(!val.data.src) {
+      return Promise.resolve(true);
+    }
+    const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
+    const SLICE_INDEX_2 = val.data.src.indexOf('@');
+    const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
+
+    try {
       const newReduxState = store.getState();
       const value = {
         document: {
           children: val.children
         }
       };
-  
-      const text = slateTransformer.toMarkdownCicero(value);
-      const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
-      const SLICE_INDEX_2 = val.data.src.indexOf('@');
-      const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
+      const text = slateTransformer.toMarkdown(value);
       const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
-  
-      try {
-        ciceroClause.parse(text);
-  
-        const ast = ciceroClause.getData();
-        const something = await ciceroClause.draft({format:'slate'});
-    
-        // const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
-        
-        action('Clause -> Parse: ')({
-          'Clause': ciceroClause,
-          'AST': ast,
-          'Draft': something
-        });  
-      }
-      catch(error) {
-        action('Clause -> Parse Error: ')({
-          'Clause': ciceroClause,
-          'error': error.message
-        });
-      }
-  
+      ciceroClause.parse(text)
+      const parseResult = ciceroClause.getData();
+      action('Clause -> Parse: ')({
+        clause: TEMPLATE_NAME,
+        parseResult,
+      });
+      return Promise.resolve(true);
+
       /* XXX What do we do with this? - JS
+      const something = await ciceroClause.draft({format:'slate'});
+      const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
+      action('Clause -> Parse: ')({
+        'Clause': ciceroClause,
+        'AST': ast,
+        'Draft': something
+      });
       const path = ReactEditor.findPath(newReduxState.editor, found[0]);
       const newConditional = {
         object: 'inline',
@@ -188,19 +183,28 @@ export const contractEditor = () => {
         data: { name: "formula", elementType: "Double" },
         children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
       };
-  
       Editor.withoutNormalizing(newReduxState.editor, () => {
         Transforms.removeNodes(newReduxState.editor, { at: path });
         Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
       });
       */
+    } catch (err) {
+      action('Clause -> Parse: ')({
+        clause: TEMPLATE_NAME,
+        parseError: err
+      });
+      return Promise.resolve(false);
     }
+
   }, [editor]);
 
-  const onClauseUpdatedHandler = useCallback((val) => {
-    parseClause(val);
-    action('Clause -> Update: ')(val);
-  }, [editor, parseClause])
+  let timeoutId;
+  const debouncedParseClause = node => new Promise((resolve) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout((n) => {
+      resolve(parseClause(n));
+    }, 500, node);
+  });
 
   return (
     <Wrapper>
@@ -212,21 +216,18 @@ export const contractEditor = () => {
         clauseProps={clausePropsObject}
         loadTemplateObject={action('Template -> Load')}
         pasteToContract={action('Contract -> Paste')}
-        onClauseUpdated={onClauseUpdatedHandler}
+        onClauseUpdated={debouncedParseClause}
         augmentEditor={augmentEditor}
       />
     </Wrapper>
   );
 };
 
-contractEditor.story = {
-  component: contractEditor,
-  decorators: [withA11y],
-  parameters: {
-    notes: "Notes ...."
-  }
+contractEditor.parameters = {
+  notes: "Notes ...."
 };
 
-const withProvider = (story) => <Provider store={store}>{story()}</Provider>;
+
+const withProvider = (contractEditor) => <Provider store={store}>{contractEditor()}</Provider>;
 
 export default { title: 'Contract Editor', decorators: [withProvider] };

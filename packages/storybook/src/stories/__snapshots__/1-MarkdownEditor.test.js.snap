@@ -527,17 +527,9 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     suppressContentEditableWarning={true}
   >
     <h1
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="My-Heading"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "25px",
-          "fontWeight": "bold",
-          "lineHeight": "23px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -734,17 +726,9 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </span>
     </p>
     <h2
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="Breaks"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "20px",
-          "fontWeight": "bold",
-          "lineHeight": "20px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -992,17 +976,9 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </p>
     </blockquote>
     <h2
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="Heading-Two"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "20px",
-          "fontWeight": "bold",
-          "lineHeight": "20px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1246,17 +1222,9 @@ code
       </li>
     </ul>
     <h3
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="Sub-heading"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "16px",
-          "fontWeight": "bold",
-          "lineHeight": "16px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1399,17 +1367,9 @@ This is an html block.
       </span>
     </p>
     <h1
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H1"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "25px",
-          "fontWeight": "bold",
-          "lineHeight": "23px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1426,17 +1386,9 @@ This is an html block.
       </span>
     </h1>
     <h2
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H2"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "20px",
-          "fontWeight": "bold",
-          "lineHeight": "20px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1453,17 +1405,9 @@ This is an html block.
       </span>
     </h2>
     <h3
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H3"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "16px",
-          "fontWeight": "bold",
-          "lineHeight": "16px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1480,17 +1424,9 @@ This is an html block.
       </span>
     </h3>
     <h4
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H4"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "14px",
-          "fontWeight": "bold",
-          "lineHeight": "14px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1507,17 +1443,9 @@ This is an html block.
       </span>
     </h4>
     <h5
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H5"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "12px",
-          "fontWeight": "bold",
-          "lineHeight": "12px",
-        }
-      }
     >
       <span
         data-slate-node="text"
@@ -1534,17 +1462,9 @@ This is an html block.
       </span>
     </h5>
     <h6
-      className="sc-AxiKw Osaca"
+      className="sc-AxiKw cBJqoo"
       data-slate-node="element"
       id="H6"
-      style={
-        Object {
-          "color": "#122330",
-          "fontSize": "10px",
-          "fontWeight": "bold",
-          "lineHeight": "10px",
-        }
-      }
     >
       <span
         data-slate-node="text"

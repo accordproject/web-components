@@ -163,13 +163,13 @@ class ConcertoForm extends Component {
       // The type changed so we have to generate a new instance
       if (this.props.json && !this.isInstanceOf(this.props.json, type)) {
         return this.generator.generateJSON(type);
-        // The instance is null so we have to create a new instance
       }
+      // The instance is null so we have to create a new instance
       if (!this.props.json) {
         return this.generator.generateJSON(type);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     // Otherwise, just use what we already have
     return this.props.json;

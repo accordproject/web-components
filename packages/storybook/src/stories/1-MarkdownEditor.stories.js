@@ -3,7 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { boolean } from '@storybook/addon-knobs';
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
-import 'semantic-ui-css/semantic.min.css';
 
 const slateTransformer = new SlateTransformer();
 
