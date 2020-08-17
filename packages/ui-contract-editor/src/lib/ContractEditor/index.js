@@ -109,8 +109,8 @@ const ContractEditor = (props) => {
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
-      templateUri: element.data.src,
-      name: element.data.name,
+      templateUri: element.data.src ? element.data.src : 'http://embedded@0.0.0#abcde',
+      name: element.data.name ? element.data.name : 'Embedded',
       clauseProps: props.clauseProps,
       readOnly: props.readOnly,
       hoveringFormulaContract,
