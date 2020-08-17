@@ -106,7 +106,7 @@ export const Demo = () => {
         children: slateChildren
       }
     };
-    const markdown = slateTransformer.toMarkdownCicero(slateValue);
+    const markdown = slateTransformer.toMarkdown(slateValue);
     setSlateValue(slateValue.document.children);
     setMarkdown(markdown);
   }, []);
