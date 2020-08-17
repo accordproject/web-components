@@ -158,7 +158,7 @@ export const contractEditor = () => {
           children: val.children
         }
       };
-      const text = slateTransformer.toMarkdown(value);
+      const text = slateTransformer.toMarkdownCicero(value);
       const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
       ciceroClause.parse(text)
       const parseResult = ciceroClause.getData();
@@ -189,9 +189,10 @@ export const contractEditor = () => {
       });
       */
     } catch (err) {
-      action('Clause -> Parse: ')({
+      action('Clause -> Parse Error: ')({
         clause: TEMPLATE_NAME,
-        parseError: err
+        parseError: err,
+        message: err.message
       });
       return Promise.resolve(false);
     }
