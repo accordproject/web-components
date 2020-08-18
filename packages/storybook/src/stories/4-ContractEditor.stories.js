@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux';
 /* Accord Project */
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { TemplateMarkTransformer } from '@accordproject/markdown-template';
-import { Template, Clause } from '@accordproject/cicero-core';
+import { Template, Clause, TemplateLibrary, version } from '@accordproject/cicero-core';
 import ContractEditor from '@accordproject/ui-contract-editor';
 
 /* Storybook */
@@ -67,24 +67,33 @@ const Wrapper = styled.div`
   }
 `;
 
-const templates = {
-  'Optional Clause': 'https://templates.accordproject.org/archives/latedeliveryandpenalty-optional@0.1.0.cta',
-  'Fixed Interest': 'https://templates.accordproject.org/archives/fixed-interests@0.5.0.cta',
-  'Late Delivery And Penalty': 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.16.0.cta',
-  'Fragile Goods': 'https://templates.accordproject.org/archives/fragile-goods@0.14.0.cta',
-};
+const markdownText = `# Heading One
+This is text. This is *italic* text. This is **bold** text. 
+This is a [link](https://clause.io). This is \`inline code\`.
+`;
 
 export const contractEditor = () => {
-  const markdownText = text( 'Markdown', `# Heading One
-This is text. This is *italic* text. This is **bold** text. This is a [link](https://clause.io). This is \`inline code\`.  
-`);
-  const templateUrl = select('Template Archive URL', templates, 'https://templates.accordproject.org/archives/latedeliveryandpenalty@0.16.0.cta');
   const lockText = boolean('lockText', true);
   const readOnly = boolean('readOnly', false);
   const [slateValue, setSlateValue] = useState( () => {
     return slateTransformer.fromMarkdown(markdownText).document.children;
   });
   const [editor, setEditor] = useState(null);
+  const [templates, setTemplates] = useState([]);
+  const templateUrl = select('Insert Template', templates);  
+
+  useEffect( () => {
+    const templateLibrary = new TemplateLibrary();
+    templateLibrary.getTemplateIndex( {latestVersion: true, ciceroVersion: version.version} )
+    .then( (index) => {
+      const temp = {};  
+      console.log(index);
+      Object.keys(index).forEach(uri => {
+        temp[index[uri].displayName] = index[uri].url
+      });
+      setTemplates(temp);
+    });
+  }, []);
 
   useEffect(() => {
     if (editor) {
@@ -134,6 +143,10 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
   }, []);
 
   const parseClause = useCallback(async (val) => {
+
+    if(!val.data.src) {
+      return Promise.resolve(true);
+    }
     const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
     const SLICE_INDEX_2 = val.data.src.indexOf('@');
     const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
@@ -145,7 +158,7 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
           children: val.children
         }
       };
-      const text = slateTransformer.toMarkdown(value);
+      const text = slateTransformer.toMarkdownCicero(value);
       const ciceroClause = new Clause(newReduxState[TEMPLATE_NAME]);
       ciceroClause.parse(text)
       const parseResult = ciceroClause.getData();
@@ -158,7 +171,6 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
       /* XXX What do we do with this? - JS
       const something = await ciceroClause.draft({format:'slate'});
       const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
-
       action('Clause -> Parse: ')({
         'Clause': ciceroClause,
         'AST': ast,
@@ -171,16 +183,16 @@ This is text. This is *italic* text. This is **bold** text. This is a [link](htt
         data: { name: "formula", elementType: "Double" },
         children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
       };
-
       Editor.withoutNormalizing(newReduxState.editor, () => {
         Transforms.removeNodes(newReduxState.editor, { at: path });
         Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
       });
       */
     } catch (err) {
-      action('Clause -> Parse: ')({
+      action('Clause -> Parse Error: ')({
         clause: TEMPLATE_NAME,
-        parseError: err
+        parseError: err,
+        message: err.message
       });
       return Promise.resolve(false);
     }

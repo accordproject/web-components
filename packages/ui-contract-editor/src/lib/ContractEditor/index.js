@@ -109,7 +109,7 @@ const ContractEditor = (props) => {
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
-      templateUri: element.data.src,
+      templateUri: element.data.src ? element.data.src : 'http://embedded@0.0.0#abcde',
       name: element.data.name,
       error: element.error,
       clauseProps: props.clauseProps,
