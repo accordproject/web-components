@@ -88,7 +88,7 @@ const withClauses = (editor, withClausesProps) => {
 
       // if we have edited a variable, then we ensure that all
       // occurences of the variable get the new value
-      if (clauseNode && variable[0].type === VARIABLE
+      if (variable && variable[0].type === VARIABLE
         && variable[0].data && variable[0].data.name) {
         const variableName = variable[0].data.name;
         const variableIterator = Editor.nodes(editor, { match: n => n.type === VARIABLE
@@ -114,13 +114,13 @@ const withClauses = (editor, withClausesProps) => {
         }
       }
 
-      onClauseUpdated(clauseNode).then(([success, newNode]) => {
-        if (newNode) {
+      onClauseUpdated(clauseNode).then(({ node, operation, error }) => {
+        if (operation === 'replace_node' && node) {
           Transforms.removeNodes(editor, { at: path });
-          Transforms.insertNodes(editor, newNode, { at: path });
+          Transforms.insertNodes(editor, node, { at: path });
         } else {
           HistoryEditor.withoutSaving(editor, () => {
-            Transforms.setNodes(editor, { error: !success }, { at: path });
+            Transforms.setNodes(editor, { error: !!error }, { at: path });
           });
         }
       });

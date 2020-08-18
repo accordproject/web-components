@@ -80,7 +80,7 @@ export const contractEditor = () => {
   });
   const [editor, setEditor] = useState(null);
   const [templates, setTemplates] = useState([]);
-  const templateUrl = select('Insert Template', templates);  
+  const templateUrl = select('Insert Template', templates) || "https://templates.accordproject.org/archives/acceptance-of-delivery@0.14.0.cta";  
 
   useEffect( () => {
     const templateLibrary = new TemplateLibrary();
@@ -96,11 +96,10 @@ export const contractEditor = () => {
   }, []);
 
   useEffect(() => {
-    if (editor) {
+    if (editor && templateUrl) {
       Template.fromUrl(templateUrl)
         .then(async (template) => {
           const clause = new Clause(template);
-          // console.log('clause', clause);
           clause.parse(template.getMetadata().getSample());
           const slateValueNew = await clause.draft({ format: 'slate' });
           console.log('slateValueNew', slateValueNew);
@@ -142,20 +141,19 @@ export const contractEditor = () => {
     return slateEditor;
   }, []);
 
-  const parseClause = useCallback(async (val) => {
-
-    if(!val.data.src) {
+  const parseClause = useCallback(async (clauseNode) => {
+    if(!clauseNode.data.src) {
       return Promise.resolve(true);
     }
-    const SLICE_INDEX_1 = val.data.src.lastIndexOf('/') + 1;
-    const SLICE_INDEX_2 = val.data.src.indexOf('@');
-    const TEMPLATE_NAME = val.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
+    const SLICE_INDEX_1 = clauseNode.data.src.lastIndexOf('/') + 1;
+    const SLICE_INDEX_2 = clauseNode.data.src.indexOf('@');
+    const TEMPLATE_NAME = clauseNode.data.src.slice(SLICE_INDEX_1, SLICE_INDEX_2);
 
     try {
       const newReduxState = store.getState();
       const value = {
         document: {
-          children: val.children
+          children: clauseNode.children
         }
       };
       const text = slateTransformer.toMarkdownCicero(value);
@@ -166,6 +164,7 @@ export const contractEditor = () => {
         clause: TEMPLATE_NAME,
         parseResult,
       });
+
       return Promise.resolve({
         node: null,
         operation: null,
