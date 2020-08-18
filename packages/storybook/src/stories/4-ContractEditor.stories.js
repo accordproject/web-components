@@ -166,7 +166,11 @@ export const contractEditor = () => {
         clause: TEMPLATE_NAME,
         parseResult,
       });
-      return Promise.resolve([true]);
+      return Promise.resolve({
+        node: null,
+        operation: null,
+        error: null,
+      });
 
       /* XXX What do we do with this? - JS
       const something = await ciceroClause.draft({format:'slate'});
@@ -194,7 +198,11 @@ export const contractEditor = () => {
         parseError: err,
         message: err.message
       });
-      return Promise.resolve([false]);
+      return Promise.resolve({
+        node: null,
+        operation: null,
+        error: err,
+      });
     }
 
   }, [editor]);

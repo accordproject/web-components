@@ -119,7 +119,9 @@ const withClauses = (editor, withClausesProps) => {
           Transforms.removeNodes(editor, { at: path });
           Transforms.insertNodes(editor, newNode, { at: path });
         } else {
-          Transforms.setNodes(editor, { error: !success }, { at: path });
+          HistoryEditor.withoutSaving(editor, () => {
+            Transforms.setNodes(editor, { error: !success }, { at: path });
+          });
         }
       });
     }
