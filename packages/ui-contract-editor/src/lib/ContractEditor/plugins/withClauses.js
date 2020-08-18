@@ -1,8 +1,9 @@
 import { uuid } from 'uuidv4';
-import { Editor, Node, Transforms } from 'slate';
+import { Editor, Node, Transforms, Path } from 'slate';
+import { HistoryEditor } from 'slate-history';
+
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { HtmlTransformer } from '@accordproject/markdown-html';
-import _ from 'lodash';
 import { CLAUSE, VARIABLE } from './withClauseSchema';
 
 import '../../styles.css';
@@ -23,7 +24,7 @@ function _recursive(params, children) {
         // eslint-disable-next-line default-case
         switch (childType) {
           case 'formula':
-            throw new Error('Computed variable not supported');
+            throw new Error('Formula not supported');
           case 'image':
             throw new Error('Image not supported');
           case 'ol_list':
@@ -78,6 +79,45 @@ const withClauses = (editor, withClausesProps) => {
     onChange();
     if (onClauseUpdated && editor.isInsideClause()) {
       const [clauseNode] = Editor.nodes(editor, { match: n => n.type === CLAUSE });
+      const [variable] = Editor.nodes(editor, { match: n => n.type === VARIABLE });
+
+      // if we have edited a variable, then we ensure that all
+      // occurences of the variable get the new value
+      if (clauseNode && variable[0].type === VARIABLE
+        && variable[0].data && variable[0].data.name) {
+        const variableName = variable[0].data.name;
+        // console.log('edited variable', variableName);
+
+        const variableIterator = Editor.nodes(editor, { match: n => n.type === VARIABLE
+          && n.data.name === variableName,
+        at: clauseNode[1] });
+
+        let result = variableIterator.next();
+        while (!result.done) {
+          const entry = result.value;
+          // console.log('found variable', entry[0].data.name);
+
+          if (!Path.equals(entry[1], variable[1])) {
+            const entryValue = Node.string(entry[0]);
+            const variableValue = Node.string(variable[0]);
+            if (entryValue !== variableValue) {
+              const newNode = JSON.parse(JSON.stringify(variable[0]));
+              // console.log('newNode', newNode);
+              // console.log(variableName, result.value);
+              // console.log('insertNodes', newNode);
+              // console.log('at', entry[1]);
+              HistoryEditor.withoutSaving(editor, () => {
+                Editor.withoutNormalizing(editor, () => {
+                  Transforms.removeNodes(editor, { at: entry[1] });
+                  Transforms.insertNodes(editor, newNode, { at: entry[1] });
+                });
+              });
+            }
+          }
+          result = variableIterator.next();
+        }
+      }
+
       onClauseUpdated(clauseNode[0]).then(success => {
         if (success) {
           Transforms.setNodes(editor, { error: false }, { at: clauseNode[1] });
