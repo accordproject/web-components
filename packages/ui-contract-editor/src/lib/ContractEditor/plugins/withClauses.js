@@ -86,26 +86,17 @@ const withClauses = (editor, withClausesProps) => {
       if (clauseNode && variable[0].type === VARIABLE
         && variable[0].data && variable[0].data.name) {
         const variableName = variable[0].data.name;
-        // console.log('edited variable', variableName);
-
         const variableIterator = Editor.nodes(editor, { match: n => n.type === VARIABLE
           && n.data.name === variableName,
         at: clauseNode[1] });
-
         let result = variableIterator.next();
         while (!result.done) {
           const entry = result.value;
-          // console.log('found variable', entry[0].data.name);
-
           if (!Path.equals(entry[1], variable[1])) {
             const entryValue = Node.string(entry[0]);
             const variableValue = Node.string(variable[0]);
             if (entryValue !== variableValue) {
               const newNode = JSON.parse(JSON.stringify(variable[0]));
-              // console.log('newNode', newNode);
-              // console.log(variableName, result.value);
-              // console.log('insertNodes', newNode);
-              // console.log('at', entry[1]);
               HistoryEditor.withoutSaving(editor, () => {
                 Editor.withoutNormalizing(editor, () => {
                   Transforms.removeNodes(editor, { at: entry[1] });
