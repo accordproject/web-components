@@ -97,8 +97,7 @@ const withClauses = (editor, withClausesProps) => {
 
       // if we have edited a variable, then we ensure that all
       // occurences of the variable get the new value
-      if (variable && variable[0].type === VARIABLE
-        && variable[0].data && variable[0].data.name) {
+      if (variable && variable[0].data && variable[0].data.name) {
         const variableName = variable[0].data.name;
         const variableIterator = Editor.nodes(editor, { match: n => n.type === VARIABLE
           && n.data.name === variableName,
@@ -131,8 +130,7 @@ const withClauses = (editor, withClausesProps) => {
           } else if (operation === 'update_formulas') {
             // if we have edited a variable, then we ensure that all
             // formulas that depend on the variable are updated based on the values in 'node'
-            if (variable && variable[0].type === VARIABLE
-                && variable[0].data && variable[0].data.name) {
+            if (variable && variable[0].data && variable[0].data.name) {
               const variableName = variable[0].data.name;
               const formulasIterator = Editor.nodes(editor, { match: n => n.type === FORMULA
                   && n.data.dependencies.includes(variableName),
