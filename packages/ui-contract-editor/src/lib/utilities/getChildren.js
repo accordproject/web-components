@@ -13,10 +13,12 @@ const getChildren = (node, matcher) => {
     let result = [];
     node.children.forEach(n => {
       const r = getChildren(n, matcher);
-      if (r && Array.isArray(r)) {
-        result = result.concat(r);
-      } else {
-        result.push(r);
+      if (r) {
+        if (Array.isArray(r)) {
+          result = result.concat(r);
+        } else {
+          result.push(r);
+        }
       }
     });
     return result;
