@@ -4,9 +4,22 @@ import { HistoryEditor } from 'slate-history';
 
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { HtmlTransformer } from '@accordproject/markdown-html';
-import { CLAUSE, VARIABLE } from './withClauseSchema';
+import { CLAUSE, VARIABLE, FORMULA } from './withClauseSchema';
+import getChildren from '../../utilities/getChildren';
 
 import '../../styles.css';
+
+/**
+ * Returns a formula inline from clauseNode whose name
+ * matches the name of the search formula
+ * @param {*} clauseNode the input clause node
+ * @param {*} search the formula to look for in the clause node
+ */
+export const findFormula = (clauseNode, search) => {
+  const formulas = getChildren(clauseNode, (n) => n.type === FORMULA
+    && n.data.name === search.data.name);
+  return formulas && formulas.length > 0 ? formulas[0] : null;
+};
 
 /**
    * Check if UI valid (depth first traversal)
@@ -23,10 +36,6 @@ function _recursive(params, children) {
       default: {
         // eslint-disable-next-line default-case
         switch (childType) {
-          case 'formula':
-            throw new Error('Formula not supported');
-          case 'image':
-            throw new Error('Image not supported');
           case 'ol_list':
           case 'ul_list': {
             if (child.data.kind === VARIABLE) {
@@ -82,7 +91,7 @@ const withClauses = (editor, withClausesProps) => {
 
   editor.onChange = () => {
     onChange();
-    if (onClauseUpdated && editor.isInsideClause()) {
+    if (editor.isInsideClause()) {
       const [clauseNode, path] = editor.getClauseWithPath();
       const [variable] = Editor.nodes(editor, { match: n => n.type === VARIABLE });
 
@@ -114,17 +123,48 @@ const withClauses = (editor, withClausesProps) => {
         }
       }
 
-      onClauseUpdated(clauseNode).then(({ node, operation, error }) => {
-        if (operation === 'replace_node' && node) {
-          Transforms.removeNodes(editor, { at: path });
-          Transforms.insertNodes(editor, node, { at: path });
-        } else {
+      if (onClauseUpdated) {
+        onClauseUpdated(clauseNode).then(({ node, operation, error }) => {
+          if (operation === 'replace_node') {
+            Transforms.removeNodes(editor, { at: path });
+            Transforms.insertNodes(editor, node, { at: path });
+          } else if (operation === 'update_formulas') {
+            // if we have edited a variable, then we ensure that all
+            // formulas that depend on the variable are updated based on the values in 'node'
+            if (variable && variable[0].type === VARIABLE
+                && variable[0].data && variable[0].data.name) {
+              const variableName = variable[0].data.name;
+              const formulasIterator = Editor.nodes(editor, { match: n => n.type === FORMULA
+                  && n.data.dependencies.includes(variableName),
+              at: path });
+              let result = formulasIterator.next();
+              while (!result.done) {
+                const formulaEntry = result.value;
+                const newFormula = findFormula(node, formulaEntry[0]);
+                if (newFormula) {
+                  const oldFormulaValue = Node.string(formulaEntry[0]);
+                  const newFormulaValue = Node.string(newFormula);
+                  if (newFormulaValue !== oldFormulaValue) {
+                    HistoryEditor.withoutSaving(editor, () => {
+                      Editor.withoutNormalizing(editor, () => {
+                        Transforms.removeNodes(editor, { at: formulaEntry[1] });
+                        Transforms.insertNodes(editor, newFormula, { at: formulaEntry[1] });
+                      });
+                    });
+                  }
+                }
+                result = formulasIterator.next();
+              }
+            }
+          }
+
+          // set or clear errors
           HistoryEditor.withoutSaving(editor, () => {
             Transforms.setNodes(editor, { error: !!error }, { at: path });
           });
-        }
-      });
-    }
+        });
+      }
+    } // inside a clause
   };
 
   editor.insertData = (data) => {

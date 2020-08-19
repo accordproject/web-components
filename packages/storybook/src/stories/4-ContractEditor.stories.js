@@ -5,9 +5,9 @@ import { Provider, connect } from 'react-redux';
 
 /* Accord Project */
 import { SlateTransformer } from '@accordproject/markdown-slate';
-import { TemplateMarkTransformer } from '@accordproject/markdown-template';
 import { Template, Clause, TemplateLibrary, version } from '@accordproject/cicero-core';
 import ContractEditor from '@accordproject/ui-contract-editor';
+import { getChildren } from '@accordproject/ui-contract-editor';
 
 /* Storybook */
 import { action } from '@storybook/addon-actions';
@@ -16,7 +16,6 @@ import { storiesOf } from '@storybook/react'
 
 /* Slate */
 import { Editor, Node, Transforms } from 'slate';
-import { ReactEditor } from 'slate-react';
 
 /* Misc */
 import { uuid } from 'uuidv4';
@@ -165,32 +164,20 @@ export const contractEditor = () => {
         parseResult,
       });
 
+      const hasFormulas = getChildren(clauseNode, (n) => n.type === 'formula');
+      let draftedSlateNode = null;
+
+      if(hasFormulas) {
+        const slateDom = await ciceroClause.draft({format:'slate'});
+        draftedSlateNode = JSON.parse(JSON.stringify(clauseNode));
+        draftedSlateNode.children = slateDom.document.children;
+      }
+
       return Promise.resolve({
-        node: null,
-        operation: null,
+        node: hasFormulas ? draftedSlateNode : null,
+        operation: hasFormulas ? 'update_formulas' : null,
         error: null,
       });
-
-      /* XXX What do we do with this? - JS
-      const something = await ciceroClause.draft({format:'slate'});
-      const found = val.children[1].children.filter(element => element.type === 'formula' && element.data.name === 'formula');
-      action('Clause -> Parse: ')({
-        'Clause': ciceroClause,
-        'AST': ast,
-        'Draft': something
-      });
-      const path = ReactEditor.findPath(newReduxState.editor, found[0]);
-      const newConditional = {
-        object: 'inline',
-        type: 'formula',
-        data: { name: "formula", elementType: "Double" },
-        children: [{ object: "text", text: `${Math.round(Math.random() * 10)}` }]
-      };
-      Editor.withoutNormalizing(newReduxState.editor, () => {
-        Transforms.removeNodes(newReduxState.editor, { at: path });
-        Transforms.insertNodes(newReduxState.editor, newConditional, { at: path });
-      });
-      */
     } catch (err) {
       action('Clause -> Parse Error: ')({
         clause: TEMPLATE_NAME,
