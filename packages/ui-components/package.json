@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ui-components",
-  "version": "0.94.0",
+  "version": "0.95.0",
   "private": false,
   "dependencies": {
     "@babel/runtime": "^7.10.3",
