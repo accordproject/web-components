@@ -82,7 +82,21 @@ export const ConcertoRelationship = ({
     return null;
   }
 
-  const relationship = Relationship.fromURI(field.getModelFile().getModelManager(), value);
+  let relationship;
+  try {
+    relationship = Relationship.fromURI(field.getModelFile().getModelManager(), value);
+  } catch {
+    return ConcertoInput({
+      id,
+      field,
+      readOnly,
+      required,
+      value,
+      onFieldValueChange,
+      skipLabel,
+      type,
+    });
+  }
 
   return <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
