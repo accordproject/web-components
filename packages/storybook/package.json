@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@accordproject/cicero-core": "^0.21.3",
-    "@accordproject/markdown-slate": "^0.12.4",
-    "@accordproject/markdown-transform": "^0.12.4",
+    "@accordproject/markdown-slate": "^0.12.5",
+    "@accordproject/markdown-transform": "^0.12.5",
     "@accordproject/ui-components": "0.94.0",
     "@accordproject/ui-concerto": "0.94.0",
     "@accordproject/ui-markdown-editor": "0.94.0",
