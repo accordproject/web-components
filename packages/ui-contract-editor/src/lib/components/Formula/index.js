@@ -71,13 +71,15 @@ const Formula = React.forwardRef((props, ref) => {
     setFormulaDependents({});
   };
 
+  const wrapperProps = {
+    onMouseEnter: () => handlerIn(),
+    onMouseLeave: () => handlerOut(),
+    ...attributes,
+  };
+
   const formulaProps = {
     id: data.name,
     className: FORMULA,
-    onMouseEnter: () => handlerIn(),
-    onMouseLeave: () => handlerOut(),
-    // onClick: () => toggleConditional(conditionalPath),
-    ...attributes,
     ref
   };
 
@@ -87,12 +89,11 @@ const Formula = React.forwardRef((props, ref) => {
     caretTop: 21,
     caretLeft: 2,
     tooltipHeight: 1.85,
+    contentEditable: false
   };
 
-  const tooltipInstructions = 'FORMULA HERE';
-
   return (
-    <span {...attributes}>
+    <span {...wrapperProps}>
         <FormulaTooltip {...formulaTooltip}>
             {data.code}
         </FormulaTooltip>
