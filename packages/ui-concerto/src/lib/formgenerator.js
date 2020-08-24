@@ -217,7 +217,9 @@ class FormGenerator {
    * @return {object} the generated HTML string
    */
   generateHTML(type, json) {
+    console.log('this.loaded', this.loaded);
     if (this.loaded) {
+      console.log('generating html for type - ', type);
       const classDeclaration = this.modelManager.getType(type);
 
       if (!classDeclaration) {

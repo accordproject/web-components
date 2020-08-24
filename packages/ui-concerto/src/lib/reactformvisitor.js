@@ -192,7 +192,9 @@ class ReactFormVisitor {
     const props = declaration.getProperties();
     // eslint-disable-next-line
     parameters.skipLabel = true;
-    const component = <div>{props[0].accept(this, parameters)}</div>;
+    const component = (
+      <div key={declaration.getName().toLowerCase()}>{props[0].accept(this, parameters)}</div>
+    );
     // eslint-disable-next-line
     parameters.skipLabel = false;
     return component;
@@ -212,6 +214,7 @@ class ReactFormVisitor {
     return (
       <ConcertoDropdown
         id={key}
+        key={key}
         value={value}
         field={enumDeclaration}
         readOnly={parameters.disabled}
@@ -396,7 +399,7 @@ class ReactFormVisitor {
         </ConcertoArray>
       );
     } else {
-      component = <ConcertoRelationship {...commonProps} value={value}/>;
+      component = <ConcertoRelationship key={key} {...commonProps} value={value}/>;
     }
 
     stack.pop();
