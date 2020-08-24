@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 /*
@@ -13,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import set from 'lodash.set';
@@ -27,89 +28,86 @@ import './concertoForm.css';
 /**
  * This React component generates a React object for a bound model.
  */
-class ConcertoForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onFieldValueChange = this.onFieldValueChange.bind(this);
-
-    this.state = {
-      // A mutable copy of this.props.json
-      // This is needed so that we can use the jsonpath library to change object properties by key
-      // using the jsonpath module, without modifying the props object
-      value: null,
-      loading: true,
-    };
-
-    // Default values which can be overridden by parent components
-    this.options = {
-      includeOptionalFields: true,
-      includeSampleData: 'sample',
-      disabled: props.readOnly,
-      visitor: new ReactFormVisitor(),
-      onFieldValueChange: (e, key) => {
-        this.onFieldValueChange(e, key);
-      },
-      addElement: (e, key, field) => {
-        this.addElement(e, key, field);
-      },
-      removeElement: (e, key, index) => {
-        this.removeElement(e, key, index);
-      },
-      ...props.options,
-    };
-    this.generator = new FormGenerator(this.options);
+const ConcertoForm = (props) => {
+  let initialValue;
+  if (typeof props.json === 'string') {
+    try {
+      initialValue = JSON.parse(props.json);
+    } catch {
+      // Do nothing
+    }
+  } else if (typeof props.json === 'object') {
+    initialValue = { ...props.json };
   }
+  const [value, setValue] = useState(initialValue);
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    this._loadAsyncData().then(modelProps => {
-      this.props.onModelChange(modelProps);
+  // Default values which can be overridden by parent components
+  const options = React.useMemo(() => ({
+    includeOptionalFields: true,
+    includeSampleData: 'sample',
+    disabled: props.readOnly,
+    visitor: new ReactFormVisitor(),
+    onFieldValueChange: (e, key) => {
+      onFieldValueChange(e, key);
+    },
+    addElement: (e, key, field) => {
+      addElement(e, key, field);
+    },
+    removeElement: (e, key, index) => {
+      removeElement(e, key, index);
+    },
+    ...props.options,
+  }), [addElement, onFieldValueChange, removeElement, props.options, props.readOnly]);
+
+  // make sure we use the same generator instance on re-renders
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const generator = React.useMemo(() => new FormGenerator(options), []);
+
+  const { onModelChange, onValueChange } = props;
+
+  const usePrevious = val => {
+    const ref = React.useRef();
+    useEffect(() => {
+      ref.current = val;
+    }, [val]);
+    return ref.current;
+  };
+
+  const prevModels = usePrevious(props.models);
+  const [models, updateModels] = useState({});
+  useEffect(() => {
+    if (!isEqual(prevModels, props.models)) {
+      updateModels(props.models);
+    }
+  }, [props.models, prevModels]);
+
+  useEffect(() => {
+    _loadAsyncData().then(modelProps => {
+      onModelChange(modelProps);
     });
-  }
+  }, [_loadAsyncData, models, onModelChange]);
 
-  componentDidUpdate(prevProps) {
-    if (!isEqual(this.props.models, prevProps.models)) {
-      this._loadAsyncData().then(modelProps => {
-        this.props.onModelChange(modelProps);
-      });
-    }
-  }
+  const onFieldValueChange = useCallback((e, key) => {
+    const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
+    const valueClone = set({ ...value }, key, fieldValue);
+    setValue(valueClone);
+    onValueChange(valueClone);
+  }, [onValueChange, value]);
 
-  static getDerivedStateFromProps(props) {
-    let shadowValue;
-    if (typeof props.json === 'string') {
-      try {
-        shadowValue = JSON.parse(props.json);
-      } catch {
-        // Do nothing
-      }
-    } else if (typeof props.json === 'object') {
-      shadowValue = { ...props.json };
-    }
-    return { value: shadowValue };
-  }
-
-  onFieldValueChange(e, key) {
-    const value = e.type === 'checkbox' ? e.checked : e.value;
-    // eslint-disable-next-line react/no-access-state-in-setstate
-    const valueClone = set({ ...this.state.value }, key, value);
-    this.setState({ value: valueClone });
-    this.props.onValueChange(valueClone);
-  }
-
-  async _loadAsyncData() {
-    this.setState({ loading: true });
-    const modelProps = await this.loadModelFiles(this.props.models, 'text');
-    this.setState({ loading: false });
+  const _loadAsyncData = useCallback(async () => {
+    setLoading(true);
+    const modelProps = await loadModelFiles(props.models, 'text');
+    setLoading(false);
     return modelProps;
-  }
+  }, [loadModelFiles, props.models]);
 
-  async loadModelFiles(files) {
+  const loadModelFiles = useCallback(async (files) => {
     let types;
     let json;
-    let fqn = this.props.type;
+    let fqn = props.type;
     try {
-      types = await this.generator.loadFromText(files);
+      types = await generator.loadFromText(files);
       // The model file was invalid
     } catch (error) {
       console.error(error.message);
@@ -124,86 +122,85 @@ class ConcertoForm extends Component {
 
     try {
       if (
-        !types.map(t => t.getFullyQualifiedName()).includes(this.props.type)
+        !types.map(t => t.getFullyQualifiedName()).includes(props.type)
       ) {
         fqn = types[0].getFullyQualifiedName();
-        json = this.generateJSON(fqn);
+        json = generateJSON(fqn);
         return { types, json };
       }
-      json = this.generateJSON(this.props.type);
+      json = generateJSON(props.type);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     return { types, json };
-  }
+  }, [generateJSON, generator, props.type]);
 
-  removeElement(e, key, index) {
-    const array = get(this.state.value, key);
+  const removeElement = useCallback((e, key, index) => {
+    const array = get(value, key);
     array.splice(index, 1);
-    this.props.onValueChange(this.state.value);
-  }
+    onValueChange(value);
+  }, [onValueChange, value]);
 
-  addElement(e, key, value) {
-    const array = get(this.state.value, key) || [];
+  const addElement = useCallback((e, key, elementValue) => {
+    const array = get(value, key) || [];
     const valueClone = set(
-      { ...this.state.value },
+      { ...value },
       [...key, array.length],
-      value
+      elementValue
     );
-    this.setState({ value: valueClone });
-    this.props.onValueChange(valueClone);
-  }
+    setValue(valueClone);
+    onValueChange(valueClone);
+  }, [onValueChange, value]);
 
-  isInstanceOf(model, type) {
-    return this.generator.isInstanceOf(model, type);
-  }
+  const isInstanceOf = useCallback(
+    (model, type) => generator.isInstanceOf(model, type), [generator]
+  );
 
-  generateJSON(type) {
+  const generateJSON = useCallback((type) => {
     try {
       // The type changed so we have to generate a new instance
-      if (this.props.json && !this.isInstanceOf(this.props.json, type)) {
-        return this.generator.generateJSON(type);
+      if (props.json && !isInstanceOf(props.json, type)) {
+        return generator.generateJSON(type);
       }
       // The instance is null so we have to create a new instance
-      if (!this.props.json) {
-        return this.generator.generateJSON(type);
+      if (!props.json) {
+        return generator.generateJSON(type);
       }
     } catch (err) {
       console.error(err);
     }
     // Otherwise, just use what we already have
-    return this.props.json;
-  }
+    return props.json;
+  }, [generator, isInstanceOf, props.json]);
 
-  render() {
-    if (this.state.loading) {
-      return (
+  if (loading) {
+    return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
         </Dimmer>
-      );
-    }
+    );
+  }
 
-    if (this.props.type && this.state.value) {
-      try {
-        return (
-          <Form style={{ minHeight: '100px', ...this.props.style }}>
-            {this.generator.generateHTML(this.props.type, this.state.value)}
+  if (props.type && value) {
+    try {
+      return (
+          <Form style={{ minHeight: '100px', ...props.style }}>
+            {generator.generateHTML(props.type, value)}
           </Form>
-        );
-      } catch (err) {
-        console.error(err);
-        return (
+      );
+    } catch (err) {
+      console.error(err);
+      return (
           <Message warning>
             <Message.Header>
               An error occured while generating this form
             </Message.Header>
             <pre>{err.message}</pre>
           </Message>
-        );
-      }
+      );
     }
-    return (
+  }
+  return (
       <Message warning>
         <Message.Header>Invalid JSON instance provided</Message.Header>
         <p>
@@ -211,9 +208,8 @@ class ConcertoForm extends Component {
           form.
         </p>
       </Message>
-    );
-  }
-}
+  );
+};
 
 ConcertoForm.propTypes = {
   models: PropTypes.arrayOf(PropTypes.string),
