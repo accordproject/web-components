@@ -9,23 +9,23 @@ import { FORMULA } from '../../ContractEditor/plugins/withClauseSchema';
 //  overflow-wrap: break-word; // NEEDS TO BE NONE
 export const FormulaTooltip = styled.span`
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
-  margin-top: -${props => props.tooltipHeight}em;
+  margin-top: -${props => (props.tooltipHeight + 1.35)}em;
   white-space: normal;
 
   &:before {
     content: '';
     position: absolute;
-    top: ${props => props.caretTop}px;
+    bottom: -6.7px;
     left: ${props => props.caretLeft - 1}px;
-    border-top: 5px solid #141F3C;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
+    border-top: 6px solid #141F3C;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
   }
 
   &:after {
     content: '';
     position: absolute;
-    top: ${props => props.caretTop}px;
+    bottom: -6.7px;
     left: ${props => props.caretLeft}px;
     border-top: 4px solid #141F3C;
     border-left: 4px solid transparent;
@@ -70,13 +70,13 @@ const Formula = React.forwardRef((props, ref) => {
   const formulaProps = {
     id: data.name,
     className: FORMULA,
-    ref
+    ref,
+    ...attributes
   };
 
   const formulaTooltip = {
     className: 'variableTooltip',
     currentHover: hoveringFormula,
-    caretTop: 21,
     caretLeft: 2,
     tooltipHeight: 1.85,
     contentEditable: false
@@ -84,10 +84,10 @@ const Formula = React.forwardRef((props, ref) => {
 
   return (
     <span {...wrapperProps}>
-        <FormulaTooltip {...formulaTooltip}>
-            {data.code}
-        </FormulaTooltip>
-        <span {...formulaProps}>{children}</span>
+      <FormulaTooltip {...formulaTooltip}>
+          {data.code}
+      </FormulaTooltip>
+      <span {...formulaProps}>{children}</span>
     </span>
   );
 });
