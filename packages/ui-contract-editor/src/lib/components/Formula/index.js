@@ -44,31 +44,21 @@ const Formula = React.forwardRef((props, ref) => {
     children,
     children: { props: { node } },
     children: { props: { node: { data } } },
-    setFormulaDependents,
+    setFormulaNode,
     setHoveringFormulaContract
   } = props;
   const [hoveringFormula, setHoveringFormula] = useState(false);
 
-
-  const currDeps = {
-    node,
-    dependencies: {
-      loanAmount: true,
-      rate: true,
-      loanDuration: true,
-    }
-  };
-
   const handlerIn = () => {
     setHoveringFormula(true);
     setHoveringFormulaContract(true);
-    setFormulaDependents(currDeps);
+    setFormulaNode(node);
   };
 
   const handlerOut = () => {
     setHoveringFormula(false);
     setHoveringFormulaContract(false);
-    setFormulaDependents({});
+    setFormulaNode({});
   };
 
   const wrapperProps = {
@@ -110,7 +100,7 @@ Formula.propTypes = {
   }),
   children: PropTypes.object.isRequired,
   setHoveringFormulaContract: PropTypes.func,
-  setFormulaDependents: PropTypes.func,
+  setFormulaNode: PropTypes.func,
   editor: PropTypes.any,
   node: PropTypes.shape({
     data: PropTypes.obj,

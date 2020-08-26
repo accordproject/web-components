@@ -78,7 +78,7 @@ const contractProps = {
  */
 const ContractEditor = (props) => {
   const [hoveringFormulaContract, setHoveringFormulaContract] = useState(false);
-  const [formulaDependents, setFormulaDependents] = useState({});
+  const [formulaNode, setFormulaNode] = useState({});
   const withClausesProps = {
     onClauseUpdated: props.onClauseUpdated,
     pasteToContract: props.pasteToContract
@@ -88,10 +88,10 @@ const ContractEditor = (props) => {
     let formulaClauseName;
     let isVariableFormulaDependency = false;
     if (!hoveringFormulaContract) return isVariableFormulaDependency;
-    const forumaPATH = ReactEditor.findPath(editor, formulaDependents.node);
-    const variablePATH = ReactEditor.findPath(editor, formulaDependents.node);
+    const formulaPATH = ReactEditor.findPath(editor, formulaNode);
+    const variablePATH = ReactEditor.findPath(editor, variableNode);
     // eslint-disable-next-line no-restricted-syntax
-    for (const [n] of Node.ancestors(editor, forumaPATH, { reverse: true })) {
+    for (const [n] of Node.ancestors(editor, formulaPATH, { reverse: true })) {
       if (n.type === CLAUSE) { formulaClauseName = n.data.name; }
     }
     // eslint-disable-next-line no-restricted-syntax
@@ -99,13 +99,13 @@ const ContractEditor = (props) => {
       if (
         n.type === CLAUSE
         && n.data.name === formulaClauseName
-        && formulaDependents.dependencies[variableNode.data.name]
+        && formulaNode.data.dependencies.includes(variableNode.data.name)
       ) {
         isVariableFormulaDependency = true;
       }
     }
     return isVariableFormulaDependency;
-  }, [hoveringFormulaContract, formulaDependents]);
+  }, [hoveringFormulaContract, formulaNode]);
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
@@ -132,7 +132,7 @@ const ContractEditor = (props) => {
       name: element.data.name,
       className: FORMULA,
       setHoveringFormulaContract,
-      setFormulaDependents,
+      setFormulaNode,
       attributes,
       editor,
     };
