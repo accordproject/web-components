@@ -8,15 +8,16 @@ import { FORMULA } from '../../ContractEditor/plugins/withClauseSchema';
 
 //  overflow-wrap: break-word; // NEEDS TO BE NONE
 export const FormulaTooltip = styled.span`
+  z-index: 2;
   visibility: ${props => (props.currentHover ? 'visible' : 'hidden')};
-  margin-top: -${props => (props.tooltipHeight + 1.35)}em;
+  transform: translateY(-110%);
   white-space: normal;
 
   &:before {
     content: '';
     position: absolute;
     bottom: -6.7px;
-    left: ${props => props.caretLeft - 1}px;
+    left: 1px;
     border-top: 6px solid #141F3C;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -26,7 +27,7 @@ export const FormulaTooltip = styled.span`
     content: '';
     position: absolute;
     bottom: -6.7px;
-    left: ${props => props.caretLeft}px;
+    left: 2px;
     border-top: 4px solid #141F3C;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
@@ -77,8 +78,6 @@ const Formula = React.forwardRef((props, ref) => {
   const formulaTooltip = {
     className: 'variableTooltip',
     currentHover: hoveringFormula,
-    caretLeft: 2,
-    tooltipHeight: 1.85,
     contentEditable: false
   };
 
