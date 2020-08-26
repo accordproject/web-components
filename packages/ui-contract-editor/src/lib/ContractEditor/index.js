@@ -78,7 +78,7 @@ const contractProps = {
  */
 const ContractEditor = (props) => {
   const [hoveringFormulaContract, setHoveringFormulaContract] = useState(false);
-  const [formulaNode, setFormulaNode] = useState({});
+  const [formulaNode, setFormulaNode] = useState(null);
   const withClausesProps = {
     onClauseUpdated: props.onClauseUpdated,
     pasteToContract: props.pasteToContract
@@ -87,7 +87,7 @@ const ContractEditor = (props) => {
   const isFormulaDependency = useCallback((editor, variableNode) => {
     let formulaClauseName;
     let isVariableFormulaDependency = false;
-    if (!hoveringFormulaContract) return isVariableFormulaDependency;
+    if (!hoveringFormulaContract || !formulaNode) return isVariableFormulaDependency;
     const formulaPATH = ReactEditor.findPath(editor, formulaNode);
     const variablePATH = ReactEditor.findPath(editor, variableNode);
     // eslint-disable-next-line no-restricted-syntax
