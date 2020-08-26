@@ -36,9 +36,7 @@ a {
 }
 
 .formula {   
-    border: #AF54C4 1px solid;
-    border-radius: 2px;
-    background-color: #fff;
+    color: #AE00BE
 }
 
 .optional:hover,
