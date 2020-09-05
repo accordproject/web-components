@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/web-components",
-  "version": "0.95.2",
+  "version": "0.95.3",
   "description": "Web components for Accord Project",
   "main": "index.js",
   "author": "accordproject.org",

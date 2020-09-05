@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ui-markdown-editor",
-  "version": "0.95.2",
+  "version": "0.95.3",
   "private": false,
   "dependencies": {
     "@accordproject/markdown-cicero": "^0.12.8",
