@@ -26,6 +26,7 @@ import Variable from '../components/Variable';
 import Conditional from '../components/Conditional';
 import Optional from '../components/Optional';
 import Formula from '../components/Formula';
+import {ClauseContext} from '../components/Clause'
 
 /* Plugins */
 import withClauseSchema, {
@@ -243,7 +244,7 @@ const ContractEditor = (props) => {
   // console.log('value: ', JSON.stringify(props.value));
 
   return (
-    // <ClauseContext.Provider value={hoveringFormulaContract}>
+    <ClauseContext.Provider value={hoveringFormulaContract}>
     <MarkdownEditor
       augmentEditor={augmentEditor}
       isEditable={isEditable}
@@ -261,7 +262,7 @@ const ContractEditor = (props) => {
       activeButton={props.activeButton}
       data-testid='editor'
   />
-  // </ClauseContext.Provider>
+   </ClauseContext.Provider>
   );
 };
 
