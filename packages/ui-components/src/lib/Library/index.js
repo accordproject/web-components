@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 /* Styling */
 import styled from 'styled-components';
-import { Input, Checkbox } from 'semantic-ui-react';
+import { Input, Checkbox, Dropdown } from 'semantic-ui-react';
 
 /* Internal */
 import isQueryMatch from '../utilities/isQueryMatch';
@@ -80,9 +80,29 @@ const LibraryItemCards = styled.div`
 
 const LibraryComponent = (props) => {
   const [query, setQuery] = useState([]);
+  const [ciceroVersion, setCiceroVersion] = useState([]);
+
   const [itemTypeFilter, setItemTypeFilter] = useState(
     props.itemTypes.reduce((acc, el) => ({ ...acc, [el.type]: true }), {})
   );
+
+  const distinctCiceroVersions = props.items.reduce((acc, { version }) => {
+    if (!acc[version]) {
+      acc[version] = 1;
+    }
+    return acc;
+  }, {});
+  const distinctOptions = [{ key: '', value: '', text: '' }, ...Object.keys(distinctCiceroVersions).map(
+    (version, index) => ({
+      key: index,
+      value: version,
+      text: version
+    })
+  )];
+
+  const onCiceroVersionChange = ({ value }) => {
+    setCiceroVersion(value);
+  };
 
   const onQueryChange = (e, input) => {
     const inputQuery = input.value.toLowerCase().trim().split(' ').filter(q => q.length);
@@ -125,8 +145,17 @@ const LibraryComponent = (props) => {
       filtered = filtered.filter(item => currentFilter.indexOf(item.itemType) > -1);
     }
 
+    if (ciceroVersion.length) {
+      // pre-existinmg length for filtered present
+      if (filtered.length < 1) {
+        // populate filtered with available options again
+        filtered = filterItemsByQuery();
+      }
+      filtered = filtered.filter((item) => item.version === ciceroVersion);
+    }
+
     return filtered;
-  }, [query, props.items, itemTypeFilter]);
+  }, [itemTypeFilter, ciceroVersion, props.itemTypes.length, filterItemsByQuery]);
 
   const renderItemTypeFilter = useCallback(() => {
     if (props.itemTypes.length === 1) return null;
@@ -147,9 +176,21 @@ const LibraryComponent = (props) => {
             />
           ))
         }
+
+        {
+          distinctOptions.length > 1 ? (
+            <Dropdown
+              placeholder="Filter by cicero version"
+              style={{ width: '200px' }}
+              fluid
+              onChange={(e, data) => onCiceroVersionChange(data)}
+              options={distinctOptions}
+            />
+          ) : null
+        }
       </ItemTypeFilterContainer>
     );
-  }, [itemTypeFilter]);
+  }, [distinctOptions, itemTypeFilter, props.itemTypes]);
 
   const filtered = filterItems();
   const dislayedItemTypes = props.itemTypes.reduce(
@@ -159,9 +200,9 @@ const LibraryComponent = (props) => {
 
   return (
     <Wrapper>
-      { renderHeader() }
+      {renderHeader()}
       <Functionality>
-        { renderItemTypeFilter() }
+        {renderItemTypeFilter()}
         <Input
           className="ui-components__library-search-input"
           fluid
@@ -173,19 +214,19 @@ const LibraryComponent = (props) => {
         <NewItemComponent onAddItem={props.onAddItem} />
       </Functionality>
       <LibraryItemCards className="ui-components__library-cards-wrapper">
-        {
-          filtered.length
-            ? filtered.map(item => (
-                <LibraryItemCard
-                  key={item.uri}
-                  item={item}
-                  itemTypeName={dislayedItemTypes[item.itemType] || 'ITEM'}
-                  onPrimaryButtonClick={props.onPrimaryButtonClick}
-                  onSecondaryButtonClick={props.onSecondaryButtonClick}
-                />
-            ))
-            : <p style={{ textAlign: 'center' }}>No results found</p>
-        }
+        {filtered.length ? (
+          filtered.map((item) => (
+            <LibraryItemCard
+              key={item.uri}
+              item={item}
+              itemTypeName={dislayedItemTypes[item.itemType] || 'ITEM'}
+              onPrimaryButtonClick={props.onPrimaryButtonClick}
+              onSecondaryButtonClick={props.onSecondaryButtonClick}
+            />
+          ))
+        ) : (
+          <p style={{ textAlign: 'center' }}>No results found</p>
+        )}
       </LibraryItemCards>
     </Wrapper>
   );
@@ -198,11 +239,13 @@ LibraryComponent.propTypes = {
   onPrimaryButtonClick: PropTypes.func.isRequired,
   onSecondaryButtonClick: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  itemTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  itemTypes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 LibraryComponent.defaultProps = {
-  itemTypes: [{ name: 'CLAUSE TEMPLATE', type: 'template', filterName: 'Templates' }]
+  itemTypes: [
+    { name: 'CLAUSE TEMPLATE', type: 'template', filterName: 'Templates' }
+  ]
 };
 
 export default LibraryComponent;
