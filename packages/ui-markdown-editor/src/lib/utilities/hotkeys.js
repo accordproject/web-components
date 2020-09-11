@@ -1,6 +1,6 @@
 import {
   LINK, IMAGE, BLOCK_QUOTE, UL_LIST, OL_LIST,
-  MARK_BOLD, MARK_ITALIC, MARK_CODE, HR
+  MARK_BOLD, MARK_ITALIC, MARK_CODE, HR, LINEBREAK
 } from './schema';
 
 const HOTKEYS = {
@@ -47,6 +47,10 @@ const HOTKEYS = {
   'mod+enter': {
     type: 'horizontal_rule',
     code: HR,
+  },
+  'shift+enter': {
+    type: 'linebreak',
+    code: LINEBREAK,
   }
 };
 
@@ -60,7 +64,7 @@ export const ENTER_BLOCK = {
   ...ENTER_LIST
 };
 
-export const formattingHotKeys = ['mod+b', 'mod+i', 'mod+shift+7', 'mod+shift+8', 'mod+shift+9', 'mod+shift+.', 'mod+shift+g', 'mod+k', 'mod+enter'];
+export const formattingHotKeys = ['mod+b', 'mod+i', 'mod+shift+7', 'mod+shift+8', 'mod+shift+9', 'mod+shift+.', 'mod+shift+g', 'mod+k', 'mod+enter', 'shift+enter'];
 
 export const ENTER = 'enter';
 export const ENTER_SHIFT = 'shift+enter';
