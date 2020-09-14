@@ -93,7 +93,7 @@ export const insertThematicBreak = (editor, type) => {
 
 export const insertLinebreak = (editor, type) => {
   const text = { object: 'text', text: '' };
-  const br = { type, children: [text] };
+  const br = { type, children: [text], data: {} };
   Transforms.insertNodes(editor, br);
   Transforms.move(editor, { distance: 1, unit: 'character' });
 };
