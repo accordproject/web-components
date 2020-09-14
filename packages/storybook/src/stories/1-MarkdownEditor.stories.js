@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import { boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 
 const slateTransformer = new SlateTransformer();
@@ -84,7 +85,6 @@ export const Demo = () => {
    */
   const [slateValue, setSlateValue] = useState(() => {
     const slate = slateTransformer.fromMarkdown(defaultMarkdown);
-    console.log(slate);
     return slate.document.children;
   });
   const [markdown, setMarkdown] = useState(defaultMarkdown);
@@ -100,6 +100,7 @@ export const Demo = () => {
    * Called when the Slate Value changes
    */
   const onSlateValueChange = useCallback((slateChildren) => {
+    action('onSlateValueChange')(slateChildren);
     localStorage.setItem('slate-editor-value', JSON.stringify(slateChildren));
     const slateValue = {
       document: {
@@ -108,6 +109,7 @@ export const Demo = () => {
     };
     const markdown = slateTransformer.toMarkdown(slateValue);
     setSlateValue(slateValue.document.children);
+    action('markdown')(markdown);
     setMarkdown(markdown);
   }, []);
 

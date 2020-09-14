@@ -109,8 +109,8 @@ const ContractEditor = (props) => {
 
   const customElements = (attributes, children, element, editor) => {
     const CLAUSE_PROPS = {
-      templateUri: element.data.src ? element.data.src : 'http://embedded@0.0.0#abcde',
-      name: element.data.name,
+      templateUri: (element.data && element.data.src) ? element.data.src : '',
+      name: (element.data && element.data.name) ? element.data.name : '',
       error: element.error,
       clauseProps: props.clauseProps,
       readOnly: props.readOnly,
@@ -129,7 +129,7 @@ const ContractEditor = (props) => {
       attributes
     };
     const FORMULA_PROPS = {
-      name: element.data.name,
+      name: (element.data && element.data.name) ? element.data.name : '',
       className: FORMULA,
       setHoveringFormulaContract,
       setFormulaNode,

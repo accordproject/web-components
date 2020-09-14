@@ -34,7 +34,12 @@ const Element = (props) => {
     [H5]: () => (<Heading id={headingId} as="h5" style={DROPDOWN_STYLE_H5} {...attributes}>{children}</Heading>),
     [H6]: () => (<Heading id={headingId} as="h6" style={DROPDOWN_STYLE_H6} {...attributes}>{children}</Heading>),
     [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
-    [LINEBREAK]: () => (<br className={LINEBREAK} {...attributes} />),
+    [LINEBREAK]: () => (<span {...attributes}>
+      <span contentEditable={false} style={{ userSelect: 'none' }}>
+        <br />
+      </span>
+      {children}
+    </span>),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
     [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),

@@ -8,7 +8,7 @@ export const withLists = (editor) => {
 
   editor.insertBreak = () => {
     const currNode = Node.get(editor, editor.selection.focus.path);
-    if (currNode.object === 'text' && currNode.text === '') {
+    if (currNode.text === '') {
       // eslint-disable-next-line no-restricted-syntax
       for (const [n] of Node.ancestors(editor, editor.selection.focus.path, { reverse: true })) {
         if (ENTER_BLOCK[n.type]) {
