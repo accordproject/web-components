@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, LINEBREAK
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH
 } from './schema';
 
 export const isBlockActive = (editor, format) => {
@@ -72,7 +72,7 @@ export const toggleHistory = (editor, format) => {
 };
 
 export const insertThematicBreak = (editor, type) => {
-  const text = { text: '' };
+  const text = { object: 'text', text: '' };
   const tBreakNode = [
     {
       object: 'block',
@@ -92,7 +92,7 @@ export const insertThematicBreak = (editor, type) => {
 };
 
 export const insertLinebreak = (editor, type) => {
-  const text = { text: '' };
+  const text = { object: 'text', text: '' };
   const br = { type, children: [text] };
   Transforms.insertNodes(editor, br);
   Transforms.move(editor, { distance: 1, unit: 'character' });
