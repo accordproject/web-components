@@ -1,12 +1,12 @@
 /* React */
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 /* Styling */
-import { ClauseContext } from '../Clause';
-import { ClauseConditional, ClauseConditionalTooltip } from '../styles';
+import { ClauseContext } from "../Clause";
+import { ClauseConditional, ClauseConditionalTooltip } from "../styles";
 
-import * as conditionalIcon from '../../icons/conditional';
+import * as conditionalIcon from "../../icons/conditional";
 
 /**
  * Component to render an addition symbol for an empty conditional
@@ -23,40 +23,42 @@ const ConditionalBoolean = (props) => {
   }, []);
 
   const conditionalIconProps = {
-    'aria-label': conditionalIcon.type,
-    viewBox: '0 0 18 18',
-    className: 'conditionalIcon',
+    "aria-label": conditionalIcon.type,
+    viewBox: "0 0 18 18",
+    className: "conditionalIcon",
     onMouseEnter: () => setHoveringConditional(true),
     onMouseLeave: () => setHoveringConditional(false),
-    onClick: props.toggleConditional
+    onClick: props.toggleConditional,
   };
 
   const conditionalTooltip = {
     ref,
     currentHover: hoveringConditional,
-    className: 'variableTooltip',
-    style: { marginTop: `-${tooltipHeight + 10}px` },
+    className: "variableTooltip",
+    style: { marginTop: `-${tooltipHeight + 10}px`, zIndex: 1000 },
     caretTop: tooltipHeight - 2,
     caretLeft: 2,
   };
 
   return (
     <ClauseContext.Consumer>
-      { hoveringClause => (<>
-        <ClauseConditionalTooltip
-          contentEditable={false}
-          {...conditionalTooltip}
-        >
-          Show text: "{props.whenTrue}"
-        </ClauseConditionalTooltip>
-        <ClauseConditional
-          contentEditable={false}
-          currentHover={hoveringClause}
-          {...conditionalIconProps}
-        >
-          {conditionalIcon.icon(hoveringConditional)}
-        </ClauseConditional>
-      </>) }
+      {(hoveringClause) => (
+        <>
+          <ClauseConditionalTooltip
+            contentEditable={false}
+            {...conditionalTooltip}
+          >
+            Show text: "{props.whenTrue}"
+          </ClauseConditionalTooltip>
+          <ClauseConditional
+            contentEditable={false}
+            currentHover={hoveringClause}
+            {...conditionalIconProps}
+          >
+            {conditionalIcon.icon(hoveringConditional)}
+          </ClauseConditional>
+        </>
+      )}
     </ClauseContext.Consumer>
   );
 };
