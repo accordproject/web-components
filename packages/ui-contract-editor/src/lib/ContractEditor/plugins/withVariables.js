@@ -1,5 +1,6 @@
 import { Transforms, Node, Editor } from 'slate';
 import inVariable from '../../utilities/inVariable';
+import { inReadOnlyVariable } from '../../utilities/readOnlyVariable';
 import { VARIABLE } from './withClauseSchema';
 
 /* eslint no-param-reassign: 0 */
@@ -35,8 +36,9 @@ export const isEditableVariable = (lockText, editor, event) => {
   const { selection } = editor;
   const textLength = Node.get(editor, editor.selection.focus.path).text.length;
   const atEnd = editor => textLength === editor.selection.focus.offset;
+  const editable = inVariable(editor) && !inReadOnlyVariable(editor);
 
-  if (inVariable(editor)) {
+  if (editable) {
     if (atEnd(editor) && event.inputType === 'deleteContentForward') {
       return false;
     }
@@ -64,7 +66,7 @@ export const isEditableVariable = (lockText, editor, event) => {
     }
     return true;
   }
-  return inVariable(editor);
+  return editable;
 };
 
 export default withVariables;

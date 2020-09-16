@@ -5,10 +5,12 @@ import styled from 'styled-components';
 
 /* Plugins */
 import { VARIABLE } from '../../ContractEditor/plugins/withClauseSchema';
+import { isReadOnlyVariable } from '../../utilities/readOnlyVariable';
 
 const VariableWrapper = styled.span`
   border: ${props => props.formulaDependency ? '#AF54C4' : '#A4BBE7'} 1px solid !important;
   background-color: ${props => props.formulaDependency ? '#BED3FC' : '#FFFFFF'} !important;
+  opacity: ${props => props.readOnly ? 0 : 1} !important;
 `;
 
 const Variable = React.forwardRef((props, ref) => {
@@ -17,12 +19,13 @@ const Variable = React.forwardRef((props, ref) => {
     children,
     editor,
     element,
-    isFormulaDependency,
+    isFormulaDependency
   } = props;
 
   const VARIABLE_PROPS = {
     className: VARIABLE,
     name: element.data.name,
+    readOnly: isReadOnlyVariable(element),
     formulaDependency: isFormulaDependency(editor, element),
     ...attributes,
     ref
@@ -40,7 +43,7 @@ Variable.propTypes = {
   children: PropTypes.object.isRequired,
   editor: PropTypes.any,
   element: PropTypes.any,
-  isFormulaDependency: PropTypes.func,
+  isFormulaDependency: PropTypes.func
 };
 
 export default Variable;
