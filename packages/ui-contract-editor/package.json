@@ -3,9 +3,9 @@
   "version": "0.95.3",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-html": "^0.12.8",
-    "@accordproject/markdown-slate": "^0.12.8",
-    "@accordproject/markdown-transform": "^0.12.8",
+    "@accordproject/markdown-html": "^0.12.9",
+    "@accordproject/markdown-slate": "^0.12.9",
+    "@accordproject/markdown-transform": "^0.12.9",
     "@accordproject/ui-markdown-editor": "0.95.3",
     "@babel/runtime": "^7.10.3",
     "lodash": "^4.17.15",
