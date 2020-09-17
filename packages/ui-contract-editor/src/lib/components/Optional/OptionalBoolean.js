@@ -35,7 +35,7 @@ const OptionalBoolean = (props) => {
     ref,
     currentHover: hoveringOptional,
     className: 'optionalTooltip',
-    style: { marginTop: `-${tooltipHeight + 10}px`,zIndex:10000 },
+    style: { marginTop: `-${tooltipHeight + 10}px`,zIndex:1000 },
     caretTop: tooltipHeight - 2,
     caretLeft: 2,
   };
