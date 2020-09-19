@@ -1,6 +1,6 @@
 import { Transforms, Node, Editor } from 'slate';
 import inVariable from '../../utilities/inVariable';
-import { inReadOnlyVariable } from '../../utilities/readOnlyVariable';
+import { inReadOnlyVariable } from '../../utilities/variableDecorators';
 import { VARIABLE } from './withClauseSchema';
 
 /* eslint no-param-reassign: 0 */
