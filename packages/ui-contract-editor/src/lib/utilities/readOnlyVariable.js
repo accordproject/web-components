@@ -1,13 +1,15 @@
 import { Node } from 'slate';
+import { Decorators } from '@accordproject/markdown-cicero';
 
 export const isReadOnlyVariable = (variableNode) => {
-  if (variableNode.data.decorators) {
-    const decorator = variableNode.data.decorators.find(d => d.name === 'ContractEditor'
-      && d.arguments && d.arguments.length === 1);
-    return decorator && decorator.arguments[0].value === 'readOnly';
-  }
+  const decorators = new Decorators(variableNode.data);
+  return (decorators.getDecoratorValue('ContractEditor', 'readOnly') === true);
+};
 
-  return false;
+export const getOpacity = (variableNode) => {
+  const decorators = new Decorators(variableNode.data);
+  const opacity = decorators.getDecoratorValue('ContractEditor', 'opacity');
+  return opacity !== undefined ? opacity : 1;
 };
 
 export const inReadOnlyVariable = (editor) => {
