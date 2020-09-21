@@ -18,8 +18,6 @@ import get from 'lodash.get';
 import toPath from 'lodash.topath';
 import { Form } from 'semantic-ui-react';
 import {
-  ModelManager,
-  ModelFile,
   EnumDeclaration,
   ClassDeclaration,
   Field,
@@ -49,6 +47,24 @@ import {
 } from './utilities';
 
 /**
+ * Returns true if the field has the @FormEditor( "hide", true )
+ * decorator
+ * @param {object} field the Concerto field
+ */
+function isHidden(field) {
+  const decorator = field.getDecorator('FormEditor');
+  if (decorator) {
+    const args = decorator.getArguments();
+    if (args.find((d, index) => d === 'hide'
+      && index < args[args.length - 1] && args[index + 1] === true)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Convert the contents of a ModelManager to React compnents.
  * @class
  */
@@ -66,12 +82,6 @@ class ReactFormVisitor {
       parameters.fileWriter = new Writer();
     }
 
-    if (thing instanceof ModelManager) {
-      return this.visitModelManager(thing, parameters);
-    }
-    if (thing instanceof ModelFile) {
-      return this.visitModelFile(thing, parameters);
-    }
     if (thing instanceof EnumDeclaration) {
       return this.visitEnumDeclaration(thing, parameters);
     }
@@ -232,12 +242,11 @@ class ReactFormVisitor {
       stack,
     } = parameters;
 
-    stack.push(field.getName());
-
-    if (hideProperty(field, parameters)) {
+    if (hideProperty(field, parameters) || isHidden(field)) {
       return null;
     }
 
+    stack.push(field.getName());
     const key = toPath(stack);
     const value = get(parameters.json, key);
     let component = null;
@@ -332,12 +341,12 @@ class ReactFormVisitor {
       onFieldValueChange,
       stack,
     } = parameters;
-    stack.push(relationship.getName());
 
-    if (hideProperty(relationship, parameters)) {
+    if (hideProperty(relationship, parameters) || isHidden(relationship)) {
       return null;
     }
 
+    stack.push(relationship.getName());
     const key = toPath(stack);
     const value = get(parameters.json, key);
 
@@ -385,7 +394,7 @@ class ReactFormVisitor {
         </ConcertoArray>
       );
     } else {
-      component = <ConcertoRelationship {...commonProps} />;
+      component = <ConcertoRelationship {...commonProps} value={value}/>;
     }
 
     stack.pop();
