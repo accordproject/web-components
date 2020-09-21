@@ -1,13 +1,13 @@
 {
   "name": "@accordproject/ui-contract-editor",
-  "version": "0.95.3",
+  "version": "0.95.4",
   "private": false,
   "dependencies": {
     "@accordproject/markdown-html": "^0.12.10",
     "@accordproject/markdown-slate": "^0.12.10",
     "@accordproject/markdown-transform": "^0.12.10",
     "@accordproject/markdown-cicero": "^0.12.10",
-    "@accordproject/ui-markdown-editor": "0.95.3",
+    "@accordproject/ui-markdown-editor": "0.95.4",
     "@babel/runtime": "^7.10.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
