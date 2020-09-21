@@ -15,6 +15,24 @@
 import { ModelManager, Factory, Serializer } from '@accordproject/concerto-core';
 import ReactFormVisitor from './reactformvisitor';
 
+const entities = {
+  amp: '&',
+  apos: '\'',
+  '#x27': '\'',
+  '#x2F': '/',
+  '#39': '\'',
+  '#47': '/',
+  lt: '<',
+  gt: '>',
+  nbsp: ' ',
+  quot: '"'
+};
+
+function decodeHTMLEntities(text) {
+  return text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match);
+}
+
+
 /**
  * Used to generate a web from from a given composer model. Accepts string or file
  * and assets.
@@ -79,8 +97,7 @@ class FormGenerator {
     this.modelManager.clearModelFiles();
     try {
       texts.forEach(text => {
-        // Unescape URL encoded relationship symbols
-        const model = text.replace(/--&gt;/g, '-->');
+        const model = decodeHTMLEntities(text);
         this.modelManager.addModelFile(model, null, true);
       });
       if (this.options.updateExternalModels) {

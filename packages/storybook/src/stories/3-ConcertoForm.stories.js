@@ -37,6 +37,8 @@ export const Demo = () => {
   concept Address {
     o String street
     o String city
+    
+    @FormEditor( "hide", true)
     o String zipCode
     o Country country
   }

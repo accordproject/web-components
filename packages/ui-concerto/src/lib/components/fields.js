@@ -73,19 +73,19 @@ export const ConcertoRelationship = ({
   field,
   readOnly,
   required,
-  value = '',
+  value,
   onFieldValueChange,
   skipLabel,
   type,
 }) => {
-  if (!value) {
-    return null;
-  }
-
   let relationship;
   try {
-    relationship = Relationship.fromURI(field.getModelFile().getModelManager(), value);
-  } catch {
+    if (value) {
+      relationship = Relationship.fromURI(field.getModelFile().getModelManager(), value);
+    } else {
+      relationship = Relationship.fromURI(field.getModelFile().getModelManager(), `resource:${field.getFullyQualifiedTypeName()}#resource1`);
+    }
+  } catch (err) {
     return ConcertoInput({
       id,
       field,
@@ -107,13 +107,12 @@ export const ConcertoRelationship = ({
       readOnly={readOnly}
       value={relationship.getIdentifier()}
       onChange={(e, data) => {
-        relationship.setIdentifier(parseValue(data.value || 'resource1', field.getType()));
+        relationship.setIdentifier(data.value || 'resource1');
         return onFieldValueChange(
           { ...data, value: relationship.toURI() },
           id
         );
-      }
-      }
+      }}
       key={id}
     />
   </Form.Field>;
