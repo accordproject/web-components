@@ -3,7 +3,7 @@
   "version": "0.98.0",
   "private": false,
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "7.13.10",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-textarea-autosize": "^7.1.2",

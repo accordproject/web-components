@@ -1,0 +1,90 @@
+a {
+    color: #0f52ba;
+}
+
+.parseError {
+    background-color: #e98181;
+}
+
+.variable,
+.conditional,
+.optional {
+    border-radius: 2px;
+    background-color: #fff;
+    color: #000;
+}
+
+.conditional,
+.optional {
+    border: #FFDDA0 1px solid;
+    margin-left: 2px;
+    padding: 1px 3px;
+}
+
+.optional > .variable {
+    cursor: text;
+    box-shadow: inset 0px 0px 0px 1px #A4BBE7;
+    padding: 0px 2px;
+    border: #A4BBE7 0px solid;
+}
+
+.variable {
+    border: #A4BBE7 1px solid;
+    padding: 0px 3px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.formula {   
+    color: #AE00BE
+}
+
+.optional:hover,
+.conditional:hover {
+    cursor: pointer;
+    background-color: #d4d8e1;
+}
+
+.conditionalTooltip,
+.optionalTooltip,
+.variableTooltip {
+    opacity: 1 !important;
+    border: 1px solid #141F3C;
+    border-radius: 2px;
+    background-color: #141F3C;
+    transition-duration: 0.25s;
+    color: #FFFFFF;
+    padding: 1px 3px;
+    position: absolute;
+}
+
+.conditionalIcon,
+.optionalIcon {
+    position: absolute;
+    display: inline-block;
+    transition-duration: 0.2s;
+    margin-left: -5px;
+    margin-top: -8px;
+    width: 18px;
+    height: 18px;
+}
+
+.conditionalIcon:hover,
+.optionalIcon:hover,
+.listIcon:hover {
+    cursor: pointer;
+}
+
+.listIcon {
+    position: absolute;
+    display: inline-block;
+    transition-duration: 0.2s;
+    margin-left: -35px;
+    margin-top: 4px;
+    width: 18px;
+    height: 16px;
+}
+.addListIcon{
+    display: block;
+    margin-top: 23px;
+}

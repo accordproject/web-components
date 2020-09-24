@@ -1,21 +1,26 @@
 {
-  "name": "@accordproject/ui-markdown-editor",
+  "name": "@accordproject/ui-template-editor",
   "version": "0.98.0",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-cicero": "0.13.1-20210513143848",
     "@accordproject/markdown-html": "0.13.1-20210513143848",
     "@accordproject/markdown-slate": "0.13.1-20210513143848",
-    "@babel/runtime": "^7.10.3",
-    "image-extensions": "^1.1.0",
-    "is-hotkey": "^0.1.6",
+    "@accordproject/markdown-template": "0.13.1-20210513143848",
+    "@accordproject/markdown-transform": "0.13.1-20210513143848",
+    "@accordproject/markdown-cicero": "0.13.1-20210513143848",
+    "@accordproject/ui-markdown-editor": "0.98.0",
+    "@babel/runtime": "7.13.10",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "semantic-ui-react": "^0.88.2"
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "slate-history": "^0.58.4",
+    "uuidv4": "^6.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
     "build:app": "react-scripts build",
-    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "build": "npx rollup -c --sourcemap",
     "build:prod": "npx rollup -c",
@@ -25,11 +30,6 @@
     "fix:style": "npx stylelint ./src/ --fix",
     "start:docs": "docz dev",
     "build:docs": "docz build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/accordproject/web-components",
-    "directory": "packages/ui-markdown-editor"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,9 +57,9 @@
   "devDependencies": {
     "@babel/cli": "7.13.10",
     "@babel/core": "7.13.10",
-    "@babel/plugin-transform-runtime": "7.13.10",
     "@babel/preset-env": "7.13.10",
     "@babel/preset-react": "7.10.1",
+    "@babel/plugin-transform-runtime": "7.13.10",
     "@rollup/plugin-babel": "5.0.4",
     "@rollup/plugin-commonjs": "12.0.0",
     "@rollup/plugin-node-resolve": "8.1.0",
@@ -96,11 +96,10 @@
   "peerDependencies": {
     "react": ">=16.13.1",
     "react-dom": ">=16.13.1",
-    "semantic-ui-css": "^2.4.1",
     "slate": ">=0.58.4",
-    "slate-history": ">=0.58.4",
     "slate-react": ">=0.58.4",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "semantic-ui-css": "^2.4.1"
   },
   "files": [
     "lib"

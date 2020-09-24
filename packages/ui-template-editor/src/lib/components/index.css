@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Graphik';
+    src: url('../../assets/fonts/Graphik-400.woff'),
+         url('../../assets/fonts/Graphik-400.woff2');
+  }
+  
+@font-face {
+font-family: 'Graphik';
+src: url('../../assets/fonts/Graphik-600.woff'),
+     url('../../assets/fonts/Graphik-600.woff2');
+font-weight: bold;
+}
