@@ -95,9 +95,6 @@ class ReactFormVisitor {
     if (thing instanceof RelationshipDeclaration) {
       return this.visitRelationship(thing, parameters);
     }
-    if (thing instanceof EnumValueDeclaration) {
-      return this.visitEnumValueDeclaration(thing, parameters);
-    }
     throw new Error(
       `Unrecognised type: ${typeof thing}, value: ${util.inspect(thing, {
         showHidden: true,
@@ -215,13 +212,13 @@ class ReactFormVisitor {
     return (
       <ConcertoDropdown
         id={key}
-        key={key}
+        key={`enum-${key}`}
         value={value}
         field={enumDeclaration}
         readOnly={parameters.disabled}
         onFieldValueChange={parameters.onFieldValueChange}
         options={enumDeclaration.getProperties().map(property => ({
-          key: property.getName(),
+          key: `option-${property.getName()}`,
           value: property.getName(),
           text: property.getName(),
         }))}
@@ -324,7 +321,7 @@ class ReactFormVisitor {
     type = findConcreteSubclass(type);
     return (
       <Form.Field required={!field.isOptional()} key={field.getName()}>
-        <ConcertoLabel skip={props.skipLabel} name={field.getName()} />
+        <ConcertoLabel skip={props.skipLabel} name={field.getName()} key={`label-${field.getName()}`} />
         {type.accept(this, parameters)}
       </Form.Field>
     );

@@ -18,11 +18,29 @@ import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import set from 'lodash.set';
 import { Form, Dimmer, Loader, Message } from 'semantic-ui-react';
+import { ModelManager } from '@accordproject/concerto-core';
 import isEqual from 'lodash.isequal';
 
 import ReactFormVisitor from '../reactformvisitor';
 import FormGenerator from '../formgenerator';
 import './concertoForm.css';
+
+const entities = {
+  amp: '&',
+  apos: '\'',
+  '#x27': '\'',
+  '#x2F': '/',
+  '#39': '\'',
+  '#47': '/',
+  lt: '<',
+  gt: '>',
+  nbsp: ' ',
+  quot: '"'
+};
+
+function decodeHTMLEntities(text) {
+  return text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match);
+}
 
 /**
  * This React component generates a React object for a bound model.
@@ -30,8 +48,8 @@ import './concertoForm.css';
 const ConcertoForm = (props) => {
   const [value, setValue] = useState(typeof props.json === 'string' ? JSON.parse(props.json) : JSON.parse(JSON.stringify(props.json)));
   console.log('value at beginning - ', value);
-  const [modelTypes, setModelTypes] = useState();
   const [loading, setLoading] = useState(true);
+  const [modelManager, setModelManager] = useState(null);
   const { onValueChange } = props;
 
   const onFieldValueChange = useCallback((e, key) => {
@@ -78,71 +96,81 @@ const ConcertoForm = (props) => {
     ...props.options,
   }), [addElement, onFieldValueChange, removeElement, props.options, props.readOnly]);
 
-  const generator = React.useMemo(() => new FormGenerator(options), [options]);
-
-  const loadModelFiles = useCallback(async (files) => {
-    let types;
-    try {
-      types = await generator.loadFromText(files);
-      // The model file was invalid
-    } catch (error) {
-      console.error(error.message);
-      // Set default values to avoid trying to render a bad model
-      // Don't change the JSON, it might be valid once the model file is fixed
-      return [];
+  const generator = React.useMemo(() => {
+    if (modelManager) {
+      return new FormGenerator(modelManager, options);
     }
+    return null;
+  }, [modelManager, options]);
 
-    if (types.length === 0) {
-      return [];
-    }
+  // const loadModelFiles = useCallback(async (files) => {
+  //   let types;
+  //   try {
+  //     types = await generator.loadFromText(files);
+  //     // The model file was invalid
+  //   } catch (error) {
+  //     console.error(error.message);
+  //     // Set default values to avoid trying to render a bad model
+  //     // Don't change the JSON, it might be valid once the model file is fixed
+  //     return [];
+  //   }
 
-    try {
-      if (
-        !types.map(t => t.getFullyQualifiedName()).includes(props.type)
-      ) {
-        return types;
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    return types;
-  }, [generator, props.type]);
+  //   if (types.length === 0) {
+  //     return [];
+  //   }
+
+  //   try {
+  //     if (
+  //       !types.map(t => t.getFullyQualifiedName()).includes(props.type)
+  //     ) {
+  //       return types;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   return types;
+  // }, [generator, props.type]);
 
   useEffect(() => {
     setLoading(true);
-    loadModelFiles(props.models, 'text').then(modelTypes => {
-      console.log('modelTypes -- ', modelTypes);
-      setModelTypes(modelTypes);
+    const modelManager = new ModelManager();
+    // TODO Refactor this to an option to make this independent of Cicero
+    modelManager.addModelFile(
+      `namespace org.accordproject.base
+    abstract asset Asset {  }
+    abstract participant Participant {  }
+    abstract transaction Transaction identified by transactionId {
+      o String transactionId
+    }
+    abstract event Event identified by eventId {
+      o String eventId
+    }`,
+      'org.accordproject.base.cto',
+      false,
+      true
+    );
+    props.models.forEach((model, idx) => {
+      const decodedModel = decodeHTMLEntities(model);
+      modelManager.addModelFile(decodedModel, `model-${idx}`, true);
+    });
+    modelManager.updateExternalModels().then(() => {
+      setModelManager(modelManager);
       setLoading(false);
     });
-  }, [loadModelFiles, props.models]);
-
-  const isInstanceOf = useCallback(
-    (model, type) => generator.isInstanceOf(model, type), [generator]
-  );
+  }, [props.models]);
 
   useEffect(() => {
-    if (props.type && modelTypes) {
-      const isValid = modelTypes
-        .filter((model) => model.getFullyQualifiedName() === props.type).length;
-      if (!isValid || !value || !isInstanceOf(value, props.type)) {
+    if (props.type && generator) {
+      if (!value) {
         console.log('model value', value);
         console.log('type', props.type);
-        console.log('modelTypes', modelTypes);
-        console.log('isValid', isValid);
-        console.log('generating new json - isInstanceof', isInstanceOf(value, props.type));
+        // console.log('modelTypes', modelTypes);
         const newJSON = generator.generateJSON(props.type);
         console.log('newJSON - ', newJSON);
         setValue(newJSON);
-        // setForm(generator.generateHTML(props.type, newJSON));
       }
     }
-  }, [generator, isInstanceOf, modelTypes, props.type, value]);
-
-  // useEffect(() => {
-  //   console.log('setting the form...');
-  //   setForm(generator.generateHTML(props.type, value));
-  // }, [props.type, modelTypes]);
+  }, [generator, props.type, value]);
 
   if (loading) {
     return (
@@ -154,9 +182,10 @@ const ConcertoForm = (props) => {
 
   if (props.type && value) {
     try {
+      const form = generator.generateHTML(props.type, value);
       return (
-          <Form style={{ minHeight: '100px', ...props.style }}>
-            {generator.generateHTML(props.type, value)}
+          <Form key="form1234" style={{ minHeight: '100px', ...props.style }}>
+            {form}
           </Form>
       );
     } catch (err) {
