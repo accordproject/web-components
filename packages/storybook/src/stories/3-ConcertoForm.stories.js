@@ -99,10 +99,10 @@ export const Demo = () => {
   const [jsonValue, setJsonValue] = useState(null);
   return <div style={{ padding: '10px' }}>
     <ConcertoForm 
-      readOnly={readOnly} 
-      models={[model]} 
+      readOnly={readOnly}
+      models={[model]}
       options = {options}
-      type={type} 
+      type={type}
       json={jsonValue}
       onModelChange={({ types, json }) => {
         setJsonValue(safeStringify(json));
