@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 /*
@@ -29,18 +28,38 @@ import './concertoForm.css';
  * This React component generates a React object for a bound model.
  */
 const ConcertoForm = (props) => {
-  let initialValue;
-  if (typeof props.json === 'string') {
-    try {
-      initialValue = JSON.parse(props.json);
-    } catch {
-      // Do nothing
-    }
-  } else if (typeof props.json === 'object') {
-    initialValue = { ...props.json };
-  }
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(typeof props.json === 'string' ? JSON.parse(props.json) : JSON.parse(JSON.stringify(props.json)));
+  console.log('value at beginning - ', value);
+  const [modelTypes, setModelTypes] = useState();
   const [loading, setLoading] = useState(true);
+  const [form, setForm] = useState(null);
+  const { onValueChange } = props;
+
+  const onFieldValueChange = useCallback((e, key) => {
+    const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
+    console.log('value before clone - ', value);
+    const valueClone = set({ ...value }, key, fieldValue);
+    console.log('valueClone - ', valueClone);
+    setValue(valueClone);
+    // onValueChange(valueClone);
+  }, [value]);
+
+  const removeElement = useCallback((e, key, index) => {
+    const array = get(value, key);
+    array.splice(index, 1);
+    // onValueChange(value);
+  }, [onValueChange, value]);
+
+  const addElement = useCallback((e, key, elementValue) => {
+    const array = get(value, key) || [];
+    const valueClone = set(
+      { ...value },
+      [...key, array.length],
+      elementValue
+    );
+    // setValue(valueClone);
+    // onValueChange(valueClone);
+  }, [onValueChange, value]);
 
   // Default values which can be overridden by parent components
   const options = React.useMemo(() => ({
@@ -60,52 +79,10 @@ const ConcertoForm = (props) => {
     ...props.options,
   }), [addElement, onFieldValueChange, removeElement, props.options, props.readOnly]);
 
-  // make sure we use the same generator instance on re-renders
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const generator = React.useMemo(() => new FormGenerator(options), []);
-
-  const { onModelChange, onValueChange } = props;
-
-  const usePrevious = val => {
-    const ref = React.useRef();
-    useEffect(() => {
-      ref.current = val;
-    }, [val]);
-    return ref.current;
-  };
-
-  const prevModels = usePrevious(props.models);
-  const [models, updateModels] = useState({});
-  useEffect(() => {
-    if (!isEqual(prevModels, props.models)) {
-      updateModels(props.models);
-    }
-  }, [props.models, prevModels]);
-
-  useEffect(() => {
-    _loadAsyncData().then(modelProps => {
-      onModelChange(modelProps);
-    });
-  }, [_loadAsyncData, models, onModelChange]);
-
-  const onFieldValueChange = useCallback((e, key) => {
-    const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
-    const valueClone = set({ ...value }, key, fieldValue);
-    setValue(valueClone);
-    onValueChange(valueClone);
-  }, [onValueChange, value]);
-
-  const _loadAsyncData = useCallback(async () => {
-    setLoading(true);
-    const modelProps = await loadModelFiles(props.models, 'text');
-    setLoading(false);
-    return modelProps;
-  }, [loadModelFiles, props.models]);
+  const generator = React.useMemo(() => new FormGenerator(options), [options]);
 
   const loadModelFiles = useCallback(async (files) => {
     let types;
-    let json;
-    let fqn = props.type;
     try {
       types = await generator.loadFromText(files);
       // The model file was invalid
@@ -113,67 +90,62 @@ const ConcertoForm = (props) => {
       console.error(error.message);
       // Set default values to avoid trying to render a bad model
       // Don't change the JSON, it might be valid once the model file is fixed
-      return { types: [] };
+      return [];
     }
 
     if (types.length === 0) {
-      return { types: [] };
+      return [];
     }
 
     try {
       if (
         !types.map(t => t.getFullyQualifiedName()).includes(props.type)
       ) {
-        fqn = types[0].getFullyQualifiedName();
-        json = generateJSON(fqn);
-        return { types, json };
+        return types;
       }
-      json = generateJSON(props.type);
     } catch (err) {
       console.error(err);
     }
-    return { types, json };
-  }, [generateJSON, generator, props.type]);
+    return types;
+  }, [generator, props.type]);
 
-  const removeElement = useCallback((e, key, index) => {
-    const array = get(value, key);
-    array.splice(index, 1);
-    onValueChange(value);
-  }, [onValueChange, value]);
-
-  const addElement = useCallback((e, key, elementValue) => {
-    const array = get(value, key) || [];
-    const valueClone = set(
-      { ...value },
-      [...key, array.length],
-      elementValue
-    );
-    setValue(valueClone);
-    onValueChange(valueClone);
-  }, [onValueChange, value]);
+  useEffect(() => {
+    setLoading(true);
+    loadModelFiles(props.models, 'text').then(modelTypes => {
+      console.log('modelTypes -- ', modelTypes);
+      setModelTypes(modelTypes);
+      setLoading(false);
+    });
+  }, [loadModelFiles, props.models]);
 
   const isInstanceOf = useCallback(
     (model, type) => generator.isInstanceOf(model, type), [generator]
   );
 
-  const generateJSON = useCallback((type) => {
-    try {
-      // The type changed so we have to generate a new instance
-      if (props.json && !isInstanceOf(props.json, type)) {
-        return generator.generateJSON(type);
+  useEffect(() => {
+    if (props.type && modelTypes) {
+      const isValid = modelTypes
+        .filter((model) => model.getFullyQualifiedName() === props.type).length;
+      if (!isValid || !value || !isInstanceOf(value, props.type)) {
+        console.log('model value', value);
+        console.log('type', props.type);
+        console.log('modelTypes', modelTypes);
+        console.log('isValid', isValid);
+        console.log('generating new json', isInstanceOf(value, props.type));
+        const newJSON = generator.generateJSON(props.type);
+        console.log('newJSON - ', newJSON);
+        setValue(newJSON);
+        setForm(generator.generateHTML(props.type, newJSON));
       }
-      // The instance is null so we have to create a new instance
-      if (!props.json) {
-        return generator.generateJSON(type);
-      }
-    } catch (err) {
-      console.error(err);
     }
-    // Otherwise, just use what we already have
-    return props.json;
-  }, [generator, isInstanceOf, props.json]);
+  }, [generator, isInstanceOf, modelTypes, props.type, value]);
 
-  if (loading) {
+  // useEffect(() => {
+  //   console.log('setting the form...');
+  //   setForm(generator.generateHTML(props.type, value));
+  // }, [props.type, modelTypes]);
+
+  if (loading || !form) {
     return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -185,7 +157,7 @@ const ConcertoForm = (props) => {
     try {
       return (
           <Form style={{ minHeight: '100px', ...props.style }}>
-            {generator.generateHTML(props.type, value)}
+            {form}
           </Form>
       );
     } catch (err) {
@@ -215,7 +187,6 @@ ConcertoForm.propTypes = {
   models: PropTypes.arrayOf(PropTypes.string),
   type: PropTypes.string,
   json: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  onModelChange: PropTypes.func.isRequired,
   onValueChange: PropTypes.func.isRequired,
   options: PropTypes.shape(),
   readOnly: PropTypes.bool,

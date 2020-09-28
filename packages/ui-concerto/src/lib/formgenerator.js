@@ -91,7 +91,7 @@ class FormGenerator {
 
   /**
    * Load models from text.
-   * @param {array} texts  - the models
+   * @param {array} texts  - the text of the model files
    * @returns {array} - A list of the types in the loaded model
    */
   async loadFromText(texts) {
