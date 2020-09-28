@@ -32,7 +32,6 @@ const ConcertoForm = (props) => {
   console.log('value at beginning - ', value);
   const [modelTypes, setModelTypes] = useState();
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState(null);
   const { onValueChange } = props;
 
   const onFieldValueChange = useCallback((e, key) => {
@@ -131,11 +130,11 @@ const ConcertoForm = (props) => {
         console.log('type', props.type);
         console.log('modelTypes', modelTypes);
         console.log('isValid', isValid);
-        console.log('generating new json', isInstanceOf(value, props.type));
+        console.log('generating new json - isInstanceof', isInstanceOf(value, props.type));
         const newJSON = generator.generateJSON(props.type);
         console.log('newJSON - ', newJSON);
         setValue(newJSON);
-        setForm(generator.generateHTML(props.type, newJSON));
+        // setForm(generator.generateHTML(props.type, newJSON));
       }
     }
   }, [generator, isInstanceOf, modelTypes, props.type, value]);
@@ -145,7 +144,7 @@ const ConcertoForm = (props) => {
   //   setForm(generator.generateHTML(props.type, value));
   // }, [props.type, modelTypes]);
 
-  if (loading || !form) {
+  if (loading) {
     return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -157,7 +156,7 @@ const ConcertoForm = (props) => {
     try {
       return (
           <Form style={{ minHeight: '100px', ...props.style }}>
-            {form}
+            {generator.generateHTML(props.type, value)}
           </Form>
       );
     } catch (err) {
