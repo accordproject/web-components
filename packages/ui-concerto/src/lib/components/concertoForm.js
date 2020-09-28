@@ -223,7 +223,7 @@ ConcertoForm.propTypes = {
   onValueChange: PropTypes.func.isRequired,
   options: PropTypes.shape(),
   readOnly: PropTypes.bool,
-  style: PropTypes.shape(),
+  style: PropTypes.shape()
 };
 
 export default ConcertoForm;

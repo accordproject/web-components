@@ -34,6 +34,10 @@ export const Demo = () => {
     o Sweden
   }
 
+  participant Person identified by name {
+    o String name
+  }
+
   concept Address {
     o String street
     o String city
@@ -41,6 +45,7 @@ export const Demo = () => {
     @FormEditor( "hide", true)
     o String zipCode
     o Country country
+    --> Person owner optional
   }
   `);
 
@@ -53,6 +58,42 @@ export const Demo = () => {
     } catch (err){
       return jsonObject;
     }
+  };
+
+  options.relationshipProvider = {
+    getOptions : (field) => {
+      if(field.getFullyQualifiedTypeName() === 'test.Person') {
+        return [{
+          key: '001',
+          value: 'test.Person#Marissa',
+          text: 'Marissa Mayer'
+        },
+        {
+          key: '002',
+          value: 'test.Person#Ada',
+          text: 'Ada Lovelace'
+        },
+        {
+          key: '003',
+          value: 'test.Person#Grace',
+          text: 'Grace Hopper'
+        },
+        {
+          key: '004',
+          value: 'test.Person#Lynn',
+          text: 'Lynn Conway'
+        },
+
+        {
+          key: '005',
+          value: 'test.Person#Rosalind',
+          text: 'Rosalind Picard'
+        }
+      ]
+      }
+      else {
+        return null;
+      }}
   };
 
   const [jsonValue, setJsonValue] = useState(null);

@@ -340,6 +340,7 @@ class ReactFormVisitor {
       removeElement,
       onFieldValueChange,
       stack,
+      relationshipProvider
     } = parameters;
 
     if (hideProperty(relationship, parameters) || isHidden(relationship)) {
@@ -361,6 +362,7 @@ class ReactFormVisitor {
       addElement,
       removeElement,
       onFieldValueChange,
+      relationshipProvider
     };
 
     let component;
