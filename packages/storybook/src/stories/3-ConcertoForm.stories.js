@@ -97,7 +97,7 @@ export const Demo = () => {
   };
 
   const [jsonValue, setJsonValue] = useState(null);
-  return <div style={{ padding: '10px' }}>
+  return <div style={{ padding: '10px' }} key='asdsafs'>
     <ConcertoForm 
       readOnly={readOnly}
       models={[model]}

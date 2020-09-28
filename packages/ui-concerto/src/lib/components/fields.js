@@ -63,7 +63,7 @@ export const ConcertoInput = ({
         id
       )
       }
-      key={id}
+      key={`input-${id}`}
     />
   </Form.Field>
 );

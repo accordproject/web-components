@@ -15,7 +15,6 @@
 
 import React from 'react';
 import get from 'lodash.get';
-import toPath from 'lodash.topath';
 import { Form } from 'semantic-ui-react';
 import {
   EnumDeclaration,
@@ -45,6 +44,8 @@ import {
   getDefaultValue,
   toFieldType,
 } from './utilities';
+
+const toPath = (paramsArr) => paramsArr.join('.');
 
 /**
  * Returns true if the field has the @FormEditor( "hide", true )
@@ -307,6 +308,7 @@ class ReactFormVisitor {
   visitSingletonField(field, parameters, props) {
     const key = toPath(parameters.stack);
     const value = get(parameters.json, key);
+    console.log('key -- ', key);
     if (field.isPrimitive()) {
       if (field.getType() === 'Boolean') {
         return <ConcertoCheckbox {...props} id={key} key={key} value={value} />;
