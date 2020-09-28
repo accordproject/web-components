@@ -21,8 +21,8 @@ import ConcertoForm from './concertoForm';
  * This React component generates a React object for a bound model.
  */
 const ConcertoFormWrapper = props => (
-  <ErrorBoundary key="errorboundary">
-    <ConcertoForm key="formwrapper" {...props} />
+  <ErrorBoundary>
+    <ConcertoForm key={`form-wrapper-${props.type}`} {...props} />
   </ErrorBoundary>
 );
 

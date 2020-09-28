@@ -49,15 +49,8 @@ export const Demo = () => {
   }
   `);
 
-  const safeStringify = (jsonObject) => {
-    try {
-      if (typeof jsonObject === 'object') {
-        return JSON.stringify(jsonObject, null, 2);
-      }
-      return JSON.stringify(JSON.parse(jsonObject), null, 2);
-    } catch (err){
-      return jsonObject;
-    }
+  const handleValueChange = (json) => {
+    return action("value changed")(json);
   };
 
   options.relationshipProvider = {
@@ -95,23 +88,17 @@ export const Demo = () => {
         return null;
       }}
   };
-
-  const [jsonValue, setJsonValue] = useState(null);
-  return <div style={{ padding: '10px' }} key='asdsafs'>
-    <ConcertoForm 
-      readOnly={readOnly}
-      models={[model]}
-      options = {options}
-      type={type}
-      json={jsonValue}
-      onModelChange={({ types, json }) => {
-        setJsonValue(safeStringify(json));
-        return action("model changed")(json);
-      }}
-      onValueChange={(json) => {
-        setJsonValue(safeStringify(json));
-        return action("value changed")(json);
-      }}
-    />
-  </div>
+  
+  return (
+    <div style={{ padding: '10px' }}>
+      <ConcertoForm
+        readOnly={readOnly}
+        models={[model]}
+        options = {options}
+        type={type}
+        json={null}
+        onValueChange={handleValueChange}
+      />
+    </div>
+  )
 };

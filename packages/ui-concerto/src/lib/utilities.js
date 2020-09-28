@@ -176,3 +176,24 @@ export const getDefaultValue = (field, parameters) => {
     });
   return parameters.modelManager.getSerializer().toJSON(resource);
 };
+
+const entities = {
+  amp: '&',
+  apos: '\'',
+  '#x27': '\'',
+  '#x2F': '/',
+  '#39': '\'',
+  '#47': '/',
+  lt: '<',
+  gt: '>',
+  nbsp: ' ',
+  quot: '"'
+};
+
+/**
+ * Helper function to decode html in models (needed bc of Storybook)
+ * @param {String} text - model string
+ * @return {String} - decoded model string
+ * @private
+ */
+export const decodeHTMLEntities = (text) => text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match);

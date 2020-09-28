@@ -21,7 +21,6 @@ import {
   ClassDeclaration,
   Field,
   RelationshipDeclaration,
-  EnumValueDeclaration,
   Writer,
 } from '@accordproject/concerto-core';
 import * as util from 'util';
@@ -305,7 +304,6 @@ class ReactFormVisitor {
   visitSingletonField(field, parameters, props) {
     const key = toPath(parameters.stack);
     const value = get(parameters.json, key);
-    console.log('key -- ', key);
     if (field.isPrimitive()) {
       if (field.getType() === 'Boolean') {
         return <ConcertoCheckbox {...props} id={key} key={key} value={value} />;
@@ -321,7 +319,7 @@ class ReactFormVisitor {
     type = findConcreteSubclass(type);
     return (
       <Form.Field required={!field.isOptional()} key={field.getName()}>
-        <ConcertoLabel skip={props.skipLabel} name={field.getName()} key={`label-${field.getName()}`} />
+        <ConcertoLabel skip={props.skipLabel} name={field.getName()} key={field.getName()} />
         {type.accept(this, parameters)}
       </Form.Field>
     );
