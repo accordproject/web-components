@@ -19,52 +19,32 @@ import get from 'lodash.get';
 import set from 'lodash.set';
 import { Form, Dimmer, Loader, Message } from 'semantic-ui-react';
 import { ModelManager } from '@accordproject/concerto-core';
-import isEqual from 'lodash.isequal';
 
 import ReactFormVisitor from '../reactformvisitor';
 import FormGenerator from '../formgenerator';
+import { decodeHTMLEntities } from '../utilities';
 import './concertoForm.css';
-
-const entities = {
-  amp: '&',
-  apos: '\'',
-  '#x27': '\'',
-  '#x2F': '/',
-  '#39': '\'',
-  '#47': '/',
-  lt: '<',
-  gt: '>',
-  nbsp: ' ',
-  quot: '"'
-};
-
-function decodeHTMLEntities(text) {
-  return text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match);
-}
 
 /**
  * This React component generates a React object for a bound model.
  */
 const ConcertoForm = (props) => {
   const [value, setValue] = useState(typeof props.json === 'string' ? JSON.parse(props.json) : JSON.parse(JSON.stringify(props.json)));
-  console.log('value at beginning - ', value);
   const [loading, setLoading] = useState(true);
   const [modelManager, setModelManager] = useState(null);
   const { onValueChange } = props;
 
   const onFieldValueChange = useCallback((e, key) => {
     const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
-    console.log('value before clone - ', value);
     const valueClone = set({ ...value }, key, fieldValue);
-    console.log('valueClone - ', valueClone);
     setValue(valueClone);
-    // onValueChange(valueClone);
-  }, [value]);
+    onValueChange(valueClone);
+  }, [onValueChange, value]);
 
   const removeElement = useCallback((e, key, index) => {
     const array = get(value, key);
     array.splice(index, 1);
-    // onValueChange(value);
+    onValueChange(value);
   }, [onValueChange, value]);
 
   const addElement = useCallback((e, key, elementValue) => {
@@ -74,8 +54,8 @@ const ConcertoForm = (props) => {
       [...key, array.length],
       elementValue
     );
-    // setValue(valueClone);
-    // onValueChange(valueClone);
+    setValue(valueClone);
+    onValueChange(valueClone);
   }, [onValueChange, value]);
 
   // Default values which can be overridden by parent components
@@ -102,34 +82,6 @@ const ConcertoForm = (props) => {
     }
     return null;
   }, [modelManager, options]);
-
-  // const loadModelFiles = useCallback(async (files) => {
-  //   let types;
-  //   try {
-  //     types = await generator.loadFromText(files);
-  //     // The model file was invalid
-  //   } catch (error) {
-  //     console.error(error.message);
-  //     // Set default values to avoid trying to render a bad model
-  //     // Don't change the JSON, it might be valid once the model file is fixed
-  //     return [];
-  //   }
-
-  //   if (types.length === 0) {
-  //     return [];
-  //   }
-
-  //   try {
-  //     if (
-  //       !types.map(t => t.getFullyQualifiedName()).includes(props.type)
-  //     ) {
-  //       return types;
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   return types;
-  // }, [generator, props.type]);
 
   useEffect(() => {
     setLoading(true);
@@ -162,11 +114,7 @@ const ConcertoForm = (props) => {
   useEffect(() => {
     if (props.type && generator) {
       if (!value) {
-        console.log('model value', value);
-        console.log('type', props.type);
-        // console.log('modelTypes', modelTypes);
         const newJSON = generator.generateJSON(props.type);
-        console.log('newJSON - ', newJSON);
         setValue(newJSON);
       }
     }
@@ -184,7 +132,7 @@ const ConcertoForm = (props) => {
     try {
       const form = generator.generateHTML(props.type, value);
       return (
-          <Form key="form1234" style={{ minHeight: '100px', ...props.style }}>
+          <Form style={{ minHeight: '100px', ...props.style }}>
             {form}
           </Form>
       );

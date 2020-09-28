@@ -12,9 +12,26 @@
  * limitations under the License.
  */
 
+import { ModelManager } from '@accordproject/concerto-core';
 import Generator from './formgenerator';
 
 describe('formgenerator Tests', () => {
+  const modelManager = new ModelManager();
+  modelManager.addModelFile(
+    `namespace org.accordproject.base
+  abstract asset Asset {  }
+  abstract participant Participant {  }
+  abstract transaction Transaction identified by transactionId {
+    o String transactionId
+  }
+  abstract event Event identified by eventId {
+    o String eventId
+  }`,
+    'org.accordproject.base.cto',
+    false,
+    true
+  );
+  modelManager.updateExternalModels();
   describe('#validation', () => {
     it('accepts a model string as input', async () => {
       const generator = new Generator();
@@ -35,9 +52,10 @@ describe('formgenerator Tests', () => {
         wrapHtmlForm: true,
         updateExternalModels: true,
       };
-      const generator = new Generator(options);
+      modelManager.addModelFile(text, 'model', true);
+      modelManager.updateExternalModels();
+      const generator = new Generator(modelManager, options);
       expect(generator).not.toBeNull();
-      await generator.loadFromText([text]);
 
       expect(generator.getTypes()).toHaveLength(11);
 
