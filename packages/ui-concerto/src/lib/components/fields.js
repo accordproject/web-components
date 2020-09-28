@@ -87,7 +87,6 @@ export const ConcertoRelationship = ({
       relationship = Relationship.fromURI(field.getModelFile().getModelManager(), `resource:${field.getFullyQualifiedTypeName()}#resource1`);
     }
   } catch (err) {
-    console.log(err);
     return ConcertoInput({
       id,
       field,
