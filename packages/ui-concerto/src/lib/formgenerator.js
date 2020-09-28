@@ -12,26 +12,8 @@
  * limitations under the License.
  */
 
-import { ModelManager, Factory, Serializer } from '@accordproject/concerto-core';
+import { Factory, Serializer } from '@accordproject/concerto-core';
 import ReactFormVisitor from './reactformvisitor';
-
-const entities = {
-  amp: '&',
-  apos: '\'',
-  '#x27': '\'',
-  '#x2F': '/',
-  '#39': '\'',
-  '#47': '/',
-  lt: '<',
-  gt: '>',
-  nbsp: ' ',
-  quot: '"'
-};
-
-function decodeHTMLEntities(text) {
-  return text.replace(/&([^;]+);/gm, (match, entity) => entities[entity] || match);
-}
-
 
 /**
  * Used to generate a web from from a given composer model. Accepts string or file
@@ -60,77 +42,32 @@ class FormGenerator {
    * @param {object} options.relationshipProvider - An optional relationship provider,
    * used to get relationship IDs.
    */
-  constructor(options) {
-    this.modelManager = new ModelManager();
-    // TODO Refactor this to an option to make this independent of Cicero
-    this.modelManager.addModelFile(
-      `namespace org.accordproject.base
-    abstract asset Asset {  }
-    abstract participant Participant {  }
-    abstract transaction Transaction identified by transactionId {
-      o String transactionId
-    }
-    abstract event Event identified by eventId {
-      o String eventId
-    }`,
-      'org.accordproject.base.cto',
-      false,
-      true
-    );
-
+  constructor(modelManager, options) {
     this.options = {
       includeSampleData: 'empty',
       updateExternalModels: false,
       ...options,
     };
 
+    this.modelManager = modelManager;
     this.factory = new Factory(this.modelManager);
     this.serializer = new Serializer(this.factory, this.modelManager);
-    this.loaded = false;
-  }
-
-  /**
-   * Load models from text.
-   * @param {array} texts  - the text of the model files
-   * @returns {array} - A list of the types in the loaded model
-   */
-  async loadFromText(texts) {
-    this.loaded = false;
-    this.modelManager.clearModelFiles();
-    try {
-      texts.forEach(text => {
-        const model = decodeHTMLEntities(text);
-        this.modelManager.addModelFile(model, null, true);
-      });
-      if (this.options.updateExternalModels) {
-        await this.modelManager.updateExternalModels();
-      }
-      this.modelManager.validateModelFiles();
-    } catch (error) {
-      this.modelManager.clearModelFiles();
-      throw error;
-    }
-    this.loaded = true;
-    return this.getTypes();
   }
 
   /**
    * @returns {array} A list of types stored in the model manager
    */
   getTypes() {
-    if (this.loaded) {
-      return this.modelManager
-        .getModelFiles()
-        .reduce(
-          (classDeclarations, modelFile) => classDeclarations
-            .concat(modelFile.getAllDeclarations()),
-          []
-        )
-        .filter(
-          classDeclaration => !classDeclaration.isEnum() && !classDeclaration.isAbstract()
-        );
-    }
-    return [];
+    return this.modelManager
+      .getModelFiles()
+      .reduce(
+        (classDeclarations, modelFile) => classDeclarations
+          .concat(modelFile.getAllDeclarations()),
+        []
+      )
+      .filter(
+        classDeclaration => !classDeclaration.isEnum() && !classDeclaration.isAbstract()
+      );
   }
 
   /**
@@ -170,45 +107,42 @@ class FormGenerator {
    * @return {object} the generated JSON instance
    */
   generateJSON(type) {
-    if (this.loaded) {
-      const classDeclaration = this.modelManager.getType(type);
+    const classDeclaration = this.modelManager.getType(type);
 
-      if (classDeclaration.isEnum()) {
-        throw new Error(
-          'Cannot generate JSON for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
-        );
-      }
-
-      if (classDeclaration.isAbstract()) {
-        throw new Error('Cannot generate JSON for abstract types');
-      }
-
-      if (!this.options.includeSampleData) {
-        throw new Error(
-          'Cannot generate form values when the component is configured not to generate sample data.'
-        );
-      }
-
-      const ns = classDeclaration.getNamespace();
-      const name = classDeclaration.getName();
-      const factoryOptions = {
-        includeOptionalFields: this.options.includeOptionalFields,
-        generate: this.options.includeSampleData,
-      };
-
-      if (classDeclaration.isConcept()) {
-        const concept = this.factory.newConcept(ns, name, factoryOptions);
-        return this.serializer.toJSON(concept);
-      }
-      const resource = this.factory.newResource(
-        ns,
-        name,
-        'resource1',
-        factoryOptions
+    if (classDeclaration.isEnum()) {
+      throw new Error(
+        'Cannot generate JSON for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
       );
-      return this.serializer.toJSON(resource);
     }
-    return null;
+
+    if (classDeclaration.isAbstract()) {
+      throw new Error('Cannot generate JSON for abstract types');
+    }
+
+    if (!this.options.includeSampleData) {
+      throw new Error(
+        'Cannot generate form values when the component is configured not to generate sample data.'
+      );
+    }
+
+    const ns = classDeclaration.getNamespace();
+    const name = classDeclaration.getName();
+    const factoryOptions = {
+      includeOptionalFields: this.options.includeOptionalFields,
+      generate: this.options.includeSampleData,
+    };
+
+    if (classDeclaration.isConcept()) {
+      const concept = this.factory.newConcept(ns, name, factoryOptions);
+      return this.serializer.toJSON(concept);
+    }
+    const resource = this.factory.newResource(
+      ns,
+      name,
+      'resource1',
+      factoryOptions
+    );
+    return this.serializer.toJSON(resource);
   }
 
   /**
@@ -217,47 +151,43 @@ class FormGenerator {
    * @return {object} the generated HTML string
    */
   generateHTML(type, json) {
-    console.log('this.loaded', this.loaded);
-    if (this.loaded) {
-      console.log('generating html for type - ', type);
-      const classDeclaration = this.modelManager.getType(type);
+    console.log('generating html for type - ', type);
+    const classDeclaration = this.modelManager.getType(type);
 
-      if (!classDeclaration) {
-        throw new Error(`${type} not found`);
-      }
-
-      if (classDeclaration.isEnum()) {
-        throw new Error(
-          'Cannot generate forms for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
-        );
-      }
-
-      if (classDeclaration.isAbstract()) {
-        throw new Error('Cannot generate forms for abstract types');
-      }
-
-      const params = {
-        customClasses: {},
-        timestamp: Date.now(),
-        modelManager: this.modelManager,
-        json,
-        stack: [],
-        ...this.options,
-      };
-      let { visitor } = params;
-      if (!visitor) {
-        visitor = new ReactFormVisitor();
-        params.wrapHtmlForm = true;
-      }
-
-      const form = classDeclaration.accept(visitor, params);
-      if (params.wrapHtmlForm) {
-        return visitor.wrapHtmlForm(form, params);
-      }
-
-      return classDeclaration.accept(params.visitor, params);
+    if (!classDeclaration) {
+      throw new Error(`${type} not found`);
     }
-    return null;
+
+    if (classDeclaration.isEnum()) {
+      throw new Error(
+        'Cannot generate forms for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
+      );
+    }
+
+    if (classDeclaration.isAbstract()) {
+      throw new Error('Cannot generate forms for abstract types');
+    }
+
+    const params = {
+      customClasses: {},
+      timestamp: Date.now(),
+      modelManager: this.modelManager,
+      json,
+      stack: [],
+      ...this.options,
+    };
+    let { visitor } = params;
+    if (!visitor) {
+      visitor = new ReactFormVisitor();
+      params.wrapHtmlForm = true;
+    }
+
+    const form = classDeclaration.accept(visitor, params);
+    if (params.wrapHtmlForm) {
+      return visitor.wrapHtmlForm(form, params);
+    }
+
+    return form;
   }
 }
 

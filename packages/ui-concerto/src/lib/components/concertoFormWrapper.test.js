@@ -14,52 +14,33 @@
 
 import React from 'react';
 import { mount } from 'enzyme';
-import waitUntil from 'async-wait-until';
 import ConcertoFormWrapper from './concertoFormWrapper';
 import { props, type, model, options } from './testProps';
 
 test('Render form, default', async () => {
-  let component;
-
-  const onModelChange = jest.fn((modelProps) => {
-    component.setProps(modelProps);
-  });
   const onValueChange = jest.fn();
 
-  component = mount(
+  const component = mount(
     <ConcertoFormWrapper
-      onModelChange={onModelChange}
       onValueChange={onValueChange}
       {...props}
     />,
   );
 
-  await waitUntil(() => onModelChange.mock.calls.length > 0, 500);
-  expect(onModelChange.mock.calls[0][0].types).toHaveLength(3);
-
   expect(component.html()).toMatchSnapshot();
 });
 
 test('Render form, no JSON provided', async () => {
-  let component;
-
-  const onModelChange = jest.fn((modelProps) => {
-    component.setProps(modelProps);
-  });
   const onValueChange = jest.fn();
 
-  component = mount(
+  const component = mount(
     <ConcertoFormWrapper
-      onModelChange={onModelChange}
       onValueChange={onValueChange}
       type={type}
       models={[model]}
       options={options}
     />,
   );
-
-  await waitUntil(() => onModelChange.mock.calls.length > 0, 500);
-  expect(onModelChange.mock.calls[0][0].types).toHaveLength(3);
 
   expect(component.prop('json')).toBeDefined();
 });

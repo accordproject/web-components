@@ -37,7 +37,7 @@ export const ConcertoCheckbox = ({
       readOnly={readOnly}
       checked={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
-      key={id}
+      key={`checkbox-${id}`}
     />
   </Form.Field>
 );
@@ -53,7 +53,7 @@ export const ConcertoInput = ({
   type,
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={field.getName()} />
     <Input
       type={type}
       readOnly={readOnly}
@@ -221,25 +221,20 @@ export const ConcertoArrayElement = ({
 
 export const ConcertoDropdown = ({
   id,
-  field,
   readOnly,
   value,
   onFieldValueChange,
   options,
-}) => (
-  <Form.Field required key={field.getName().toLowerCase()}>
-    {!readOnly ? (
+}) => !readOnly ? (
       <Select
         fluid
         value={value}
         onChange={(e, data) => onFieldValueChange(data, id)}
-        key={id}
+        key={`select-${id}`}
         options={options}
       />
-    ) : (
-      <Input type="text" readOnly value={value} key={id} />
-    )}
-  </Form.Field>
+) : (
+      <Input type="text" readOnly value={value} key={`input-${id}`} />
 );
 
 const BinaryField = ({ className, children }) => (
