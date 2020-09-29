@@ -29,7 +29,7 @@ import './concertoForm.css';
  * This React component generates a React object for a bound model.
  */
 const ConcertoForm = (props) => {
-  const [value, setValue] = useState(typeof props.json === 'string' ? JSON.parse(props.json) : JSON.parse(JSON.stringify(props.json)));
+  const [value, setValue] = useState(props.json);
   const [loading, setLoading] = useState(true);
   const [modelManager, setModelManager] = useState(null);
   const { onValueChange, options, models } = props;
@@ -153,6 +153,18 @@ const ConcertoForm = (props) => {
       );
     }
   }
+
+  if (!props.type) {
+    return (
+    <Message warning>
+      <Message.Header>No model type specified</Message.Header>
+      <p>
+        Please specify a model type to display the form.
+      </p>
+    </Message>
+    );
+  }
+
   return (
       <Message warning>
         <Message.Header>Invalid JSON instance provided</Message.Header>
@@ -164,14 +176,22 @@ const ConcertoForm = (props) => {
   );
 };
 
+ConcertoForm.defaultProps = {
+  models: [],
+  onValueChange: () => true,
+  options: {},
+  readOnly: false,
+  style: {}
+};
+
 ConcertoForm.propTypes = {
-  models: PropTypes.arrayOf(PropTypes.string),
-  type: PropTypes.string,
-  json: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  models: PropTypes.arrayOf(PropTypes.string).isRequired,
+  type: PropTypes.string.isRequired,
+  json: PropTypes.oneOfType(PropTypes.object),
   onValueChange: PropTypes.func.isRequired,
-  options: PropTypes.shape(),
+  options: PropTypes.object(),
   readOnly: PropTypes.bool,
-  style: PropTypes.shape()
+  style: PropTypes.object()
 };
 
 export default ConcertoForm;
