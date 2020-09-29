@@ -32,7 +32,7 @@ const ConcertoForm = (props) => {
   const [value, setValue] = useState(typeof props.json === 'string' ? JSON.parse(props.json) : JSON.parse(JSON.stringify(props.json)));
   const [loading, setLoading] = useState(true);
   const [modelManager, setModelManager] = useState(null);
-  const { onValueChange } = props;
+  const { onValueChange, options, models } = props;
 
   const onFieldValueChange = useCallback((e, key) => {
     const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
@@ -59,7 +59,7 @@ const ConcertoForm = (props) => {
   }, [onValueChange, value]);
 
   // Default values which can be overridden by parent components
-  const options = React.useMemo(() => ({
+  const generatorOptions = React.useMemo(() => ({
     includeOptionalFields: true,
     includeSampleData: 'sample',
     disabled: props.readOnly,
@@ -73,15 +73,15 @@ const ConcertoForm = (props) => {
     removeElement: (e, key, index) => {
       removeElement(e, key, index);
     },
-    ...props.options,
-  }), [addElement, onFieldValueChange, removeElement, props.options, props.readOnly]);
+    ...options,
+  }), [addElement, onFieldValueChange, removeElement, options, props.readOnly]);
 
   const generator = React.useMemo(() => {
     if (modelManager) {
-      return new FormGenerator(modelManager, options);
+      return new FormGenerator(modelManager, generatorOptions);
     }
     return null;
-  }, [modelManager, options]);
+  }, [modelManager, generatorOptions]);
 
   useEffect(() => {
     setLoading(true);
@@ -101,15 +101,20 @@ const ConcertoForm = (props) => {
       false,
       true
     );
-    props.models.forEach((model, idx) => {
+    models.forEach((model, idx) => {
       const decodedModel = decodeHTMLEntities(model);
       modelManager.addModelFile(decodedModel, `model-${idx}`, true);
     });
-    modelManager.updateExternalModels().then(() => {
+    if (options.updateExternalModels) {
+      modelManager.updateExternalModels().then(() => {
+        setModelManager(modelManager);
+        setLoading(false);
+      });
+    } else {
       setModelManager(modelManager);
       setLoading(false);
-    });
-  }, [props.models]);
+    }
+  }, [models, options.updateExternalModels]);
 
   useEffect(() => {
     if (props.type && generator) {
