@@ -187,11 +187,11 @@ ConcertoForm.defaultProps = {
 ConcertoForm.propTypes = {
   models: PropTypes.arrayOf(PropTypes.string).isRequired,
   type: PropTypes.string.isRequired,
-  json: PropTypes.oneOfType(PropTypes.object),
+  json: PropTypes.object,
   onValueChange: PropTypes.func.isRequired,
-  options: PropTypes.object(),
+  options: PropTypes.object,
   readOnly: PropTypes.bool,
-  style: PropTypes.object()
+  style: PropTypes.object
 };
 
 export default ConcertoForm;

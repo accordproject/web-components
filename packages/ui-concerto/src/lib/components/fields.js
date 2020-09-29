@@ -109,6 +109,7 @@ export const ConcertoRelationship = ({
   readOnly={readOnly}
   onFieldValueChange={onFieldValueChange}
   options={relationshipOptions}
+  key={id}
 />
     : <Input
   type={type}
