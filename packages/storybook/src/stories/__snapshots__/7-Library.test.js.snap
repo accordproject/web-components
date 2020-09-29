@@ -2,24 +2,24 @@
 
 exports[`Library Storyshots Library Heterogeneous 1`] = `
 <div
-  className="sc-fzqPZZ eKDrmd"
+  className="sc-ciSmjq eiwDpQ"
 >
   <div
-    className="sc-fzoxKX haoLUQ"
+    className="sc-jcwofb DEMaO"
   >
     <div
-      className="sc-fzoKki iDUUbW"
+      className="sc-carGAA jqeRQg"
     >
       <button
         aria-label="Upload Button"
-        className="sc-fzqBkg lmruii ui-components__library-import-button"
+        className="sc-cBoprd dAAEvW ui-components__library-import-button"
         onClick={[Function]}
       >
         Import from VS Code
       </button>
       <button
         aria-label="Upload Button"
-        className="sc-fzqBkg lmruii ui-components__library-upload-button"
+        className="sc-cBoprd dAAEvW ui-components__library-upload-button"
         onClick={[Function]}
       >
         Add a new library item
@@ -27,10 +27,10 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
     </div>
   </div>
   <div
-    className="sc-fzoYkl ezjjOD"
+    className="sc-iTVIwl bJGTXk"
   >
     <div
-      className="sc-fzpkJw ihaTlU"
+      className="sc-iBzFoy lbQdiM"
     >
       <div
         className="ui checked checkbox"
@@ -144,7 +144,7 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
     </button>
   </div>
   <div
-    className="sc-fznzOf gOcuPz ui-components__library-cards-wrapper"
+    className="sc-efHXLn rTBcs ui-components__library-cards-wrapper"
   >
     <div
       className="ui fluid card ui-components__library-card template"
@@ -196,22 +196,22 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This clause allows the receiver of goods to inspect them for a given time period after delivery.
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -268,22 +268,22 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This is a sample variable item
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -340,22 +340,22 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           Ta Simple Car Rental Contract in Turkish Language
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -412,22 +412,22 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This is a sample file item
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -440,24 +440,24 @@ exports[`Library Storyshots Library Heterogeneous 1`] = `
 
 exports[`Library Storyshots Library Homogeneous 1`] = `
 <div
-  className="sc-fzqPZZ eKDrmd"
+  className="sc-ciSmjq eiwDpQ"
 >
   <div
-    className="sc-fzoxKX haoLUQ"
+    className="sc-jcwofb DEMaO"
   >
     <div
-      className="sc-fzoKki iDUUbW"
+      className="sc-carGAA jqeRQg"
     >
       <button
         aria-label="Upload Button"
-        className="sc-fzqBkg lmruii ui-components__library-import-button"
+        className="sc-cBoprd dAAEvW ui-components__library-import-button"
         onClick={[Function]}
       >
         Import from VS Code
       </button>
       <button
         aria-label="Upload Button"
-        className="sc-fzqBkg lmruii ui-components__library-upload-button"
+        className="sc-cBoprd dAAEvW ui-components__library-upload-button"
         onClick={[Function]}
       >
         Add a new library item
@@ -465,7 +465,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
     </div>
   </div>
   <div
-    className="sc-fzoYkl ezjjOD"
+    className="sc-iTVIwl bJGTXk"
   >
     <div
       className="ui fluid icon input ui-components__library-search-input"
@@ -509,7 +509,7 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
     </button>
   </div>
   <div
-    className="sc-fznzOf gOcuPz ui-components__library-cards-wrapper"
+    className="sc-efHXLn rTBcs ui-components__library-cards-wrapper"
   >
     <div
       className="ui fluid card ui-components__library-card template"
@@ -561,22 +561,22 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This clause allows the receiver of goods to inspect them for a given time period after delivery.
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -633,22 +633,22 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           Ta Simple Car Rental Contract in Turkish Language
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -705,22 +705,22 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This is a sample Certificate of Incorporation.
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
@@ -777,22 +777,22 @@ exports[`Library Storyshots Library Homogeneous 1`] = `
           </span>
         </div>
         <div
-          className="description sc-fzolEj fbHTzo"
+          className="description sc-gXfWUo jGyawj"
         >
           This is a sample Certificate of Incorporation.
         </div>
       </div>
       <div
-        className="sc-fzpmMD hZrqBZ ui-components__library-card-actions"
+        className="sc-kLokih jyWsSc ui-components__library-card-actions"
       >
         <a
-          className="sc-fznxKY sc-fznMAR fzugwN ui-components__library-card-primary-btn"
+          className="sc-iklIKw sc-jJMGHv czebJo kgmqBd ui-components__library-card-primary-btn"
           onMouseDown={[Function]}
         >
           + Add to contract
         </a>
         <a
-          className="sc-fznxKY sc-fznWOq cZaZVc ui-components__library-card-secondary-btn"
+          className="sc-iklIKw sc-hiKfjK czebJo gDnoGW ui-components__library-card-secondary-btn"
           onMouseDown={[Function]}
         >
           Details
