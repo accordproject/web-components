@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render form, default 1`] = `
+<div
+  className="ui active transition visible inverted dimmer"
+  onClick={[Function]}
+>
+  <div
+    className="content"
+  >
+    <div
+      className="ui inverted text loader"
+    >
+      Loading
+    </div>
+  </div>
+</div>
+`;
