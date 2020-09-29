@@ -9,7 +9,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
   }
 >
   <div
-    className="sc-AxhUy fglOYZ"
+    className="sc-iCoHVE cOTBHl"
     id="ap-rich-text-editor-toolbar"
   >
     <div
@@ -122,11 +122,11 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </div>
     </div>
     <div
-      className="sc-fzplWN dRmgQU"
+      className="sc-bqGHjH dyavzI"
     />
     <svg
       aria-label="bold"
-      className="sc-AxjAm kngdkt"
+      className="sc-bdnylx izkfoE"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -163,7 +163,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="italic"
-      className="sc-AxjAm kngdkt"
+      className="sc-bdnylx izkfoE"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -201,7 +201,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="code"
-      className="sc-AxjAm dVgXNv"
+      className="sc-bdnylx cYlwjO"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -240,11 +240,11 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </g>
     </svg>
     <div
-      className="sc-fzplWN dRmgQU"
+      className="sc-bqGHjH dyavzI"
     />
     <svg
       aria-label="block_quote"
-      className="sc-AxjAm cgHPQy"
+      className="sc-bdnylx bsfYof"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -281,7 +281,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="ol_list"
-      className="sc-AxjAm gabVJK"
+      className="sc-bdnylx iXjEzj"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -319,7 +319,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="ul_list"
-      className="sc-AxjAm gabVJK"
+      className="sc-bdnylx iXjEzj"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -356,11 +356,11 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </g>
     </svg>
     <div
-      className="sc-fzplWN dRmgQU"
+      className="sc-bqGHjH dyavzI"
     />
     <svg
       aria-label="undo"
-      className="sc-AxjAm iJUrHh"
+      className="sc-bdnylx cQdyag"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -394,7 +394,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="redo"
-      className="sc-AxjAm iJUrHh"
+      className="sc-bdnylx cQdyag"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -427,11 +427,11 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </g>
     </svg>
     <div
-      className="sc-fzplWN dRmgQU"
+      className="sc-bqGHjH dyavzI"
     />
     <svg
       aria-label="link"
-      className="sc-AxjAm bmiexi"
+      className="sc-bdnylx kuHxrv"
       height="25px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -468,7 +468,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     </svg>
     <svg
       aria-label="image"
-      className="sc-AxjAm hRvTEI"
+      className="sc-bdnylx ejcygp"
       height="18px"
       onBlur={[Function]}
       onClick={[Function]}
@@ -493,6 +493,25 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
           id="Shape"
         />
       </g>
+    </svg>
+    <svg
+      aria-label="horizontal_rule"
+      className="sc-bdnylx fa-dygp"
+      height="17px"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      viewBox="0 0 19 19"
+      width="17px"
+    >
+      <path
+        className="st0"
+        d="M14.8,6.5H6.7C6.4,6.5,6.2,6.2,6.2,6V1.9c0-0.3-0.3-0.5-0.5-0.5H4.8c-0.3,0-0.5,0.3-0.5,0.5v5.9 c0,0.3,0.3,0.5,0.5,0.5h11.9c0.3,0,0.5-0.3,0.5-0.5V1.9c0-0.3-0.3-0.5-0.5-0.5h-0.9c-0.3,0-0.5,0.3-0.5,0.5V6 C15.3,6.2,15.2,6.5,14.8,6.5 M6.7,12.9h8.2c0.3,0,0.5,0.3,0.5,0.5v4.1c0,0.3,0.3,0.5,0.5,0.5h0.9c0.3,0,0.5-0.3,0.5-0.5v-5.9 c0-0.3-0.3-0.5-0.5-0.5H4.8c-0.3,0-0.5,0.3-0.5,0.5v5.9c0,0.3,0.3,0.5,0.5,0.5h0.8c0.3,0,0.5-0.3,0.5-0.5v-4.1 C6.2,13.1,6.4,12.9,6.7,12.9 M0.6,7.4v4.5c0,0.4,0.5,0.7,0.8,0.3L3.7,10c0.2-0.2,0.2-0.5,0-0.7L1.5,7C1.1,6.7,0.6,7,0.6,7.4"
+        fill="#949CA2"
+      />
     </svg>
   </div>
   <div
@@ -527,9 +546,17 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
     suppressContentEditableWarning={true}
   >
     <h1
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="My-Heading"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "25px",
+          "fontWeight": "bold",
+          "lineHeight": "23px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -726,9 +753,17 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </span>
     </p>
     <h2
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="Breaks"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "20px",
+          "fontWeight": "bold",
+          "lineHeight": "20px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -760,13 +795,49 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
           </span>
         </span>
       </span>
-      <br
-        className="linebreak"
+      <span
         contentEditable={false}
         data-slate-inline={true}
         data-slate-node="element"
         data-slate-void={true}
-      />
+      >
+        <span
+          contentEditable={false}
+          style={
+            Object {
+              "userSelect": "none",
+            }
+          }
+        >
+          <br />
+        </span>
+        <span
+          data-slate-spacer={true}
+          style={
+            Object {
+              "color": "transparent",
+              "height": "0",
+              "outline": "none",
+              "position": "absolute",
+            }
+          }
+        >
+          <span
+            data-slate-node="text"
+          >
+            <span
+              data-slate-leaf={true}
+            >
+              <span
+                data-slate-length={0}
+                data-slate-zero-width="z"
+              >
+                ﻿
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
       <span
         data-slate-node="text"
       >
@@ -847,36 +918,56 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </span>
     </p>
     <div
-      className="sc-AxhCb bkrppD"
+      className="sc-hKFyIo bcLNzD"
+      contentEditable={false}
       data-slate-node="element"
       data-slate-void={true}
     >
+      <br />
       <div
-        data-slate-spacer={true}
-        style={
-          Object {
-            "color": "transparent",
-            "height": "0",
-            "outline": "none",
-            "position": "absolute",
-          }
-        }
+        className="sc-eCApGN ddrtET"
+        contentEditable={false}
       >
+        <div
+          className="sc-jSFkmK kWqVPN"
+        />
         <span
-          data-slate-node="text"
+          className="sc-gKAblj hkhCyx"
+          contentEditable={false}
         >
-          <span
-            data-slate-leaf={true}
+          <div
+            data-slate-spacer={true}
+            style={
+              Object {
+                "color": "transparent",
+                "height": "0",
+                "outline": "none",
+                "position": "absolute",
+              }
+            }
           >
             <span
-              data-slate-length={0}
-              data-slate-zero-width="z"
+              data-slate-node="text"
             >
-              ﻿
+              <span
+                data-slate-leaf={true}
+              >
+                <span
+                  data-slate-length={0}
+                  data-slate-zero-width="z"
+                >
+                  ﻿
+                </span>
+              </span>
             </span>
-          </span>
+          </div>
+          PAGE BREAK
         </span>
+        <div
+          className="sc-jSFkmK kWqVPN"
+        />
       </div>
+      <br />
     </div>
     <p
       data-slate-node="element"
@@ -922,7 +1013,7 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
           contentEditable={false}
         >
           <img
-            className="sc-AxirZ AcePT"
+            className="sc-gtssRu Upqk"
             src="https://docs.accordproject.org/docs/assets/020/template.png"
           />
         </span>
@@ -976,9 +1067,17 @@ exports[`Markdown Editor Storyshots Markdown Editor Demo 1`] = `
       </p>
     </blockquote>
     <h2
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="Heading-Two"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "20px",
+          "fontWeight": "bold",
+          "lineHeight": "20px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1222,9 +1321,17 @@ code
       </li>
     </ul>
     <h3
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="Sub-heading"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "16px",
+          "fontWeight": "bold",
+          "lineHeight": "16px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1367,9 +1474,17 @@ This is an html block.
       </span>
     </p>
     <h1
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H1"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "25px",
+          "fontWeight": "bold",
+          "lineHeight": "23px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1386,9 +1501,17 @@ This is an html block.
       </span>
     </h1>
     <h2
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H2"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "20px",
+          "fontWeight": "bold",
+          "lineHeight": "20px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1405,9 +1528,17 @@ This is an html block.
       </span>
     </h2>
     <h3
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H3"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "16px",
+          "fontWeight": "bold",
+          "lineHeight": "16px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1424,9 +1555,17 @@ This is an html block.
       </span>
     </h3>
     <h4
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H4"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "14px",
+          "fontWeight": "bold",
+          "lineHeight": "14px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1443,9 +1582,17 @@ This is an html block.
       </span>
     </h4>
     <h5
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H5"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "12px",
+          "fontWeight": "bold",
+          "lineHeight": "12px",
+        }
+      }
     >
       <span
         data-slate-node="text"
@@ -1462,9 +1609,17 @@ This is an html block.
       </span>
     </h5>
     <h6
-      className="sc-AxiKw cBJqoo"
+      className="sc-dlnjPT gKUDvN"
       data-slate-node="element"
       id="H6"
+      style={
+        Object {
+          "color": "#122330",
+          "fontSize": "10px",
+          "fontWeight": "bold",
+          "lineHeight": "10px",
+        }
+      }
     >
       <span
         data-slate-node="text"

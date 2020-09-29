@@ -2,43 +2,43 @@
 
 exports[`Navigation Storyshots Navigation Navigation 1`] = `
 <div
-  className="sc-fznxsB foekoE ui-components__navigation-wrapper"
+  className="sc-fKgIGh kIuOko ui-components__navigation-wrapper"
 >
   <a
-    className="sc-fznJRM sc-fznWqX jplvCD ui-components__navigation-switch-title-active"
+    className="sc-bCwgka sc-iwaifL Lllle eesuxp ui-components__navigation-switch-title-active"
     onClick={[Function]}
   >
     NAVIGATION
   </a>
   <a
-    className="sc-fznJRM sc-fzoiQi ldXljb ui-components__navigation-switch-title-inactive"
+    className="sc-bCwgka sc-cxNIbT Lllle jqhJAJ ui-components__navigation-switch-title-inactive"
     onClick={[Function]}
   >
     FILES
   </a>
   <div
-    className="sc-fzqARJ eGqCTc"
+    className="sc-lmgQde enZzfF"
   >
     <div
-      className="sc-fzqNqU sc-fzoXWK gqKYgY ui-components__navigation-header-clause"
+      className="sc-iJCRLp sc-bYwzba cFghiT cXQmeY ui-components__navigation-header-clause"
       onClick={[Function]}
     >
       This is a clause heading
     </div>
     <div
-      className="sc-fzqNqU fohfWZ ui-components__navigation-header-one"
+      className="sc-iJCRLp cFghiT ui-components__navigation-header-one"
       onClick={[Function]}
     >
       This is a H1 heading
     </div>
     <div
-      className="sc-fzqNqU sc-fzoyTs fpGMpV ui-components__navigation-header-two"
+      className="sc-iJCRLp sc-giAqnE cFghiT rcNdD ui-components__navigation-header-two"
       onClick={[Function]}
     >
       This is a H2 heading
     </div>
     <div
-      className="sc-fzqNqU sc-fzoNJl lpedIt ui-components__navigation-header-three"
+      className="sc-iJCRLp sc-ezzayL cFghiT eeBFp ui-components__navigation-header-three"
       onClick={[Function]}
     >
       This is a H3 heading
