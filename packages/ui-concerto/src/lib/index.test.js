@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { ConcertoForm } from './index';
 
 describe('ExampleComponent', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
-  })
-})
+    expect(ConcertoForm).toBeTruthy();
+  });
+});

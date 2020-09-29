@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build:app": "react-scripts build",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "build": "npx rollup -c --sourcemap",
     "build:watch": "npx rollup -c --sourcemap -w",
