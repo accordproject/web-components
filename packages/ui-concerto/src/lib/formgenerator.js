@@ -57,6 +57,8 @@ class FormGenerator {
    * @param {object} options.customClasses - a custom CSS classes that can be
    *  applied to generated HTML
    * @param {ModelManager} options.modelManager - An optional custom model manager
+   * @param {object} options.relationshipProvider - An optional relationship provider,
+   * used to get relationship IDs.
    */
   constructor(options) {
     this.modelManager = new ModelManager();

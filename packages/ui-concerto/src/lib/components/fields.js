@@ -77,6 +77,7 @@ export const ConcertoRelationship = ({
   onFieldValueChange,
   skipLabel,
   type,
+  relationshipProvider
 }) => {
   let relationship;
   try {
@@ -98,23 +99,36 @@ export const ConcertoRelationship = ({
     });
   }
 
+  const relationshipOptions = relationshipProvider.getOptions
+    ? relationshipProvider.getOptions(field) : null;
+  const relationshipEditor = relationshipOptions
+    ? <ConcertoDropdown
+  id={id}
+  value={value}
+  field={field}
+  readOnly={readOnly}
+  onFieldValueChange={onFieldValueChange}
+  options={relationshipOptions}
+/>
+    : <Input
+  type={type}
+  label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
+  labelPosition='right'
+  readOnly={readOnly}
+  value={relationship.getIdentifier()}
+  onChange={(e, data) => {
+    relationship.setIdentifier(data.value || 'resource1');
+    return onFieldValueChange(
+      { ...data, value: relationship.toURI() },
+      id
+    );
+  }}
+  key={id}
+/>;
+
   return <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={field.getName()} />
-    <Input
-      type={type}
-      label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
-      labelPosition='right'
-      readOnly={readOnly}
-      value={relationship.getIdentifier()}
-      onChange={(e, data) => {
-        relationship.setIdentifier(data.value || 'resource1');
-        return onFieldValueChange(
-          { ...data, value: relationship.toURI() },
-          id
-        );
-      }}
-      key={id}
-    />
+    {relationshipEditor}
   </Form.Field>;
 };
 
