@@ -44,6 +44,8 @@ const ConcertoForm = (props) => {
   const removeElement = useCallback((e, key, index) => {
     const array = get(value, key);
     array.splice(index, 1);
+    const valueClone = set({ ...value }, key, array);
+    setValue(valueClone);
     onValueChange(value);
   }, [onValueChange, value]);
 
