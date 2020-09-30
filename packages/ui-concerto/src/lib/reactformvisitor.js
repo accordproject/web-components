@@ -362,7 +362,7 @@ class ReactFormVisitor {
       addElement,
       removeElement,
       onFieldValueChange,
-      relationshipProvider
+      relationshipProvider,
     };
 
     let component;
@@ -379,6 +379,7 @@ class ReactFormVisitor {
       component = (
         <ConcertoArray
           {...commonProps}
+          key={key}
           addElement={(e, id) => addElement(e, id, newResource.toURI())}>
           {value
             && value.map((_element, index) => {
@@ -386,7 +387,7 @@ class ReactFormVisitor {
               const key = toPath(stack);
               const value = get(parameters.json, key);
               const arrayComponent = (
-                <ConcertoArrayElement key={key} {...commonProps} index={index}>
+                <ConcertoArrayElement {...commonProps} key={`relationship-${key}-${index}`} index={index}>
                   <ConcertoRelationship {...commonProps} id={key} value={value} />
                 </ConcertoArrayElement>
               );

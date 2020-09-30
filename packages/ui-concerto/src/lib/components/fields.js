@@ -52,7 +52,7 @@ export const ConcertoInput = ({
   skipLabel,
   type,
 }) => (
-  <Form.Field required={required}>
+  <Form.Field key={`field-${id}`} required={required}>
     <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={field.getName()} />
     <Input
       type={type}
@@ -99,7 +99,7 @@ export const ConcertoRelationship = ({
     });
   }
 
-  const relationshipOptions = relationshipProvider.getOptions
+  const relationshipOptions = (relationshipProvider && relationshipProvider.getOptions)
     ? relationshipProvider.getOptions(field) : null;
   const relationshipEditor = relationshipOptions
     ? <ConcertoDropdown
@@ -127,8 +127,8 @@ export const ConcertoRelationship = ({
   key={id}
 />;
 
-  return <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+  return <Form.Field required={required} key={`field-${id}`}>
+    <ConcertoLabel skip={skipLabel} name={field.getName()} key={`label-${id}`}/>
     {relationshipEditor}
   </Form.Field>;
 };
@@ -163,13 +163,14 @@ export const ConcertoArray = ({
   children,
   addElement,
 }) => (
-  <Form.Field required={required}>
+  <Form.Field key={`field-${id}`} required={required}>
     <ConcertoLabel name={field.getName()} />
     {children}
     <div className="arrayElement grid">
       <div />
       <div>
         <Button
+          key={`add-btn-${id}`}
           basic
           circular
           aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
@@ -197,16 +198,16 @@ export const ConcertoArrayElement = ({
   index,
   removeElement,
 }) => (
-  <div className="arrayElement grid">
-    <div>{children}</div>
-    <div>
+  <div className="arrayElement grid" key={`array-${id}`}>
+    <div key={`array-children-${id}`}>{children}</div>
       <Button
         basic
         circular
         icon={<Popup
           content='Remove this element'
           position='left center'
-          trigger={<Icon name='minus circle'/>}
+          key={`array-popup-${id}`}
+          trigger={<Icon name='minus circle' key={`array-icon-${id}`} />}
         />}
         aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
         className='arrayButton'
@@ -215,8 +216,8 @@ export const ConcertoArrayElement = ({
           removeElement(e, id, index);
           e.preventDefault();
         }}
+        key={`array-btn-${id}`}
       />
-    </div>
   </div>
 );
 
