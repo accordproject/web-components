@@ -1,18 +1,328 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render form, default 1`] = `
-<div
-  className="ui active transition visible inverted dimmer"
-  onClick={[Function]}
->
-  <div
-    className="content"
+exports[`render form creates a React form for model booleans.cto 1`] = `
+<div>
+  <form
+    class="ui form"
+    style="min-height: 100px;"
   >
     <div
-      className="ui inverted text loader"
+      class="required field"
     >
-      Loading
+      <label>
+        Name
+      </label>
+      <div
+        class="ui input"
+      >
+        <input
+          type="text"
+          value="Sandy"
+        />
+      </div>
     </div>
-  </div>
+    <div
+      class="required field"
+    >
+      <label>
+        Employed
+      </label>
+      <div
+        class="ui fitted toggle checkbox"
+      >
+        <input
+          class="hidden"
+          readonly=""
+          tabindex="0"
+          type="checkbox"
+          value=""
+        />
+        <label />
+      </div>
+    </div>
+    <div
+      class="required field"
+    >
+      <label>
+        Retired
+      </label>
+      <div
+        class="ui checked fitted toggle checkbox"
+      >
+        <input
+          checked=""
+          class="hidden"
+          readonly=""
+          tabindex="0"
+          type="checkbox"
+          value=""
+        />
+        <label />
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`render form creates a React form for model datetime.cto 1`] = `
+<div>
+  <form
+    class="ui form"
+    style="min-height: 100px;"
+  >
+    <div
+      class="required field"
+    >
+      <label>
+        Name
+      </label>
+      <div
+        class="ui input"
+      >
+        <input
+          type="text"
+          value="Sandy"
+        />
+      </div>
+    </div>
+    <div
+      class="required field"
+    >
+      <label>
+        Birthday
+      </label>
+      <div
+        class="field"
+      >
+        <div
+          class="ui icon input"
+        >
+          <i
+            aria-hidden="true"
+            class="calendar icon"
+          />
+          <input
+            tabindex="0"
+            type="text"
+            value="2010-10-01"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="required field"
+    >
+      <label>
+        Age
+      </label>
+      <div
+        class="ui input"
+      >
+        <input
+          type="number"
+          value="10"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`render form creates a React form for model relationship.cto 1`] = `
+<div>
+  <form
+    class="ui form"
+    style="min-height: 100px;"
+  >
+    <div
+      class="required field"
+    >
+      <label>
+        Name
+      </label>
+      <div
+        class="ui input"
+      >
+        <input
+          type="text"
+          value="resource1"
+        />
+      </div>
+    </div>
+    <div
+      class="required field"
+    >
+      <label>
+        Address
+      </label>
+      <div
+        class="required field"
+      >
+        <label>
+          Street
+        </label>
+        <div
+          class="ui input"
+        >
+          <input
+            type="text"
+            value="Quis irure."
+          />
+        </div>
+      </div>
+      <div
+        class="required field"
+      >
+        <label>
+          City
+        </label>
+        <div
+          class="ui input"
+        >
+          <input
+            type="text"
+            value="Ipsum elit."
+          />
+        </div>
+      </div>
+      <div
+        class="required field"
+      >
+        <label>
+          Country
+        </label>
+        <div
+          aria-expanded="false"
+          class="ui fluid selection dropdown"
+          role="listbox"
+          tabindex="0"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="polite"
+            class="text"
+            role="alert"
+          >
+            UK
+          </div>
+          <i
+            aria-hidden="true"
+            class="dropdown icon"
+          />
+          <div
+            class="menu transition"
+          >
+            <div
+              aria-checked="false"
+              aria-selected="false"
+              class="item"
+              role="option"
+              style="pointer-events: all;"
+            >
+              <span
+                class="text"
+              >
+                USA
+              </span>
+            </div>
+            <div
+              aria-checked="true"
+              aria-selected="true"
+              class="active selected item"
+              role="option"
+              style="pointer-events: all;"
+            >
+              <span
+                class="text"
+              >
+                UK
+              </span>
+            </div>
+            <div
+              aria-checked="false"
+              aria-selected="false"
+              class="item"
+              role="option"
+              style="pointer-events: all;"
+            >
+              <span
+                class="text"
+              >
+                France
+              </span>
+            </div>
+            <div
+              aria-checked="false"
+              aria-selected="false"
+              class="item"
+              role="option"
+              style="pointer-events: all;"
+            >
+              <span
+                class="text"
+              >
+                Sweden
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="field"
+    >
+      <label>
+        Children
+      </label>
+      <div
+        class="arrayElement grid"
+      >
+        <div>
+          <div
+            class="field"
+          >
+            <div
+              class="ui right labeled input"
+            >
+              <input
+                type="text"
+                value="Grace"
+              />
+              <div
+                class="ui basic label label"
+              >
+                Person
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          aria-label="Remove element 0 from Children"
+          class="ui basic circular icon button arrayButton"
+        >
+          <i
+            aria-hidden="true"
+            class="minus circle icon"
+          />
+        </button>
+      </div>
+      <div
+        class="arrayElement grid"
+      >
+        <div />
+        <div>
+          <button
+            aria-label="Add an element to Children"
+            class="ui basic circular icon button arrayButton"
+          >
+            <i
+              aria-hidden="true"
+              class="plus circle icon"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 `;

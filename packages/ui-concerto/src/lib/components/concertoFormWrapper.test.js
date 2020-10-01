@@ -13,35 +13,55 @@
  */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, waitFor, screen } from '@testing-library/react';
+import ConcertoForm from './concertoForm';
 
-import ConcertoFormWrapper from './concertoFormWrapper';
-import { props, type, model, options } from './testProps';
+const fs = require('fs');
 
-test('Render form, default', async () => {
-  const onValueChange = jest.fn();
-
-  const testRenderer = renderer.create(
-    <ConcertoFormWrapper
-      onValueChange={onValueChange}
-      {...props}
-    />
-  );
-
-  expect(testRenderer.toJSON()).toMatchSnapshot();
-});
-
-test.skip('Render form, no JSON provided', async () => {
-  const onValueChange = jest.fn();
-
-  const testRenderer = renderer.create(
-    <ConcertoFormWrapper
-      onValueChange={onValueChange}
-      type={type}
-      models={[model]}
-      options={options}
-    />
-  );
-
-  expect(testRenderer.toJSON()).toMatchSnapshot();
+const readOnly = false;
+const type = 'test.Person';
+const options = {
+  includeOptionalFields: true,
+  includeSampleData: 'sample',
+  updateExternalModels: true,
+  hiddenFields: [
+    'org.accordproject.base.Transaction.transactionId',
+    'org.accordproject.cicero.contract.AccordContract.contractId',
+    'org.accordproject.cicero.contract.AccordClause.clauseId',
+    'org.accordproject.cicero.contract.AccordContractState.stateId',
+  ],
+};
+/**
+ * Get the name and contents of all model test files
+ * @returns {*} an array of name/contents tuples
+ */
+function getModelFiles() {
+  const result = [];
+  const files = fs.readdirSync(`${__dirname}/../../../test/data`);
+  files.forEach((file) => {
+    if (file.endsWith('.cto')) {
+      const contents = fs.readFileSync(`${__dirname}/../../../test/data/${file}`, 'utf8');
+      const json = fs.readFileSync(`${__dirname}/../../../test/data/${file.replace('cto', 'json')}`, 'utf8');
+      result.push([file, contents, json]);
+    }
+  });
+  return result;
+}
+describe('render form', () => {
+  getModelFiles().forEach(([file, modelText, json]) => {
+    it(`creates a React form for model ${file}`, async () => {
+      const { container } = render(
+        <ConcertoForm
+          readOnly={readOnly}
+          models={[modelText]}
+          options = {options}
+          type={type}
+          json={JSON.parse(json)}
+          onValueChange={(json) => json}
+      />
+      );
+      await waitFor(() => screen.getByText('Name'));
+      expect(container).toMatchSnapshot();
+    });
+  });
 });

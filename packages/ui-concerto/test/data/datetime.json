@@ -1,0 +1,6 @@
+{
+  "$class": "test.Person",
+  "name": "Sandy",
+  "birthday": "2010-10-01",
+  "age": 10
+}

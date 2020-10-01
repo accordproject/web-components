@@ -1,0 +1,14 @@
+{
+  "$class": "test.Person",
+  "address": {
+    "$class": "test.Address",
+    "city": "Ipsum elit.",
+    "country": "UK",
+    "street": "Quis irure.",
+    "zipCode": "Laboris non ex."
+  },
+  "children": [
+    "test.Person#Grace"
+  ],
+  "name": "resource1"
+}
