@@ -179,7 +179,11 @@ export const MarkdownEditor = (props) => {
         /> }
       <Editable
         id="ap-rich-text-editor"
-        style={{ padding: '20px' }}
+        style={{
+          padding: '20px',
+          border: '1px solid grey',
+          borderRadius: '4px'
+        }}
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
