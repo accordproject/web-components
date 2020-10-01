@@ -1,0 +1,7 @@
+namespace test 
+
+  participant Person identified by name {
+    o String name
+    o Boolean employed
+    o Boolean retired
+  }

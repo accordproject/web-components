@@ -1,0 +1,6 @@
+{
+  "$class": "test.Person",
+  "name": "Sandy",
+  "employed": false,
+  "retired": true
+}

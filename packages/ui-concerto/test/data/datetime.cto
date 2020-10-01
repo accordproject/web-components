@@ -1,0 +1,7 @@
+namespace test 
+
+  participant Person identified by name {
+    o String name
+    o DateTime birthday
+    o Integer age
+  }
