@@ -34,6 +34,10 @@ const ConcertoForm = (props) => {
   const [modelManager, setModelManager] = useState(null);
   const { onValueChange, options, models } = props;
 
+  useEffect(() => {
+    setValue(props.json);
+  }, [props.json]);
+
   const onFieldValueChange = useCallback((e, key) => {
     const fieldValue = e.type === 'checkbox' ? e.checked : e.value;
     const valueClone = set({ ...value }, key, fieldValue);
