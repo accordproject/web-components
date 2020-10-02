@@ -31,7 +31,7 @@ const postcssPlugins = [
 ];
 
 const config = outputs.map(({ file, format }) => ({
-  input: 'src/lib/index.js',
+  input: 'src/index.js',
   output: {
     file,
     format,
