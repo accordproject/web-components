@@ -1,5 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './environment/App';
+import ErrorLogger from './ErrorLogger';
+import Navigation from './Navigation';
+import Library from './Library';
+import TextEditor from './TextEditor';
+import Tile from './Tile';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export {
+  ErrorLogger,
+  Navigation,
+  Library,
+  TextEditor,
+  Tile,
+};

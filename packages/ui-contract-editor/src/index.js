@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './environment/App';
+import ContractEditor from './ContractEditor';
+import getChildren from './utilities/getChildren';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export { getChildren };
+export default ContractEditor;

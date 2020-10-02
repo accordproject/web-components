@@ -17,5 +17,5 @@
   "plugins": [
     "stylelint-order"
   ],
-  "ignoreFiles": ["src/lib/components/concertoForm.css", "**/*.js"]
+  "ignoreFiles": ["src/components/concertoForm.css", "**/*.js"]
 }
