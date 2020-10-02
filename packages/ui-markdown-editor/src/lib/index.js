@@ -95,6 +95,8 @@ export const MarkdownEditor = (props) => {
         hotkeyActions[type](code);
       }
     });
+
+    setShowLinkModal(false);
   }, [canBeFormatted, canKeyDown, editor, hotkeyActions]);
 
   const onBeforeInput = useCallback((event) => {
