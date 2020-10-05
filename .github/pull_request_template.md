@@ -23,6 +23,7 @@
 - Pull Request #<NUMBER>
 
 ### Author Checklist
+- [ ] Ensure you provide a [DCO sign-off](https://github.com/probot/dco#how-it-works) for your commits using the `--signoff` option of git commit.
 - [ ] Vital features and changes captured in unit and/or integration tests
 - [ ] Commits messages follow [AP format](https://github.com/accordproject/techdocs/blob/master/DEVELOPERS.md#commit-message-format)
 - [ ] Extend the documentation, if necessary
