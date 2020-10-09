@@ -1,8 +1,7 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Node } from 'slate';
-import { useSlate } from 'slate-react';
+import { useEditor } from 'slate-react';
 import { Dropdown } from 'semantic-ui-react';
 import StyleDropdownItem from './Item';
 import {
@@ -17,7 +16,7 @@ import {
 } from '../../utilities/schema';
 
 const StyleDropdown = ({ canBeFormatted }) => {
-  const editor = useSlate();
+  const editor = useEditor();
   const currentBlock = (editor && editor.selection)
     ? BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type]
     : 'Style';
@@ -60,6 +59,5 @@ const StyleDropdown = ({ canBeFormatted }) => {
 StyleDropdown.propTypes = {
   canBeFormatted: PropTypes.func
 };
-
 
 export default StyleDropdown;
