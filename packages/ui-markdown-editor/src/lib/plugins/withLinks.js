@@ -13,7 +13,8 @@ const atEnd = (editor) => {
 };
 
 // checks if selection is in the body of the link and not at the end
-export const isSelectionLinkBody = editor => isSelectionLink(editor) && !atEnd(editor);
+export const isSelectionLinkBody = editor => isSelectionLink(editor) && !atEnd(editor)
+    && Range.isCollapsed(editor.selection);
 
 // checks if selection is at the end of a link
 export const isSelectionLinkEnd = editor => isSelectionLink(editor) && atEnd(editor);
