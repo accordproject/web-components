@@ -131,18 +131,20 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     return () => clearTimeout(timer);
   }, [linkCopied]);
 
-  const handleClick = useCallback((e) => {
+  const actionHandler = useCallback((e) => {
     if (ref.current && !ref.current.contains(e.target)) {
       props.setShowLinkModal(false);
     }
   }, [props, ref]);
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('mousedown', actionHandler);
+    document.addEventListener('keydown', actionHandler);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('mousedown', actionHandler);
+      document.removeEventListener('keydown', actionHandler);
     };
-  }, [handleClick]);
+  }, [actionHandler]);
 
   const defaultTextValue = React.useMemo(() => {
     try {
