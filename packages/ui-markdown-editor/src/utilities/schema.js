@@ -28,6 +28,7 @@ export const LINEBREAK = 'linebreak';
 export const LINK = 'link';
 export const IMAGE = 'image';
 export const HTML_INLINE = 'html_inline';
+export const HEADINGBREAK = 'headingbreak';
 
 const INLINES = {
   [LINEBREAK]: true,
