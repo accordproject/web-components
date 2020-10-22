@@ -97,3 +97,20 @@ export const insertLinebreak = (editor, type) => {
   Transforms.insertNodes(editor, br);
   Transforms.move(editor, { distance: 1, unit: 'character' });
 };
+
+export const insertHeadingbreak = (editor) => {
+  const text = {object: 'text', text: '' };
+  const n = { object: "block", type: 'paragraph', children: [text]};
+  Transforms.insertNodes(editor, n);
+  return;
+}
+
+export const isBlockHeading = (editor) => {
+  const [match] = Editor.nodes(editor, {
+    match: n => { return n.type === 'heading_one'
+                        | n.type === 'heading_two'
+                        | n.type === 'heading_three'
+                },
+  });
+  return !!match;
+};
