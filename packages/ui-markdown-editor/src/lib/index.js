@@ -90,10 +90,8 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
-    if (event.key === "Enter") {
-      if (!isBlockHeading(editor)) {
-        return;
-      }
+    if (event.key === "Enter" && !isBlockHeading(editor)) {
+      return;
     }
 
     const hotkeys = Object.keys(HOTKEYS);
