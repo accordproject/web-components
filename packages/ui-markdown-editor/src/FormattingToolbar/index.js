@@ -55,10 +55,26 @@ const FormattingToolbar = ({
       const CARET_TOP_OFFSET = 15;
       el.style.opacity = 1;
       el.style.top = `${rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET}px`;
-      el.style.left = `${rect.left
-          + window.pageXOffset
-          - el.offsetWidth / 2
-          + rect.width / 2}px`;
+      if(window.innerWidth>660 || (window.innerWidth>=440 && window.innerWidth<600)){
+        el.style.left='25px';
+      }else{
+        el.style.left='10px';
+        el.style.minWidth='300px';
+        let w =el.children[0], z = el.parentElement;
+        // somehow padding was ignored so i subtracted it manually
+        if(z.offsetWidth-28>362){
+          w.style.left="calc(50% - 97px)";
+        }else{
+          w.style.left="calc(50% - 55px)";
+        }
+        if(window.innerWidth<440){
+          if(z.offsetWidth>=390){
+            w.style.left="calc(50% - 97px)";
+          }else{
+            w.style.left="calc(50% - 55px)";
+          }
+        }
+      }
     }
   }, [editor, showLinkModal]);
 

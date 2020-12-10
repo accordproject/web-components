@@ -42,7 +42,7 @@ const HyperlinkWrapper = styled.div`
 const HyperlinkCaret = styled.div`
     position: absolute;
     z-index: 4000;
-    left: calc(50% - 5px);
+    left: calc(50% + 150px);
     top: -10px;
     height: 0;
     width: 0;
