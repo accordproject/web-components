@@ -71,7 +71,12 @@ const FormattingToolbar = ({
           if(z.offsetWidth>=390){
             w.style.left="calc(50% - 97px)";
           }else{
-            w.style.left="calc(50% - 55px)";
+            if(z.offsetWidth>360){
+              w.style.left="calc(50% - 55px)";
+            }else{
+              w.style.left="calc(50% - 25px)";
+            }
+            console.log(z.offsetWidth);
           }
         }
       }
