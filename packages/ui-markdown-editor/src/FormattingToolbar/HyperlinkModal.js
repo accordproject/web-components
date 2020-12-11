@@ -26,7 +26,7 @@ const HyperlinkWrapper = styled.div`
     border-radius: .3rem;
     transition: opacity 0.75s;
 
-    min-width: min-content;
+    min-width:300px;
     line-height: 1.4285em;
     max-width: 250px;
     padding: .833em 1em;
@@ -42,7 +42,7 @@ const HyperlinkWrapper = styled.div`
 const HyperlinkCaret = styled.div`
     position: absolute;
     z-index: 4000;
-    left: calc(50% + 150px);
+    left: calc(50% - 5px);
     top: -10px;
     height: 0;
     width: 0;

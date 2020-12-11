@@ -54,32 +54,36 @@ const FormattingToolbar = ({
       const rect = domRange.getBoundingClientRect();
       const CARET_TOP_OFFSET = 15;
       el.style.opacity = 1;
-      el.style.top = `${rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET}px`;
-      if(window.innerWidth>660 || (window.innerWidth>=440 && window.innerWidth<600)){
-        el.style.left='25px';
-      }else{
-        el.style.left='10px';
-        el.style.minWidth='300px';
-        let w =el.children[0], z = el.parentElement;
-        // somehow padding was ignored so i subtracted it manually
-        if(z.offsetWidth-28>362){
-          w.style.left="calc(50% - 97px)";
-        }else{
-          w.style.left="calc(50% - 55px)";
-        }
-        if(window.innerWidth<440){
-          if(z.offsetWidth>=390){
-            w.style.left="calc(50% - 97px)";
-          }else{
-            if(z.offsetWidth>360){
-              w.style.left="calc(50% - 55px)";
-            }else{
-              w.style.left="calc(50% - 25px)";
-            }
-            console.log(z.offsetWidth);
-          }
-        }
+      el.style.top = `${
+        rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET
+      }px`;
+      let w = el.children[0],
+        z = el.parentElement;
+      let calPos = rect.left  - el.offsetWidth / 2  ;
+
+
+      // When the modal goes off page from left side
+      if (calPos < 0) {
+        // start from 10px 
+        calPos = 10;
+        w.style.left = `${rect.left - 10}px`;
       }
+
+      // calculate the endpoint of the modal
+      let rightEndPos = calPos + el.offsetWidth,
+        containerWidth = z.offsetWidth;
+
+      // When the modal goes off the page from right side
+      if (rightEndPos > containerWidth) {
+        let diff = rightEndPos-containerWidth;
+        // extra space of 10px on right side to look clean
+        diff+=10;
+        calPos=calPos-diff;
+        let shift=diff-5;
+        w.style.left= `calc(50% + ${shift}px)`;
+      }
+
+      el.style.left = `${calPos}px`;
     }
   }, [editor, showLinkModal]);
 
