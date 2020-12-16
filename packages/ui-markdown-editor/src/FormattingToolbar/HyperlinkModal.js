@@ -24,8 +24,6 @@ const HyperlinkWrapper = styled.div`
     background-color: #FFFFFF;
     border: 1px solid #d4d4d5;
     border-radius: .3rem;
-    transition: opacity 0.75s;
-
     min-width:300px;
     line-height: 1.4285em;
     max-width: 250px;
