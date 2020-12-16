@@ -54,11 +54,35 @@ const FormattingToolbar = ({
       const rect = domRange.getBoundingClientRect();
       const CARET_TOP_OFFSET = 15;
       el.style.opacity = 1;
-      el.style.top = `${rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET}px`;
-      el.style.left = `${rect.left
-          + window.pageXOffset
-          - el.offsetWidth / 2
-          + rect.width / 2}px`;
+      el.style.top = `${
+        rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET
+      }px`;
+      const hyperlinkCaret = el.children[0];
+      let calPos = rect.left  - el.offsetWidth / 2  ;
+
+
+      // When the modal goes off page from left side
+      if (calPos < 0) {
+        // start from 10px 
+        calPos = 10;
+        hyperlinkCaret.style.left = `${rect.left - 10}px`;
+      }
+
+      // calculate the endpoint of the modal
+      const rightEndPos = calPos + el.offsetWidth,
+        containerWidth = el.parentElement.offsetWidth;
+
+      // When the modal goes off the page from right side
+      if (rightEndPos > containerWidth) {
+        let diff = rightEndPos-containerWidth;
+        // extra space of 10px on right side to look clean
+        diff+=10;
+        calPos=calPos-diff;
+        let shift=diff-5;
+        hyperlinkCaret.style.left= `calc(50% + ${shift}px)`;
+      }
+
+      el.style.left = `${calPos}px`;
     }
   }, [editor, showLinkModal]);
 

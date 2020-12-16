@@ -26,7 +26,7 @@ const HyperlinkWrapper = styled.div`
     border-radius: .3rem;
     transition: opacity 0.75s;
 
-    min-width: min-content;
+    min-width:300px;
     line-height: 1.4285em;
     max-width: 250px;
     padding: .833em 1em;
