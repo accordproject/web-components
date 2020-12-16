@@ -57,8 +57,7 @@ const FormattingToolbar = ({
       el.style.top = `${
         rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET
       }px`;
-      let w = el.children[0],
-        z = el.parentElement;
+      const hyperlinkCaret = el.children[0];
       let calPos = rect.left  - el.offsetWidth / 2  ;
 
 
@@ -66,12 +65,12 @@ const FormattingToolbar = ({
       if (calPos < 0) {
         // start from 10px 
         calPos = 10;
-        w.style.left = `${rect.left - 10}px`;
+        hyperlinkCaret.style.left = `${rect.left - 10}px`;
       }
 
       // calculate the endpoint of the modal
-      let rightEndPos = calPos + el.offsetWidth,
-        containerWidth = z.offsetWidth;
+      const rightEndPos = calPos + el.offsetWidth,
+        containerWidth = el.parentElement.offsetWidth;
 
       // When the modal goes off the page from right side
       if (rightEndPos > containerWidth) {
@@ -80,7 +79,7 @@ const FormattingToolbar = ({
         diff+=10;
         calPos=calPos-diff;
         let shift=diff-5;
-        w.style.left= `calc(50% + ${shift}px)`;
+        hyperlinkCaret.style.left= `calc(50% + ${shift}px)`;
       }
 
       el.style.left = `${calPos}px`;
