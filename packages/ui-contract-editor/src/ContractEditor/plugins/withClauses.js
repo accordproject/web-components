@@ -179,7 +179,7 @@ const withClauses = (editor, withClausesProps) => {
         const NEW_SLATE_CHILDREN = SLATE_DOM.document.children.map(
           (child) => {
             if (child.type === CLAUSE) {
-              child.data.clauseid = uuidv4();
+              child.data.clauseid = uuidv4() ;
               clausesToParseAndPaste.push(child);
             }
             return child;
