@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import { Editor, Node, Transforms, Path } from 'slate';
 import { HistoryEditor } from 'slate-history';
 
@@ -179,7 +179,7 @@ const withClauses = (editor, withClausesProps) => {
         const NEW_SLATE_CHILDREN = SLATE_DOM.document.children.map(
           (child) => {
             if (child.type === CLAUSE) {
-              child.data.clauseid = uuid();
+              child.data.clauseid = uuidv4();
               clausesToParseAndPaste.push(child);
             }
             return child;

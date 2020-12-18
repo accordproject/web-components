@@ -43,7 +43,7 @@ const config = outputs.map(({ file, format }) => ({
       'styled-components': 'styled',
       slate: 'slate',
       'slate-react': 'slateReact',
-      uuidv4: 'uuidv4',
+      uuidv4: 'uuid',
       '@accordproject/markdown-slate': 'markdownSlate',
       '@accordproject/markdown-html': 'markdownHtml',
       lodash: '_',
