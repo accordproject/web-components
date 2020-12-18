@@ -18,7 +18,7 @@ import { storiesOf } from '@storybook/react'
 import { Editor, Node, Transforms } from 'slate';
 
 /* Misc */
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
 const slateTransformer = new SlateTransformer();
@@ -110,7 +110,7 @@ export const contractEditor = () => {
               children: slateValueNew.document.children,
               data: {
                 src: templateUrl,
-                name: uuid(),
+                name: uuidv4(),
               },
               object: 'block',
               type: 'clause',
