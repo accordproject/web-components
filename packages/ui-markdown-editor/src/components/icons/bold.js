@@ -27,6 +27,7 @@ const bold = {
   height: '25px',
   width: '25px',
   padding: '5px 7px',
+  paddingMob: '5px 5px',
   viewBox: '0 0 11 13',
   icon,
 };
