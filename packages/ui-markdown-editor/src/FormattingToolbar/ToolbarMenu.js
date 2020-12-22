@@ -5,6 +5,7 @@ const Menu = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
+  min-width: 630px;
   background-color: #fff;
   padding: 15px 15px 5px 15px;
   z-index: 10;
@@ -17,14 +18,8 @@ const Menu = styled.div`
     display: inline-block;
   }
   & > * + * {
-    margin-left: 5px;
+    margin-left: 15px;
   };
-
-  @media (min-width: 600px) {
-    & > * + * {
-      margin-left: 15px;
-    }
-  }
 `;
 
 const ToolbarMenu = React.forwardRef(({ ...props }, ref) => (

@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useMemo, useState
+  useCallback, useMemo, useState, useEffect
 } from 'react';
 import { CiceroMarkTransformer } from '@accordproject/markdown-cicero';
 import { HtmlTransformer } from '@accordproject/markdown-html';
@@ -50,6 +50,13 @@ export const MarkdownEditor = (props) => {
     ))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+  useEffect(()=>{
+    const toolbar = document.getElementById("ap-rich-text-editor-toolbar");
+    toolbar.parentElement.style.minWidth = "630px";
+    document.body.style.overflowX = "auto";
+  },[])
 
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {

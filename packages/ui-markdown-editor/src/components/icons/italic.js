@@ -28,7 +28,6 @@ const italic = {
     height: '25px',
     width: '25px',
     padding: '5px 7px',
-    paddingMob: '5px 5px',
     viewBox: '0 0 10 13',
     icon,
   };
