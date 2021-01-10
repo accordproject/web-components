@@ -15,10 +15,10 @@ const cardStyle = {
 };
 
 const itemLogoStyle = {
-  objectFit: "contain",
-  float: "right",
-  maxHeight: "20px",
   display: "inline-block",
+  objectFit: "contain",
+  maxHeight: "20px",
+  float: "right",
 };
 
 const DescriptionContainer = styled(Card.Description)``;
