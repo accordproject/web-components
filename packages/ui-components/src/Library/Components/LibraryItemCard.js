@@ -1,60 +1,58 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Card, Image } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { Card, Image } from "semantic-ui-react";
 
-import CardActions from './CardActions';
+import CardActions from "./CardActions";
 
 const cardStyle = {
-  margin: '10px 0',
-  border: '1px solid #7B8084',
-  borderRadius: '6px',
-  backgroundColor: '#fff',
-  textAlign: 'left',
-  boxShadow: '0 1px 9px 0 rgba(0,0,0,0.1)',
+  margin: "10px 0",
+  border: "1px solid #7B8084",
+  borderRadius: "6px",
+  backgroundColor: "#fff",
+  textAlign: "left",
+  boxShadow: "0 1px 9px 0 rgba(0,0,0,0.1)",
 };
 
 const itemLogoStyle = {
-  position: 'absolute',
-  top: '13px',
-  right: '16px',
-  maxHeight: '23px',
+  objectFit: "contain",
+  float: "right",
+  maxHeight: "20px",
+  display: "inline-block",
 };
 
-const DescriptionContainer = styled(Card.Description)`
-`;
+const DescriptionContainer = styled(Card.Description)``;
 
 /**
  * A Library Item Card component that displays each library item and it's details.
  */
-const LibraryItemCard = props => (
+const LibraryItemCard = (props) => (
+
   <Card
     fluid
     key={props.item.uri}
     style={cardStyle}
     className={`ui-components__library-card ${props.item.itemType}`}
   >
-    <Card.Content className='ui-components__library-card-content'>
+    <Card.Content className="ui-components__library-card-content">
       <Image
         style={itemLogoStyle}
         src={props.item.logoUrl}
-        className='ui-components__library-card-logo'
+        className="ui-components__library-card-logo"
       />
-      <Card.Header className='ui-components__library-card-header'>
-        { props.item.displayName || props.item.name }
+      <Card.Header className="ui-components__library-card-header">
+        {props.item.displayName || props.item.name}
       </Card.Header>
-      <Card.Meta className='ui-components__library-card-meta'>
-        <span className='ui-components__library-card-item-type'>
+      <Card.Meta className="ui-components__library-card-meta">
+        <span className="ui-components__library-card-item-type">
           {props.itemTypeName}
         </span>
         &nbsp;|&nbsp;
-        <span className='ui-components__library-card-item-version'>
+        <span className="ui-components__library-card-item-version">
           Version {props.item.version}
         </span>
       </Card.Meta>
-      <DescriptionContainer>
-        {props.item.description}
-      </DescriptionContainer>
+      <DescriptionContainer>{props.item.description}</DescriptionContainer>
     </Card.Content>
     <CardActions
       item={props.item}

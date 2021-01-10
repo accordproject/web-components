@@ -128,6 +128,8 @@ const LibraryComponent = (props) => {
     return filtered;
   }, [query, props.items, itemTypeFilter]);
 
+    
+
   const renderItemTypeFilter = useCallback(() => {
     if (props.itemTypes.length === 1) return null;
 
@@ -174,8 +176,10 @@ const LibraryComponent = (props) => {
       </Functionality>
       <LibraryItemCards className="ui-components__library-cards-wrapper">
         {
+          
           filtered.length
             ? filtered.map(item => (
+                
                 <LibraryItemCard
                   key={item.uri}
                   item={item}
