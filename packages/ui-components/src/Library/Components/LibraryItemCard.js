@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Card, Image } from "semantic-ui-react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Card, Image } from 'semantic-ui-react';
 
-import CardActions from "./CardActions";
+import CardActions from './CardActions';
 
 const cardStyle = {
-  margin: "10px 0",
-  border: "1px solid #7B8084",
-  borderRadius: "6px",
-  backgroundColor: "#fff",
-  textAlign: "left",
-  boxShadow: "0 1px 9px 0 rgba(0,0,0,0.1)",
+  margin: '10px 0',
+  border: '1px solid #7B8084',
+  borderRadius: '6px',
+  backgroundColor: '#fff',
+  textAlign: 'left',
+  boxShadow: '0 1px 9px 0 rgba(0,0,0,0.1)',
 };
 
 const itemLogoStyle = {
-  maxHeight: "20px",
-  float: "right",
-  display: "inline-block",
-  objectFit: "contain",
+  maxHeight: '20px',
+  float: 'right',
+  display: 'inline-block',
+  objectFit: 'contain',
 };
 
 const DescriptionContainer = styled(Card.Description)``;
@@ -27,7 +27,6 @@ const DescriptionContainer = styled(Card.Description)``;
  * A Library Item Card component that displays each library item and it's details.
  */
 const LibraryItemCard = (props) => (
-
   <Card
     fluid
     key={props.item.uri}
