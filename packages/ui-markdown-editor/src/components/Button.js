@@ -12,7 +12,7 @@ const Button = styled.svg`
   cursor: pointer;
   &:hover {
     background-color: ${BUTTON_COLORS.BACKGROUND_ACTIVE};
-  };
+  }
 `;
 
 export default Button;
