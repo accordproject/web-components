@@ -176,38 +176,37 @@ export const MarkdownEditor = (props) => {
   };
 
   return (
-    <div style={{minWidth:'600px'}}>
-      <Slate editor={editor} value={props.value} onChange={onChange} >
-        { !props.readOnly
-          && <FormatBar
-          canBeFormatted={props.canBeFormatted}
-          showLinkModal={showLinkModal}
-          setShowLinkModal={setShowLinkModal}
-          activeButton={props.activeButton || BUTTON_ACTIVE}
-          /> }
-        <Editable
-          id="ap-rich-text-editor"
-          style={{
-            padding: '20px',
-            border: '1px solid grey',
-            borderRadius: '4px'
-          }}
-          readOnly={props.readOnly}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          placeholder={props.placeholder || 'Enter some rich text...'}
-          spellCheck
-          autoFocus
-          onKeyDown={onKeyDown}
-          onDOMBeforeInput={onBeforeInput}
-          onCopy={handleCopyOrCut}
-          onCut={event => handleCopyOrCut(event, true)}
-          onDragStart={handleDragStart}
-          onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
-          onDrop={handleDrop}
-        />
-      </Slate>
-    </div>
+    <Slate editor={editor} value={props.value} onChange={onChange} >
+      { !props.readOnly
+        && <FormatBar
+        canBeFormatted={props.canBeFormatted}
+        showLinkModal={showLinkModal}
+        setShowLinkModal={setShowLinkModal}
+        activeButton={props.activeButton || BUTTON_ACTIVE}
+        /> }
+      <Editable
+        id="ap-rich-text-editor"
+        style={{
+          padding: '20px',
+          border: '1px solid grey',
+          borderRadius: '4px',
+          minWidth: '600px'
+        }}
+        readOnly={props.readOnly}
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
+        placeholder={props.placeholder || 'Enter some rich text...'}
+        spellCheck
+        autoFocus
+        onKeyDown={onKeyDown}
+        onDOMBeforeInput={onBeforeInput}
+        onCopy={handleCopyOrCut}
+        onCut={event => handleCopyOrCut(event, true)}
+        onDragStart={handleDragStart}
+        onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
+        onDrop={handleDrop}
+      />
+    </Slate>
   );
 };
 

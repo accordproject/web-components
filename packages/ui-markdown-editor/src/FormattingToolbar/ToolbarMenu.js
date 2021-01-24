@@ -5,6 +5,7 @@ const Menu = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
+  min-width: 600px;
   background-color: #FFF;
   padding: 15px 15px 5px 15px;
   z-index: 10;
