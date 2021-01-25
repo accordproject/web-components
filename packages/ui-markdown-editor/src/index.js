@@ -176,7 +176,7 @@ export const MarkdownEditor = (props) => {
   };
 
   return (
-    <Slate editor={editor} value={props.value} onChange={onChange}>
+    <Slate editor={editor} value={props.value} onChange={onChange} >
       { !props.readOnly
         && <FormatBar
         canBeFormatted={props.canBeFormatted}
@@ -189,7 +189,8 @@ export const MarkdownEditor = (props) => {
         style={{
           padding: '20px',
           border: '1px solid grey',
-          borderRadius: '4px'
+          borderRadius: '4px',
+          minWidth: '600px'
         }}
         readOnly={props.readOnly}
         renderElement={renderElement}
