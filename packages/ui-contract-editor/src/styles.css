@@ -51,6 +51,7 @@ a {
     opacity: 1 !important;
     border: 1px solid #141F3C;
     border-radius: 2px;
+    z-index:100;
     background-color: #141F3C;
     transition-duration: 0.25s;
     color: #FFFFFF;
