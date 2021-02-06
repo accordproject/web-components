@@ -207,14 +207,17 @@ const ContractEditor = (props) => {
     if (!clauseNodeAndPath) return true; // continue to next handler if not a clause
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
-
     const nodes = [...Node.ancestors(editor, path, { reverse: false })];
+    //placementNodeType is used store node type and used to compare if a node is a list or not.
     const placementNodeType = nodes.length > 1 ? nodes[1][0].type : null;
     if(placementNodeType === "ul_list" || placementNodeType === "ol_list"){
+      //Node of type List stored in placementNode and its path in placementNodepath
       const placementNode = nodes[1][0];
       const placementNodePath = ReactEditor.findPath(editor, placementNode);
       const listSize=nodes[1][0].children.length;
+      //currentNodeIndex cpatures the list-item index
       const currentNodeIndex=nodes[2][1][1];
+      //comparison to decide to place it above or below the list
       if(listSize/2 > currentNodeIndex){
         if(clauseNodeAndPath[1] > placementNodePath[0]){
           Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: placementNodePath });
