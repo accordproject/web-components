@@ -39,6 +39,7 @@ export const DROPDOWN_STYLE_H1 = {
   lineHeight: '23px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
+  textAlign: 'center',
 };
 
 export const DROPDOWN_STYLE_H2 = {
@@ -56,22 +57,22 @@ export const DROPDOWN_STYLE_H3 = {
 };
 
 export const DROPDOWN_STYLE_H4 = {
-  fontSize: '14px',
-  lineHeight: '14px',
+  fontSize: '15px',
+  lineHeight: '15px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
 
 export const DROPDOWN_STYLE_H5 = {
-  fontSize: '12px',
-  lineHeight: '12px',
+  fontSize: '14x',
+  lineHeight: '14px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
 
 export const DROPDOWN_STYLE_H6 = {
-  fontSize: '10px',
-  lineHeight: '10px',
+  fontSize: '13px',
+  lineHeight: '13px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
