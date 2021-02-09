@@ -1,18 +1,31 @@
 import { Transforms, Node, Editor } from 'slate';
 import inVariable from '../../utilities/inVariable';
-import { inReadOnlyVariable } from '../../utilities/variableDecorators';
+import { inReadOnlyVariable, isReadOnlyVariable } from '../../utilities/variableDecorators';
 import { VARIABLE } from './withClauseSchema';
 
 /* eslint no-param-reassign: 0 */
 const withVariables = (editor) => {
   const { insertText, isInline } = editor;
   editor.insertText = (text) => {
-    const nextNode = Editor.next(editor, { at: editor.selection.focus.path });
-    const textLength = Node.get(editor, editor.selection.focus.path).text.length;
-
+    const nextNode = Editor.next(editor, {
+      at: editor.selection.focus.path,
+    });
+    const previousNode = Node.parent(editor, editor.selection.focus.path);
+    const textLength = Node.get(editor, editor.selection.focus.path).text
+      .length;
+    const readOnlyNext = (nextNode)
+      ? isReadOnlyVariable(nextNode[0])
+      : null;
+    const readOnlyParent = previousNode
+      ? isReadOnlyVariable(previousNode)
+      : null;
     // if the current focus is at the end of a node and the next node is a variable
     // move focus to the start of the variable node
-    if (nextNode && nextNode[0].type === VARIABLE && textLength === editor.selection.focus.offset) {
+    if (
+      nextNode &&
+      nextNode[0].type === VARIABLE &&
+      textLength === editor.selection.focus.offset
+    ) {
       Transforms.select(editor, nextNode[1]);
       Transforms.collapse(editor, { edge: 'start' });
     }
@@ -20,16 +33,23 @@ const withVariables = (editor) => {
     // the default slate implementation of `insertText` moves the cursor
     // out of inlines before inserting text. Override this for variables
     // https://github.com/ianstormtaylor/slate/blob/1d7ab974292a3e831908a2ba0aab9fdd8a66fe10/packages/slate/src/create-editor.ts#L154
-    if (Node.parent(editor, editor.selection.focus.path).type === VARIABLE) {
+    if (Node.parent(editor, editor.selection.focus.path).type === VARIABLE &&
+      ((readOnlyNext === false || nextNode === undefined) &&
+      readOnlyParent === false)
+    ) {
       Transforms.insertText(editor, text);
-    } else {
+    } else if (
+      Node.parent(editor, editor.selection.focus.path).type !== VARIABLE
+    ) {
       insertText(text);
     }
   };
 
-  editor.isInline = element => (element.type === VARIABLE ? true : isInline(element));
+  editor.isInline = (element) =>
+    element.type === VARIABLE ? true : isInline(element);
   return editor;
 };
+
 
 export const isEditableVariable = (lockText, editor, event) => {
   if (!lockText || !editor.isInsideClause()) return true;
