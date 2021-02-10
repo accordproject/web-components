@@ -57,16 +57,15 @@ export const isEditableVariable = (lockText, editor, event) => {
   const textLength = Node.get(editor, editor.selection.focus.path).text.length;
   const atEnd = editor => textLength === editor.selection.focus.offset;
   const editable = inVariable(editor) && !inReadOnlyVariable(editor);
-
   if (editable) {
     if (atEnd(editor) && event.inputType === 'deleteContentForward') {
       return false;
     }
     if (event.inputType === 'deleteContentBackward') {
       // Do not allow user to delete variable if only 1 char left
-      if (textLength === 1) {
-        return false;
-      }
+      // if (textLength === 1) {
+      //   return false;
+      // }
       // if we hit backspace and are at the zeroth position of a
       // variable prevent deleting the char that precedes the variable
       return selection.anchor.offset > 0;
