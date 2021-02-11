@@ -33,6 +33,7 @@ a {
     padding: 0px 3px;
     border-radius: 2px;
     background-color: #fff;
+    display: inline-grid;
 }
 
 .formula {   
