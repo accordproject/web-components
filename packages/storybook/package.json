@@ -60,6 +60,11 @@
     "build-storybook:watch": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -w -s public --quiet",
     "test": "NODE_ENV=test jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/web-components",
+    "directory": "packages/storybook"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
