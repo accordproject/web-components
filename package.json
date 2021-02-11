@@ -44,5 +44,9 @@
     "pkgbump": "node ./scripts/pkgbump.js && node ./scripts/pkgcheck.js --fix",
     "pkgset": "node ./scripts/pkgset.js",
     "depcheck": "node ./scripts/depcheck.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/web-components"
   }
 }
