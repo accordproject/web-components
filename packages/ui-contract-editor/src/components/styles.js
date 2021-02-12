@@ -103,6 +103,7 @@ export const ClauseBody = styled.div`
   color: #141F3C;
   font-size: 1em;
   line-height: 22px;
+  caret-color: transparent;
 `;
 
 export const ClauseIcon = styled.svg`
