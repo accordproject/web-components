@@ -42,7 +42,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
 
   const title = titleGenerator(props.templateUri);
   const header = headerGenerator(props.templateUri, clauseProps.HEADER_TITLE);
-
   const iconWrapperProps = {
     currentHover: hovering,
     contentEditable: false,
@@ -116,7 +115,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         className={`ui-contract-editor__clause ${props.error ? 'error' : ''}`}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        style={{ userSelect: 'none' }}
+        style={{ userSelect: 'none', padding: '3px' }}
         draggable="true"
         ref={ref}
         error={props.error}
@@ -155,8 +154,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             {header}
           </S.HeaderToolTipText>
         </S.ClauseHeader>
-        { !props.readOnly
-          && <>
+        { (!props.readOnly)
+          && header.length !== 0 ? <>
               <S.DragWrapper
                 {...iconWrapperProps}
               >
@@ -236,7 +235,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
                 </S.HeaderToolTipWrapper>
               }
             </S.DeleteWrapper>
-          </>
+          </> : null
         }
         <S.ClauseBody
           onMouseEnter={(e) => setDraggable(e, false)}
