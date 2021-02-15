@@ -154,7 +154,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             {header}
           </S.HeaderToolTipText>
         </S.ClauseHeader>
-        { (!props.readOnly)
+        {!props.readOnly
           && header.length !== 0 ? <>
               <S.DragWrapper
                 {...iconWrapperProps}
