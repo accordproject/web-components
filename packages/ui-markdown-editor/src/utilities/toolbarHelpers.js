@@ -42,6 +42,10 @@ export const toggleBlock = (editor, format) => {
       const listItemBlock = { type: LIST_ITEM, children: [], data: { tight: true } };
       const anchor = editor.selection.anchor.path.slice(0, -1).concat(0, editor.selection.anchor.path[editor.selection.anchor.path.length - 1]);
       const focus = editor.selection.focus.path.slice(0, -1).concat(0, editor.selection.focus.path[editor.selection.focus.path.length - 1]);
+
+      if(anchor[1]>focus[1]){
+        [anchor[1],focus[1]]=[focus[1],anchor[1]];
+      }
       // eslint-disable-next-line no-restricted-syntax
       for (const [node, path] of Node.descendants(
         editor,
