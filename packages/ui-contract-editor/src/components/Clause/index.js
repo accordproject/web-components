@@ -116,7 +116,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         className={`ui-contract-editor__clause ${props.error ? 'error' : ''}`}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        style={{ userSelect: `${props.readOnly?"all":"none"}` }}
+        style={{ userSelect: "text"}}
+        contentEditable={ false }
         draggable="true"
         ref={ref}
         error={props.error}
