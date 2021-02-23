@@ -43,7 +43,7 @@ const Element = (props) => {
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
     [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
-    [BLOCK_QUOTE]: () => (<blockquote {...attributes}>{children}</blockquote>),
+    [BLOCK_QUOTE]: () => (<blockquote {...attributes}><q>{children}</q></blockquote>),
     [OL_LIST]: () => (<ol {...attributes}>{children}</ol>),
     [UL_LIST]: () => (<ul {...attributes}>{children}</ul>),
     [LIST_ITEM]: () => (<li {...attributes}>{children}</li>),
