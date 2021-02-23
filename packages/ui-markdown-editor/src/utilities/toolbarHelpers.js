@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS
 } from './schema';
 
 export const isBlockActive = (editor, format) => {
@@ -51,7 +51,7 @@ export const toggleBlock = (editor, format) => {
         editor,
         { from: anchor, to: focus }
       )) {
-        if (node.type === PARAGRAPH) {
+        if (node.type === PARAGRAPH  || HEADINGS.includes(node.type)) {
           Transforms.wrapNodes(editor, listItemBlock, { at: path });
         }
       }
