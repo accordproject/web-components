@@ -89,7 +89,6 @@ export const QUOTE_STYLE = {
   marginLeft: "50px",
   paddingLeft: "15px",
   borderLeft: "3px solid #ccc",
-  color: "#aaa",
   fontStyle: "italic",
 };
 
