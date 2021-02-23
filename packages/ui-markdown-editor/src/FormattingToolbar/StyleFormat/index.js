@@ -9,7 +9,7 @@ import {
   DROPDOWN_STYLE,
   DROPDOWN_STYLE_H1,
   DROPDOWN_STYLE_H2,
-  DROPDOWN_STYLE_H3
+  DROPDOWN_STYLE_H3,
 } from '../../utilities/constants';
 import {
   PARAGRAPH, H1, H2, H3
