@@ -175,6 +175,7 @@ export const insertHeadingbreak = (editor) => {
   const text = { object: 'text', text: '' };
   const n = { object: "block", type: 'paragraph', children: [text] };
   Transforms.insertNodes(editor, n);
+  Transforms.move(editor, { distance: 1, unit: 'character' })
   return;
 }
 
