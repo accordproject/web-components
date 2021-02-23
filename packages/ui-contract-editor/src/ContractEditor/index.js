@@ -121,7 +121,6 @@ const ContractEditor = (props) => {
     const VARIABLE_PROPS = {
       element,
       editor,
-      readOnly: props.readOnly,
       isFormulaDependency,
       ...attributes
     };

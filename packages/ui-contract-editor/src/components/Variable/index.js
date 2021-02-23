@@ -68,7 +68,7 @@ const Variable = React.forwardRef((props, ref) => {
     ref
   };
 
-  return (<VariableWrapper contentEditable={!props.readOnly} {...VARIABLE_PROPS}>{children}</VariableWrapper>);
+  return (<VariableWrapper {...VARIABLE_PROPS}>{children}</VariableWrapper>);
 });
 
 Variable.displayName = 'Variable';
