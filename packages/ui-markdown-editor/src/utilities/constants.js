@@ -82,3 +82,15 @@ export const POPUP_STYLE = {
   backgroundColor: BUTTON_COLORS.TOOLTIP_BACKGROUND,
   color: BUTTON_COLORS.TOOLTIP,
 };
+
+export const QUOTE_STYLE = {
+  marginTop: "10px",
+  marginBottom: "10px",
+  marginLeft: "50px",
+  paddingLeft: "15px",
+  borderLeft: "3px solid #ccc",
+  color: "#aaa",
+  fontStyle: "italic",
+};
+
+

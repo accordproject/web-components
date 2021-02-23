@@ -15,7 +15,8 @@ import {
   DROPDOWN_STYLE_H3,
   DROPDOWN_STYLE_H4,
   DROPDOWN_STYLE_H5,
-  DROPDOWN_STYLE_H6
+  DROPDOWN_STYLE_H6,
+  QUOTE_STYLE
 } from '../utilities/constants';
 import generateId from '../utilities/generateId';
 
@@ -43,7 +44,7 @@ const Element = (props) => {
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
     [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
-    [BLOCK_QUOTE]: () => (<blockquote {...attributes}>{children}</blockquote>),
+    [BLOCK_QUOTE]: () => (<blockquote style={QUOTE_STYLE} {...attributes}>{children}</blockquote>),
     [OL_LIST]: () => (<ol {...attributes}>{children}</ol>),
     [UL_LIST]: () => (<ul {...attributes}>{children}</ul>),
     [LIST_ITEM]: () => (<li {...attributes}>{children}</li>),
