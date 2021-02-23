@@ -150,7 +150,6 @@ const ContractEditor = (props) => {
     return returnObject;
   };
 
-
   const augmentEditor = editor => (
     props.augmentEditor
       ? props.augmentEditor(withVariables(withClauses(withClauseSchema(editor), withClausesProps)))
@@ -208,58 +207,56 @@ const ContractEditor = (props) => {
     const node = ReactEditor.toSlateNode(editor, event.target);
     const path = ReactEditor.findPath(editor, node);
     const nodes = [...Node.ancestors(editor, path, { reverse: false })];
-    //placementNodeType is used store node type and used to compare if a node is a list or not.
+    // placementNodeType is used store node type and used to compare if a node is a list or not.
     const placementNodeType = nodes.length > 1 ? nodes[1][0].type : null;
-    if(placementNodeType === "ul_list" || placementNodeType === "ol_list"){
-      //Node of type List stored in placementNode and its path in placementNodepath
+    if (placementNodeType === 'ul_list' || placementNodeType === 'ol_list') {
+      // Node of type List stored in placementNode and its path in placementNodepath
       const placementNode = nodes[1][0];
       const placementNodePath = ReactEditor.findPath(editor, placementNode);
-      const listSize=nodes[1][0].children.length;
-      //currentNodeIndex cpatures the list-item index
-      const currentNodeIndex=nodes[2][1][1];
-      //comparison to decide to place it above or below the list
-      if(listSize/2 > currentNodeIndex){
-        if(clauseNodeAndPath[1] > placementNodePath[0]){
+      const listSize = nodes[1][0].children.length;
+      // currentNodeIndex cpatures the list-item index
+      const currentNodeIndex = nodes[2][1][1];
+      // comparison to decide to place it above or below the list
+      if (listSize / 2 > currentNodeIndex) {
+        if (clauseNodeAndPath[1] > placementNodePath[0]) {
           Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: placementNodePath });
-        }else{
+        } else {
           Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: [placementNodePath[0] - 1] });
         }
-      }else{
-        if(clauseNodeAndPath[1] > placementNodePath[0]){
-          Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: [placementNodePath[0] + 1] });
-        }else{
-          Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: placementNodePath });
+      } else if (clauseNodeAndPath[1] > placementNodePath[0]) {
+        Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: [placementNodePath[0] + 1] });
+      } else {
+        Transforms.moveNodes(editor, { at: clauseNodeAndPath[1], to: placementNodePath });
+      }
+    } else {
+      // first node is root editor so second will be top level after root editor
+      const topLevelNodeAndPath = nodes[1];
+      // if no top level after editor then the node was already a top level node so use its own path
+      const topLevelPath = topLevelNodeAndPath ? topLevelNodeAndPath[1] : path;
+      if (topLevelPath.length) {
+        Transforms.select(editor, topLevelPath);
+      } else {
+      // if top level is empty array then we are at the editor level & should use the target range
+        Transforms.select(editor, targetRange);
+      }
+
+      let edge = 'end';
+      // if at the top level node, use the offset to determine which half we are in
+      if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
+        const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
+        if (targetRange.focus.offset < midpoint) {
+          edge = 'start';
+        }
+      } else { // if not at the top level node
+      // divy up the children & see where the target child is in relation to middle child
+        const midChild = [...Node.children(editor, topLevelPath)].length / 2;
+        if (path[1] < midChild) {
+          edge = 'start';
         }
       }
-    }else{
-      // first node is root editor so second will be top level after root editor
-    const topLevelNodeAndPath = nodes[1];
-    // if no top level after editor then the node was already a top level node so use its own path
-    const topLevelPath = topLevelNodeAndPath ? topLevelNodeAndPath[1] : path;
-    if (topLevelPath.length) {
-      Transforms.select(editor, topLevelPath);
-    } else {
-      // if top level is empty array then we are at the editor level & should use the target range
-      Transforms.select(editor, targetRange);
-    }
-
-    let edge = 'end';
-    // if at the top level node, use the offset to determine which half we are in
-    if (topLevelPath === path || (path[1] === 0 && path[0] === topLevelPath[0])) {
-      const midpoint = Node.get(editor, targetRange.focus.path).text.length / 2;
-      if (targetRange.focus.offset < midpoint) {
-        edge = 'start';
-      }
-    } else { // if not at the top level node
-      // divy up the children & see where the target child is in relation to middle child
-      const midChild = [...Node.children(editor, topLevelPath)].length / 2;
-      if (path[1] < midChild) {
-        edge = 'start';
-      }
-    }
-    Transforms.collapse(editor, { edge });
-    Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === CLAUSE });
-    Transforms.insertNodes(editor, clauseNodeAndPath[0]);
+      Transforms.collapse(editor, { edge });
+      Transforms.removeNodes(editor, { at: sourceRange.anchor.path, match: n => n.type === CLAUSE });
+      Transforms.insertNodes(editor, clauseNodeAndPath[0]);
     }
     return false;
   };
@@ -288,7 +285,6 @@ const ContractEditor = (props) => {
   // </ClauseContext.Provider>
   );
 };
-
 
 /**
  * The property types for this component

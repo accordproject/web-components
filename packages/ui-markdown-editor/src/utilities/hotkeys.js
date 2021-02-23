@@ -53,7 +53,7 @@ const HOTKEYS = {
     type: 'linebreak',
     code: LINEBREAK,
   },
-  'enter': {
+  enter: {
     type: 'headingbreak',
     code: HEADINGBREAK
   }

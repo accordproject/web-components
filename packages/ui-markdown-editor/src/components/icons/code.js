@@ -18,13 +18,13 @@ const icon = fillColor => (
 );
 
 const code = {
-    type: 'code',
-    label: `Code (${MOD()}+Shift+9)`,
-    height: '25px',
-    width: '25px',
-    padding: '6px 2px 4px',
-    viewBox: '0 0 20 12',
-    icon,
-  };
-  
-  export default code;
+  type: 'code',
+  label: `Code (${MOD()}+Shift+9)`,
+  height: '25px',
+  width: '25px',
+  padding: '6px 2px 4px',
+  viewBox: '0 0 20 12',
+  icon,
+};
+
+export default code;

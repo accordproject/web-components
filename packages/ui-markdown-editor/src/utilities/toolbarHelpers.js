@@ -43,15 +43,15 @@ export const toggleBlock = (editor, format) => {
       const anchor = editor.selection.anchor.path.slice(0, -1).concat(0, editor.selection.anchor.path[editor.selection.anchor.path.length - 1]);
       const focus = editor.selection.focus.path.slice(0, -1).concat(0, editor.selection.focus.path[editor.selection.focus.path.length - 1]);
       // swap anchor and focus when selecting from bottom-top
-      if(anchor[1]>focus[1]){
-        [anchor[1],focus[1]]=[focus[1],anchor[1]];
+      if (anchor[1] > focus[1]) {
+        [anchor[1], focus[1]] = [focus[1], anchor[1]];
       }
       // eslint-disable-next-line no-restricted-syntax
       for (const [node, path] of Node.descendants(
         editor,
         { from: anchor, to: focus }
       )) {
-        if (node.type === PARAGRAPH  || HEADINGS.includes(node.type)) {
+        if (node.type === PARAGRAPH || HEADINGS.includes(node.type)) {
           Transforms.wrapNodes(editor, listItemBlock, { at: path });
         }
       }
@@ -104,18 +104,15 @@ export const insertLinebreak = (editor, type) => {
 
 export const insertHeadingbreak = (editor) => {
   const text = { object: 'text', text: '' };
-  const n = { object: "block", type: 'paragraph', children: [text] };
+  const n = { object: 'block', type: 'paragraph', children: [text] };
   Transforms.insertNodes(editor, n);
-  return;
-}
+};
 
 export const isBlockHeading = (editor) => {
   const [match] = Editor.nodes(editor, {
-    match: n => { 
-      return n.type === 'heading_one'
+    match: n => n.type === 'heading_one'
         || n.type === 'heading_two'
-        || n.type === 'heading_three'
-    },
+        || n.type === 'heading_three',
   });
   return !!match;
 };

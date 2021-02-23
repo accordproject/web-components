@@ -7,7 +7,6 @@ const CurrentTextValue = props => (
   </React.Fragment>
 );
 
-
 CurrentTextValue.propTypes = {
   textValue: PropTypes.string,
   textLabel: PropTypes.string,

@@ -162,7 +162,6 @@ export const ClauseAdd = styled.svg`
   }
 `;
 
-
 export const HeaderToolTipWrapper = styled.div`
   position: absolute;
   top: -40px;

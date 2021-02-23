@@ -23,13 +23,13 @@ const icon = fillColor => (
 );
 
 const italic = {
-    type: 'italic',
-    label: `Italic (${MOD()}+I)`,
-    height: '25px',
-    width: '25px',
-    padding: '5px 7px',
-    viewBox: '0 0 10 13',
-    icon,
-  };
-  
-  export default italic;
+  type: 'italic',
+  label: `Italic (${MOD()}+I)`,
+  height: '25px',
+  width: '25px',
+  padding: '5px 7px',
+  viewBox: '0 0 10 13',
+  icon,
+};
+
+export default italic;

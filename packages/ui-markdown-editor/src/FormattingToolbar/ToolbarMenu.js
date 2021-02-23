@@ -30,4 +30,3 @@ const ToolbarMenu = React.forwardRef(
 ToolbarMenu.displayName = 'ToolbarMenu';
 
 export default ToolbarMenu;
-

@@ -26,7 +26,6 @@ const Tile = props => (
   </TileWrapper>
 );
 
-
 Tile.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   header: PropTypes.string,

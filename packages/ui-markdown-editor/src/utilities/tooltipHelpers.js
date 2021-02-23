@@ -8,7 +8,6 @@ const sliceWord = word => word.toString().slice(1);
 
 const firstTwoLetters = word => word.toString().slice(0, 2);
 
-
 /* Function to determine OS and MOD command of user */
 
 export const MOD = () => {

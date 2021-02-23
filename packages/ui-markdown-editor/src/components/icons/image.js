@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MOD } from '../../utilities/tooltipHelpers'
+import { MOD } from '../../utilities/tooltipHelpers';
 
 const icon = () => (
   <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

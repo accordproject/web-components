@@ -58,28 +58,27 @@ const FormattingToolbar = ({
         rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET
       }px`;
       const hyperlinkCaret = el.children[0];
-      let calPos = rect.left  - el.offsetWidth / 2  ;
-
+      let calPos = rect.left - el.offsetWidth / 2;
 
       // When the modal goes off page from left side
       if (calPos < 0) {
-        // start from 10px 
+        // start from 10px
         calPos = 10;
         hyperlinkCaret.style.left = `${rect.left - 10}px`;
       }
 
       // calculate the endpoint of the modal
-      const rightEndPos = calPos + el.offsetWidth,
-        containerWidth = el.parentElement.offsetWidth;
+      const rightEndPos = calPos + el.offsetWidth;
+      const containerWidth = el.parentElement.offsetWidth;
 
       // When the modal goes off the page from right side
       if (rightEndPos > containerWidth) {
-        let diff = rightEndPos-containerWidth;
+        let diff = rightEndPos - containerWidth;
         // extra space of 10px on right side to look clean
-        diff+=10;
-        calPos=calPos-diff;
-        let shift=diff-5;
-        hyperlinkCaret.style.left= `calc(50% + ${shift}px)`;
+        diff += 10;
+        calPos -= diff;
+        const shift = diff - 5;
+        hyperlinkCaret.style.left = `calc(50% + ${shift}px)`;
       }
 
       el.style.left = `${calPos}px`;
@@ -115,6 +114,5 @@ FormattingToolbar.propTypes = {
   setShowLinkModal: PropTypes.func,
   activeButton: PropTypes.object,
 };
-
 
 export default FormattingToolbar;
