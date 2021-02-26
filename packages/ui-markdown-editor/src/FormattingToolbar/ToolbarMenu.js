@@ -8,7 +8,6 @@ const Menu = styled.div`
   min-width: 600px;
   background-color: #FFF;
   padding: 15px 15px 5px 15px;
-  z-index: 10;
   display: flex;
   align-content: space-evenly;
   justify-content: center;
