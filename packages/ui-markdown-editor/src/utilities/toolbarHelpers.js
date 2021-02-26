@@ -1,7 +1,5 @@
 import { Node, Editor, Transforms } from 'slate';
-import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH
-} from './schema';
+import { LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, LINEBREAK } from './schema';
 
 export const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
@@ -66,6 +64,7 @@ export const toggleMark = (editor, format) => {
 };
 
 export const toggleHistory = (editor, format) => {
+  console.log(format)
   if (format === 'undo') {
     editor.undo();
   } else { editor.redo(); }
@@ -91,14 +90,22 @@ export const insertThematicBreak = (editor, type) => {
   Transforms.insertNodes(editor, tBreakNode);
 };
 
-export const insertLinebreak = (editor, type) => {
+export const insertSoftBreak = (editor, type) => {
   const text = { object: 'text', text: '' };
   const br = { type, children: [text], data: {} };
   Transforms.insertNodes(editor, br);
   Transforms.move(editor, { distance: 1, unit: 'character' });
 };
 
-export const insertHeadingbreak = (editor) => {
+export const insertLineBreak = (editor) => {
+  const text = { object: 'text', text: '' };
+  const lineBreakNode = { type: LINEBREAK, children: [text] };
+  Transforms.insertNodes(editor, lineBreakNode);
+  Transforms.move(editor, { distance: 1, unit: 'line' })
+  return;
+}
+
+export const insertHeadingBreak = (editor) => {
   const text = { object: 'text', text: '' };
   const n = { object: "block", type: 'paragraph', children: [text] };
   Transforms.insertNodes(editor, n);
