@@ -24,6 +24,11 @@
     "start:docs": "docz dev",
     "build:docs": "docz build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/web-components",
+    "directory": "packages/ui-components"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
