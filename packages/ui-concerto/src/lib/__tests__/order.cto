@@ -1,0 +1,15 @@
+namespace org.accordproject
+
+concept Address {
+    o String country
+}
+
+concept Product identified by sku {
+    o String sku
+}
+
+concept Order identified {
+    o Double amount
+    o Address address
+    --> Product product
+}

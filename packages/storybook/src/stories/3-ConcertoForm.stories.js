@@ -9,12 +9,15 @@ export default {
   component: ConcertoForm,
   parameters: {
     componentSubtitle: 'Create dynamic forms from Concerto models',
+    knobs: {
+      escapeHTML: false,
+    },
   }
 };
 
 export const Demo = () => {
   const readOnly = boolean('Read-only', false);
-  const type = text('Type', 'test.Address');
+  const type = text('Type', 'org.accordproject.Order');
   const options = object('Options', {
     includeOptionalFields: true,
     includeSampleData: 'sample',
@@ -26,22 +29,21 @@ export const Demo = () => {
       'org.accordproject.cicero.contract.AccordContractState.stateId',
     ],
   });
-  const model = text('Model', `namespace test 
+  const model = text('Model', `namespace org.accordproject
 
-  enum Country {
-    o USA
-    o UK
-    o France
-    o Sweden
-  }
+concept Address {
+    o String country
+}
 
-  concept Address {
-    o String street
-    o String city
-    o String zipCode
-    o Country country
-  }
-  `);
+concept Product identified by sku {
+    o String sku
+}
+
+concept Order identified {
+    o Double ammount
+    o Address address
+    --> Product product
+}`);
 
   const safeStringify = (jsonObject) => {
     try {

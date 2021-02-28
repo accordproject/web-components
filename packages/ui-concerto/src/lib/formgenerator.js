@@ -55,7 +55,6 @@ class FormGenerator {
     }`,
       'org.accordproject.base.cto',
       false,
-      true
     );
 
     this.options = {
@@ -153,7 +152,7 @@ class FormGenerator {
 
       if (classDeclaration.isEnum()) {
         throw new Error(
-          'Cannot generate JSON for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
+          'Cannot generate JSON for an enumerated type directly, the type should be contained in Asset, Transaction, Participant or Event declaration'
         );
       }
 
@@ -223,15 +222,9 @@ class FormGenerator {
       let { visitor } = params;
       if (!visitor) {
         visitor = new ReactFormVisitor();
-        params.wrapHtmlForm = true;
       }
 
-      const form = classDeclaration.accept(visitor, params);
-      if (params.wrapHtmlForm) {
-        return visitor.wrapHtmlForm(form, params);
-      }
-
-      return classDeclaration.accept(params.visitor, params);
+      return classDeclaration.accept(visitor, params);
     }
     return null;
   }

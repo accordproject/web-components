@@ -18,8 +18,6 @@ import get from 'lodash.get';
 import toPath from 'lodash.topath';
 import { Form } from 'semantic-ui-react';
 import {
-  ModelManager,
-  ModelFile,
   EnumDeclaration,
   ClassDeclaration,
   Field,
@@ -65,12 +63,6 @@ class ReactFormVisitor {
       parameters.fileWriter = new Writer();
     }
 
-    if (thing instanceof ModelManager) {
-      return this.visitModelManager(thing, parameters);
-    }
-    if (thing instanceof ModelFile) {
-      return this.visitModelFile(thing, parameters);
-    }
     if (thing instanceof EnumDeclaration) {
       return this.visitEnumDeclaration(thing, parameters);
     }
@@ -115,7 +107,7 @@ class ReactFormVisitor {
       }
     }
 
-    if (classDeclaration.isSystemType() || classDeclaration.isAbstract()) {
+    if (classDeclaration.isAbstract()) {
       return null;
     }
 

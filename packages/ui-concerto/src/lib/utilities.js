@@ -110,8 +110,7 @@ export const findConcreteSubclass = declaration => {
 
   const concreteSubclasses = declaration
     .getAssignableClassDeclarations()
-    .filter(subclass => !subclass.isAbstract())
-    .filter(subclass => !subclass.isSystemType());
+    .filter(subclass => !subclass.isAbstract());
 
   if (concreteSubclasses.length === 0) {
     throw new Error('No concrete subclasses found');

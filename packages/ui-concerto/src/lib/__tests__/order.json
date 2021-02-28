@@ -1,0 +1,10 @@
+{
+    "$class": "org.accordproject.Order",
+    "$identifier": "3d51e239-f23a-4bdd-893d-7d267d2c1678",
+    "amount": 0,
+    "address": {
+        "$class": "org.accordproject.Address",
+        "country": ""
+    },
+    "product": "resource:org.accordproject.Product#8727"
+}

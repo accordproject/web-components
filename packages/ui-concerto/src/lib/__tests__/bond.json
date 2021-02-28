@@ -1,0 +1,19 @@
+{
+    "$class": "org.accordproject.finance.bond.Bond",
+    "instrumentId": [],
+    "exchangeId": [],
+    "maturity": "2021-02-28T21:23:24.936Z",
+    "parValue": 0,
+    "faceAmount": 0,
+    "paymentFrequency": {
+        "$class": "org.accordproject.finance.bond.PaymentFrequency",
+        "periodMultiplier": 0,
+        "period": {
+            "$class": "org.accordproject.time.Duration",
+            "amount": 0,
+            "unit": "seconds"
+        }
+    },
+    "dayCountFraction": "",
+    "issuer": "resource:org.accordproject.organization.Organization#7867"
+}

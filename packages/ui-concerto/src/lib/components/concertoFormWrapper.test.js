@@ -13,10 +13,14 @@
  */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import waitUntil from 'async-wait-until';
+import Adapter from 'enzyme-adapter-react-16';
+
 import ConcertoFormWrapper from './concertoFormWrapper';
 import { props, type, model, options } from './testProps';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 test('Render form, default', async () => {
   let component;
