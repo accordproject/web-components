@@ -8,6 +8,9 @@ export default {
   component: ConcertoForm,
   parameters: {
     componentSubtitle: 'Create dynamic forms from Concerto models',
+    knobs: {
+      escapeHTML: false,
+    },
   }
 };
 

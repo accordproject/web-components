@@ -1,0 +1,13 @@
+namespace test 
+
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money@0.2.0.cto
+import org.accordproject.time.Duration from https://models.accordproject.org/time@0.2.0.cto
+import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
+
+concept Person {
+  o String name
+  o MonetaryAmount value
+  o Duration duration
+  --> AccordParty payee
+  o String hiddenInConfig
+}

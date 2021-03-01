@@ -178,15 +178,9 @@ class FormGenerator {
     let { visitor } = params;
     if (!visitor) {
       visitor = new ReactFormVisitor();
-      params.wrapHtmlForm = true;
     }
 
-    const form = classDeclaration.accept(visitor, params);
-    if (params.wrapHtmlForm) {
-      return visitor.wrapHtmlForm(form, params);
-    }
-
-    return form;
+    return classDeclaration.accept(visitor, params);
   }
 }
 
