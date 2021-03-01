@@ -18,8 +18,8 @@ import { Checkbox, Input, Form, Button, Select, Popup, Label, Icon } from 'seman
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import { parseValue, normalizeLabel } from '../utilities';
 
-export const ConcertoLabel = ({ skip, name }) => !skip
-  ? <label>{normalizeLabel(name)}</label> : null;
+export const ConcertoLabel = ({ skip, name, htmlFor }) => !skip
+  ? <label htmlFor={htmlFor}>{normalizeLabel(name)}</label> : null;
 
 export const ConcertoCheckbox = ({
   id,
@@ -31,9 +31,10 @@ export const ConcertoCheckbox = ({
   skipLabel,
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+    <ConcertoLabel skip={skipLabel} name={field.getName()} htmlFor={id} />
     <Checkbox
       toggle
+      id={id}
       readOnly={readOnly}
       checked={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
@@ -53,8 +54,9 @@ export const ConcertoInput = ({
   type,
 }) => (
   <Form.Field key={`field-${id}`} required={required}>
-    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={field.getName()} />
+    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={field.getName()} htmlFor={id} />
     <Input
+      id={id}
       type={type}
       readOnly={readOnly}
       value={value}
@@ -143,13 +145,14 @@ export const ConcertoDateTime = ({
   skipLabel,
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} />
+    <ConcertoLabel skip={skipLabel} name={field.getName()} htmlFor={id} />
     <DateTimeInput
       readOnly={readOnly}
       value={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
       dateTimeFormat={'YYYY-MM-DDTHH:mm:ss.sssZ'}
       key={id}
+      id={id}
       animation='none'
     />
   </Form.Field>

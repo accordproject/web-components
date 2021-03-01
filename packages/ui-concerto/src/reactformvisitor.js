@@ -123,7 +123,7 @@ class ReactFormVisitor {
       }
     }
 
-    if (classDeclaration.isSystemType() || classDeclaration.isAbstract()) {
+    if (classDeclaration.isAbstract()) {
       return null;
     }
 

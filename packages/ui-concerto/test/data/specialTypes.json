@@ -1,0 +1,15 @@
+{
+  "$class": "test.Person",
+  "name": "Matt",
+  "value": {
+    "$class": "org.accordproject.money.MonetaryAmount",
+    "doubleValue": 1.0,
+    "currencyCode": "GBP"
+  },
+  "duration": {
+    "$class": "org.accordproject.time.Duration",
+    "amount": 1,
+    "unit": "seconds"
+  },
+  "payee": "matt"
+}

@@ -22,7 +22,6 @@ import { ModelManager } from '@accordproject/concerto-core';
 
 import ReactFormVisitor from '../reactformvisitor';
 import FormGenerator from '../formgenerator';
-import { decodeHTMLEntities } from '../utilities';
 import './concertoForm.css';
 
 /**
@@ -55,9 +54,10 @@ const ConcertoForm = (props) => {
 
   const addElement = useCallback((e, key, elementValue) => {
     const array = get(value, key) || [];
+    const path = typeof key === 'string' ? [key] : key;
     const valueClone = set(
       { ...value },
-      [...key, array.length],
+      [...path, array.length],
       elementValue
     );
     setValue(valueClone);
@@ -108,8 +108,7 @@ const ConcertoForm = (props) => {
       true
     );
     models.forEach((model, idx) => {
-      const decodedModel = decodeHTMLEntities(model);
-      modelManager.addModelFile(decodedModel, `model-${idx}`, true);
+      modelManager.addModelFile(model, `model-${idx}`, true);
     });
     if (options.updateExternalModels) {
       modelManager.updateExternalModels().then(() => {

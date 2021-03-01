@@ -11,9 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import React from 'react';
 import { ModelManager } from '@accordproject/concerto-core';
+import { render, waitFor, screen } from '@testing-library/react';
 import Generator from './formgenerator';
+
+const fs = require('fs');
 
 describe('formgenerator Tests', () => {
   const modelManager = new ModelManager();
@@ -29,7 +32,6 @@ describe('formgenerator Tests', () => {
   }`,
     'org.accordproject.base.cto',
     false,
-    true
   );
   modelManager.updateExternalModels();
   describe('#validation', () => {
@@ -40,28 +42,34 @@ describe('formgenerator Tests', () => {
   });
   describe('#instantiate', () => {
     it('generates a form from text', async () => {
-      const text = `
-            namespace org.accordproject.finance.bond import org.accordproject.organization.Organization from https://models.accordproject.org/organization.cto import org.accordproject.time.Duration from https://models.accordproject.org/time.cto import org.accordproject.money.CurrencyCode from https://models.accordproject.org/money.cto enum CouponType { o FIXED o FLOATING } concept PaymentFrequency { o Integer periodMultiplier o Duration period } /** * Definition of a Bond, based on the FpML schema: * http://www.fpml.org/spec/fpml-5-3-2-wd-2/html/reporting/schemaDocumentation/schemas/fpml-asset-5-3_xsd/elements/bond.html * */ concept Bond { o String[] instrumentId o Boolean boolean o String description optional o CurrencyCode currency optional o String[] exchangeId o String clearanceSystem optional o String definition optional o String seniority optional o CouponType couponType optional o Double couponRate optional o DateTime maturity o Double parValue o Double faceAmount o PaymentFrequency paymentFrequency o String dayCountFraction --> Organization issuer } asset BondAsset identified by ISINCode { o String ISINCode o Bond bond }
-            `;
+      const text = fs.readFileSync(`${__dirname}/../test/data/relationship.cto`, 'utf8');
       const options = {
         customClasses: {
           field: 'form-group',
           input: 'form-control',
           label: 'control-label'
         },
-        wrapHtmlForm: true,
         updateExternalModels: true,
       };
       modelManager.addModelFile(text, 'model', true);
       modelManager.updateExternalModels();
       const generator = new Generator(modelManager, options);
       expect(generator).not.toBeNull();
+      expect(generator.getTypes()).toHaveLength(2);
 
-      // expect(generator.getTypes()).toHaveLength(11); this is 3
+      const generatedInstance = generator.generateJSON('test.Person');
+      const json = {
+        ...generatedInstance,
+        address: {
+          ...generatedInstance.address,
+          $identifier: 'a9c0177b-f08f-417e-a956-7a7c9e9701e5',
+        }
+      };
+      const form = generator.generateHTML('test.Person', json);
 
-      // const json = generator.generateJSON('org.accordproject.finance.bond.Bond'); // this fails
-      // const form = generator.generateHTML('org.accordproject.finance.bond.Bond', json);
-      // expect(form).toContain('<form');
+      const { container } = render(<div>{ form }</div>);
+      await waitFor(() => screen.getByText('Name'));
+      expect(container).toMatchSnapshot();
     });
   });
 });

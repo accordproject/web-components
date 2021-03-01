@@ -13,7 +13,8 @@
  */
 
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ConcertoForm from './concertoForm';
 
 const fs = require('fs');
@@ -29,6 +30,7 @@ const options = {
     'org.accordproject.cicero.contract.AccordContract.contractId',
     'org.accordproject.cicero.contract.AccordClause.clauseId',
     'org.accordproject.cicero.contract.AccordContractState.stateId',
+    'test.Person.hiddenInConfig',
   ],
 };
 /**
@@ -37,11 +39,11 @@ const options = {
  */
 function getModelFiles() {
   const result = [];
-  const files = fs.readdirSync(`${__dirname}/../../../test/data`);
+  const files = fs.readdirSync(`${__dirname}/../../test/data`);
   files.forEach((file) => {
     if (file.endsWith('.cto')) {
-      const contents = fs.readFileSync(`${__dirname}/../../../test/data/${file}`, 'utf8');
-      const json = fs.readFileSync(`${__dirname}/../../../test/data/${file.replace('cto', 'json')}`, 'utf8');
+      const contents = fs.readFileSync(`${__dirname}/../../test/data/${file}`, 'utf8');
+      const json = fs.readFileSync(`${__dirname}/../../test/data/${file.replace('cto', 'json')}`, 'utf8');
       result.push([file, contents, json]);
     }
   });
@@ -50,18 +52,46 @@ function getModelFiles() {
 describe('render form', () => {
   getModelFiles().forEach(([file, modelText, json]) => {
     it(`creates a React form for model ${file}`, async () => {
+      const onValueChange = jest.fn();
+      const parsedJson = JSON.parse(json);
       const { container } = render(
         <ConcertoForm
           readOnly={readOnly}
           models={[modelText]}
           options = {options}
           type={type}
-          json={JSON.parse(json)}
-          onValueChange={(json) => json}
+          json={parsedJson}
+          onValueChange={onValueChange}
       />
       );
       await waitFor(() => screen.getByText('Name'));
       expect(container).toMatchSnapshot();
+
+      // Exercise the onChange handlers
+      const nameInput = screen.getByLabelText('Name');
+      userEvent.type(nameInput, ' Roberts');
+      expect(onValueChange).toHaveBeenLastCalledWith({
+        ...parsedJson,
+        name: `${parsedJson.name} Roberts`
+      });
+
+      // Exercise array buttons
+      if (parsedJson.children) {
+        const callCount = onValueChange.mock.calls.length;
+        expect(onValueChange.mock.calls[callCount - 1][0].children).toHaveLength(1);
+
+        const addButton = screen.getByRole('button', {
+          name: /Add an element to Children/
+        });
+        fireEvent.click(addButton);
+        expect(onValueChange.mock.calls[callCount][0].children).toHaveLength(2);
+
+        const removeButton = screen.getByRole('button', {
+          name: /Remove element 0 from Children/
+        });
+        fireEvent.click(removeButton);
+        expect(onValueChange.mock.calls[callCount + 1][0].children).toHaveLength(1);
+      }
     });
   });
 });
