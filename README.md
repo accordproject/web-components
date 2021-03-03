@@ -30,7 +30,7 @@ npm run storybook
 This repository is a monorepo, built using [lerna](https://lerna.js.org). Each package is published as an independent npm module.
 
 - [Markdown Editor](packages/ui-markdown-editor): A WYSIWYG editor based on [Slate](https://www.slatejs.org) for markdown that conforms to the [CommonMark](https://spec.commonmark.org) specification.
-- [Contract Editor](packages/ui-contract-edtior): An editor based on our [Markdown Editor](packages/ui-markdown-editor) for handling smart legal contracts.
+- [Contract Editor](packages/ui-contract-editor): An editor based on our [Markdown Editor](packages/ui-markdown-editor) for handling smart legal contracts.
 - [Concerto UI](packages/ui-concerto): React components for models written in the [Concerto Modeling Language](https://github.com/accordproject/concerto).
 - [Web Components](packages/ui-components): Tools for implementing React components in your contract editing studio.
 - [Storybook](packages/storybook): A [React Storybook](https://storybook.js.org), and contains all the stories for all the sub-packages.
