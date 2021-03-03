@@ -158,7 +158,6 @@ const ClauseComponent = React.forwardRef((props, ref) => {
           && header.length !== 0 ? <>
               <S.DragWrapper
                 {...iconWrapperProps}
-                style={{ marginBottom: '0px', position: 'relative', top: '-5px', maxHeight: '50px' }}
               >
               <S.DragIcon
                 {...upIconProps}

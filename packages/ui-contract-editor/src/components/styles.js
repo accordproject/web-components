@@ -147,6 +147,10 @@ export const DragWrapper = styled(IconWrapper)`
   grid-area: fifteen;
   background: linear-gradient(to right, #FFF 0%, #F4F6FC 100%);
   margin-right: 9px;
+  margin-bottom: 0px;
+  position: relative;
+  top: -5px;
+  max-height: 50px;
   padding: 4px 0 0 0;
   cursor: text;
 `;
