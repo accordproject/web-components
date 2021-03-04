@@ -114,6 +114,8 @@ export const ClauseIcon = styled.svg`
 
 export const DragIcon = styled(ClauseIcon)`
   fill: #949CA2;
+  position: relative;
+  top: ${props => (props.position ?? -6)}px;
   &:hover {
     fill: #414F58;
   }

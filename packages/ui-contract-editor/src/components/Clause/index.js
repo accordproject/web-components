@@ -161,6 +161,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               >
               <S.DragIcon
                 {...upIconProps}
+                position={-3}
                 onClick={handleClick}
               >
                 {upIcon.icon()}
@@ -170,6 +171,7 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               </ S.DragIcon>
               <S.DragIcon
                 {...downIconProps}
+                position={-10}
                 onClick={(e) => handleClick(e, true)}
               >
                 {downIcon.icon()}
