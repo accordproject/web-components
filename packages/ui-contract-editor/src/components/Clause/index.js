@@ -76,8 +76,8 @@ const ClauseComponent = React.forwardRef((props, ref) => {
   const dragIconProps = {
     'aria-label': dragIcon.type,
     width: '12px',
-    height: '22px',
-    viewBox: '0 0 12 22',
+    height: '15px',
+    viewBox: '0 0 12 15',
   };
 
   const upIconProps = {
@@ -161,15 +161,17 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               >
               <S.DragIcon
                 {...upIconProps}
+                position={-3}
                 onClick={handleClick}
               >
                 {upIcon.icon()}
               </ S.DragIcon>
-              <S.DragIcon {...dragIconProps} style={{ margin: '6px 0 0 2px' }}>
+              <S.DragIcon {...dragIconProps} >
                 {dragIcon.icon()}
               </ S.DragIcon>
               <S.DragIcon
                 {...downIconProps}
+                position={-10}
                 onClick={(e) => handleClick(e, true)}
               >
                 {downIcon.icon()}
