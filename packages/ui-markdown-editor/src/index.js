@@ -6,11 +6,11 @@ import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import isHotkey from 'is-hotkey';
 import { Editable, withReact, Slate, ReactEditor } from 'slate-react';
-import { Editor, Range, Node, createEditor, Transforms } from 'slate';
+import { Editor, Range, createEditor, Transforms, Node } from 'slate';
 import { withHistory } from 'slate-history';
 import PropTypes from 'prop-types';
 import HOTKEYS, { formattingHotKeys } from './utilities/hotkeys';
-import { BUTTON_ACTIVE } from './utilities/constants';
+import { BUTTON_ACTIVE, BLOCK_STYLE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
@@ -37,6 +37,7 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
+  const [currentStyle, setCurrentStyle] = useState('')
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
@@ -145,6 +146,8 @@ export const MarkdownEditor = (props) => {
     if (selection && isSelectionLinkBody(editor)) {
       setShowLinkModal(true);
     }
+    const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
+    setCurrentStyle(currentStyleCalculated);
   };
 
   const handleDragStart = (event) => {
@@ -179,6 +182,7 @@ export const MarkdownEditor = (props) => {
     <Slate editor={editor} value={props.value} onChange={onChange} >
       { !props.readOnly
         && <FormatBar
+        currentStyle={currentStyle}
         canBeFormatted={props.canBeFormatted}
         showLinkModal={showLinkModal}
         setShowLinkModal={setShowLinkModal}
@@ -242,6 +246,8 @@ MarkdownEditor.propTypes = {
   onDrop: PropTypes.func,
   /* Optional function to call when onDragOver event fires which will receive editor and event */
   onDragOver: PropTypes.func,
+  /* Tells the current style of text block that the cursor is on and updates onChange */
+  currentStyle: PropTypes.string,
 };
 
 MarkdownEditor.defaultProps = {
