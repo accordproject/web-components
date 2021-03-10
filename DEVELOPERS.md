@@ -48,3 +48,27 @@ npm run build
 Storybook will reload with the applied changes.
 
 [apdev]: https://github.com/accordproject/techdocs/blob/master/DEVELOPERS.md
+
+## Releasing
+
+Releases are made manually by maintainers through GitHub. Version tags follow semantic-versioning conventions with a `v` prefix, for example `v1.2.3`.
+
+### Generating release notes from Pull Requests
+
+A markdown changelog that includes the contributors and links to changes can be generated automatically through the `lerna-changelog` tool.
+
+1. You will need a GitHub [Personal Access Token](https://github.com/settings/tokens) with `public_repo` permissions.
+2. Review [all merged PRs since the last release](https://github.com/accordproject/web-components/pulls?q=is%3Apr+is%3Aclosed+is%3Amerged) to ensure that they are appropriately labelled with one of the following labels.
+    - `Type: Breaking Change 💥`
+    - `Type: Enhancement ✨`
+    - `Type: Bug 🐛`
+    - `Type: Chore 🧼`
+    - `Type: Documentation 📝`
+    
+> Note that `Type: Styling` and `Type: Feature Request` are not used, you should use `Type: Enhancement` instead.
+
+3. Run the following command from the root folder of an up-to-date local clone of this repositoryto generate the markdown content.
+```bash
+GITHUB_AUTH=[YOUR_PERSONAL_ACCESS_TOKEN] npm run changelog:unreleased
+```
+4. Copy the markdown output to the [GitHub release editor](https://github.com/accordproject/web-components/releases/new).
