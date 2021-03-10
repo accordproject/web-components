@@ -67,8 +67,8 @@ A markdown changelog that includes the contributors and links to changes can be 
     
 > Note that `Type: Styling` and `Type: Feature Request` are not used, you should use `Type: Enhancement` instead.
 
-3. Run the following command from the root folder of an up-to-date local clone of this repositoryto generate the markdown content.
+3. Run the following command from the root folder of an up-to-date local clone of this repository to generate the markdown content.
 ```bash
 GITHUB_AUTH=[YOUR_PERSONAL_ACCESS_TOKEN] npm run changelog:unreleased
 ```
-4. Copy the markdown output to the [GitHub release editor](https://github.com/accordproject/web-components/releases/new).
+4. Copy the markdown output from the terminal to the [GitHub release editor](https://github.com/accordproject/web-components/releases/new).
