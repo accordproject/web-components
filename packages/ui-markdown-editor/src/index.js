@@ -14,9 +14,8 @@ import { BUTTON_ACTIVE, BLOCK_STYLE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
-import { toggleMark, toggleBlock, insertThematicBreak, 
-  insertLinebreak, insertHeadingbreak, isBlockHeading
-} from './utilities/toolbarHelpers';
+import { toggleMark, toggleBlock, insertThematicBreak,
+  insertLinebreak, insertHeadingbreak, isBlockHeading } from './utilities/toolbarHelpers';
 import { withImages, insertImage } from './plugins/withImages';
 import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
@@ -37,7 +36,7 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState('')
+  const [currentStyle, setCurrentStyle] = useState('');
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
@@ -91,7 +90,7 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
-    if (event.key === "Enter" && !isBlockHeading(editor)) {
+    if (event.key === 'Enter' && !isBlockHeading(editor)) {
       return;
     }
 

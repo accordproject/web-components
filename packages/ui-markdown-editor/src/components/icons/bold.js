@@ -19,7 +19,7 @@ const icon = fillColor => (
         </text>
       </g>
     </g>
-  );
+);
 
 const bold = {
   type: 'bold',
