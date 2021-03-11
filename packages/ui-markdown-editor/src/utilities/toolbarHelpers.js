@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS, H1, H2, H3, H4, H5, H6
 } from './schema';
 
 export const isBlockActive = (editor, format) => {
@@ -112,9 +112,12 @@ export const insertHeadingbreak = (editor) => {
 export const isBlockHeading = (editor) => {
   const [match] = Editor.nodes(editor, {
     match: n => { 
-      return n.type === 'heading_one'
-        || n.type === 'heading_two'
-        || n.type === 'heading_three'
+      return n.type === H1
+        || n.type === H2
+        || n.type === H3
+        || n.type === H4
+        || n.type === H5
+        || n.type === H6
     },
   });
   return !!match;

@@ -1,6 +1,5 @@
 # Accord Project Web Components
 
-[![downloads](https://img.shields.io/npm/dm/@accordproject/ui-components)](https://www.npmjs.com/package/@accordproject/ui-components)
 [![npm version](https://badge.fury.io/js/%40accordproject%2Fui-components.svg)](https://badge.fury.io/js/%40accordproject%2Fui-components)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
@@ -25,9 +24,20 @@ Storybook will reload with the applied changes.
 
 ---
 
-<a href="https://www.accordproject.org/">
-  <img src="../../assets/APLogo.png" alt="Accord Project Logo" width="400" />
-</a>
+<p align="center">
+  <a href="https://www.accordproject.org/">
+    <img src="../../assets/APLogo.png" alt="Accord Project Logo" width="400" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/accordproject/cicero?color=bright-green" alt="GitHub license">
+  </a>
+  <a href="https://accord-project-slack-signup.herokuapp.com/">
+    <img src="https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue" alt="Join the Accord Project Slack"/>
+  </a>
+</p>
 
 Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
