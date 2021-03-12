@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import ImageElement from '../plugins/withImages';
 import { Heading } from './Node';
@@ -20,6 +20,9 @@ import {
 import generateId from '../utilities/generateId';
 
 const Element = (props) => {
+  const showModal = () => {
+    props.setShowLinkModal(true);
+  }
   const {
     attributes, children, element, customElements, editor
   } = props;
@@ -40,7 +43,7 @@ const Element = (props) => {
       </span>
       {children}
     </span>),
-    [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
+    [LINK]: () => (<a onClick={showModal} {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
     [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
     [BLOCK_QUOTE]: () => (<blockquote {...attributes}>{children}</blockquote>),
@@ -70,7 +73,8 @@ Element.propTypes = {
     type: PropTypes.string
   }),
   attributes: PropTypes.any,
-  editor: PropTypes.any
+  editor: PropTypes.any,
+  setShowLinkModal: PropTypes.func
 };
 
 export default Element;

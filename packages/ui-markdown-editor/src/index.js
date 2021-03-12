@@ -54,7 +54,7 @@ export const MarkdownEditor = (props) => {
 
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {
-    const elementProps = { ...slateProps, customElements: props.customElements, editor };
+    const elementProps = { ...slateProps, customElements: props.customElements, editor, setShowLinkModal };
     return (<Element {...elementProps} />);
   }, [props.customElements, editor]);
 
@@ -72,7 +72,7 @@ export const MarkdownEditor = (props) => {
       return editor.redo();
     },
     link: () => {
-      setShowLinkModal(true);
+      // setShowLinkModal(true);
     },
     horizontal_rule: (code) => insertThematicBreak(editor, code),
     linebreak: (code) => insertLinebreak(editor, code),
@@ -143,9 +143,6 @@ export const MarkdownEditor = (props) => {
     if (props.readOnly) return;
     props.onChange(value, editor);
     const { selection } = editor;
-    if (selection && isSelectionLinkBody(editor)) {
-      setShowLinkModal(true);
-    }
     const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
     setCurrentStyle(currentStyleCalculated);
   };
