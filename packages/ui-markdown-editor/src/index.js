@@ -72,7 +72,7 @@ export const MarkdownEditor = (props) => {
       return editor.redo();
     },
     link: () => {
-      // setShowLinkModal(true);
+      setShowLinkModal(true);
     },
     horizontal_rule: (code) => insertThematicBreak(editor, code),
     linebreak: (code) => insertLinebreak(editor, code),
