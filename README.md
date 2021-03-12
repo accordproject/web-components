@@ -24,6 +24,24 @@ lerna clean && lerna bootstrap && lerna run build
 cd packages/storybook
 npm run storybook
 ```
+### User Interaction Testing (e2e tests)
+
+Install cypress app on your local system:
+https://download.cypress.io/desktop
+
+Check if the system requirements are matched:
+https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements
+
+Start the storybook
+```sh
+cd packages/storybook
+npm run storybook
+```
+Execute the following script to start e2e tesing
+```sh
+npm run cypress:open
+```
+This would start the cypress app, select the tests to be executed.
 
 ## Repository Structure
 
