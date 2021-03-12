@@ -99,13 +99,18 @@ const ClauseComponent = React.forwardRef((props, ref) => {
     const path = ReactEditor.findPath(props.editor, node);
     const range = Editor.range(props.editor, path);
     const documentEnd = Editor.end(props.editor, []);
-    const newPath = [Math.max(range.anchor.path[0], range.focus.path[0]) + (down ? 1 : -1)];
+    const newPath = [
+      Math.max(range.anchor.path[0], range.focus.path[0]) + (down ? 1 : -1),
+    ];
     if (newPath[0] >= 0 && newPath[0] <= documentEnd.path[0]) {
       Transforms.moveNodes(props.editor, { at: path, to: newPath });
     }
   };
 
-  const setDraggable = (event, draggable) => event.target.closest('.ui-contract-editor__clause').setAttribute('draggable', draggable);
+  const setDraggable = (event, draggable) =>
+    event.target
+      .closest('.ui-contract-editor__clause')
+      .setAttribute('draggable', draggable);
 
   return (
     <ClauseContext.Provider value={hovering}>
@@ -115,13 +120,17 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         className={`ui-contract-editor__clause ${props.error ? 'error' : ''}`}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        style={{ userSelect: `${props.readOnly?"text":"none"}`, padding: '3px'}}
+        style={{
+          userSelect: `${props.readOnly ? 'text' : 'none'}`,
+          padding: '3px',
+          zIndex: '-1',
+        }}
         draggable="true"
         ref={ref}
         error={props.error}
         {...props.attributes}
       >
-      {/*
+        {/*
       {
         Object.entries(listVariables).map(([key, value]) => (
           <ClauseVariableList
@@ -134,19 +143,19 @@ const ClauseComponent = React.forwardRef((props, ref) => {
         ))
       } */}
         <S.ClauseHeader
-          className='ui-contract-editor__clause-header'
+          className="ui-contract-editor__clause-header"
           currentHover={hovering}
           contentEditable={false}
           suppressContentEditableWarning={true}
           style={{ userSelect: 'none' }}
         >
-          {(hoveringHeader && header.length > 54)
-            && <S.HeaderToolTipWrapper>
+          {hoveringHeader && header.length > 54 && (
+            <S.HeaderToolTipWrapper>
               <S.HeaderToolTip>
                 {title + clauseProps.HEADER_TITLE}
               </S.HeaderToolTip>
             </S.HeaderToolTipWrapper>
-          }
+          )}
           <S.HeaderToolTipText
             onMouseEnter={() => setHoveringHeader(true)}
             onMouseLeave={() => setHoveringHeader(false)}
@@ -154,28 +163,20 @@ const ClauseComponent = React.forwardRef((props, ref) => {
             {header}
           </S.HeaderToolTipText>
         </S.ClauseHeader>
-        {!props.readOnly
-          && header.length !== 0 ? <>
-              <S.DragWrapper
-                {...iconWrapperProps}
-              >
-              <S.DragIcon
-                {...upIconProps}
-                position={-3}
-                onClick={handleClick}
-              >
+        {!props.readOnly && header.length !== 0 ? (
+          <>
+            <S.DragWrapper {...iconWrapperProps}>
+              <S.DragIcon {...upIconProps} position={-3} onClick={handleClick}>
                 {upIcon.icon()}
-              </ S.DragIcon>
-              <S.DragIcon {...dragIconProps} >
-                {dragIcon.icon()}
-              </ S.DragIcon>
+              </S.DragIcon>
+              <S.DragIcon {...dragIconProps}>{dragIcon.icon()}</S.DragIcon>
               <S.DragIcon
                 {...downIconProps}
                 position={-10}
                 onClick={(e) => handleClick(e, true)}
               >
                 {downIcon.icon()}
-              </ S.DragIcon>
+              </S.DragIcon>
             </S.DragWrapper>
             <S.TestWrapper
               {...iconWrapperProps}
@@ -183,19 +184,14 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseLeave={() => setHoveringTestIcon(false)}
               onClick={() => clauseProps.CLAUSE_TEST_FUNCTION(props)}
             >
-              <S.ClauseIcon
-                {...testIconProps}
-                hovering={hoveringTestIcon}
-              >
+              <S.ClauseIcon {...testIconProps} hovering={hoveringTestIcon}>
                 {testIcon.icon()}
-              </ S.ClauseIcon>
-              {(hoveringTestIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
-                    Test
-                  </S.HeaderToolTip>
+              </S.ClauseIcon>
+              {hoveringTestIcon && (
+                <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>Test</S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
-              }
+              )}
             </S.TestWrapper>
             <S.EditWrapper
               {...iconWrapperProps}
@@ -203,19 +199,14 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseLeave={() => setHoveringEditIcon(false)}
               onClick={() => clauseProps.CLAUSE_EDIT_FUNCTION(props)}
             >
-              <S.ClauseIcon
-                {...editIconProps}
-                hovering={hoveringEditIcon}
-              >
+              <S.ClauseIcon {...editIconProps} hovering={hoveringEditIcon}>
                 {editIcon.icon()}
-              </ S.ClauseIcon>
-              {(hoveringEditIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
-                    Edit
-                  </S.HeaderToolTip>
+              </S.ClauseIcon>
+              {hoveringEditIcon && (
+                <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>Edit</S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
-              }
+              )}
             </S.EditWrapper>
             <S.DeleteWrapper
               {...iconWrapperProps}
@@ -223,22 +214,17 @@ const ClauseComponent = React.forwardRef((props, ref) => {
               onMouseLeave={() => setHoveringDeleteIcon(false)}
               onClick={() => clauseProps.CLAUSE_DELETE_FUNCTION(props)}
             >
-              <S.ClauseIcon
-                {...deleteIconProps}
-                hovering={hoveringDeleteIcon}
-              >
+              <S.ClauseIcon {...deleteIconProps} hovering={hoveringDeleteIcon}>
                 {deleteIcon.icon()}
-              </ S.ClauseIcon>
-              {(hoveringDeleteIcon)
-                && <S.HeaderToolTipWrapper>
-                  <S.HeaderToolTip>
-                    Delete
-                  </S.HeaderToolTip>
+              </S.ClauseIcon>
+              {hoveringDeleteIcon && (
+                <S.HeaderToolTipWrapper>
+                  <S.HeaderToolTip>Delete</S.HeaderToolTip>
                 </S.HeaderToolTipWrapper>
-              }
+              )}
             </S.DeleteWrapper>
-          </> : null
-        }
+          </>
+        ) : null}
         <S.ClauseBody
           onMouseEnter={(e) => setDraggable(e, false)}
           onMouseLeave={(e) => setDraggable(e, true)}
