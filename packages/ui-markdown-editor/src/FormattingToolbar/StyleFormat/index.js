@@ -15,11 +15,17 @@ import {
 
 const StyleDropdown = ({ canBeFormatted, currentStyle }) => {
   const editor = useEditor();
+  const onMouseDownHandler = (event) => {
+    event.preventDefault();
+    if (!canBeFormatted(editor)) return;
+  }
+
   const currentBlock = currentStyle;
   return (
     <Dropdown
         simple
         openOnFocus
+        onMouseDown={onMouseDownHandler}
         text={currentBlock}
         style={DROPDOWN_STYLE}
       >
