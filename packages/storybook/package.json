@@ -59,7 +59,9 @@
     "build-storybook": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -s public --quiet",
     "build-storybook:watch": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -w -s public --quiet",
     "test": "NODE_ENV=test jest",
-    "cypress:open": "cypress open"
+    "storybook:ci": "start-storybook -p 9009 -s public --ci",
+    "test:e2e": "cypress run --headless -C cypress.json",
+    "ci:start-and-test-storybook": "cross-env START_SERVER_AND_TEST_INSECURE=1 yarn start-server-and-test storybook:ci http://localhost:9009 test:e2e"
   },
   "repository": {
     "type": "git",
