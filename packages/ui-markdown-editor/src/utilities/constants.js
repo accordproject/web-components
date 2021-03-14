@@ -1,7 +1,7 @@
 const MISC_CONSTANTS = {
   DROPDOWN_COLOR: '#122330',
   DROPDOWN_WEIGHT: 'bold',
-  DROPDOWN_NORMAL: 'Normal'
+  DROPDOWN_NORMAL: 'Normal',
 };
 
 export const BUTTON_COLORS = {
@@ -23,6 +23,9 @@ export const BLOCK_STYLE = {
   heading_one: 'Heading 1',
   heading_two: 'Heading 2',
   heading_three: 'Heading 3',
+  heading_four: 'Heading 4',
+  heading_five: 'Heading 5',
+  heading_six: 'Heading 6',
   block_quote: MISC_CONSTANTS.DROPDOWN_NORMAL,
   list_item: MISC_CONSTANTS.DROPDOWN_NORMAL,
   link: MISC_CONSTANTS.DROPDOWN_NORMAL,
@@ -43,38 +46,52 @@ export const DROPDOWN_STYLE_H1 = {
 };
 
 export const DROPDOWN_STYLE_H2 = {
+  fontSize: '25px',
+  lineHeight: '23px',
+  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
+  color: MISC_CONSTANTS.DROPDOWN_COLOR,
+};
+
+export const DROPDOWN_STYLE_H3 = {
   fontSize: '20px',
   lineHeight: '20px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
 
-export const DROPDOWN_STYLE_H3 = {
-  fontSize: '16px',
-  lineHeight: '16px',
-  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
-  color: MISC_CONSTANTS.DROPDOWN_COLOR,
-};
-
 export const DROPDOWN_STYLE_H4 = {
-  fontSize: '15px',
-  lineHeight: '15px',
+  fontSize: '18px',
+  lineHeight: '18px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
 
 export const DROPDOWN_STYLE_H5 = {
-  fontSize: '14x',
-  lineHeight: '14px',
+  fontSize: '16x',
+  lineHeight: '16px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
   color: MISC_CONSTANTS.DROPDOWN_COLOR,
 };
 
 export const DROPDOWN_STYLE_H6 = {
-  fontSize: '13px',
-  lineHeight: '13px',
+  fontSize: '14px',
+  lineHeight: '14px',
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
-  color: MISC_CONSTANTS.DROPDOWN_COLOR,
+  color: '#949CA2',
+  letterSpacing: '0.3px',
+  // This margin is to override default styling in chrome
+  margin: '0.7rem 0rem 1rem 0rem',
+  textTransform: 'uppercase',
+};
+
+// Separate styling for the toolbar without margin to make it look normal
+export const TOOLBAR_DROPDOWN_STYLE_H6 = {
+  fontSize: '14px',
+  lineHeight: '14px',
+  fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
+  color: '#949CA2',
+  letterSpacing: '0.3px',
+  textTransform: 'uppercase',
 };
 
 export const POPUP_STYLE = {
