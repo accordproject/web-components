@@ -18,6 +18,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "lerna": "^3.22.1",
+    "lerna-changelog": "^1.0.1",
     "moment-mini": "2.22.1",
     "semver": "6.2.0"
   },
@@ -43,10 +44,20 @@
     "pkgstamp": "node ./scripts/pkgstamp.js",
     "pkgbump": "node ./scripts/pkgbump.js && node ./scripts/pkgcheck.js --fix",
     "pkgset": "node ./scripts/pkgset.js",
-    "depcheck": "node ./scripts/depcheck.js"
+    "depcheck": "node ./scripts/depcheck.js",
+    "changelog:unreleased": "lerna-changelog"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/accordproject/web-components"
+  },
+  "changelog": {
+    "labels": {
+      "type: breaking change 💥": ":boom: Breaking Change",
+      "type: enhancement ✨": ":sparkles: Enhancement",
+      "type: bug 🐛": ":bug: Bug",
+      "type: chore 🧼": ":soap: Chore",
+      "type: documentation 📝": ":memo: Documentation"
+    }
   }
 }
