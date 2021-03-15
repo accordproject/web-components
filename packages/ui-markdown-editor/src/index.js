@@ -14,9 +14,8 @@ import { BUTTON_ACTIVE, BLOCK_STYLE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
-import { toggleMark, toggleBlock, insertThematicBreak, 
-  insertLinebreak, insertHeadingbreak, isBlockHeading
-} from './utilities/toolbarHelpers';
+import { toggleMark, toggleBlock, insertThematicBreak,
+  insertLinebreak, insertHeadingbreak, isBlockHeading } from './utilities/toolbarHelpers';
 import { withImages, insertImage } from './plugins/withImages';
 import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
@@ -91,7 +90,7 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
-    if (event.key === "Enter" && !isBlockHeading(editor)) {
+    if (event.key === 'Enter' && !isBlockHeading(editor)) {
       return;
     }
 
@@ -130,9 +129,14 @@ export const MarkdownEditor = (props) => {
     const CICERO_MARK_DOM = slateTransformer.toCiceroMark(SLATE_DOM);
     const HTML_DOM = htmlTransformer.toHtml(CICERO_MARK_DOM);
     const MARKDOWN_TEXT = ciceroMarkTransformer.toMarkdown(CICERO_MARK_DOM);
+    const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
 
     event.clipboardData.setData('text/html', HTML_DOM);
     event.clipboardData.setData('text/plain', MARKDOWN_TEXT);
+
+    if (cut && imageNode) {
+      Editor.deleteBackward(editor);
+    }
 
     if (cut && editor.selection && Range.isExpanded(editor.selection)) {
       Editor.deleteFragment(editor);
