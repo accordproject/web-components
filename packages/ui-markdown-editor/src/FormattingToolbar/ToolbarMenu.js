@@ -5,6 +5,7 @@ const Menu = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
+  z-index: 10;
   min-width: 600px;
   background-color: #FFF;
   padding: 15px 15px 5px 15px;
@@ -19,7 +20,6 @@ const Menu = styled.div`
   & > * + * {
     margin-left: 15px;
   }
-  };
 `;
 
 const ToolbarMenu = React.forwardRef(
