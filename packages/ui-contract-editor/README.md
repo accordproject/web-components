@@ -25,6 +25,71 @@ npm run build
 
 Storybook will reload with the applied changes.
 
+### Overview of Contract Editor Tool
+
+The Contract Editor tool gives you the ability to examine and edit class contracts in a context that is isolated from the full class text. In other words, when you use the Contract Editor tool, you see and edit the contracts without having to work around other elements of the software text such as implementation.For routines, you can edit pre- and postconditions, and for classes, you can edit class invariants. The tool provides views of inherited contracts as well as immediate ones.
+
+### Usage 
+
+```js
+import { render } from 'react-dom';
+import React, { useCallback, useState } from 'react';
+import ContractEditor from '@accordproject/ui-contract-editor';
+import { SlateTransformer } from '@accordproject/markdown-slate';
+import 'semantic-ui-css/semantic.min.css';
+const slateTransformer = new SlateTransformer();
+const getContractSlateVal = () => {
+    const defaultContractMarkdown = `# Heading One
+        This is text. This is *italic* text. This is **bold** text. This is \`inline code\`. Fin.`;
+    return slateTransformer.fromMarkdown(defaultContractMarkdown);
+};
+const clausePropsObject = {
+    CLAUSE_DELETE_FUNCTION (function),
+    CLAUSE_EDIT_FUNCTION (function),
+    CLAUSE_TEST_FUNCTION (function),
+}
+const parseClauseFunction = () => { /* ... */ }
+const loadTemplateObjectFunction = () => { /* ... */ }
+const pasteToContractFunction = () => { /* ... */ }
+const ContractEditorRenderer = () => {
+  const [slateValue, setSlateValue] = useState(() => {
+    const slate = getContractSlateVal();
+    return slate.document.children;
+  });
+  
+  const onContractChange = useCallback((value) => { setSlateValue(value); }, []);
+  return (
+      <ContractEditor
+        value={slateValue}
+        lockText={false}
+        readOnly={false}
+        onChange={onContractChange}
+        clauseProps={clausePropsObject}
+        loadTemplateObject={loadTemplateObjectFunction}
+        pasteToContract={pasteToContractFunction}
+        onClauseUpdated={parseClauseFunction}
+    />
+  );
+}
+render(<ContractEditorRenderer />, document.getElementById('root'));
+```
+### Overview of Clause Props Object
+- `clauseProps`: An `object` for the clauses in the editor which contains a deletion, edit, and test function, as well as a header title string and color for clause icons on hover see below.
+`clauseProps`:
+You can support deletion, editing, and testing of the Clause Components within the `ContractEditor`. An object may be passed down this component with the following possible functions:
+```js
+clauseProps = {
+    CLAUSE_DELETE_FUNCTION,  // (Function)
+    CLAUSE_EDIT_FUNCTION,    // (Function)
+    CLAUSE_TEST_FUNCTION,    // (Function)
+    HEADER_TITLE,            // (String)
+    ICON_HOVER_COLOR,        // (String)
+}
+```
+The functions in `clauseProps` like `CLAUSE_DELETE_FUNCTION`,`CLAUSE_EDIT_FUNCTION` and `CLAUSE_TEST_FUNCTION`  are not implemented by default because they typically require interaction with other components or the persistence layer of the embedding application.
+These functions will be supplied by the user of the component.
+For more information in realtion to the `props` , `values` and `functionality` of Contract Editor visit [README.md](./src/ContractEditor/README.md)
+
 ---
 
 <a href="https://www.accordproject.org/">
