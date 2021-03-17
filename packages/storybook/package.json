@@ -58,7 +58,10 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -s public --quiet",
     "build-storybook:watch": "NODE_OPTIONS='--max-old-space-size=4096' build-storybook -w -s public --quiet",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "storybook:ci": "start-storybook -p 9009 -s public --ci",
+    "test:e2e": "cypress run --headless -C cypress.json",
+    "ci:start-and-test-storybook": "cross-env START_SERVER_AND_TEST_INSECURE=1 yarn start-server-and-test storybook:ci http://localhost:9009 test:e2e"
   },
   "repository": {
     "type": "git",
@@ -92,6 +95,7 @@
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^6.0.12",
     "babel-jest": "^26.1.0",
+    "cypress": "^6.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
     "react-test-renderer": "16.13.1",
