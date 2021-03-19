@@ -39,6 +39,7 @@ npm run storybook
 ```
 Execute the following script to start e2e tesing
 ```sh
+cd packages/storybook
 npm run test:e2e
 ```
 If you are writing the tests and want to see the tests in a browser, then do the following
