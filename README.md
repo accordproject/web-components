@@ -39,9 +39,14 @@ npm run storybook
 ```
 Execute the following script to start e2e tesing
 ```sh
-npm run cypress:open
+cd packages/storybook
+npm run test:e2e
 ```
-This would start the cypress app, select the tests to be executed.
+If you are writing the tests and want to see the tests in a browser, then do the following
+```sh
+cd packages/storybook
+npx cypress open
+```
 
 ## Repository Structure
 
