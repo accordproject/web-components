@@ -22,6 +22,7 @@ import {
   image, link, undo, redo,
   tbreak, Separator
 } from '../components/icons';
+import ImageModal from './ImageModal';
 
 const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
 const block = { toggleFunc: toggleBlock, activeFunc: isBlockActive };
@@ -32,11 +33,14 @@ const FormattingToolbar = ({
   canBeFormatted,
   showLinkModal,
   setShowLinkModal,
+  showImageModal,
+  setShowImageModal,
   activeButton,
   currentStyle
 }) => {
   const editor = useEditor();
   const linkModalRef = useRef();
+  const imageModalRef= useRef();
 
   const buttonProps = {
     canBeFormatted,
@@ -47,6 +51,11 @@ const FormattingToolbar = ({
     showLinkModal,
     setShowLinkModal
   };
+
+  const imageProps ={
+    showImageModal,
+    setShowImageModal
+  }
 
   useEffect(() => {
     if (showLinkModal) {
@@ -87,6 +96,51 @@ const FormattingToolbar = ({
     }
   }, [editor, showLinkModal]);
 
+
+  useEffect(()=>{
+    if(showImageModal){
+      const el = imageModalRef.current;
+      console.log(el);
+      const domRange = ReactEditor.toDOMRange(editor, editor.selection);
+      const rect = domRange.getBoundingClientRect();
+      const CARET_TOP_OFFSET = 15;
+      el.style.opacity = 1;
+      el.style.top = `${
+        rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET + 50
+      }px`;
+      const imageCaret = el.children[0];
+      let calPos = rect.left  - el.offsetWidth / 2;
+
+      // When the modal goes off page from left side
+      if (calPos < 0) {
+        // start from 10px 
+        calPos = 10;
+        imageCaret.style.left = `${rect.left - 10}px`;
+        el.style.left = `${calPos}px`;
+        return ;
+      }
+
+      // calculate the endpoint of the modal
+      const rightEndPos = calPos + el.offsetWidth,
+        containerWidth = el.parentElement.offsetWidth;
+
+
+      // When the modal goes off the page from right side
+      if (rightEndPos > containerWidth) {
+        let diff = rightEndPos-containerWidth;
+        // extra space of 10px on right side to look clean
+        diff+=10;
+        calPos=calPos-diff;
+        let shift=diff-5;
+        imageCaret.style.left= `calc(50% + ${shift}px)`;
+        el.style.left = `${calPos}px`;
+        return ;
+      }
+
+      el.style.left = `50px`;
+    }
+  },[editor, showImageModal])
+
   return (
     <ToolbarMenu id="ap-rich-text-editor-toolbar">
       <StyleDropdown canBeFormatted={canBeFormatted} currentStyle={currentStyle}/>
@@ -106,6 +160,7 @@ const FormattingToolbar = ({
       <InsertImageButton {...image} canBeFormatted={canBeFormatted} />
       <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
       { showLinkModal && <HyperlinkModal ref={linkModalRef} {...linkProps} /> }
+      { showImageModal && <ImageModal ref={imageModalRef} {...imageProps}/> }
     </ToolbarMenu>
   );
 };
@@ -114,6 +169,8 @@ FormattingToolbar.propTypes = {
   canBeFormatted: PropTypes.func,
   showLinkModal: PropTypes.bool,
   setShowLinkModal: PropTypes.func,
+  showImageModal: PropTypes.bool,
+  setShowImageModal: PropTypes.func,
   activeButton: PropTypes.object,
   currentStyle: PropTypes.string,
 };

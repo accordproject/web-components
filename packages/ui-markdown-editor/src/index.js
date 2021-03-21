@@ -36,6 +36,7 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const [currentStyle, setCurrentStyle] = useState('')
   const editor = useMemo(() => {
     if (augmentEditor) {
@@ -53,7 +54,7 @@ export const MarkdownEditor = (props) => {
 
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
   const renderElement = useCallback((slateProps) => {
-    const elementProps = { ...slateProps, customElements: props.customElements, editor };
+    const elementProps = { ...slateProps, customElements: props.customElements, editor , setShowImageModal};
     return (<Element {...elementProps} />);
   }, [props.customElements, editor]);
 
@@ -190,6 +191,8 @@ export const MarkdownEditor = (props) => {
         canBeFormatted={props.canBeFormatted}
         showLinkModal={showLinkModal}
         setShowLinkModal={setShowLinkModal}
+        showImageModal={showImageModal}
+        setShowImageModal={setShowImageModal}
         activeButton={props.activeButton || BUTTON_ACTIVE}
         /> }
       <Editable
