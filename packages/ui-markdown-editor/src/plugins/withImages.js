@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import imageExtensions from 'image-extensions';
 import styled from 'styled-components';
@@ -18,11 +18,12 @@ const StyledImage = styled.img`
   max-width: 100%;
   max-height: 20em;
   box-shadow: ${props => (props.shadow ? '0 0 0 3px #B4D5FF' : 'none')};
+  cursor: pointer;
 `;
 
-export const insertImage = (editor, url) => {
+export const insertImage = (editor, url, title) => {
   const text = { text: '' };
-  const image = { type: 'image', data: { href: url, title: url }, children: [text] };
+  const image = { type: 'image', data: { href: url, title: title || url }, children: [text] };
   Transforms.insertNodes(editor, image);
 };
 
@@ -76,15 +77,12 @@ export const InsertImageButton = ({
   label,
   icon,
   canBeFormatted,
+  setShowImageModal,
   ...props
 }) => {
   const editor = useEditor();
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    if (!canBeFormatted(editor)) return;
-    const url = window.prompt('Enter the URL of the image:');
-    if (!url) return;
-    insertImage(editor, url);
+  const handleMouseDown = () => {
+    setShowImageModal(true);
   };
   return (
     <Popup
@@ -108,15 +106,21 @@ InsertImageButton.propTypes = {
   icon: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.string,
-  canBeFormatted: PropTypes.func
+  canBeFormatted: PropTypes.func,
+  setShowImageModal: PropTypes.func,
 };
 
-const ImageElement = (({ attributes, children, element }) => {
+const ImageElement = (({ attributes, children, element, setShowImageModal }) => {
   const selected = useSelected();
   const focused = useFocused();
+  useEffect(()=>{
+    if((focused && selected)){
+      setShowImageModal(true);
+    }
+  },[focused, selected])
   return (
-    <span {...attributes}>
-      <span contentEditable={false}>
+    <span {...attributes} >
+      <span >
         <StyledImage src={element.data.href} shadow={selected && focused} />
       </span>
       {children}
@@ -133,7 +137,8 @@ ImageElement.propTypes = {
       href: PropTypes.string
     })
   }),
-  attributes: PropTypes.any
+  attributes: PropTypes.any,
+  setShowImageModal: PropTypes.func
 };
 
 export default ImageElement;
