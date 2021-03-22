@@ -77,15 +77,12 @@ export const InsertImageButton = ({
   label,
   icon,
   canBeFormatted,
+  setShowImageModal,
   ...props
 }) => {
   const editor = useEditor();
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    if (!canBeFormatted(editor)) return;
-    const url = window.prompt('Enter the URL of the image:');
-    if (!url) return;
-    insertImage(editor, url);
+  const handleMouseDown = () => {
+    setShowImageModal(true);
   };
   return (
     <Popup
@@ -109,7 +106,8 @@ InsertImageButton.propTypes = {
   icon: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.string,
-  canBeFormatted: PropTypes.func
+  canBeFormatted: PropTypes.func,
+  setShowImageModal: PropTypes.func,
 };
 
 const ImageElement = (({ attributes, children, element, setShowImageModal }) => {

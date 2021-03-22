@@ -2,8 +2,8 @@ import React, {
 useState, useRef, useEffect, useCallback
 } from 'react';
 import PropTypes from 'prop-types';
-import { ReactEditor, useEditor } from 'slate-react';
-import { Editor, Transforms, Node } from 'slate';
+import { useEditor } from 'slate-react';
+import { Editor, Transforms } from 'slate';
 import styled from 'styled-components';
 import { Form, Input } from 'semantic-ui-react';
 import { insertImage } from "../plugins/withImages"
@@ -76,10 +76,6 @@ background-color: #0043BA;
 }
 `;
 
-const popupStyles = {
-padding: '0.2em 0.5em 0.2em 0.5em',
-zIndex: '9999'
-};
 
 // eslint-disable-next-line react/display-name
 const ImageMenu = React.forwardRef(
@@ -112,13 +108,13 @@ useEffect(() => {
 
 const defaultURLValue = React.useMemo(() => {
     const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
-    const text = imageNode[0].data.href
+    const text = imageNode ? imageNode[0].data.href:'';
     return text
 }, [editor]);
 
 const defaultTextValue = React.useMemo(() => {
     const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
-    const text = imageNode[0].data.title
+    const text = imageNode ? imageNode[0].data.title:'';
     return text;
 }, [editor]);
 
@@ -150,7 +146,6 @@ const applyURL = (event) => {
     Editor.deleteBackward(editor);
     insertImage(editor, newUrl, event.target.text.value);
     props.setShowImageModal(false);
-    
 };
 
 const handleUrlInput = (event) => {
