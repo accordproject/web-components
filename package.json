@@ -19,25 +19,27 @@
     "eslint-plugin-react-hooks": "^4.0.2",
     "lerna": "^3.22.1",
     "lerna-changelog": "^1.0.1",
+    "license-check-and-add": "2.3.6",
     "moment-mini": "2.22.1",
     "semver": "6.2.0"
   },
   "dependencies": {
     "react-dom": "^16.13.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "slate": "^0.58.4",
     "slate-history": "^0.58.4",
     "slate-react": "^0.58.4",
-    "styled-components": "^5.1.0",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.2"
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "storybook": "lerna exec --scope storybook -- npm run build-storybook",
     "postinstall": "npm run bootstrap",
     "bootstrap": "lerna bootstrap",
-    "pretest": "npm run doc && npm run licchk",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:windows": "lerna exec -- npm run test:windows",
+    "licchk": "license-check-and-add",
+    "pretest": "npm run licchk",
+    "test:e2e": "lerna exec --scope storybook -- npm run ci:start-and-test-storybook",
+    "test": "npm run test:e2e",
     "repoclean": "lerna clean",
     "changelog:unreleased": "lerna-changelog"
   },
@@ -52,6 +54,76 @@
       "type: bug 🐛": ":bug: Bug",
       "type: chore 🧼": ":soap: Chore",
       "type: documentation 📝": ":memo: Documentation"
+    }
+  },
+  "license-check-and-add-config": {
+    "folder": ".",
+    "license": "HEADER",
+    "exact_paths_method": "EXCLUDE",
+    "exact_paths": [
+      ".git",
+      ".github",
+      "node_modules",
+      "packages",
+      "softhsm",
+      "build.cfg",
+      "README.md",
+      "CONTRIBUTING.md",
+      "DEVELOPERS.md",
+      "NOTICES.md",
+      "CHARTER.md",
+      "LICENSE",
+      "HEADER",
+      "docs/",
+      "coverage",
+      ".DS_Store"
+    ],
+    "file_type_method": "EXCLUDE",
+    "file_types": [
+      ".yml",
+      ".log",
+      ".enc",
+      ".xmind",
+      ".deb",
+      ".vo",
+      ".glob",
+      ".aux",
+      ".v.d",
+      ".ctoj",
+      ".depends",
+      ".annot",
+      ".byte",
+      ".cmi",
+      ".cmo",
+      ".tem",
+      ".txt",
+      ".config",
+      ".coq_modules"
+    ],
+    "insert_license": false,
+    "license_formats": {
+      "js|ergo|cto": {
+        "prepend": "/*",
+        "append": " */",
+        "eachLine": {
+          "prepend": " * "
+        }
+      },
+      "v|atd|mll|mly": {
+        "prepend": "*",
+        "append": " *)",
+        "eachLine": {
+          "prepend": " * "
+        }
+      },
+      "gitattributes|cfg|ocp-indent": {
+        "eachLine": {
+          "prepend": "# "
+        }
+      },
+      "md": {
+        "file": "HEADER.md"
+      }
     }
   }
 }
