@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 14.x
 
-      - run: npm ci
+      - run: npx lerna bootstrap && npx lerna run build
       - run: npm run build --if-present
 
       - name: tag
@@ -33,7 +33,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
           npm version --no-git-tag-version --yes --exact ${{ github.event.release.tag_name }}
           npx lerna version --no-git-tag-version --yes --exact ${{ github.event.release.tag_name }}
-          npx lerna exec -- npm publish --access public ${{ steps.tag.outputs.tag }} 2>&1
+          npx lerna exec --ignore storybook -- npm publish --access public ${{ steps.tag.outputs.tag }} 2>&1
 
       - name: Create PR to increment version
         uses: peter-evans/create-pull-request@v3
