@@ -13,8 +13,9 @@ const icon = () => (
 const tbreak = {
   type: 'horizontal_rule',
   label: `Page Break (${MOD()}+Enter)`,
-  height: '17px',
-  width: '17px',
+  height: '25px',
+  width: '25px',
+  padding: '4px',
   viewBox: '0 0 19 19',
   icon,
 };
