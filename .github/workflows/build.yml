@@ -59,11 +59,11 @@ jobs:
           record: true
           parallel: true
           group: 'Storybook - Chrome'
-          spec: cypress/storybook/*
+          spec: packages/storybook/cypress/storybook/*
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   publish:
     needs:
       - build
