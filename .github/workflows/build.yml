@@ -49,6 +49,7 @@ jobs:
       - name: 'Storybook Tests - Chrome'
         uses: cypress-io/github-action@v2
         with:
+          install: false
           start: npm run storybook:ci
           wait-on: 'http://localhost:9009'
           wait-on-timeout: 120
