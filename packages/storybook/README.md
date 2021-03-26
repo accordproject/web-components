@@ -1,6 +1,6 @@
 # Accord Project Web Components Storybook
 
-[![Build Status](https://travis-ci.org/accordproject/web-components.svg?branch=master)](https://travis-ci.org/accordproject/web-components) 
+[![Build Status](https://github.com/accordproject/web-components/actions/workflows/build.yml/badge.svg)](https://github.com/accordproject/web-components/actions/workflows/build.yml)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains a [React Storybook](https://storybook.js.org), and contains all the stories for all the sub-packages to discover the components and their properties.
