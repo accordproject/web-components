@@ -31,17 +31,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
     
-      - uses: actions/cache@v2
-        id: npm-build-cache
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-            build
-          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-build-
-
       - run: npx lerna bootstrap && npx lerna run build
       - run: npm run build --if-present
       - run: npm test
