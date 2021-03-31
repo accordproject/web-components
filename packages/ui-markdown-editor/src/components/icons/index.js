@@ -1,6 +1,7 @@
 import bold from './bold';
 import italic from './italic';
 import code from './code';
+import code_block from './code_block';
 import quote from './quote';
 import olist from './olist';
 import ulist from './ulist';
@@ -12,6 +13,7 @@ import tbreak from './tbreak';
 import Separator from './separator';
 
 export {
+  code_block,
   bold,
   italic,
   code,

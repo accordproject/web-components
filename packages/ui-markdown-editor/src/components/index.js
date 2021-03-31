@@ -42,7 +42,7 @@ const Element = (props) => {
     </span>),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
-    [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
+    [CODE_BLOCK]: () => (<pre style={{ padding: '1.25rem 2.5rem', backgroundColor: '#F6F8FA' }} {...attributes}>{children}</pre>),
     [BLOCK_QUOTE]: () => (<blockquote {...attributes}>{children}</blockquote>),
     [OL_LIST]: () => (<ol {...attributes}>{children}</ol>),
     [UL_LIST]: () => (<ul {...attributes}>{children}</ul>),

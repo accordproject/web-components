@@ -17,7 +17,7 @@ import {
   toggleHistory, insertThematicBreak
 } from '../utilities/toolbarHelpers';
 import {
-  bold, italic, code,
+  bold, italic, code, code_block,
   quote, olist, ulist,
   image, link, undo, redo,
   tbreak, Separator
@@ -98,6 +98,7 @@ const FormattingToolbar = ({
       <FormatButton {...block} {...quote} {...buttonProps} />
       <FormatButton {...block} {...olist} {...buttonProps} />
       <FormatButton {...block} {...ulist} {...buttonProps} />
+      <FormatButton {...block} {...code_block} {...buttonProps} />
       <Separator />
       <HistoryButton {...history} {...undo} />
       <HistoryButton {...history} {...redo} />

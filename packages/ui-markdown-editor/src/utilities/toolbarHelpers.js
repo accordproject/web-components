@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS, CODE_BLOCK
 } from './schema';
 
 export const isBlockActive = (editor, format) => {
@@ -20,10 +20,12 @@ export const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format);
   const isList = input => LIST_TYPES.includes(input);
   const isQuote = input => input === BLOCK_QUOTE;
+  const isCodeBlock = input => input === CODE_BLOCK;
   const isListItem = input => input === LIST_ITEM;
 
   /* Clear selection of block types */
   Transforms.unwrapNodes(editor, { match: n => isQuote(n.type), split: true });
+  Transforms.unwrapNodes(editor, { match: n => isCodeBlock(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => isListItem(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => LIST_TYPES.includes(n.type), split: true });
 

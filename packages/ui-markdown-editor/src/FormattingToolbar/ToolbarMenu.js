@@ -18,7 +18,7 @@ const Menu = styled.div`
     display: inline-block;
   }
   & > * + * {
-    margin-left: 15px;
+    margin-left: 10px;
   }
 `;
 
