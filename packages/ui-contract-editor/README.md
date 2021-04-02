@@ -14,7 +14,11 @@ npm install @accordproject/ui-contract-editor @accordproject/markdown-slate slat
 ```
 ### Overview of Contract Editor Tool
 
-The Contract Editor tool gives you the ability to examine and edit class contracts in a context that is isolated from the full class text. In other words, when you use the Contract Editor tool, you see and edit the contracts without having to work around other elements of the software text such as implementation.For routines, you can edit pre and post conditions, and for classes, you can edit class invariants. The tool provides views of inherited contracts as well as immediate ones.
+Contracting is undergoing a digital transformation driven by a need to deliver customer-centric legal and business solutions faster, and at lower cost. This imperative is fueling the adoption of a broad range of new technologies to improve the efficiency of drafting, managing, and executing legal contracting operations; the Accord Project is proud to be part of that movement.
+
+The Accord Project provides a Smart Contract that does not depend on a blockchain, that can integrate text and data and that can continue operating over its lifespan. The Accord Project smart contract can integrate with your technology platforms and become part of you digital infrastructure.
+
+In addition, contributions from businesses are crucial for the development of the Accord Project. The expertise of stakeholders, such as business professionals and attorneys, is invaluable in improving the functionality and content of the Accord Project's codebase and specifications, to ensure that the templates meet real-world business requirements.
 
 ### Implementation
 
