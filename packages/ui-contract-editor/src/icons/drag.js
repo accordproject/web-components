@@ -4,7 +4,7 @@ export const type = () => 'drag';
 
 export const icon = () => (
     <g id="Side-nav-+-new-editor" stroke="none" strokeWidth="1" fillRule="evenodd">
-        <g id="Drag-and-drop" transform="translate(-302.000000, -457.000000)">
+        <g id="Drag-and-drop" transform="translate(-300.250000, -457.000000)">
             <g id="handle" transform="translate(297.000000, 455.000000)">
                 <rect id="Rectangle" x="0" y="0" width="18" height="22" fill="none"></rect>
                 <g id="Group-5" transform="translate(5.000000, 2.000000)" fillRule="nonzero">

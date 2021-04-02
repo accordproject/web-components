@@ -1,6 +1,6 @@
 # Accord Project Web Components Storybook
 
-[![Build Status](https://travis-ci.org/accordproject/web-components.svg?branch=master)](https://travis-ci.org/accordproject/web-components) 
+[![Build Status](https://github.com/accordproject/web-components/actions/workflows/build.yml/badge.svg)](https://github.com/accordproject/web-components/actions/workflows/build.yml)
 [![join slack](https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue)](https://accord-project-slack-signup.herokuapp.com/)
 
 This repository contains a [React Storybook](https://storybook.js.org), and contains all the stories for all the sub-packages to discover the components and their properties.
@@ -32,9 +32,20 @@ npm run test
 
 ---
 
-<a href="https://www.accordproject.org/">
-  <img src="../../assets/APLogo.png" alt="Accord Project Logo" width="400" />
-</a>
+<p align="center">
+  <a href="https://www.accordproject.org/">
+    <img src="../../assets/APLogo.png" alt="Accord Project Logo" width="400" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/accordproject/cicero?color=bright-green" alt="GitHub license">
+  </a>
+  <a href="https://accord-project-slack-signup.herokuapp.com/">
+    <img src="https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue" alt="Join the Accord Project Slack"/>
+  </a>
+</p>
 
 Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
