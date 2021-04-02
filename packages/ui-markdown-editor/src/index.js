@@ -6,22 +6,22 @@ import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 import isHotkey from 'is-hotkey';
 import { Editable, withReact, Slate, ReactEditor } from 'slate-react';
-import { Editor, Range, Node, createEditor, Transforms } from 'slate';
+import { Editor, Range, createEditor, Transforms, Node } from 'slate';
 import { withHistory } from 'slate-history';
 import PropTypes from 'prop-types';
 import HOTKEYS, { formattingHotKeys } from './utilities/hotkeys';
-import { BUTTON_ACTIVE } from './utilities/constants';
+import { BUTTON_ACTIVE, BLOCK_STYLE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
-import { toggleMark, toggleBlock, insertThematicBreak, 
-  insertLinebreak, insertHeadingbreak, isBlockHeading
-} from './utilities/toolbarHelpers';
+import { toggleMark, toggleBlock, insertThematicBreak,
+  insertLinebreak, insertHeadingbreak, isBlockHeading } from './utilities/toolbarHelpers';
 import { withImages, insertImage } from './plugins/withImages';
 import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
 import { withLists } from './plugins/withLists';
 import FormatBar from './FormattingToolbar';
+import { withText } from './plugins/withText';
 
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
@@ -37,17 +37,18 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
+  const [currentStyle, setCurrentStyle] = useState('')
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
-        withLists(withLinks(withHtml(withImages(
+        withLists(withLinks(withHtml(withImages(withText(
           withSchema(withHistory(withReact(createEditor())))
-        ))))
+        )))))
       );
     }
-    return withLists(withLinks(withHtml(withImages(
+    return withLists(withLinks(withHtml(withImages(withText(
       withSchema(withHistory(withReact(createEditor())))
-    ))));
+    )))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,7 +91,7 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
-    if (event.key === "Enter" && !isBlockHeading(editor)) {
+    if (event.key === 'Enter' && !isBlockHeading(editor)) {
       return;
     }
 
@@ -129,9 +130,14 @@ export const MarkdownEditor = (props) => {
     const CICERO_MARK_DOM = slateTransformer.toCiceroMark(SLATE_DOM);
     const HTML_DOM = htmlTransformer.toHtml(CICERO_MARK_DOM);
     const MARKDOWN_TEXT = ciceroMarkTransformer.toMarkdown(CICERO_MARK_DOM);
+    const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
 
     event.clipboardData.setData('text/html', HTML_DOM);
     event.clipboardData.setData('text/plain', MARKDOWN_TEXT);
+
+    if (cut && imageNode) {
+      Editor.deleteBackward(editor);
+    }
 
     if (cut && editor.selection && Range.isExpanded(editor.selection)) {
       Editor.deleteFragment(editor);
@@ -145,6 +151,8 @@ export const MarkdownEditor = (props) => {
     if (selection && isSelectionLinkBody(editor)) {
       setShowLinkModal(true);
     }
+    const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
+    setCurrentStyle(currentStyleCalculated);
   };
 
   const handleDragStart = (event) => {
@@ -179,6 +187,7 @@ export const MarkdownEditor = (props) => {
     <Slate editor={editor} value={props.value} onChange={onChange} >
       { !props.readOnly
         && <FormatBar
+        currentStyle={currentStyle}
         canBeFormatted={props.canBeFormatted}
         showLinkModal={showLinkModal}
         setShowLinkModal={setShowLinkModal}
@@ -242,6 +251,8 @@ MarkdownEditor.propTypes = {
   onDrop: PropTypes.func,
   /* Optional function to call when onDragOver event fires which will receive editor and event */
   onDragOver: PropTypes.func,
+  /* Tells the current style of text block that the cursor is on and updates onChange */
+  currentStyle: PropTypes.string,
 };
 
 MarkdownEditor.defaultProps = {

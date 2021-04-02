@@ -32,7 +32,8 @@ const FormattingToolbar = ({
   canBeFormatted,
   showLinkModal,
   setShowLinkModal,
-  activeButton
+  activeButton,
+  currentStyle
 }) => {
   const editor = useEditor();
   const linkModalRef = useRef();
@@ -88,7 +89,7 @@ const FormattingToolbar = ({
 
   return (
     <ToolbarMenu id="ap-rich-text-editor-toolbar">
-      <StyleDropdown canBeFormatted={canBeFormatted}/>
+      <StyleDropdown canBeFormatted={canBeFormatted} currentStyle={currentStyle}/>
       <Separator />
       <FormatButton {...mark} {...bold} {...buttonProps} />
       <FormatButton {...mark} {...italic} {...buttonProps} />
@@ -114,6 +115,7 @@ FormattingToolbar.propTypes = {
   showLinkModal: PropTypes.bool,
   setShowLinkModal: PropTypes.func,
   activeButton: PropTypes.object,
+  currentStyle: PropTypes.string,
 };
 
 

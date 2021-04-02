@@ -48,8 +48,11 @@ const wrapLink = (editor, url, text) => {
     Transforms.insertNodes(editor, link);
     return;
   }
-  unwrapLink(editor);
-  Transforms.wrapNodes(editor, link, { split: true });
+  if(isSelectionLink(editor)){
+    unwrapLink(editor);
+  }
+  Editor.deleteBackward(editor);
+  Transforms.insertNodes(editor, link);
 };
 
 export const insertLink = (editor, url, text) => {
