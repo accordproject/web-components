@@ -12,8 +12,9 @@ const icon = () => (
 const image = {
   type: 'image',
   label: `Insert Image (${MOD()}+Shift+G)`,
-  height: '18px',
-  width: '18px',
+  height: '25px',
+  width: '25px',
+  padding: '4px',
   viewBox: '0 0 18 18',
   icon,
 };
