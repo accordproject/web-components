@@ -37,7 +37,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
       //checks if para changed to heading-3
       getIframeBody()
         .find(TEST_HEADING)
-        .should('have.css', 'font-size', '16px', 'font-weight', 'bold');
+        .should('have.css', 'font-size', '20px', 'font-weight', 'bold');
       //undo and check
       getIframeBody()
         .find(UNDO_BUTTON)
@@ -53,7 +53,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
       
       getIframeBody().
         find(TEST_HEADING).
-        should('have.css', 'font-size', '16px', 'font-weight', 'bold');
+        should('have.css', 'font-size', '20px', 'font-weight', 'bold');
      });
 
     it("Change to Header 2", () => {
@@ -72,7 +72,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
         //checks if para changed to heading-2
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '20px', 'font-weight', 'bold');
+          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
         //undo and check
         getIframeBody()
           .find(UNDO_BUTTON)
@@ -88,7 +88,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
 
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '20px', 'font-weight', 'bold');
+          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
     }); 
     
     it("Change to Header 1", () => {
