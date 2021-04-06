@@ -119,6 +119,47 @@ clauseProps = {
 The functions in `clauseProps` like `CLAUSE_DELETE_FUNCTION`,`CLAUSE_EDIT_FUNCTION` and `CLAUSE_TEST_FUNCTION`  are not implemented by default because they typically require interaction with other components or the persistence layer of the embedding application.
 These functions will be supplied by the user of the component.
 
+## Props
+
+### Expected Properties
+
+#### Values
+
+- `value` [OPTIONAL]: An `array` which is the initial contents of the editor.
+- `lockText` [OPTIONAL]: A `boolean` to lock all non variable text.
+- `readOnly` [OPTIONAL]: A `boolean` to lock all text and remove the formatting toolbar.
+- `activeButton` [OPTIONAL]: Optional `object` to change formatting button active state color
+  - `{ background: '#FFF', symbol: '#000' }`
+
+#### Functionality
+
+- `onChange` [OPTIONAL]: A callback `function` called when the contents of the editor change. Argument:
+  - `value`: The Slate nodes `array` representing all the rich text
+- `loadTemplateObject` [OPTIONAL]: A callback `function` to load a template. Argument:
+  - `uri`: URI `string` source for loading the template
+- `onClauseUpdated` [OPTIONAL]: A callback `function` called when text inside of a clause is changed. Arguments:
+  - `clause`: The Slate node `object` representation of the clause
+  - `justAdded`:  A `boolean` indicating if this was just added (likely via a paste action)
+- `pasteToContract` [OPTIONAL]: A callback `function` to load a clause template via copy/paste. Arguments:
+  - `clauseid`: Data `string` from the clause in Slate to indicate a `uuid`
+  - `src`: URI `string` source for loading the template
+
+### Available Functionality
+
+- `clauseProps`: An `object` for the clauses in the editor which contains a deletion, edit, and test function, as well as a header title string and color for clause icons on hover see below.
+
+`clauseProps`:
+You can support deletion, editing, and testing of the Clause Components within the `ContractEditor`. An object may be passed down this component with the following possible functions:
+```js
+clauseProps = {
+    CLAUSE_DELETE_FUNCTION,  // (Function)
+    CLAUSE_EDIT_FUNCTION,    // (Function)
+    CLAUSE_TEST_FUNCTION,    // (Function)
+    HEADER_TITLE,            // (String)
+    ICON_HOVER_COLOR,        // (String)
+}
+```
+
 ---
 
 <p align="center">
