@@ -85,6 +85,20 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
+    const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
+
+    // handle specific case to delete image when backspace is pressed
+    if(event.keyCode===8 && imageNode){
+      Editor.deleteBackward(editor);
+      return ;
+    }
+
+    // handle specific case to delete image when delete is pressed
+    if(event.keyCode===46 && imageNode){
+      Editor.deleteForward(editor);
+      return ;
+    }
+
     const isFormatEvent = () => formattingHotKeys.some(hotkey => isHotkey(hotkey, event));
     if (!canBeFormatted(editor) && isFormatEvent()) {
       event.preventDefault();
