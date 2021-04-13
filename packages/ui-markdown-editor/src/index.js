@@ -204,7 +204,7 @@ export const MarkdownEditor = (props) => {
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder={props.placeholder || 'Enter some rich text...'}
+        placeholder={props.placeholder || 'Enter some text here...'}
         spellCheck
         autoFocus
         onKeyDown={onKeyDown}
