@@ -79,10 +79,10 @@ export const contractEditor = () => {
   });
   const [editor, setEditor] = useState(null);
   const [templates, setTemplates] = useState([]);
-  const templateUrl = select('Insert Template', templates) || "https://templates.accordproject.org/archives/acceptance-of-delivery@0.14.0.cta";  
+  const templateUrl = select('Insert Template', templates) || "https://60856d3e9e509b0008a93ee0--templates-accordproject.netlify.app/archives/acceptance-of-delivery@0.15.0.cta";  
 
   useEffect( () => {
-    const templateLibrary = new TemplateLibrary();
+    const templateLibrary = new TemplateLibrary('https://60856d3e9e509b0008a93ee0--templates-accordproject.netlify.app/');
     templateLibrary.getTemplateIndex( {latestVersion: true, ciceroVersion: version.version} )
     .then( (index) => {
       const temp = {};  
