@@ -3,7 +3,7 @@
   "version": "0.97.0",
   "private": false,
   "dependencies": {
-    "@accordproject/concerto-core": "^1.0.0-alpha.10",
+    "@accordproject/concerto-core": "^1.0.0",
     "@babel/runtime": "^7.10.3",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
