@@ -37,7 +37,7 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState('')
+  const [currentStyle, setCurrentStyle] = useState('');
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
@@ -145,14 +145,18 @@ export const MarkdownEditor = (props) => {
   }, [canCopy, editor]);
 
   const onChange = (value) => {
-    if (props.readOnly) return;
-    props.onChange(value, editor);
-    const { selection } = editor;
-    if (selection && isSelectionLinkBody(editor)) {
-      setShowLinkModal(true);
+    try {
+      if (props.readOnly) return;
+      props.onChange(value, editor);
+      const { selection } = editor;
+      if (selection && isSelectionLinkBody(editor)) {
+        setShowLinkModal(true);
+      }
+      const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
+      setCurrentStyle(currentStyleCalculated);
+    } catch (err) {
+      console.log('Caught exception within markdown-editor onChange', err);
     }
-    const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
-    setCurrentStyle(currentStyleCalculated);
   };
 
   const handleDragStart = (event) => {
