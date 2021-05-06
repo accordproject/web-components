@@ -24,6 +24,7 @@ export const MARKS = [MARK_BOLD, MARK_ITALIC, MARK_CODE, MARK_HTML];
 
 export const HR = 'horizontal_rule';
 export const SOFTBREAK = 'softbreak';
+export const PARAGRAPH_BREAK = 'paragraph_break';
 export const LINEBREAK = 'linebreak';
 export const LINK = 'link';
 export const IMAGE = 'image';
@@ -33,12 +34,14 @@ export const HEADINGBREAK = 'headingbreak';
 const INLINES = {
   [LINEBREAK]: true,
   [SOFTBREAK]: true,
+  [PARAGRAPH_BREAK]: true,
   [HTML_INLINE]: true,
   [LINK]: true,
   [IMAGE]: true,
 };
 const VOIDS = {
   [LINEBREAK]: true,
+  [PARAGRAPH_BREAK]: true,
   [SOFTBREAK]: true,
   [IMAGE]: true,
   [HR]: true,
