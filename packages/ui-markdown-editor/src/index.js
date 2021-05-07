@@ -214,7 +214,7 @@ export const MarkdownEditor = (props) => {
       <Editable
         id="ap-rich-text-editor"
         style={{
-          padding: '20px',
+          padding: '0px 20px 10px 20px',
           border: '1px solid grey',
           borderRadius: '4px',
           minWidth: '600px'
