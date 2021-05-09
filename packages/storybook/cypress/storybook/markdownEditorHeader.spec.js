@@ -1,3 +1,5 @@
+import {DROPDOWN_STYLE_H1, DROPDOWN_STYLE_H2, DROPDOWN_STYLE_H3} from '@accordproject/ui-markdown-editor/src/utilities/constants';
+
 //components and elements
 const STORYBOOK_IFRAME  = "#storybook-preview-iframe";
 const IFRAME_DOCUMENT = "0.contentDocument";
@@ -9,7 +11,6 @@ const HEADING_3_SELECTOR = "#ap-rich-text-editor-toolbar > div.ui.active.visible
 const TEST_HEADING = "#This-is-text-This-is-italic-text-This-is-bold-text-This-is-a-undefined-This-is-inline-code";
 const UNDO_BUTTON = "#ap-rich-text-editor-toolbar > svg:nth-child(11)";
 const REDO_BUTTON = "#ap-rich-text-editor-toolbar > svg:nth-child(12)";
-
 
 const getIframeDocument = () =>
   cy.get(STORYBOOK_IFRAME)
@@ -24,6 +25,7 @@ const getIframeBody = () =>
 
 
 describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
+  console.log(DROPDOWN_STYLE_H2)
     it("Change to Header 3", () => {
       cy.visit("/");
       //Finds the paragraph and place cursor
@@ -37,7 +39,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
       //checks if para changed to heading-3
       getIframeBody()
         .find(TEST_HEADING)
-        .should('have.css', 'font-size', '20px', 'font-weight', 'bold');
+        .should('have.css', DROPDOWN_STYLE_H3);
       //undo and check
       getIframeBody()
         .find(UNDO_BUTTON)
@@ -53,7 +55,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
       
       getIframeBody().
         find(TEST_HEADING).
-        should('have.css', 'font-size', '20px', 'font-weight', 'bold');
+        should('have.css', DROPDOWN_STYLE_H3);
      });
 
     it("Change to Header 2", () => {
@@ -72,7 +74,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
         //checks if para changed to heading-2
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
+          .should('have.css', DROPDOWN_STYLE_H2);
         //undo and check
         getIframeBody()
           .find(UNDO_BUTTON)
@@ -88,7 +90,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
 
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
+          .should('have.css', DROPDOWN_STYLE_H2);
     }); 
     
     it("Change to Header 1", () => {
@@ -108,7 +110,7 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
         //checks if para changed to heading-1
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
+          .should('have.css', DROPDOWN_STYLE_H1);
         //undo and check
         getIframeBody()
           .find(UNDO_BUTTON)
@@ -124,6 +126,6 @@ describe(" Placing cursor in paragraph and changing to header 1, 2, 3", () => {
 
         getIframeBody()
           .find(TEST_HEADING)
-          .should('have.css', 'font-size', '25px', 'font-weight', 'bold');
+          .should('have.css', DROPDOWN_STYLE_H1);
     });
 });
