@@ -16,6 +16,11 @@ const FormatButton = ({
   ...props
 }) => {
   const editor = useSlate();
+  /**
+   * Toggles the foramtting styles on mouse click.
+   * 
+   * @param {MouseEvent} e Mouse click
+   */
   const handleMouseDown = (e) => {
     e.preventDefault();
     if (!canBeFormatted(editor)) return;

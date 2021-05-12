@@ -10,7 +10,13 @@ const StyleDropdownItem = ({
     <Dropdown.Item
         text={BLOCK_STYLE[type]}
         style={style}
-        onMouseDown={(event) => {
+        onMouseDown={
+          /**
+           * Toggles the corresponding block styles.
+           * 
+           * @param {MouseEvent} event Mouse Click
+           */
+          (event) => {
           event.preventDefault();
           if (!canBeFormatted(editor)) return;
           toggleBlock(editor, type);

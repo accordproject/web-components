@@ -14,6 +14,11 @@ const InsertButton = ({
   ...props
 }) => {
   const editor = useSlate();
+  /**
+   * Toggles the function on mouse click
+   * 
+   * @param {MouseEvent} e Mouse click
+   */
   const handleMouseDown = (e) => {
     e.preventDefault();
     if (!canBeFormatted(editor)) return;

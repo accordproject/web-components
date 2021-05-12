@@ -4,6 +4,13 @@ import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
 
 /* eslint no-param-reassign: 0 */
+
+/**
+ * Extends the editor'features by incorporating HTML feature.
+ * 
+ * @param {Object} editor Editor to be improved
+ * @returns {object} Editor with HTML functionality
+ */
 export const withHtml = (editor) => {
   const { insertData } = editor;
 

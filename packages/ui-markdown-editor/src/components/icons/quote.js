@@ -2,6 +2,12 @@ import React from 'react';
 import { BLOCK_QUOTE } from '../../utilities/schema';
 import { identifyBlock } from '../../utilities/tooltipHelpers';
 
+/**
+ * Renders the icon for Quote in svg format.
+ * 
+ * @param {string} fillColor Color to fill the svg
+ * @returns {HTMLOrSVGElement} SVG for the Quote icon
+ */
 const icon = fillColor => (
   <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
     <g

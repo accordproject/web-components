@@ -3,6 +3,13 @@ import {
   LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS, H1, H2, H3, H4, H5, H6
 } from './schema';
 
+/**
+ * Checks if a block type node is active or not.
+ * 
+ * @param {Object} editor Editor in which the block type is node checked
+ * @param {string} format Type of the block to be checked
+ * @returns {boolean} Block type node is active or not
+ */
 export const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
     match: n => n.type === format,
@@ -11,15 +18,48 @@ export const isBlockActive = (editor, format) => {
   return !!match;
 };
 
+/**
+ * Checks if a mark type node is active or not.
+ * 
+ * @param {Object} editor Editor in which the mark type is node checked
+ * @param {string} format Type of the mark node to be checked
+ * @returns {boolean} Mark type node is active or not
+ */
 export const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
 
+/**
+ * Toggles the block type node.
+ * 
+ * @param {Object} editor Editor to be transformed
+ * @param {string} format Type of the block node which needs to be toggled
+ */
 export const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format);
+  /**
+   * Checks if a given element is of type list.
+   * 
+   * @param {string} input Value to be checked against list type
+   * @returns {boolean} Value is list type or not
+   */
   const isList = input => LIST_TYPES.includes(input);
+
+  /**
+   * Checks if a given element is of type Quote.
+   * 
+   * @param {string} input Value to be compared
+   * @returns {boolean} Value is of type quote or not
+   */
   const isQuote = input => input === BLOCK_QUOTE;
+
+  /**
+   * Checks if a given value is of type List Item.
+   * 
+   * @param {string} input Value to be compared
+   * @returns {boolean} Value is of type list item or not
+   */
   const isListItem = input => input === LIST_ITEM;
 
   /* Clear selection of block types */
@@ -59,6 +99,12 @@ export const toggleBlock = (editor, format) => {
   }
 };
 
+/**
+ * Toggles the mark type node.
+ * 
+ * @param {Object} editor Editor to be transformed
+ * @param {string} format Type of the mark node which needs to be toggled
+ */
 export const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format);
 
@@ -69,12 +115,24 @@ export const toggleMark = (editor, format) => {
   }
 };
 
+/**
+ * Toggles the history element/node in editor i.e. Undos or Redos the changes in the document.
+ * 
+ * @param {Object} editor Editor to be transformed
+ * @param {string} format Type of operation: Undo or Redo
+ */
 export const toggleHistory = (editor, format) => {
   if (format === 'undo') {
     editor.undo();
   } else { editor.redo(); }
 };
 
+/**
+ * Inserts a Thematic/Page Break into the document.
+ * 
+ * @param {Object} editor Editor to be transformed
+ * @param {string} format Type of the break
+ */
 export const insertThematicBreak = (editor, type) => {
   const text = { object: 'text', text: '' };
   const tBreakNode = [
@@ -95,6 +153,12 @@ export const insertThematicBreak = (editor, type) => {
   Transforms.insertNodes(editor, tBreakNode);
 };
 
+/**
+ * Inserts a line break in the document.
+ * 
+ * @param {Object} editor Editor to be transformed
+ * @param {string} format Type of the break
+ */
 export const insertLinebreak = (editor, type) => {
   const text = { object: 'text', text: '' };
   const br = { type, children: [text], data: {} };
@@ -102,6 +166,11 @@ export const insertLinebreak = (editor, type) => {
   Transforms.move(editor, { distance: 1, unit: 'character' });
 };
 
+/**
+ * Inserts a heading break in the document.
+ * 
+ * @param {Object} editor Editor to be transformed
+ */
 export const insertHeadingbreak = (editor) => {
   const text = { object: 'text', text: '' };
   const n = { object: "block", type: 'paragraph', children: [text] };
@@ -109,6 +178,12 @@ export const insertHeadingbreak = (editor) => {
   return;
 }
 
+/**
+ * Checks if the block node is a heading.
+ * 
+ * @param {Object} editor Editor in which value is to be checked
+ * @returns {boolean} Block node is heading or not
+ */
 export const isBlockHeading = (editor) => {
   const [match] = Editor.nodes(editor, {
     match: n => { 

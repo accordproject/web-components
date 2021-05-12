@@ -24,6 +24,9 @@ const HyperlinkButton = ({
     : BUTTON_COLORS.BACKGROUND_INACTIVE;
 
   const editor = useEditor();
+  /**
+   * Shows the modal on mouse click if the document is in editable mode.
+   */
   const onMouseDown = () => {
     if (!canBeFormatted(editor)) return;
     if (editor.selection) setShowLinkModal(true);

@@ -18,6 +18,11 @@ import {
 
 const StyleDropdown = ({ canBeFormatted, currentStyle }) => {
   const editor = useEditor();
+  /**
+   * Prevents the default mouse click event.
+   * 
+   * @param {MouseEvent} event Mouse Click
+   */
   const onMouseDownHandler = (event) => {
     event.preventDefault();
     if (!canBeFormatted(editor)) return;

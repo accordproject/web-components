@@ -172,6 +172,9 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     }
   }, [editor, props.showLinkModal]);
 
+  /**
+   * Removes the link from the selection in the document.
+   */
   const removeLink = () => {
     Transforms.select(editor, originalSelection);
     unwrapLink(editor);
@@ -180,6 +183,12 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     props.setShowLinkModal(false);
   };
 
+  /**
+   * Converts the value in Valid URL.
+   * 
+   * @param {string} url URL to be checked
+   * @returns {string} Valid URL
+   */
   const validateUrl = (url) => {
     const isUrlInvalid = !(url.startsWith('http://') || url.startsWith('https://'));
     if (isUrlInvalid) {
@@ -188,6 +197,11 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     return url;
   };
 
+  /**
+   * Validates the URL and inserts the link in the document.
+   * 
+   * @param {FormEvent} event Form containing the link value
+   */
   const applyLink = (event) => {
     const newUrl = validateUrl(event.target.url.value);
     Transforms.select(editor, originalSelection);
@@ -202,6 +216,9 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     setApplyStatus(!!event.target.value);
   };
 
+  /**
+   * Copies a link and displays the corresponding message.
+   */
   const copyLink = () => {
     const inputLink = refHyperlinkTextInput.current.inputRef.current.value;
     const listener = (e) => {
@@ -215,6 +232,9 @@ const HyperlinkModal = React.forwardRef(({ ...props }, ref) => {
     setLinkCopied(true);
   };
 
+  /**
+   * Opens the link in a new tab.
+   */
   const openLink = () => {
     const inputLink = refHyperlinkTextInput.current.inputRef.current.value;
     if (inputLink) {
