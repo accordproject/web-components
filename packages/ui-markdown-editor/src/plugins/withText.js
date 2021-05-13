@@ -1,9 +1,9 @@
-import { Editor, Node } from 'slate';
-import { insertThematicBreak, isBlockHeading } from '../utilities/toolbarHelpers';
+import { Editor, Node, Transforms } from 'slate';
+import { isBlockHeading } from '../utilities/toolbarHelpers';
 import { HR } from '../utilities/schema'
+import MatchHeadings from './MatchCases/MatchHeadings'
 
 export const withText = (editor) => {
-  // Inserts page break with dash
 	const { insertText } = editor;
 	editor.insertText = (text) => {
 		insertText(text);
@@ -11,12 +11,22 @@ export const withText = (editor) => {
 		if(isBlockHeading(editor)){
 			return;
 		}
-		const firstWord = currentNode.text;
-		if(firstWord !== '---'){
+		
+		let matchingText;
+		const currentLine = currentNode.text;
+		const headingMatchCase = currentLine.match(/(^\s*)#{1,6}\s/m);
+		
+		// Assignment inside of conditional statements
+		if((matchingText = headingMatchCase)){
+			MatchHeadings(editor, matchingText);
+			Editor.deleteBackward(editor, { unit: 'word' });
+		}
+
+		if(currentLine === '---'){
+			Editor.deleteBackward(editor, { unit: 'word' });
+			Transforms.setNodes(editor, { type: HR })
 			return;
 		}
-		Editor.deleteBackward(editor, { unit: 'word' });
-		insertThematicBreak(editor, HR);
 	}
 	return editor;
 }
