@@ -13,6 +13,11 @@ const FormatButton = ({
   ...props
 }) => {
   const editor = useSlate();
+  /**
+   * Toggles the undo or redo action on mouse click.
+   * 
+   * @param {MouseEvent} e Mouse Click
+   */
   const handleMouseDown = (e) => {
     e.preventDefault();
     toggleFunc(editor, type);

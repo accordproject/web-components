@@ -1,6 +1,12 @@
 import React from 'react';
 import { MOD } from '../../utilities/tooltipHelpers';
 
+/**
+ * Renders the icon for Code in svg format.
+ * 
+ * @param {string} fillColor Color to fill the svg
+ * @returns {HTMLOrSVGElement} SVG for the code icon
+ */
 const icon = fillColor => (
   <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
     <g

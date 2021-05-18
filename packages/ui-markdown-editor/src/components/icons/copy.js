@@ -1,6 +1,11 @@
 import React from 'react';
 
 // eslint-disable-next-line react/display-name
+/**
+ * Renders the icon for Copy in svg format.
+ * 
+ * @returns {HTMLOrSVGElement} SVG for the Copy icon
+ */
 export default () => (
   <div>
     <svg

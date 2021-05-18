@@ -52,12 +52,22 @@ export const MarkdownEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Renders the leaf component into the document.
+   */
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
+
+  /**
+   * Renders the elements into the document.
+   */
   const renderElement = useCallback((slateProps) => {
     const elementProps = { ...slateProps, customElements: props.customElements, editor };
     return (<Element {...elementProps} />);
   }, [props.customElements, editor]);
 
+  /**
+   * Hotkey/Shortucy key functions for different actions
+   */
   const hotkeyActions = {
     mark: code => toggleMark(editor, code),
     block: code => toggleBlock(editor, code),
@@ -79,6 +89,9 @@ export const MarkdownEditor = (props) => {
     headingbreak: () => insertHeadingbreak(editor)
   };
 
+  /**
+   * Calls the corresponding function on key down.
+   */
   const onKeyDown = useCallback((event) => {
     if (!canKeyDown(editor, event)) {
       event.preventDefault();
@@ -119,6 +132,9 @@ export const MarkdownEditor = (props) => {
     });
   }, [canBeFormatted, canKeyDown, editor, hotkeyActions]);
 
+  /**
+   * Ensures that the editor is editable before changing the document. If editor isn't editable, then nothing is done.
+   */
   const onBeforeInput = useCallback((event) => {
     const canEdit = isEditable(editor, event);
     if (!canEdit) {
@@ -126,6 +142,9 @@ export const MarkdownEditor = (props) => {
     }
   }, [editor, isEditable]);
 
+  /**
+   * Calls the corresponding fucntions when copy or cut is performed.
+   */
   const handleCopyOrCut = useCallback((event, cut) => {
     event.preventDefault();
     if (!canCopy(editor)) return;
@@ -158,6 +177,11 @@ export const MarkdownEditor = (props) => {
     }
   }, [canCopy, editor]);
 
+  /**
+   * Updates the style block and executes the corresponding function whenever the document changes.
+   * 
+   * @param {Object} value Properties and value of the document.
+   */
   const onChange = (value) => {
     try {
       if (props.readOnly) return;
@@ -173,6 +197,11 @@ export const MarkdownEditor = (props) => {
     }
   };
 
+  /**
+   * Executes the function whenever an item is dragged
+   * 
+   * @param {MouseEvent} event Mouse Drag
+   */
   const handleDragStart = (event) => {
     event.stopPropagation();
     if (props.onDragStart) {
@@ -184,6 +213,11 @@ export const MarkdownEditor = (props) => {
     event.dataTransfer.setData('text', JSON.stringify(range));
   };
 
+  /**
+   * Changes the position of the dragged item.
+   * 
+   * @param {MouseEvent} event Mouse Drop
+   */
   const handleDrop = (event) => {
     event.preventDefault();
     if (props.onDrop) {

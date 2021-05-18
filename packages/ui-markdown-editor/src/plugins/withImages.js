@@ -20,6 +20,12 @@ const StyledImage = styled.img`
   box-shadow: ${props => (props.shadow ? '0 0 0 3px #B4D5FF' : 'none')};
 `;
 
+/**
+ * Inserts an image into the editor
+ * 
+ * @param {Object} editor Editor in which image is to be inserted
+ * @param {string} url    URL of the iamge.
+ */
 export const insertImage = (editor, url) => {
   const text = { text: '' };
   const image = { type: 'image', data: { href: url, title: url }, children: [text] };
@@ -35,6 +41,12 @@ const isImageUrl = (url) => {
 
 /* eslint no-param-reassign: 0 */
 /* eslint no-restricted-syntax: 0 */
+/**
+ * Extends the editor's features by including the image feature.
+ * 
+ * @param {Object} editor Editor to be improved
+ * @returns {Object} Editor with the image functionality
+ */
 export const withImages = (editor) => {
   const { insertData, isVoid } = editor;
 
@@ -111,6 +123,12 @@ InsertImageButton.propTypes = {
   canBeFormatted: PropTypes.func
 };
 
+/**
+ * Renders an image in the document.
+ * 
+ * @param {object} props Necessary details of image and its styles
+ * @returns {React.ReactNode} JSX to be rendered
+ */
 const ImageElement = (({ attributes, children, element }) => {
   const selected = useSelected();
   const focused = useFocused();

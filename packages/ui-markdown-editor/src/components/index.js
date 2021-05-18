@@ -20,6 +20,12 @@ import {
 } from '../utilities/constants';
 import generateId from '../utilities/generateId';
 
+/**
+ * Renders different elements according to the properties.
+ * 
+ * @param {Object} props Properties of the element
+ * @return {React.ReactChild} JSX for the element
+ */
 const Element = (props) => {
   const {
     attributes, children, element, customElements, editor

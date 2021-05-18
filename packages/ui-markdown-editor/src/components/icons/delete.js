@@ -1,6 +1,11 @@
 import React from 'react';
 
 // eslint-disable-next-line react/display-name
+/**
+ * Renders the icon for Delete in svg format.
+ * 
+ * @returns {HTMLOrSVGElement} SVG for the Delete icon
+ */
 export default () => (
   <div>
     <svg width="18px" height="18px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg">

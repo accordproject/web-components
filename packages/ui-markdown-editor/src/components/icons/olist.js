@@ -2,6 +2,12 @@ import React from 'react';
 import { OL_LIST } from '../../utilities/schema';
 import { identifyBlock } from '../../utilities/tooltipHelpers';
 
+/**
+ * Renders the icon for Ordered List in svg format.
+ * 
+ * @param {string} fillColor Color to fill the svg
+ * @returns {HTMLOrSVGElement} SVG for the Ordered List icon
+ */
 const icon = fillColor => (
   <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
     <g transform="translate(-617.000000, -48.000000)">

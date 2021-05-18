@@ -3,6 +3,12 @@ import { Transforms, Node } from 'slate';
 import { ENTER_BLOCK, ENTER_LIST } from '../utilities/hotkeys';
 import { LIST_ITEM, PARAGRAPH } from '../utilities/schema';
 
+/**
+ * Extends the editor's features by including the lists feature.
+ * 
+ * @param {Object} editor Editor to be improved
+ * @returns {Object} Editor with the lists functionality
+ */
 export const withLists = (editor) => {
   const { insertBreak } = editor;
 

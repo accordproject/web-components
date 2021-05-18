@@ -1,6 +1,12 @@
 import React from 'react';
 import { MOD } from '../../utilities/tooltipHelpers';
 
+/**
+ * Renders the icon for Italic in svg format.
+ * 
+ * @param {string} fillColor Color to fill the svg
+ * @returns {HTMLOrSVGElement} SVG for the Italic icon
+ */
 const icon = fillColor => (
   <g
     stroke="none"
