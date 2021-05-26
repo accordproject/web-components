@@ -27,9 +27,9 @@
     "react-dom": "^16.13.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "slate": "^0.58.4",
-    "slate-history": "^0.58.4",
-    "slate-react": "^0.58.4",
+    "slate": "^0.63.0",
+    "slate-history": "^0.62.0",
+    "slate-react": "^0.63.0",
     "styled-components": "^5.1.0"
   },
   "scripts": {
