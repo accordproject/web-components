@@ -79,7 +79,7 @@ export const contractEditor = () => {
   });
   const [editor, setEditor] = useState(null);
   const [templates, setTemplates] = useState([]);
-  const templateUrl = select('Insert Template', templates) || "https://templates.accordproject.org/archives/acceptance-of-delivery@0.14.0.cta";  
+  const templateUrl = select('Insert Template', templates) || "https://templates.accordproject.org/archives/acceptance-of-delivery@0.15.0.cta";  
 
   useEffect( () => {
     const templateLibrary = new TemplateLibrary();

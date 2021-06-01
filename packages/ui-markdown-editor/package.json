@@ -1,11 +1,11 @@
 {
   "name": "@accordproject/ui-markdown-editor",
-  "version": "0.97.0",
+  "version": "0.98.0",
   "private": false,
   "dependencies": {
-    "@accordproject/markdown-cicero": "^0.12.12",
-    "@accordproject/markdown-html": "^0.12.12",
-    "@accordproject/markdown-slate": "^0.12.12",
+    "@accordproject/markdown-cicero": "0.13.0",
+    "@accordproject/markdown-html": "0.13.0",
+    "@accordproject/markdown-slate": "0.13.0",
     "@babel/runtime": "^7.10.3",
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.1.6",
@@ -55,11 +55,11 @@
     }
   },
   "devDependencies": {
-    "@babel/cli": "7.10.3",
-    "@babel/core": "7.10.3",
-    "@babel/preset-env": "7.10.3",
+    "@babel/cli": "7.13.10",
+    "@babel/core": "7.13.10",
+    "@babel/plugin-transform-runtime": "7.13.10",
+    "@babel/preset-env": "7.13.10",
     "@babel/preset-react": "7.10.1",
-    "@babel/plugin-transform-runtime": "7.10.3",
     "@rollup/plugin-babel": "5.0.4",
     "@rollup/plugin-commonjs": "12.0.0",
     "@rollup/plugin-node-resolve": "8.1.0",
@@ -96,11 +96,11 @@
   "peerDependencies": {
     "react": ">=16.13.1",
     "react-dom": ">=16.13.1",
+    "semantic-ui-css": "^2.4.1",
     "slate": ">=0.58.4",
     "slate-history": ">=0.58.4",
     "slate-react": ">=0.58.4",
-    "styled-components": "^5.1.0",
-    "semantic-ui-css": "^2.4.1"
+    "styled-components": "^5.1.0"
   },
   "files": [
     "lib"

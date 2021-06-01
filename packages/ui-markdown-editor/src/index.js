@@ -21,6 +21,7 @@ import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
 import { withLists } from './plugins/withLists';
 import FormatBar from './FormattingToolbar';
+import { withText } from './plugins/withText';
 
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
@@ -36,27 +37,37 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState('')
+  const [currentStyle, setCurrentStyle] = useState('');
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
-        withLists(withLinks(withHtml(withImages(
+        withLists(withLinks(withHtml(withImages(withText(
           withSchema(withHistory(withReact(createEditor())))
-        ))))
+        )))))
       );
     }
-    return withLists(withLinks(withHtml(withImages(
+    return withLists(withLinks(withHtml(withImages(withText(
       withSchema(withHistory(withReact(createEditor())))
-    ))));
+    )))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Renders the leaf component into the document.
+   */
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
+
+  /**
+   * Renders the elements into the document.
+   */
   const renderElement = useCallback((slateProps) => {
     const elementProps = { ...slateProps, customElements: props.customElements, editor };
     return (<Element {...elementProps} />);
   }, [props.customElements, editor]);
 
+  /**
+   * Hotkey/Shortucy key functions for different actions
+   */
   const hotkeyActions = {
     mark: code => toggleMark(editor, code),
     block: code => toggleBlock(editor, code),
@@ -78,10 +89,27 @@ export const MarkdownEditor = (props) => {
     headingbreak: () => insertHeadingbreak(editor)
   };
 
+  /**
+   * Calls the corresponding function on key down.
+   */
   const onKeyDown = useCallback((event) => {
     if (!canKeyDown(editor, event)) {
       event.preventDefault();
       return;
+    }
+
+    const [imageNode] = Editor.nodes(editor, { match: n => n.type === 'image' });
+
+    // handle specific case to delete image when backspace is pressed
+    if(event.keyCode===8 && imageNode){
+      Editor.deleteBackward(editor);
+      return ;
+    }
+
+    // handle specific case to delete image when delete is pressed
+    if(event.keyCode===46 && imageNode){
+      Editor.deleteForward(editor);
+      return ;
     }
 
     const isFormatEvent = () => formattingHotKeys.some(hotkey => isHotkey(hotkey, event));
@@ -104,6 +132,9 @@ export const MarkdownEditor = (props) => {
     });
   }, [canBeFormatted, canKeyDown, editor, hotkeyActions]);
 
+  /**
+   * Ensures that the editor is editable before changing the document. If editor isn't editable, then nothing is done.
+   */
   const onBeforeInput = useCallback((event) => {
     const canEdit = isEditable(editor, event);
     if (!canEdit) {
@@ -111,6 +142,9 @@ export const MarkdownEditor = (props) => {
     }
   }, [editor, isEditable]);
 
+  /**
+   * Calls the corresponding fucntions when copy or cut is performed.
+   */
   const handleCopyOrCut = useCallback((event, cut) => {
     event.preventDefault();
     if (!canCopy(editor)) return;
@@ -143,17 +177,31 @@ export const MarkdownEditor = (props) => {
     }
   }, [canCopy, editor]);
 
+  /**
+   * Updates the style block and executes the corresponding function whenever the document changes.
+   * 
+   * @param {Object} value Properties and value of the document.
+   */
   const onChange = (value) => {
-    if (props.readOnly) return;
-    props.onChange(value, editor);
-    const { selection } = editor;
-    if (selection && isSelectionLinkBody(editor)) {
-      setShowLinkModal(true);
+    try {
+      if (props.readOnly) return;
+      props.onChange(value, editor);
+      const { selection } = editor;
+      if (selection && isSelectionLinkBody(editor)) {
+        setShowLinkModal(true);
+      }
+      const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
+      setCurrentStyle(currentStyleCalculated);
+    } catch (err) {
+      console.log('Caught exception within markdown-editor onChange', err);
     }
-    const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
-    setCurrentStyle(currentStyleCalculated);
   };
 
+  /**
+   * Executes the function whenever an item is dragged
+   * 
+   * @param {MouseEvent} event Mouse Drag
+   */
   const handleDragStart = (event) => {
     event.stopPropagation();
     if (props.onDragStart) {
@@ -165,6 +213,11 @@ export const MarkdownEditor = (props) => {
     event.dataTransfer.setData('text', JSON.stringify(range));
   };
 
+  /**
+   * Changes the position of the dragged item.
+   * 
+   * @param {MouseEvent} event Mouse Drop
+   */
   const handleDrop = (event) => {
     event.preventDefault();
     if (props.onDrop) {
@@ -195,7 +248,7 @@ export const MarkdownEditor = (props) => {
       <Editable
         id="ap-rich-text-editor"
         style={{
-          padding: '20px',
+          padding: '0px 20px 10px 20px',
           border: '1px solid grey',
           borderRadius: '4px',
           minWidth: '600px'
@@ -203,7 +256,7 @@ export const MarkdownEditor = (props) => {
         readOnly={props.readOnly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder={props.placeholder || 'Enter some rich text...'}
+        placeholder={props.placeholder || 'Enter some text here...'}
         spellCheck
         autoFocus
         onKeyDown={onKeyDown}

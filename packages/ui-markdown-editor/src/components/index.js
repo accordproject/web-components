@@ -10,15 +10,22 @@ import {
   HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS
 } from '../utilities/schema';
 import {
-  DROPDOWN_STYLE_H1,
-  DROPDOWN_STYLE_H2,
-  DROPDOWN_STYLE_H3,
-  DROPDOWN_STYLE_H4,
-  DROPDOWN_STYLE_H5,
-  DROPDOWN_STYLE_H6
+  H1_STYLING,
+  H2_STYLING,
+  H3_STYLING,
+  H4_STYLING,
+  H5_STYLING,
+  H6_STYLING,
+  PARAGRAPH_STYLING
 } from '../utilities/constants';
 import generateId from '../utilities/generateId';
 
+/**
+ * Renders different elements according to the properties.
+ * 
+ * @param {Object} props Properties of the element
+ * @return {React.ReactChild} JSX for the element
+ */
 const Element = (props) => {
   const {
     attributes, children, element, customElements, editor
@@ -26,13 +33,13 @@ const Element = (props) => {
   const { type, data } = element;
   const headingId = HEADINGS.includes(type) ? generateId(element) : null;
   const baseElementRenderer = {
-    [PARAGRAPH]: () => (<p {...attributes}>{children}</p>),
-    [H1]: () => (<Heading id={headingId} as="h1" style={DROPDOWN_STYLE_H1} {...attributes}>{children}</Heading>),
-    [H2]: () => (<Heading id={headingId} as="h2" style={DROPDOWN_STYLE_H2} {...attributes}>{children}</Heading>),
-    [H3]: () => (<Heading id={headingId} as="h3" style={DROPDOWN_STYLE_H3} {...attributes}>{children}</Heading>),
-    [H4]: () => (<Heading id={headingId} as="h4" style={DROPDOWN_STYLE_H4} {...attributes}>{children}</Heading>),
-    [H5]: () => (<Heading id={headingId} as="h5" style={DROPDOWN_STYLE_H5} {...attributes}>{children}</Heading>),
-    [H6]: () => (<Heading id={headingId} as="h6" style={DROPDOWN_STYLE_H6} {...attributes}>{children}</Heading>),
+    [PARAGRAPH]: () => (<p style={PARAGRAPH_STYLING} {...attributes}>{children}</p>),
+    [H1]: () => (<Heading id={headingId} as="h1" style={H1_STYLING} {...attributes}>{children}</Heading>),
+    [H2]: () => (<Heading id={headingId} as="h2" style={H2_STYLING} {...attributes}>{children}</Heading>),
+    [H3]: () => (<Heading id={headingId} as="h3" style={H3_STYLING} {...attributes}>{children}</Heading>),
+    [H4]: () => (<Heading id={headingId} as="h4" style={H4_STYLING} {...attributes}>{children}</Heading>),
+    [H5]: () => (<Heading id={headingId} as="h5" style={H5_STYLING} {...attributes}>{children}</Heading>),
+    [H6]: () => (<Heading id={headingId} as="h6" style={H6_STYLING} {...attributes}>{children}</Heading>),
     [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
     [LINEBREAK]: () => (<span {...attributes}>
       <span contentEditable={false} style={{ userSelect: 'none' }}>

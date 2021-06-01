@@ -1,14 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Code = styled.code`
+  color: black;
+  border: 1px solid #D3D3D3;
+  background: #ededeb;
+  border-radius: 2.5px;
+  padding: 0px 2px;
+`;
 
 /* eslint no-param-reassign: 0 */
+/**
+ * Renders the Leaf nodes according to leaf type and attributes.
+ * 
+ * @param {object} param0 Contains attributes, children and leaf type
+ * @return {React.ReactNode} JSX for the leaf
+ */
 const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
 
   if (leaf.code) {
-    children = <code>{children}</code>;
+    children = <Code>{children}</Code>;
   }
 
   if (leaf.italic) {

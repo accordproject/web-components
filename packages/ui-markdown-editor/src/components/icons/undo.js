@@ -2,6 +2,11 @@ import React from 'react';
 import { MOD } from '../../utilities/tooltipHelpers';
 import { BUTTON_COLORS } from '../../utilities/constants';
 
+/**
+ * Renders the icon for Undo in svg format.
+ * 
+ * @returns {HTMLOrSVGElement} SVG for the Undo icon
+ */
 const icon = () => (
   <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
     <g

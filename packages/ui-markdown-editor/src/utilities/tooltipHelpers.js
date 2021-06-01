@@ -2,10 +2,28 @@
 
 /* Methods for conversion to strings and further manipulation */
 
+/**
+ * Converts the input into string and capitalizes the first letter of a word.
+ * 
+ * @param {string} word Value to be changed
+ * @returns {string} Value with capitalized first letter
+ */
 const capitalizeFirst = word => word.toString().charAt(0).toUpperCase();
 
+/**
+ * Converts the input into string and slices the first letter of a value.
+ * 
+ * @param {string} word Value to be changed
+ * @returns {string} Value with first letter removed
+ */
 const sliceWord = word => word.toString().slice(1);
 
+/**
+ * Converts the input into string and extracts the first 2 letters from a value.
+ * 
+ * @param {string} word Value to be changed
+ * @returns {string} First two characters of the value
+ */
 const firstTwoLetters = word => word.toString().slice(0, 2);
 
 

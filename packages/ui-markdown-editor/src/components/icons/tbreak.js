@@ -2,6 +2,11 @@ import React from 'react';
 import { MOD } from '../../utilities/tooltipHelpers';
 import { BUTTON_COLORS } from '../../utilities/constants';
 
+/**
+ * Renders the icon for Page Break in svg format.
+ * 
+ * @returns {HTMLOrSVGElement} SVG for the Page Break icon
+ */
 const icon = () => (
 <path className="st0" fill={BUTTON_COLORS.SYMBOL_INACTIVE} d="M14.8,6.5H6.7C6.4,6.5,6.2,6.2,6.2,6V1.9c0-0.3-0.3-0.5-0.5-0.5H4.8c-0.3,0-0.5,0.3-0.5,0.5v5.9
 	c0,0.3,0.3,0.5,0.5,0.5h11.9c0.3,0,0.5-0.3,0.5-0.5V1.9c0-0.3-0.3-0.5-0.5-0.5h-0.9c-0.3,0-0.5,0.3-0.5,0.5V6
@@ -13,8 +18,9 @@ const icon = () => (
 const tbreak = {
   type: 'horizontal_rule',
   label: `Page Break (${MOD()}+Enter)`,
-  height: '17px',
-  width: '17px',
+  height: '25px',
+  width: '25px',
+  padding: '4px',
   viewBox: '0 0 19 19',
   icon,
 };
