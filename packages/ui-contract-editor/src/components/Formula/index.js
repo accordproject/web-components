@@ -42,9 +42,8 @@ export const FormulaTooltip = styled.span`
 const Formula = React.forwardRef((props, ref) => {
   const {
     attributes,
+    element,
     children,
-    children: { props: { node } },
-    children: { props: { node: { data } } },
     setFormulaNode,
     setHoveringFormulaContract
   } = props;
@@ -53,7 +52,7 @@ const Formula = React.forwardRef((props, ref) => {
   const handlerIn = () => {
     setHoveringFormula(true);
     setHoveringFormulaContract(true);
-    setFormulaNode(node);
+    setFormulaNode(element);
   };
 
   const handlerOut = () => {
@@ -69,7 +68,7 @@ const Formula = React.forwardRef((props, ref) => {
   };
 
   const formulaProps = {
-    id: data.name,
+    id: element ? element.data.name : '',
     className: FORMULA,
     ref,
     ...attributes
@@ -84,7 +83,7 @@ const Formula = React.forwardRef((props, ref) => {
   return (
     <span {...wrapperProps}>
       <FormulaTooltip {...formulaTooltip}>
-          {data.code}
+          {element ? element.data.code.trim() : 'unknown'}
       </FormulaTooltip>
       <span {...formulaProps}>{children}</span>
     </span>
@@ -94,16 +93,12 @@ const Formula = React.forwardRef((props, ref) => {
 Formula.displayName = 'Formula';
 
 Formula.propTypes = {
-  attributes: PropTypes.PropTypes.shape({
-    'data-key': PropTypes.string,
-  }),
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
+  element: PropTypes.object,
+  attributes: PropTypes.object.isRequired,
   setHoveringFormulaContract: PropTypes.func,
   setFormulaNode: PropTypes.func,
   editor: PropTypes.any,
-  node: PropTypes.shape({
-    data: PropTypes.obj,
-  }),
   readOnly: PropTypes.bool,
 };
 
