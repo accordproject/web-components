@@ -84,7 +84,11 @@ const ConcertoForm = (props) => {
 
   const generator = React.useMemo(() => {
     if (modelManager) {
-      return new FormGenerator(modelManager, generatorOptions);
+      try {
+        return new FormGenerator(modelManager, generatorOptions);
+      } catch (err) {
+        console.log(err);
+      }
     }
     return null;
   }, [modelManager, generatorOptions]);
@@ -108,7 +112,11 @@ const ConcertoForm = (props) => {
       true
     );
     models.forEach((model, idx) => {
-      modelManager.addModelFile(model, `model-${idx}`, true);
+      try {
+        modelManager.addModelFile(model, `model-${idx}`, true);
+      } catch (err) {
+        console.log(err);
+      }
     });
     if (options.updateExternalModels) {
       modelManager.updateExternalModels().then(() => {
@@ -124,8 +132,12 @@ const ConcertoForm = (props) => {
   useEffect(() => {
     if (props.type && generator) {
       if (!value) {
-        const newJSON = generator.generateJSON(props.type);
-        setValue(newJSON);
+        try {
+          const newJSON = generator.generateJSON(props.type);
+          setValue(newJSON);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   }, [generator, props.type, value]);

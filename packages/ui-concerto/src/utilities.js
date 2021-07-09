@@ -158,18 +158,9 @@ export const getDefaultValue = (field, parameters) => {
   }
   let type = parameters.modelManager.getType(field.getFullyQualifiedTypeName());
   type = findConcreteSubclass(type);
-  if (type.isConcept()) {
-    const concept = parameters.modelManager
-      .getFactory()
-      .newConcept(type.getNamespace(), type.getName(), {
-        includeOptionalFields: true,
-        generate: 'sample',
-      });
-    return parameters.modelManager.getSerializer().toJSON(concept);
-  }
   const resource = parameters.modelManager
     .getFactory()
-    .newResource(type.getNamespace(), type.getName(), 'resource1', {
+    .newResource(type.getNamespace(), type.getName(), type.isIdentified() ? 'resource1' : null, {
       includeOptionalFields: true,
       generate: 'sample',
     });
