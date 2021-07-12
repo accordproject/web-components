@@ -13,6 +13,7 @@
  */
 import ConcertoFormWrapper from './components/concertoFormWrapper';
 import ReactFormVisitor from './reactformvisitor';
+import ModelBuilderVisitor from './modelBuilderVisitor';
 import * as Utilities from './utilities';
 
-export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor, Utilities };
+export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor, ModelBuilderVisitor, Utilities };

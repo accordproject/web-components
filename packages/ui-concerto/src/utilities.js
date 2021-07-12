@@ -161,7 +161,7 @@ export const getDefaultValue = (field, parameters) => {
   if (type.isConcept()) {
     const concept = parameters.modelManager
       .getFactory()
-      .newConcept(type.getNamespace(), type.getName(), {
+      .newConcept(type.getNamespace(), type.getName(), undefined, {
         includeOptionalFields: true,
         generate: 'sample',
       });

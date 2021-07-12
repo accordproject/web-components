@@ -133,7 +133,7 @@ class FormGenerator {
     };
 
     if (classDeclaration.isConcept()) {
-      const concept = this.factory.newConcept(ns, name, factoryOptions);
+      const concept = this.factory.newConcept(ns, name, undefined, factoryOptions);
       return this.serializer.toJSON(concept);
     }
     const resource = this.factory.newResource(

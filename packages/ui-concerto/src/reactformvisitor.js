@@ -317,9 +317,17 @@ class ReactFormVisitor {
       field.getFullyQualifiedTypeName()
     );
     type = findConcreteSubclass(type);
+
+    const decorator = field.getDecorator('FormEditor');
+    let name = field.getName();
+    if (decorator) {
+      const args = decorator.getArguments();
+      name = args[1];
+    }
+
     return (
-      <Form.Field required={!field.isOptional()} key={field.getName()}>
-        <ConcertoLabel skip={props.skipLabel} name={field.getName()} key={field.getName()} />
+      <Form.Field required={!field.isOptional()} key={name}>
+        <ConcertoLabel skip={props.skipLabel} name={name} key={name} />
         {type.accept(this, parameters)}
       </Form.Field>
     );
@@ -397,7 +405,7 @@ class ReactFormVisitor {
         </ConcertoArray>
       );
     } else {
-      component = <ConcertoRelationship key={key} {...commonProps} value={value}/>;
+      component = <ConcertoRelationship key={key} {...commonProps} value={value} />;
     }
 
     stack.pop();
