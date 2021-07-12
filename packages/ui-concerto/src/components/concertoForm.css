@@ -12,33 +12,50 @@
  * limitations under the License.
  */
 
-.arrayElement, .classElement {
-    border-left: 1px solid rgba(34,36,38,.15);
-    padding: 5px 0px 5px 10px
+.arrayElement,
+.classElement {
+  border-left: 1px solid rgba(34, 36, 38, 0.15);
+  padding: 5px 0px 5px 10px;
+}
+
+.field > .field {
+  border-left: 1px solid rgba(34, 36, 38, 0.15);
+  padding: 5px 0px 5px 10px;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: auto 36px;
-    grid-column-gap: 5px;
+  display: grid;
+  grid-template-columns: auto 42px;
+  column-gap: 5px;
 }
 
 .fullHeight {
-    height:100%
+  height: 100%;
 }
 
 .monetaryAmount {
-    display: grid;
-    grid-template-columns: auto 80px;
-    grid-column-gap: 5px;
+  display: grid;
+  grid-template-columns: auto 80px;
+  column-gap: 5px;
 }
 
 .duration {
-    display: grid;
-    grid-template-columns: auto 100px;
-    grid-column-gap: 5px;
+  display: grid;
+  grid-template-columns: auto 100px;
+  column-gap: 5px;
+}
+
+.fieldDeclaration {
+  display: grid;
+  grid-template-columns: auto 80px 80px;
+  column-gap: 5px;
 }
 
 .arrayButton {
-    box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: rgb(240, 240, 240) !important;
+}
+
+.ui.form .field > label {
+  margin-top: 2px;
 }
