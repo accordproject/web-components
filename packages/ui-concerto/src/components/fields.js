@@ -16,17 +16,7 @@ import React from 'react';
 import { Relationship } from '@accordproject/concerto-core';
 import { Checkbox, Input, Form, Button, Select, Popup, Label, Icon } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
-import { parseValue, normalizeLabel } from '../utilities';
-
-export const applyDecoratorTitle = field => {
-  const decorator = field.getDecorator('FormEditor');
-  let name = field.getName();
-  if (decorator) {
-    const args = decorator.getArguments();
-    name = args[1];
-  }
-  return name;
-};
+import { parseValue, normalizeLabel, applyDecoratorTitle } from '../utilities';
 
 export const ConcertoLabel = ({ skip, name, htmlFor }) => !skip
   ? <label htmlFor={htmlFor}>{normalizeLabel(name)}</label> : null;
@@ -39,11 +29,13 @@ export const ConcertoCheckbox = ({
   value,
   onFieldValueChange,
   skipLabel,
+  toggle
 }) => (
   <Form.Field required={required}>
     <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
     <Checkbox
-      toggle
+      toggle={toggle}
+      fitted
       id={id}
       readOnly={readOnly}
       checked={value}
@@ -117,7 +109,6 @@ export const ConcertoRelationship = ({
     ? <ConcertoDropdown
       id={id}
       value={value}
-      field={field}
       readOnly={readOnly}
       onFieldValueChange={onFieldValueChange}
       options={relationshipOptions}
@@ -187,7 +178,7 @@ export const ConcertoArray = ({
         icon={<Popup
           content='Add an element'
           position='left center'
-          trigger={<Icon name='plus circle' />}
+          trigger={<Icon name='add' />}
         />}
         disabled={readOnly}
         className='arrayButton'
@@ -214,7 +205,7 @@ export const ConcertoArrayElement = ({
         content='Remove this element'
         position='left center'
         key={`array-popup-${id}`}
-        trigger={<Icon name='minus circle' key={`array-icon-${id}`} />}
+        trigger={<Icon name='delete' key={`array-icon-${id}`} />}
       />}
       aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
       className='arrayButton'

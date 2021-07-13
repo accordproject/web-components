@@ -14,13 +14,14 @@ export default {
   }
 };
 
-export const Demo = () => {
+export const SimpleExample = () => {
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Person');
   const options = object('Options', {
     includeOptionalFields: true,
     includeSampleData: 'sample',
     updateExternalModels: true,
+    checkboxStyle: 'toggle',
     hiddenFields: [
       'org.accordproject.base.Transaction.transactionId',
       'org.accordproject.cicero.contract.AccordContract.contractId',
@@ -115,10 +116,13 @@ export const ModelBuilder = () => {
     includeOptionalFields: false,
     includeSampleData: 'sample',
     updateExternalModels: false,
-    hiddenFields: [
-      'concerto.metamodel.Decorator'
-    ],
-    visitor: new ModelBuilderVisitor()
+    visitor: new ModelBuilderVisitor(),
+    customSelectors: {
+      types: [
+        { text: 'Contract', value: 'org.accordproject.cicero.contract.AccordContract' },
+        { text: 'Party', value: 'org.accordproject.cicero.contract.AccordParty' }
+      ]
+    }
   });
   const model = text('Model', `     /*
   * Licensed under the Apache License, Version 2.0 (the "License");
@@ -156,6 +160,7 @@ export const ModelBuilder = () => {
  }
  
  concept TypeIdentifier {
+   @FormEditor("selectOptions", "types")
    o String fullyQualifiedName
  }
  
@@ -218,7 +223,9 @@ export const ModelBuilder = () => {
  
  abstract concept FieldDeclaration {
    o String name
+   @FormEditor("title", "isArray?")
    o Boolean isArray optional
+   @FormEditor("title", "isOptional?")
    o Boolean isOptional optional 
    @FormEditor("hide", true)
    o Decorator[] decorators optional
@@ -227,6 +234,7 @@ export const ModelBuilder = () => {
  concept ObjectFieldDeclaration extends FieldDeclaration {
    @FormEditor("hide", true)
    o StringDefault defaultValue optional
+   @FormEditor("selectOptions", "types")
    o TypeIdentifier type
  }
  
@@ -272,6 +280,7 @@ export const ModelBuilder = () => {
  }
  
  concept RelationshipDeclaration extends FieldDeclaration {
+   @FormEditor("selectOptions", "types")
    o TypeIdentifier type
  }
  
@@ -292,7 +301,7 @@ export const ModelBuilder = () => {
    o String namespace
    @FormEditor("hide", true)
    o Import[] imports optional
-   @FormEditor("title", "class")
+   @FormEditor("title", "classes")
    o ClassDeclaration[] declarations optional
  }
      `);
