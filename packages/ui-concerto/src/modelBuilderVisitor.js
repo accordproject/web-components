@@ -50,7 +50,7 @@ class ModelBuilderVisitor extends ReactFormVisitor {
   visitClassDeclaration(classDeclaration, parameters) {
     const fqn = classDeclaration.getFullyQualifiedName();
     if (fqn === 'concerto.metamodel.AssetDeclaration') {
-      return this.visitConceptDeclaration(classDeclaration, parameters);
+      return this.visitMetaConceptDeclaration(classDeclaration, parameters);
     }
 
     if (fqn === 'concerto.metamodel.TypeIdentifier') {
@@ -62,13 +62,13 @@ class ModelBuilderVisitor extends ReactFormVisitor {
 
     const declarationTypeNames = declarationTypes.map(({ value }) => value);
     if (declarationTypeNames.includes(fqn)) {
-      return this.visitFieldDeclaration(classDeclaration, parameters);
+      return this.visitMetaFieldDeclaration(classDeclaration, parameters);
     }
 
     return super.visitClassDeclaration(classDeclaration, parameters);
   }
 
-  visitConceptDeclaration(declaration, parameters) {
+  visitMetaConceptDeclaration(declaration, parameters) {
     const props = declaration.getProperties();
     const identifier = props.find(({ name }) => name === 'identifier');
     const superType = props.find(({ name }) => name === 'superType');
@@ -85,13 +85,13 @@ class ModelBuilderVisitor extends ReactFormVisitor {
     </div>;
   }
 
-  visitFieldDeclaration(declaration, parameters) {
+  visitMetaFieldDeclaration(declaration, parameters) {
     const props = declaration.getProperties();
 
     const name = props.find(({ name }) => name === 'name');
     const isOptional = props.find(({ name }) => name === 'isOptional');
     const isArray = props.find(({ name }) => name === 'isArray');
-    const type = props.find(({ name }) => name === 'type');
+    let type;
 
     const key = pathToString(parameters.stack);
     const value = get(parameters.json, key);
@@ -101,59 +101,70 @@ class ModelBuilderVisitor extends ReactFormVisitor {
       'concerto.metamodel.RelationshipDeclaration'
     ].includes(name);
 
-    // We need a special version of `onFieldValueChange` because changing the $class value
-    // requires us to regenerate the instance
-    const onFieldValueChange = (data, key) => {
-      const { value: newClassName } = data;
-      if (hasTypeProperty(newClassName) && !hasTypeProperty(value.$class)) {
-        console.log('adding type property');
-        value.type = null;
-      }
-
-      if (!hasTypeProperty(newClassName) && hasTypeProperty(value.$class)) {
-        console.log('removing type property');
-
-        value.type = undefined;
-      }
-
-      return parameters.onFieldValueChange(data, key);
-    };
-
-    if (hasTypeProperty(declaration.getFullyQualifiedName())) {
-      // const typeField = new Field(declaration, )
-      return (
-        <div className='mbObjectDeclaration' key={declaration.getName().toLowerCase()}>
-          <div>{name.accept(this, parameters)}</div>
-          <div>{type.accept(this, parameters)}</div>
-          <Form.Field required={true} key={'$class'}>
-            <ConcertoLabel name='type' htmlFor={`${key}.$class`} />
-            <ConcertoDropdown
-              id={`${key}.$class`}
-              key={key}
-              value={value.$class}
-              readOnly={parameters.disabled}
-              onFieldValueChange={onFieldValueChange}
-              options={declarationTypes.map(({ value, text }) => ({
-                key: `option-${value}`,
-                value,
-                text,
-              }))}
-            />
-          </Form.Field>
-          <div>{isArray.accept(this, parameters)}</div>
-          <div>{isOptional.accept(this, parameters)}</div>
-        </div>
-      );
+    // Create a new concept
+    if (value.$class) {
+      const tempParts = value.$class.split('.');
+      const tempName = tempParts.pop();
+      const concept = parameters.modelManager
+        .getFactory()
+        .newConcept(tempParts.join('.'), tempName, undefined, {
+          parameters: parameters.includeOptionalFields,
+          generate: parameters.includeSampleData,
+        });
+      type = concept.getClassDeclaration().getProperties().find(({ name }) => name === 'type');
     }
 
+    // We need a special version of `onFieldValueChange` because changing the $class value
+    // requires us to regenerate the instance
+    const onFieldValueChange = data => {
+      const { value: newClassName } = data;
+
+      // Add a new type property to the data
+      if (hasTypeProperty(newClassName) && !hasTypeProperty(value.$class)) {
+        const parts = newClassName.split('.');
+        const name = parts.pop();
+
+        // Create a new concept
+        const concept = parameters.modelManager
+          .getFactory()
+          .newConcept(parts.join('.'), name, undefined, {
+            parameters: parameters.includeOptionalFields,
+            generate: parameters.includeSampleData,
+          });
+
+        // Keep any existing values
+        const json = {
+          ...parameters.modelManager.getSerializer().toJSON(concept),
+          name: value.name,
+          isOptional: value.isOptional,
+          isArray: value.isArray,
+        };
+        value.type = json;
+
+        parameters.onFieldValueChange({
+          ...data,
+          value: json
+        }, key);
+        return;
+      }
+
+      // Remove any old type properties
+      value.type = undefined;
+      value.$class = newClassName;
+      parameters.onFieldValueChange({
+        ...data,
+        value,
+      }, key);
+    };
+
     return (
-      <div className='mbFieldDeclaration' key={declaration.getName().toLowerCase()}>
+      <div className='mbObjectDeclaration' key={declaration.getName().toLowerCase()}>
         <div>{name.accept(this, parameters)}</div>
         <Form.Field required={true} key={'$class'}>
           <ConcertoLabel name='type' htmlFor={`${key}.$class`} />
           <ConcertoDropdown
             id={`${key}.$class`}
-            key={`${key}.$class`}
+            key={key}
             value={value.$class}
             readOnly={parameters.disabled}
             onFieldValueChange={onFieldValueChange}
@@ -164,6 +175,7 @@ class ModelBuilderVisitor extends ReactFormVisitor {
             }))}
           />
         </Form.Field>
+        <div>{type && type.accept(this, parameters)}</div>
         <div>{isArray.accept(this, parameters)}</div>
         <div>{isOptional.accept(this, parameters)}</div>
       </div>
