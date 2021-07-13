@@ -14,8 +14,9 @@
 
 .arrayElement,
 .classElement {
-  border-left: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px dashed rgba(34, 36, 38, 0.15);
   padding: 5px 0px 5px 10px;
+  margin-bottom: 5px;
 }
 
 .field > .field {
@@ -45,12 +46,6 @@
   column-gap: 5px;
 }
 
-.fieldDeclaration {
-  display: grid;
-  grid-template-columns: auto 80px 80px;
-  column-gap: 5px;
-}
-
 .arrayButton {
   box-shadow: none !important;
   background-color: rgb(240, 240, 240) !important;
@@ -58,4 +53,31 @@
 
 .ui.form .field > label {
   margin-top: 2px;
+}
+
+.ui.form .field {
+  margin-bottom: 0;
+}
+
+/** CSS Classes for use by the ModelBuilderVisitor */
+.mbFieldDeclaration {
+  display: grid;
+  grid-template-columns: auto 150px 80px 80px;
+  column-gap: 5px;
+}
+
+.mbObjectDeclaration {
+  display: grid;
+  grid-template-columns: auto 150px 150px 80px 80px;
+  column-gap: 5px;
+}
+
+.mbIdentifierDeclaration {
+  display: grid;
+  grid-template-columns: auto 150px;
+  column-gap: 5px;
+}
+
+.mbFieldDeclarations {
+  padding-top: 5px;
 }

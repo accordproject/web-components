@@ -153,6 +153,7 @@ export const hideProperty = (property, parameters) => {
  * @private
  */
 export const getDefaultValue = (field, parameters) => {
+  const { includeOptionalFields, includeSampleData } = parameters;
   if (field.isPrimitive()) {
     return convertToJSON(field);
   }
@@ -161,8 +162,71 @@ export const getDefaultValue = (field, parameters) => {
   const resource = parameters.modelManager
     .getFactory()
     .newResource(type.getNamespace(), type.getName(), type.isIdentified() ? 'resource1' : null, {
-      includeOptionalFields: true,
-      generate: 'sample',
+      includeOptionalFields,
+      generate: includeSampleData,
     });
   return parameters.modelManager.getSerializer().toJSON(resource);
+};
+
+/**
+ * Convert an array path, e.g. ['a', 1, 'b'] to the path string e.g. 'a[1].b'
+ * @param {Array} array - the source array path
+ * @return {String} - A string representation of the path.
+ * @private
+ */
+export const pathToString = (array) => array.reduce((string, item) => {
+  const prefix = string === '' ? '' : '.';
+  return string + (Number.isNaN(Number(item)) ? prefix + item : `[${item}]`);
+}, '');
+
+/**
+ * Substitutes the field name for a value in a decorator, @FormEditor( "title", "My Name" )
+ * @param {object} field the Concerto field
+ * @private
+ */
+export const applyDecoratorTitle = field => {
+  const decorator = field.getDecorator('FormEditor');
+  let name = field.getName();
+  if (decorator) {
+    const args = decorator.getArguments();
+    const index = args.findIndex(d => d === 'title');
+    if (index >= 0 && index < args.length - 1) {
+      name = args[index + 1];
+    }
+  }
+  return name;
+};
+
+/**
+ * Returns true if the field has the decorator @FormEditor( "hide", true )
+ * @param {object} field the Concerto field
+ * @private
+ */
+export const isHidden = field => {
+  const decorator = field.getDecorator('FormEditor');
+  if (decorator) {
+    const args = decorator.getArguments();
+    if (args.find((d, index) => d === 'hide'
+      && index < args[args.length - 1] && args[index + 1] === true)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * Returns the value of the decorator @FormEditor( "selectOptions", "key" )
+ * @param {object} field the Concerto field
+ * @private
+ */
+export const getCustomSelectDecoratorKey = field => {
+  const decorator = field.getDecorator('FormEditor');
+  if (decorator) {
+    const args = decorator.getArguments();
+    const index = args.findIndex(d => d === 'selectOptions');
+    if (index >= 0 && index < args.length - 1) {
+      return args[index + 1];
+    }
+  }
+  return undefined;
 };
