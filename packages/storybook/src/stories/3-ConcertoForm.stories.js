@@ -234,7 +234,7 @@ export const ModelBuilder = () => {
  concept ObjectFieldDeclaration extends FieldDeclaration {
    @FormEditor("hide", true)
    o StringDefault defaultValue optional
-   @FormEditor("selectOptions", "types")
+   @FormEditor("title", "typeIdentifier", "selectOptions", "types")
    o TypeIdentifier type
  }
  
@@ -280,7 +280,7 @@ export const ModelBuilder = () => {
  }
  
  concept RelationshipDeclaration extends FieldDeclaration {
-   @FormEditor("selectOptions", "types")
+   @FormEditor("title", "typeIdentifier", "selectOptions", "types")
    o TypeIdentifier type
  }
  
