@@ -237,6 +237,7 @@ export const ConcertoDropdown = ({
   options,
 }) => !readOnly ? (
   <Select
+    clearable
     fluid
     value={value}
     onChange={(e, data) => onFieldValueChange(data, id)}

@@ -201,7 +201,6 @@ export const ConcertoMetamodel = `/*
  }
  
  concept ModelFile {
-   @FormEditor("hide", true)
    o String namespace
    @FormEditor("hide", true)
    o Import[] imports optional
