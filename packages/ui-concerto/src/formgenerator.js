@@ -132,14 +132,10 @@ class FormGenerator {
       generate: this.options.includeSampleData,
     };
 
-    if (classDeclaration.isConcept()) {
-      const concept = this.factory.newConcept(ns, name, factoryOptions);
-      return this.serializer.toJSON(concept);
-    }
     const resource = this.factory.newResource(
       ns,
       name,
-      'resource1',
+      classDeclaration.isIdentified() ? 'resource1' : null,
       factoryOptions
     );
     return this.serializer.toJSON(resource);
