@@ -83,7 +83,7 @@ export const ConcertoMetamodel = `/*
    o String identifiedByField optional
    @FormEditor("title", "parentType")
    o TypeIdentifier superType optional
-   o BooleanFieldDeclaration[] fields
+   o FieldDeclaration[] fields
  }
  
  concept AssetDeclaration extends ClassDeclaration {
@@ -121,7 +121,6 @@ export const ConcertoMetamodel = `/*
    o Double value
  }
  
- // TODO this decorator doesn't work because Concerto's version of 'findConcreteSubclass' doesn't support it yet. 
  @FormEditor("defaultSubclass","concerto.metamodel.StringFieldDeclaration")
  abstract concept FieldDeclaration {
    // TODO Allow regex modifiers e.g. //ui
