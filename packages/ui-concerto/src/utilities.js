@@ -116,6 +116,24 @@ export const findConcreteSubclass = declaration => {
     throw new Error('No concrete subclasses found');
   }
 
+  // Allow the model to specify an explicit default sub-class,
+  // e.g. @FormEditor("defaultSubclass", "concerto.metadata.ConceptDeclaration")
+  const decorator = declaration.getDecorator('FormEditor');
+  let explicitSubclassName;
+  if (decorator) {
+    const args = decorator.getArguments();
+    const index = args.findIndex(d => d === 'defaultSubclass');
+    if (index >= 0 && index < args.length - 1) {
+      explicitSubclassName = args[index + 1];
+    }
+  }
+
+  const explicitSubclass = concreteSubclasses
+    .find(c => c.getFullyQualifiedName() === explicitSubclassName);
+  if (explicitSubclass) {
+    return explicitSubclass;
+  }
+
   return concreteSubclasses[0];
 };
 

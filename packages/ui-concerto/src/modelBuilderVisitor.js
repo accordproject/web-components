@@ -49,7 +49,7 @@ class ModelBuilderVisitor extends ReactFormVisitor {
    */
   visitClassDeclaration(classDeclaration, parameters) {
     const fqn = classDeclaration.getFullyQualifiedName();
-    if (fqn === 'concerto.metamodel.AssetDeclaration') {
+    if (fqn === 'concerto.metamodel.ConceptDeclaration') {
       return this.visitMetaConceptDeclaration(classDeclaration, parameters);
     }
 

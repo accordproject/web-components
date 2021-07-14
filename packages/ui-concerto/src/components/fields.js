@@ -54,8 +54,18 @@ export const ConcertoInput = ({
   onFieldValueChange,
   skipLabel,
   type,
-}) => (
-  <Form.Field key={`field-${id}`} required={required}>
+}) => {
+  let error;
+  const validator = field.getValidator();
+  if (validator) {
+    try {
+      validator.validate(id, value);
+    } catch (validationError) {
+      error = true;
+      console.warn(validationError.message);
+    }
+  }
+  return <Form.Field key={`field-${id}`} required={required} error={error}>
     <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
     <Input
       id={id}
@@ -69,8 +79,8 @@ export const ConcertoInput = ({
       }
       key={`input-${id}`}
     />
-  </Form.Field>
-);
+  </Form.Field>;
+};
 
 export const ConcertoRelationship = ({
   id,
