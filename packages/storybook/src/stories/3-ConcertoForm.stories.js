@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { text, boolean, object } from '@storybook/addon-knobs';
 import { ConcertoForm, ModelBuilderVisitor } from '@accordproject/ui-concerto';
 import { ConcertoMetamodel, TestModel } from './concerto.models';
+import { MetaModel } from '@accordproject/concerto-core';
 
 export default {
   title: 'Concerto Form',
@@ -32,8 +33,8 @@ export const SimpleExample = () => {
   });
   const model = text('Model', TestModel);
 
-  const handleValueChange = (json) => {
-    return action("value changed")(json);
+  const handleValueChange = async (json) => {
+    await action("new cto")(newCto);
   };
 
   options.relationshipProvider = {
@@ -97,15 +98,16 @@ export const ModelBuilder = () => {
     visitor: new ModelBuilderVisitor(),
     customSelectors: {
       types: [
-        { text: 'Contract', value: 'org.accordproject.cicero.contract.AccordContract' },
-        { text: 'Party', value: 'org.accordproject.cicero.contract.AccordParty' }
+        { text: 'Contract', value: 'Contract' },
+        { text: 'Party', value: 'Party' }
       ]
     }
   });
   const model = text('Model', ConcertoMetamodel);
 
-  const handleValueChange = (json) => {
-    return action("value changed")(json);
+  const handleValueChange = async (json) => {
+    await action("new cto")(MetaModel.modelFromMetaModel(json));
+    await action("value changed")(json);
   };
 
   return (

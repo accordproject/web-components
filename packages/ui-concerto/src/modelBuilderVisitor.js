@@ -30,7 +30,7 @@ const declarationTypes = [
   { value: 'concerto.metamodel.IntegerFieldDeclaration', text: 'Whole Number' },
   { value: 'concerto.metamodel.BooleanFieldDeclaration', text: 'Boolean' },
   { value: 'concerto.metamodel.DateTimeFieldDeclaration', text: 'Date' },
-  { value: 'concerto.metamodel.RealFieldDeclaration', text: 'Decimal' },
+  { value: 'concerto.metamodel.DoubleFieldDeclaration', text: 'Decimal' },
   { value: 'concerto.metamodel.ObjectFieldDeclaration', text: 'Object' },
   { value: 'concerto.metamodel.RelationshipDeclaration', text: 'Relationship' },
 ];
@@ -70,13 +70,13 @@ class ModelBuilderVisitor extends ReactFormVisitor {
 
   visitMetaConceptDeclaration(declaration, parameters) {
     const props = declaration.getProperties();
-    const identifier = props.find(({ name }) => name === 'identifier');
+    const className = props.find(({ name }) => name === 'name');
     const superType = props.find(({ name }) => name === 'superType');
     const fields = props.find(({ name }) => name === 'fields');
 
     return <div>
-      <div className='mbIdentifierDeclaration'>
-        <div>{identifier.accept(this, parameters)}</div>
+      <div className='mbClassNameDeclaration'>
+        <div>{className.accept(this, parameters)}</div>
         <div>{superType.accept(this, parameters)}</div>
       </div>
       <div className='mbFieldDeclarations'>

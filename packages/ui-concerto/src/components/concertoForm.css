@@ -72,7 +72,7 @@
   column-gap: 5px;
 }
 
-.mbIdentifierDeclaration {
+.mbClassNameDeclaration {
   display: grid;
   grid-template-columns: auto 150px;
   column-gap: 5px;
