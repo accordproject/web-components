@@ -16,7 +16,7 @@ import React from 'react';
 import { Relationship } from '@accordproject/concerto-core';
 import { Checkbox, Input, Form, Button, Select, Popup, Label, Icon } from 'semantic-ui-react';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
-import { parseValue, normalizeLabel } from '../utilities';
+import { parseValue, normalizeLabel, applyDecoratorTitle } from '../utilities';
 
 export const ConcertoLabel = ({ skip, name, htmlFor }) => !skip
   ? <label htmlFor={htmlFor}>{normalizeLabel(name)}</label> : null;
@@ -29,11 +29,13 @@ export const ConcertoCheckbox = ({
   value,
   onFieldValueChange,
   skipLabel,
+  toggle
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} htmlFor={id} />
+    <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
     <Checkbox
-      toggle
+      toggle={toggle}
+      fitted
       id={id}
       readOnly={readOnly}
       checked={value}
@@ -52,9 +54,19 @@ export const ConcertoInput = ({
   onFieldValueChange,
   skipLabel,
   type,
-}) => (
-  <Form.Field key={`field-${id}`} required={required}>
-    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={field.getName()} htmlFor={id} />
+}) => {
+  let error;
+  const validator = field.getValidator();
+  if (validator) {
+    try {
+      validator.validate(id, value);
+    } catch (validationError) {
+      error = true;
+      console.warn(validationError.message);
+    }
+  }
+  return <Form.Field key={`field-${id}`} required={required} error={error}>
+    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
     <Input
       id={id}
       type={type}
@@ -67,8 +79,8 @@ export const ConcertoInput = ({
       }
       key={`input-${id}`}
     />
-  </Form.Field>
-);
+  </Form.Field>;
+};
 
 export const ConcertoRelationship = ({
   id,
@@ -105,32 +117,31 @@ export const ConcertoRelationship = ({
     ? relationshipProvider.getOptions(field) : null;
   const relationshipEditor = relationshipOptions
     ? <ConcertoDropdown
-  id={id}
-  value={value}
-  field={field}
-  readOnly={readOnly}
-  onFieldValueChange={onFieldValueChange}
-  options={relationshipOptions}
-  key={id}
-/>
+      id={id}
+      value={value}
+      readOnly={readOnly}
+      onFieldValueChange={onFieldValueChange}
+      options={relationshipOptions}
+      key={id}
+    />
     : <Input
-  type={type}
-  label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
-  labelPosition='right'
-  readOnly={readOnly}
-  value={relationship.getIdentifier()}
-  onChange={(e, data) => {
-    relationship.setIdentifier(data.value || 'resource1');
-    return onFieldValueChange(
-      { ...data, value: relationship.toURI() },
-      id
-    );
-  }}
-  key={id}
-/>;
+      type={type}
+      label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
+      labelPosition='right'
+      readOnly={readOnly}
+      value={relationship.getIdentifier()}
+      onChange={(e, data) => {
+        relationship.setIdentifier(data.value || 'resource1');
+        return onFieldValueChange(
+          { ...data, value: relationship.toURI() },
+          id
+        );
+      }}
+      key={id}
+    />;
 
   return <Form.Field required={required} key={`field-${id}`}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} key={`label-${id}`}/>
+    <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} key={`label-${id}`} />
     {relationshipEditor}
   </Form.Field>;
 };
@@ -145,7 +156,7 @@ export const ConcertoDateTime = ({
   skipLabel,
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={field.getName()} htmlFor={id} />
+    <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
     <DateTimeInput
       readOnly={readOnly}
       value={value}
@@ -167,29 +178,25 @@ export const ConcertoArray = ({
   addElement,
 }) => (
   <Form.Field key={`field-${id}`} required={required}>
-    <ConcertoLabel name={field.getName()} />
+    <ConcertoLabel name={applyDecoratorTitle(field)} />
     {children}
     <div className="arrayElement grid">
       <div />
-      <div>
-        <Button
-          key={`add-btn-${id}`}
-          basic
-          circular
-          aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
-          icon={<Popup
-            content='Add an element'
-            position='left center'
-            trigger={<Icon name='plus circle'/>}
-          />}
-          disabled={readOnly}
-          className='arrayButton'
-          onClick={e => {
-            addElement(e, id);
-            e.preventDefault();
-          }}
-        />
-      </div>
+      <Button
+        key={`add-btn-${id}`}
+        aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
+        icon={<Popup
+          content='Add an element'
+          position='left center'
+          trigger={<Icon name='add' />}
+        />}
+        disabled={readOnly}
+        className='arrayButton'
+        onClick={e => {
+          addElement(e, id);
+          e.preventDefault();
+        }}
+      />
     </div>
   </Form.Field>
 );
@@ -203,24 +210,22 @@ export const ConcertoArrayElement = ({
 }) => (
   <div className="arrayElement grid" key={`array-${id}`}>
     <div key={`array-children-${id}`}>{children}</div>
-      <Button
-        basic
-        circular
-        icon={<Popup
-          content='Remove this element'
-          position='left center'
-          key={`array-popup-${id}`}
-          trigger={<Icon name='minus circle' key={`array-icon-${id}`} />}
-        />}
-        aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
-        className='arrayButton'
-        disabled={readOnly}
-        onClick={e => {
-          removeElement(e, id, index);
-          e.preventDefault();
-        }}
-        key={`array-btn-${id}`}
-      />
+    <Button
+      icon={<Popup
+        content='Remove this element'
+        position='left center'
+        key={`array-popup-${id}`}
+        trigger={<Icon name='delete' key={`array-icon-${id}`} />}
+      />}
+      aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
+      className='arrayButton'
+      disabled={readOnly}
+      onClick={e => {
+        removeElement(e, id, index);
+        e.preventDefault();
+      }}
+      key={`array-btn-${id}`}
+    />
   </div>
 );
 
@@ -231,16 +236,17 @@ export const ConcertoDropdown = ({
   onFieldValueChange,
   options,
 }) => !readOnly ? (
-      <Select
-        fluid
-        value={value}
-        onChange={(e, data) => onFieldValueChange(data, id)}
-        key={`select-${id}`}
-        options={options}
-      />
+  <Select
+    clearable
+    fluid
+    value={value}
+    onChange={(e, data) => onFieldValueChange(data, id)}
+    key={`select-${id}`}
+    options={options}
+  />
 ) : (
-      <Input type="text" readOnly value={value} key={`input-${id}`} />
-);
+    <Input type="text" readOnly value={value} key={`input-${id}`} />
+  );
 
 const BinaryField = ({ className, children }) => (
   <div className={className}>

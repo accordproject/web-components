@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, boolean, object } from '@storybook/addon-knobs';
-import { ConcertoForm } from '@accordproject/ui-concerto';
+import { ConcertoForm, ModelBuilderVisitor } from '@accordproject/ui-concerto';
+import { ConcertoMetamodel, TestModel } from './concerto.models';
 
 export default {
   title: 'Concerto Form',
@@ -14,13 +15,14 @@ export default {
   }
 };
 
-export const Demo = () => {
+export const SimpleExample = () => {
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Person');
   const options = object('Options', {
     includeOptionalFields: true,
     includeSampleData: 'sample',
     updateExternalModels: true,
+    checkboxStyle: 'toggle',
     hiddenFields: [
       'org.accordproject.base.Transaction.transactionId',
       'org.accordproject.cicero.contract.AccordContract.contractId',
@@ -28,37 +30,15 @@ export const Demo = () => {
       'org.accordproject.cicero.contract.AccordContractState.stateId',
     ],
   });
-  const model = text('Model', `namespace test 
-
-  enum Country {
-    o USA
-    o UK
-    o France
-    o Sweden
-  }
-
-  participant Person identified by name {
-    o String name
-    o Address address
-    --> Person[] children optional
-  }
-
-  concept Address {
-    o String street
-    o String city
-    @FormEditor( "hide", true)
-    o String zipCode
-    o Country country
-  }
-  `);
+  const model = text('Model', TestModel);
 
   const handleValueChange = (json) => {
     return action("value changed")(json);
   };
 
   options.relationshipProvider = {
-    getOptions : (field) => {
-      if(field.getFullyQualifiedTypeName() === 'test.Person') {
+    getOptions: (field) => {
+      if (field.getFullyQualifiedTypeName() === 'test.Person') {
         return [{
           key: '001',
           value: 'test.Person#Marissa',
@@ -85,19 +65,55 @@ export const Demo = () => {
           value: 'test.Person#Rosalind',
           text: 'Rosalind Picard'
         }
-      ]
+        ]
       }
       else {
         return null;
-      }}
+      }
+    }
   };
-  
+
   return (
     <div style={{ padding: '10px' }}>
       <ConcertoForm
         readOnly={readOnly}
         models={[model]}
-        options = {options}
+        options={options}
+        type={type}
+        json={null}
+        onValueChange={handleValueChange}
+      />
+    </div>
+  )
+};
+
+
+export const ModelBuilder = () => {
+  const readOnly = boolean('Read-only', false);
+  const type = text('Type', 'concerto.metamodel.ModelFile');
+  const options = object('Options', {
+    includeOptionalFields: false,
+    updateExternalModels: false,
+    visitor: new ModelBuilderVisitor(),
+    customSelectors: {
+      types: [
+        { text: 'Contract', value: 'org.accordproject.cicero.contract.AccordContract' },
+        { text: 'Party', value: 'org.accordproject.cicero.contract.AccordParty' }
+      ]
+    }
+  });
+  const model = text('Model', ConcertoMetamodel);
+
+  const handleValueChange = (json) => {
+    return action("value changed")(json);
+  };
+
+  return (
+    <div style={{ padding: '10px' }}>
+      <ConcertoForm
+        readOnly={readOnly}
+        models={[model]}
+        options={options}
         type={type}
         json={null}
         onValueChange={handleValueChange}

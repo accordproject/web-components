@@ -42,27 +42,10 @@ import {
   findConcreteSubclass,
   getDefaultValue,
   toFieldType,
+  pathToString,
+  getCustomSelectDecoratorKey,
+  isHidden
 } from './utilities';
-
-const toPath = (paramsArr) => paramsArr.join('.');
-
-/**
- * Returns true if the field has the @FormEditor( "hide", true )
- * decorator
- * @param {object} field the Concerto field
- */
-function isHidden(field) {
-  const decorator = field.getDecorator('FormEditor');
-  if (decorator) {
-    const args = decorator.getArguments();
-    if (args.find((d, index) => d === 'hide'
-      && index < args[args.length - 1] && args[index + 1] === true)) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 /**
  * Convert the contents of a ModelManager to React compnents.
@@ -205,7 +188,7 @@ class ReactFormVisitor {
    * @private
    */
   visitEnumDeclaration(enumDeclaration, parameters) {
-    const key = toPath(parameters.stack);
+    const key = pathToString(parameters.stack);
     const value = get(parameters.json, key);
 
     return (
@@ -247,7 +230,7 @@ class ReactFormVisitor {
     }
 
     stack.push(field.getName());
-    const key = toPath(stack);
+    const key = pathToString(stack);
     const value = get(parameters.json, key);
     let component = null;
 
@@ -302,14 +285,44 @@ class ReactFormVisitor {
    * @private
    */
   visitSingletonField(field, parameters, props) {
-    const key = toPath(parameters.stack);
+    const key = pathToString(parameters.stack);
     const value = get(parameters.json, key);
     if (field.isPrimitive()) {
       if (field.getType() === 'Boolean') {
-        return <ConcertoCheckbox {...props} id={key} key={key} value={value} />;
+        const { checkboxStyle } = parameters;
+        return <ConcertoCheckbox
+          {...props}
+          id={key}
+          key={key}
+          value={value}
+          toggle={checkboxStyle === 'toggle' ? 'toggle' : undefined}
+        />;
       }
       if (toFieldType(field.getType()) === 'datetime-local') {
         return <ConcertoDateTime {...props} id={key} key={key} value={value} />;
+      }
+
+      // Allow the client application to override the definition of a basic input
+      // field with a Dropdown using their values
+      const customSelectorKey = getCustomSelectDecoratorKey(field);
+      if (customSelectorKey) {
+        const { customSelectors = {} } = parameters;
+        const options = customSelectors[customSelectorKey];
+        if (!options) {
+          throw new Error(`Custom selector key '${customSelectorKey}' not found`);
+        }
+        return <ConcertoDropdown
+          id={key}
+          key={`select-${key}`}
+          value={value}
+          readOnly={parameters.disabled}
+          onFieldValueChange={parameters.onFieldValueChange}
+          options={options.map(({ value, text }) => ({
+            key: `option-${value}`,
+            value,
+            text,
+          }))}
+        />;
       }
       return <ConcertoInput {...props} id={key} key={key} value={value} />;
     }
@@ -317,9 +330,17 @@ class ReactFormVisitor {
       field.getFullyQualifiedTypeName()
     );
     type = findConcreteSubclass(type);
+
+    const decorator = field.getDecorator('FormEditor');
+    let name = field.getName();
+    if (decorator) {
+      const args = decorator.getArguments();
+      name = args[1];
+    }
+
     return (
-      <Form.Field required={!field.isOptional()} key={field.getName()}>
-        <ConcertoLabel skip={props.skipLabel} name={field.getName()} key={field.getName()} />
+      <Form.Field required={!field.isOptional()} key={name}>
+        <ConcertoLabel skip={props.skipLabel} name={name} key={name} />
         {type.accept(this, parameters)}
       </Form.Field>
     );
@@ -348,7 +369,7 @@ class ReactFormVisitor {
     }
 
     stack.push(relationship.getName());
-    const key = toPath(stack);
+    const key = pathToString(stack);
     const value = get(parameters.json, key);
 
     const commonProps = {
@@ -384,7 +405,7 @@ class ReactFormVisitor {
           {value
             && value.map((_element, index) => {
               stack.push(index);
-              const key = toPath(stack);
+              const key = pathToString(stack);
               const value = get(parameters.json, key);
               const arrayComponent = (
                 <ConcertoArrayElement {...commonProps} key={`relationship-${key}-${index}`} index={index}>
@@ -397,7 +418,7 @@ class ReactFormVisitor {
         </ConcertoArray>
       );
     } else {
-      component = <ConcertoRelationship key={key} {...commonProps} value={value}/>;
+      component = <ConcertoRelationship key={key} {...commonProps} value={value} />;
     }
 
     stack.pop();

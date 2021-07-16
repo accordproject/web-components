@@ -17,6 +17,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 import set from 'lodash.set';
+import toPath from 'lodash.topath';
 import { Form, Dimmer, Loader, Message } from 'semantic-ui-react';
 import { ModelManager } from '@accordproject/concerto-core';
 
@@ -53,11 +54,11 @@ const ConcertoForm = (props) => {
   }, [onValueChange, value]);
 
   const addElement = useCallback((e, key, elementValue) => {
-    const array = get(value, key) || [];
-    const path = typeof key === 'string' ? [key] : key;
+    const pathKey = toPath(key);
+    const array = get(value, pathKey) || [];
     const valueClone = set(
       { ...value },
-      [...path, array.length],
+      [...pathKey, array.length],
       elementValue
     );
     setValue(valueClone);
@@ -144,9 +145,9 @@ const ConcertoForm = (props) => {
 
   if (loading) {
     return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
     );
   }
 
@@ -154,42 +155,42 @@ const ConcertoForm = (props) => {
     try {
       const form = generator.generateHTML(props.type, value);
       return (
-          <Form style={{ minHeight: '100px', ...props.style }}>
-            {form}
-          </Form>
+        <Form style={{ minHeight: '100px', ...props.style }}>
+          {form}
+        </Form>
       );
     } catch (err) {
       console.error(err);
       return (
-          <Message warning>
-            <Message.Header>
-              An error occured while generating this form
-            </Message.Header>
-            <pre>{err.message}</pre>
-          </Message>
+        <Message warning>
+          <Message.Header>
+            An error occured while generating this form
+          </Message.Header>
+          <pre>{err.message}</pre>
+        </Message>
       );
     }
   }
 
   if (!props.type) {
     return (
-    <Message warning>
-      <Message.Header>No model type specified</Message.Header>
-      <p>
-        Please specify a model type to display the form.
-      </p>
-    </Message>
+      <Message warning>
+        <Message.Header>No model type specified</Message.Header>
+        <p>
+          Please specify a model type to display the form.
+        </p>
+      </Message>
     );
   }
 
   return (
-      <Message warning>
-        <Message.Header>Invalid JSON instance provided</Message.Header>
-        <p>
-          The JSON value does not match the model type associated with this
-          form.
-        </p>
-      </Message>
+    <Message warning>
+      <Message.Header>Invalid JSON instance provided</Message.Header>
+      <p>
+        The JSON value does not match the model type associated with this
+        form.
+      </p>
+    </Message>
   );
 };
 
