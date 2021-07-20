@@ -106,7 +106,7 @@ export const ModelBuilder = () => {
   const model = text('Model', ConcertoMetamodel);
 
   const handleValueChange = async (json) => {
-    await action("new cto")(MetaModel.modelFromMetaModel(json));
+    await action("new cto")(MetaModel.ctoFromMetaModel(json, false));
     await action("value changed")(json);
   };
 
