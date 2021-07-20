@@ -74,7 +74,7 @@ concept Decorator {
 concept Identified {
 }
 
-concept IdenfiedBy extends Identified {
+concept IdentifiedBy extends Identified {
   o String name
 }
 
@@ -110,26 +110,6 @@ concept ConceptDeclaration extends ClassDeclaration {
 concept EnumDeclaration extends ClassDeclaration {
 }
 
-concept StringDefault {
-  o String value
-}
-
-concept BooleanDefault {
-  o Boolean value
-}
-
-concept IntegerDefault {
-  o Integer value
-}
-
-concept LongDefault {
-  o Long value
-}
-
-concept DoubleDefault {
-  o Double value
-}
-
 @FormEditor("defaultSubclass","concerto.metamodel.StringFieldDeclaration")
 abstract concept FieldDeclaration {
   // TODO Allow regex modifiers e.g. //ui
@@ -144,19 +124,24 @@ abstract concept FieldDeclaration {
   o Decorator[] decorators optional
 }
 
-concept ObjectFieldDeclaration extends FieldDeclaration {
-  @FormEditor("hide", true)
-  o StringDefault defaultValue optional
+concept EnumFieldDeclaration extends FieldDeclaration {
+}
+
+concept RelationshipDeclaration extends FieldDeclaration {
   @FormEditor("title", "Type Name", "selectOptions", "types")
   o TypeIdentifier type
 }
 
-concept EnumFieldDeclaration extends FieldDeclaration {
+concept ObjectFieldDeclaration extends FieldDeclaration {
+  @FormEditor("hide", true)
+  o String defaultValue optional
+  @FormEditor("title", "Type Name", "selectOptions", "types")
+  o TypeIdentifier type
 }
 
 concept BooleanFieldDeclaration extends FieldDeclaration {
   @FormEditor("hide", true)
-  o BooleanDefault defaultValue optional
+  o Boolean defaultValue optional
 }
 
 concept DateTimeFieldDeclaration extends FieldDeclaration {
@@ -164,7 +149,7 @@ concept DateTimeFieldDeclaration extends FieldDeclaration {
 
 concept StringFieldDeclaration extends FieldDeclaration {
   @FormEditor("hide", true)
-  o StringDefault defaultValue optional
+  o String defaultValue optional
   @FormEditor("hide", true)
   o StringRegexValidator validator optional
 }
@@ -173,9 +158,21 @@ concept StringRegexValidator {
   o String regex
 }
 
+concept DoubleFieldDeclaration extends FieldDeclaration {
+  o Double defaultValue optional
+  o DoubleDomainValidator validator optional
+}
+
 concept DoubleDomainValidator {
   o Double lower optional
   o Double upper optional
+}
+
+concept IntegerFieldDeclaration extends FieldDeclaration {
+  @FormEditor("hide", true)
+  o Integer defaultValue optional
+  @FormEditor("hide", true)
+  o IntegerDomainValidator validator optional
 }
 
 concept IntegerDomainValidator {
@@ -183,33 +180,16 @@ concept IntegerDomainValidator {
   o Integer upper optional
 }
 
-concept LongDomainValidator {
-  o Long lower optional
-  o Long upper optional
-}
-
-concept DoubleFieldDeclaration extends FieldDeclaration {
-  o DoubleDefault defaultValue optional
-  o DoubleDomainValidator validator optional
-}
-
-concept IntegerFieldDeclaration extends FieldDeclaration {
-  @FormEditor("hide", true)
-  o IntegerDefault defaultValue optional
-  @FormEditor("hide", true)
-  o IntegerDomainValidator validator optional
-}
-
 concept LongFieldDeclaration extends FieldDeclaration {
   @FormEditor("hide", true)
-  o LongDefault defaultValue optional
+  o Long defaultValue optional
   @FormEditor("hide", true)
   o LongDomainValidator validator optional
 }
 
-concept RelationshipDeclaration extends FieldDeclaration {
-  @FormEditor("title", "Type Name", "selectOptions", "types")
-  o TypeIdentifier type
+concept LongDomainValidator {
+  o Long lower optional
+  o Long upper optional
 }
 
 abstract concept Import {
