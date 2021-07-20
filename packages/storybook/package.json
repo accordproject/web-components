@@ -3,6 +3,7 @@
   "version": "0.98.0",
   "private": true,
   "dependencies": {
+    "@accordproject/concerto-core": "1.0.5-20210719155343",
     "@accordproject/cicero-core": "0.22.0",
     "@accordproject/markdown-slate": "0.13.0",
     "@accordproject/markdown-transform": "0.13.0",
