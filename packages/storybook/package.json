@@ -3,7 +3,7 @@
   "version": "0.98.0",
   "private": true,
   "dependencies": {
-    "@accordproject/concerto-core": "1.0.5-20210719155343",
+    "@accordproject/concerto-core": "1.0.5-20210721165725",
     "@accordproject/cicero-core": "0.22.0",
     "@accordproject/markdown-slate": "0.13.0",
     "@accordproject/markdown-transform": "0.13.0",
@@ -49,7 +49,7 @@
     "semantic-ui-css": "^2.4.1",
     "slate": "^0.63.0",
     "slate-history": "^0.62.0",
-    "slate-react": "^0.63.0",
+    "slate-react": "^0.65.0",
     "styled-components": "^5.1.0",
     "stylelint": "13.3.3",
     "stylelint-config-standard": "20.0.0",
