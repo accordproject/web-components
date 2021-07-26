@@ -16,6 +16,35 @@ export default {
   }
 };
 
+const initialJson = null;
+
+// const initialJson = {
+//   "$class": "concerto.metamodel.ModelFile",
+//   "namespace": "org.litle.test",
+//   "imports": [],
+//   "declarations": [
+//     {
+//       "$class": "concerto.metamodel.ConceptDeclaration",
+//       "isAbstract": false,
+//       "name": "Person",
+//       "fields": [
+//         {
+//           "$class": "concerto.metamodel.StringFieldDeclaration",
+//           "name": "name",
+//           "isArray": false,
+//           "isOptional": false
+//         }, 
+//         {
+//           "$class": "concerto.metamodel.IntegerFieldDeclaration",
+//           "name": "age",
+//           "isArray": false,
+//           "isOptional": false
+//         }
+//       ]
+//     }
+//   ]
+// };
+
 export const SimpleExample = () => {
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Person');
@@ -117,7 +146,7 @@ export const ModelBuilder = () => {
         models={[model]}
         options={options}
         type={type}
-        json={null}
+        json={initialJson}
         onValueChange={handleValueChange}
       />
     </div>

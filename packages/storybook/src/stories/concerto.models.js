@@ -59,6 +59,8 @@ concept DecoratorBoolean extends DecoratorLiteral {
 concept TypeIdentifier {
   @FormEditor("selectOptions", "types")
   o String name default="Concept"
+  @FormEditor( "hide", true)
+  o String fullyQualifiedName optional
 }
 
 concept DecoratorIdentifier extends DecoratorLiteral {
@@ -201,7 +203,7 @@ concept ImportAll extends Import {
 }
 
 concept ImportType extends Import {
-  o TypeIdentifier identifier
+  o String name
 }
 
 concept ModelFile {
