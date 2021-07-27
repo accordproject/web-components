@@ -11,9 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ConcertoFormWrapper from './components/concertoFormWrapper';
 import ReactFormVisitor from './reactformvisitor';
 import ModelBuilderVisitor from './modelBuilderVisitor';
+import ConcertoFormWrapper from './components/concertoFormWrapper';
+import ConcertoModelBuilder from './components/concertoModelBuilder';
 import * as Utilities from './utilities';
 
-export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor, ModelBuilderVisitor, Utilities };
+export { ConcertoFormWrapper as ConcertoForm, ReactFormVisitor, ModelBuilderVisitor, Utilities, ConcertoModelBuilder };

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, boolean, object } from '@storybook/addon-knobs';
-import { ConcertoForm, ModelBuilderVisitor } from '@accordproject/ui-concerto';
-import { ConcertoMetamodel, TestModel } from './concerto.models';
+import { ConcertoForm, ConcertoModelBuilder } from '@accordproject/ui-concerto';
+import { TestModel } from './concerto.models';
 import { MetaModel } from '@accordproject/concerto-core';
 
 export default {
@@ -15,35 +15,6 @@ export default {
     },
   }
 };
-
-const initialJson = null;
-
-// const initialJson = {
-//   "$class": "concerto.metamodel.ModelFile",
-//   "namespace": "org.litle.test",
-//   "imports": [],
-//   "declarations": [
-//     {
-//       "$class": "concerto.metamodel.ConceptDeclaration",
-//       "isAbstract": false,
-//       "name": "Person",
-//       "fields": [
-//         {
-//           "$class": "concerto.metamodel.StringFieldDeclaration",
-//           "name": "name",
-//           "isArray": false,
-//           "isOptional": false
-//         }, 
-//         {
-//           "$class": "concerto.metamodel.IntegerFieldDeclaration",
-//           "name": "age",
-//           "isArray": false,
-//           "isOptional": false
-//         }
-//       ]
-//     }
-//   ]
-// };
 
 export const SimpleExample = () => {
   const readOnly = boolean('Read-only', false);
@@ -124,7 +95,6 @@ export const ModelBuilder = () => {
   const options = object('Options', {
     includeOptionalFields: false,
     updateExternalModels: false,
-    visitor: new ModelBuilderVisitor(),
     customSelectors: {
       types: [
         { text: 'Contract', value: 'Contract' },
@@ -132,21 +102,32 @@ export const ModelBuilder = () => {
       ]
     }
   });
-  const model = text('Model', ConcertoMetamodel);
 
+  const cto = text('Initial CTO', TestModel);
+  const json = MetaModel.ctoToMetaModel(cto);
   const handleValueChange = async (json) => {
-    await action("new cto")(MetaModel.ctoFromMetaModel(json, false));
-    await action("value changed")(json);
+    let newCto;
+    try {
+      newCto = MetaModel.ctoFromMetaModel(json, true);
+      await action("metamodel change")(json);
+    } catch (error) {
+      await action("Invalid metamodel")(json);
+    }
+    try {
+      const roundtripForSafety = MetaModel.ctoToMetaModel(newCto);
+      await action("New CTO")(newCto);
+    } catch (error) {
+      await action("Invalid CTO")(`${newCto}\n[${error.message}]`);
+    }
   };
 
   return (
     <div style={{ padding: '10px' }}>
-      <ConcertoForm
+      <ConcertoModelBuilder
         readOnly={readOnly}
-        models={[model]}
         options={options}
         type={type}
-        json={initialJson}
+        json={json}
         onValueChange={handleValueChange}
       />
     </div>
