@@ -104,7 +104,12 @@ export const ModelBuilder = () => {
   });
 
   const cto = text('Initial CTO', TestModel);
-  const json = MetaModel.ctoToMetaModel(cto);
+  let json = null;
+  try {
+    json = MetaModel.ctoToMetaModel(cto);
+  } catch (error) {
+      console.log(`Invalid CTO: [${error.message}]`);
+  }
   const handleValueChange = async (json) => {
     let newCto;
     try {
@@ -117,7 +122,7 @@ export const ModelBuilder = () => {
       const roundtripForSafety = MetaModel.ctoToMetaModel(newCto);
       await action("New CTO")(newCto);
     } catch (error) {
-      await action("Invalid CTO")(`${newCto}\n[${error.message}]`);
+      await action("Invalid CTO")(`[${error.message}]\n${newCto}`);
     }
   };
 
