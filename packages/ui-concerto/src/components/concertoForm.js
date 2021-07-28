@@ -97,21 +97,6 @@ const ConcertoForm = (props) => {
   useEffect(() => {
     setLoading(true);
     const modelManager = new ModelManager();
-    // TODO Refactor this to an option to make this independent of Cicero
-    modelManager.addModelFile(
-      `namespace org.accordproject.base
-    abstract asset Asset {  }
-    abstract participant Participant {  }
-    abstract transaction Transaction identified by transactionId {
-      o String transactionId
-    }
-    abstract event Event identified by eventId {
-      o String eventId
-    }`,
-      'org.accordproject.base.cto',
-      false,
-      true
-    );
     models.forEach((model, idx) => {
       try {
         modelManager.addModelFile(model, `model-${idx}`, true);
