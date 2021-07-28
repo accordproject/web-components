@@ -233,6 +233,7 @@ export const ConcertoDropdown = ({
   id,
   readOnly,
   value,
+  text,
   onFieldValueChange,
   options,
 }) => !readOnly ? (
@@ -245,7 +246,7 @@ export const ConcertoDropdown = ({
     options={options}
   />
 ) : (
-    <Input type="text" readOnly value={value} key={`input-${id}`} />
+    <Input type="text" readOnly value={text} key={`input-${id}`} />
   );
 
 const BinaryField = ({ className, children }) => (
