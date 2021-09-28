@@ -26,13 +26,13 @@ import {
 } from './utilities';
 
 const declarationTypes = [
-  { value: 'concerto.metamodel.StringFieldDeclaration', text: 'Text' },
-  { value: 'concerto.metamodel.IntegerFieldDeclaration', text: 'Whole Number' },
-  { value: 'concerto.metamodel.BooleanFieldDeclaration', text: 'Boolean' },
-  { value: 'concerto.metamodel.DateTimeFieldDeclaration', text: 'Date' },
-  { value: 'concerto.metamodel.DoubleFieldDeclaration', text: 'Decimal' },
-  { value: 'concerto.metamodel.ObjectFieldDeclaration', text: 'Object' },
-  { value: 'concerto.metamodel.RelationshipDeclaration', text: 'Relationship' },
+  { value: 'concerto.metamodel.StringProperty', text: 'Text' },
+  { value: 'concerto.metamodel.IntegerProperty', text: 'Whole Number' },
+  { value: 'concerto.metamodel.BooleanProperty', text: 'Boolean' },
+  { value: 'concerto.metamodel.DateTimeProperty', text: 'Date' },
+  { value: 'concerto.metamodel.DoubleProperty', text: 'Decimal' },
+  { value: 'concerto.metamodel.ObjectProperty', text: 'Object' },
+  { value: 'concerto.metamodel.RelationshipProperty', text: 'Relationship' },
 ];
 
 /**
@@ -72,7 +72,7 @@ class ModelBuilderVisitor extends ReactFormVisitor {
     const props = declaration.getProperties();
     const className = props.find(({ name }) => name === 'name');
     const superType = props.find(({ name }) => name === 'superType');
-    const fields = props.find(({ name }) => name === 'fields');
+    const properties = props.find(({ name }) => name === 'properties');
 
     return <div>
       <div className='mbClassNameDeclaration'>
@@ -80,7 +80,7 @@ class ModelBuilderVisitor extends ReactFormVisitor {
         <div>{superType.accept(this, parameters)}</div>
       </div>
       <div className='mbFieldDeclarations'>
-        {fields.accept(this, parameters)}
+        {properties.accept(this, parameters)}
       </div>
     </div>;
   }
@@ -97,8 +97,8 @@ class ModelBuilderVisitor extends ReactFormVisitor {
     const value = get(parameters.json, key);
 
     const hasTypeProperty = name => [
-      'concerto.metamodel.ObjectFieldDeclaration',
-      'concerto.metamodel.RelationshipDeclaration'
+      'concerto.metamodel.ObjectProperty',
+      'concerto.metamodel.RelationshipProperty'
     ].includes(name);
 
     // Create a new concept
