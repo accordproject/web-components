@@ -70,14 +70,14 @@ class ModelBuilderVisitor extends ReactFormVisitor {
 
   visitMetaConceptDeclaration(declaration, parameters) {
     const props = declaration.getProperties();
-    const className = props.find(({ name }) => name === 'name');
+    const identifier = props.find(({ name }) => name === 'name');
     const superType = props.find(({ name }) => name === 'superType');
     const properties = props.find(({ name }) => name === 'properties');
 
     return <div>
-      <div className='mbClassNameDeclaration'>
-        <div>{className.accept(this, parameters)}</div>
-        <div>{superType.accept(this, parameters)}</div>
+      <div className='mbIdentifierDeclaration'>
+        <div>{identifier.accept(this, parameters)}</div>
+        {superType && <div>{superType.accept(this, parameters)}</div>}
       </div>
       <div className='mbFieldDeclarations'>
         {properties.accept(this, parameters)}
