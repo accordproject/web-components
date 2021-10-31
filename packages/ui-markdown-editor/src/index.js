@@ -1,6 +1,4 @@
-import React, {
-  useCallback, useMemo, useState
-} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { CiceroMarkTransformer } from '@accordproject/markdown-cicero';
 import { HtmlTransformer } from '@accordproject/markdown-html';
 import { SlateTransformer } from '@accordproject/markdown-slate';
@@ -14,14 +12,16 @@ import { BUTTON_ACTIVE, BLOCK_STYLE } from './utilities/constants';
 import withSchema from './utilities/schema';
 import Element from './components';
 import Leaf from './components/Leaf';
-import { toggleMark, toggleBlock, insertThematicBreak,
-  insertLinebreak, insertHeadingbreak, isBlockHeading } from './utilities/toolbarHelpers';
+import { toggleMark, toggleBlock, insertThematicBreak, 
+  insertLineBreak, isBlockHeading, insertHeadingBreak, insertParagraphBreak
+} from './utilities/toolbarHelpers';
 import { withImages, insertImage } from './plugins/withImages';
 import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
 import { withLists } from './plugins/withLists';
 import FormatBar from './FormattingToolbar';
 import { withText } from './plugins/withText';
+import { HEADINGBREAK } from './utilities/schema';
 
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
@@ -85,8 +85,9 @@ export const MarkdownEditor = (props) => {
       setShowLinkModal(true);
     },
     horizontal_rule: (code) => insertThematicBreak(editor, code),
-    linebreak: (code) => insertLinebreak(editor, code),
-    headingbreak: () => insertHeadingbreak(editor)
+    linebreak: () => insertLineBreak(editor),
+    paragraph_break: () => insertParagraphBreak(editor),
+    headingbreak: () => insertHeadingBreak(editor)
   };
 
   /**
@@ -118,15 +119,17 @@ export const MarkdownEditor = (props) => {
       return;
     }
 
-    if (event.key === 'Enter' && !isBlockHeading(editor)) {
-      return;
-    }
-
     const hotkeys = Object.keys(HOTKEYS);
     hotkeys.forEach((hotkey) => {
       if (isHotkey(hotkey, event)) {
         event.preventDefault();
         const { code, type } = HOTKEYS[hotkey];
+        // if linebreak happens form a heading block then we run the insertHeadingBreak function
+        // otherwise it would be a linebreak every time
+        if(type === 'paragraph_break' && isBlockHeading(editor)){
+          hotkeyActions[HEADINGBREAK]()
+          return;
+        }
         hotkeyActions[type](code);
       }
     });

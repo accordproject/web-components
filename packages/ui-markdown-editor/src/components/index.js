@@ -7,7 +7,7 @@ import { HorizontalRule } from './Span';
 import {
   PARAGRAPH, LINK, IMAGE, H1, H2, H3, H4, H5, H6, HR,
   CODE_BLOCK, HTML_BLOCK, BLOCK_QUOTE, UL_LIST, OL_LIST, LIST_ITEM,
-  HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS
+  HTML_INLINE, HEADINGS, LINEBREAK, PARAGRAPH_BREAK
 } from '../utilities/schema';
 import {
   H1_STYLING,
@@ -40,11 +40,13 @@ const Element = (props) => {
     [H4]: () => (<Heading id={headingId} as="h4" style={H4_STYLING} {...attributes}>{children}</Heading>),
     [H5]: () => (<Heading id={headingId} as="h5" style={H5_STYLING} {...attributes}>{children}</Heading>),
     [H6]: () => (<Heading id={headingId} as="h6" style={H6_STYLING} {...attributes}>{children}</Heading>),
-    [SOFTBREAK]: () => (<span className={SOFTBREAK} {...attributes}> {children}</span>),
     [LINEBREAK]: () => (<span {...attributes}>
       <span contentEditable={false} style={{ userSelect: 'none' }}>
         <br />
       </span>
+      {children}
+    </span>),
+    [PARAGRAPH_BREAK]: () => (<span {...attributes}>
       {children}
     </span>),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
