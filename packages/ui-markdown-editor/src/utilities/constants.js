@@ -4,7 +4,7 @@ const MISC_CONSTANTS = {
   DROPDOWN_NORMAL: 'Normal',
 };
 
-export const SPACE_BAR = " ";
+export const SPACE_CHARACTER = " ";
 
 export const BUTTON_COLORS = {
   BACKGROUND_INACTIVE: '#FFFFFF',

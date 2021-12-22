@@ -1,7 +1,7 @@
 import { Node } from 'slate';
 import { isBlockHeading } from '../utilities/toolbarHelpers';
 import { matchCases } from "utilities/matchCases";
-import { SPACE_BAR } from "utilities/constants";
+import { SPACE_CHARACTER } from "utilities/constants";
 
 export const withText = (editor) => {
 	const { insertText } = editor;
@@ -15,10 +15,8 @@ export const withText = (editor) => {
 		const currentLine = currentNode.text
 
 		onkeyup = (ev) => {
-			switch (ev.key) {
-  	    case SPACE_BAR:
-					matchCases(editor, currentLine);
-				break;
+			if(ev.key === SPACE_CHARACTER){
+				matchCases(editor, currentLine);
 			}
 		}	
 	}
