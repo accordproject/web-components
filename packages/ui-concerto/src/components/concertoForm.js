@@ -66,22 +66,33 @@ const ConcertoForm = (props) => {
   }, [onValueChange, value]);
 
   // Default values which can be overridden by parent components
-  const generatorOptions = React.useMemo(() => ({
-    includeOptionalFields: true,
-    includeSampleData: 'sample',
-    disabled: props.readOnly,
-    visitor: new ReactFormVisitor(),
-    onFieldValueChange: (e, key) => {
-      onFieldValueChange(e, key);
-    },
-    addElement: (e, key, field) => {
-      addElement(e, key, field);
-    },
-    removeElement: (e, key, index) => {
-      removeElement(e, key, index);
-    },
-    ...options,
-  }), [addElement, onFieldValueChange, removeElement, options, props.readOnly]);
+  const generatorOptions = React.useMemo(
+    () => ({
+      includeOptionalFields: true,
+      includeSampleData: "sample",
+      disabled: props.readOnly,
+      textOnly: props.textOnly,
+      visitor: new ReactFormVisitor(),
+      onFieldValueChange: (e, key) => {
+        onFieldValueChange(e, key);
+      },
+      addElement: (e, key, field) => {
+        addElement(e, key, field);
+      },
+      removeElement: (e, key, index) => {
+        removeElement(e, key, index);
+      },
+      ...options,
+    }),
+    [
+      addElement,
+      onFieldValueChange,
+      removeElement,
+      options,
+      props.readOnly,
+      props.textOnly,
+    ]
+  );
 
   const generator = React.useMemo(() => {
     if (modelManager) {
@@ -184,7 +195,8 @@ ConcertoForm.defaultProps = {
   onValueChange: () => true,
   options: {},
   readOnly: false,
-  style: {}
+  textOnly: false,
+  style: {},
 };
 
 ConcertoForm.propTypes = {
@@ -194,7 +206,8 @@ ConcertoForm.propTypes = {
   onValueChange: PropTypes.func.isRequired,
   options: PropTypes.object,
   readOnly: PropTypes.bool,
-  style: PropTypes.object
+  textOnly: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 export default ConcertoForm;

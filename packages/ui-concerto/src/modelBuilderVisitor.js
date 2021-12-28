@@ -160,15 +160,20 @@ class ModelBuilderVisitor extends ReactFormVisitor {
     // For read only, we also need the alternative text for the Input component if it exists
     const altText = declarationTypes.find(({ value: declValue }) => declValue === value.$class);
     return (
-      <div className='mbObjectDeclaration' key={declaration.getName().toLowerCase()}>
+      <div
+        className="mbObjectDeclaration"
+        key={declaration.getName().toLowerCase()}
+      >
         <div>{name.accept(this, parameters)}</div>
-        <Form.Field required={true} key={'$class'}>
-          <ConcertoLabel name='type' htmlFor={`${key}.$class`} />
+        <Form.Field required={true} key={"$class"}>
+          <ConcertoLabel name="type" htmlFor={`${key}.$class`} />
           <ConcertoDropdown
             id={`${key}.$class`}
             key={key}
             value={value.$class}
             text={altText ? altText.text : value.$class}
+            displayText={altText ? altText.text : value.$class}
+            textOnly={parameters.textOnly}
             readOnly={parameters.disabled}
             onFieldValueChange={onFieldValueChange}
             options={declarationTypes.map(({ value, text }) => ({

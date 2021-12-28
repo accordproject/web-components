@@ -196,10 +196,12 @@ class ReactFormVisitor {
         id={key}
         key={`enum-${key}`}
         value={value}
+        displayText={value}
         field={enumDeclaration}
         readOnly={parameters.disabled}
+        textOnly={parameters.textOnly}
         onFieldValueChange={parameters.onFieldValueChange}
-        options={enumDeclaration.getProperties().map(property => ({
+        options={enumDeclaration.getProperties().map((property) => ({
           key: `option-${property.getName()}`,
           value: property.getName(),
           text: property.getName(),
@@ -219,6 +221,7 @@ class ReactFormVisitor {
     const {
       skipLabel,
       disabled,
+      textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -242,6 +245,7 @@ class ReactFormVisitor {
       type: toFieldType(field.getType()),
       required: !field.isOptional(),
       readOnly: disabled,
+      textOnly: textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -311,18 +315,22 @@ class ReactFormVisitor {
         if (!options) {
           throw new Error(`Custom selector key '${customSelectorKey}' not found`);
         }
-        return <ConcertoDropdown
-          id={key}
-          key={`select-${key}`}
-          value={value}
-          readOnly={parameters.disabled}
-          onFieldValueChange={parameters.onFieldValueChange}
-          options={options.map(({ value, text }) => ({
-            key: `option-${value}`,
-            value,
-            text,
-          }))}
-        />;
+        return (
+          <ConcertoDropdown
+            id={key}
+            key={`select-${key}`}
+            value={value}
+            displayText={value}
+            readOnly={parameters.disabled}
+            textOnly={parameters.textOnly}
+            onFieldValueChange={parameters.onFieldValueChange}
+            options={options.map(({ value, text }) => ({
+              key: `option-${value}`,
+              value,
+              text,
+            }))}
+          />
+        );
       }
       return <ConcertoInput {...props} id={key} key={key} value={value} />;
     }
@@ -357,6 +365,7 @@ class ReactFormVisitor {
     const {
       skipLabel,
       disabled,
+      textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -380,6 +389,7 @@ class ReactFormVisitor {
       type: 'text',
       required: !relationship.isOptional(),
       readOnly: disabled,
+      textOnly: textOnly,
       addElement,
       removeElement,
       onFieldValueChange,

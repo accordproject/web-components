@@ -34,6 +34,7 @@ class FormGenerator {
    * 'sample' uses random well-typed values
    * 'empty' provides sensible empty values
    * @param {object} options.disabled - if true, all form fields will be disabled
+   * @param {object} options.textOnly - if true, all form fields will appear as labels
    * @param {object} options.visitor - a class that extends HTMLFormVisitor
    *  that generates HTML, defaults to HTMLFormVisitor
    * @param {object} options.customClasses - a custom CSS classes that can be
@@ -44,7 +45,7 @@ class FormGenerator {
    */
   constructor(modelManager, options) {
     this.options = {
-      includeSampleData: 'empty',
+      includeSampleData: "empty",
       updateExternalModels: false,
       ...options,
     };
@@ -61,12 +62,13 @@ class FormGenerator {
     return this.modelManager
       .getModelFiles()
       .reduce(
-        (classDeclarations, modelFile) => classDeclarations
-          .concat(modelFile.getAllDeclarations()),
+        (classDeclarations, modelFile) =>
+          classDeclarations.concat(modelFile.getAllDeclarations()),
         []
       )
       .filter(
-        classDeclaration => !classDeclaration.isEnum() && !classDeclaration.isAbstract()
+        (classDeclaration) =>
+          !classDeclaration.isEnum() && !classDeclaration.isAbstract()
       );
   }
 
@@ -111,17 +113,17 @@ class FormGenerator {
 
     if (classDeclaration.isEnum()) {
       throw new Error(
-        'Cannot generate JSON for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
+        "Cannot generate JSON for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration"
       );
     }
 
     if (classDeclaration.isAbstract()) {
-      throw new Error('Cannot generate JSON for abstract types');
+      throw new Error("Cannot generate JSON for abstract types");
     }
 
     if (!this.options.includeSampleData) {
       throw new Error(
-        'Cannot generate form values when the component is configured not to generate sample data.'
+        "Cannot generate form values when the component is configured not to generate sample data."
       );
     }
 
@@ -135,7 +137,7 @@ class FormGenerator {
     const resource = this.factory.newResource(
       ns,
       name,
-      classDeclaration.isIdentified() ? 'resource1' : null,
+      classDeclaration.isIdentified() ? "resource1" : null,
       factoryOptions
     );
     return this.serializer.toJSON(resource);
@@ -155,12 +157,12 @@ class FormGenerator {
 
     if (classDeclaration.isEnum()) {
       throw new Error(
-        'Cannot generate forms for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration'
+        "Cannot generate forms for an enumerated type directly, the type should be contained in Concept, Asset, Transaction or Event declaration"
       );
     }
 
     if (classDeclaration.isAbstract()) {
-      throw new Error('Cannot generate forms for abstract types');
+      throw new Error("Cannot generate forms for abstract types");
     }
 
     const params = {

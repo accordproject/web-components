@@ -24,20 +24,26 @@ export const ConcertoLabel = ({ skip, name, htmlFor }) => !skip
 export const ConcertoCheckbox = ({
   id,
   field,
+  textOnly,
   readOnly,
   required,
   value,
   onFieldValueChange,
   skipLabel,
-  toggle
+  toggle,
 }) => (
   <Form.Field required={required}>
-    <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
+    <ConcertoLabel
+      skip={skipLabel}
+      name={applyDecoratorTitle(field)}
+      htmlFor={id}
+    />
     <Checkbox
       toggle={toggle}
       fitted
       id={id}
       readOnly={readOnly}
+      disabled={textOnly}
       checked={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
       key={`checkbox-${id}`}
@@ -49,6 +55,7 @@ export const ConcertoInput = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   value,
   onFieldValueChange,
@@ -65,27 +72,45 @@ export const ConcertoInput = ({
       console.warn(validationError.message);
     }
   }
-  return <Form.Field key={`field-${id}`} required={required} error={error}>
-    <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
-    <Input
-      id={id}
-      type={type}
-      readOnly={readOnly}
-      value={value}
-      onChange={(e, data) => onFieldValueChange(
-        { ...data, value: parseValue(data.value, field.getType()) },
-        id
-      )
-      }
-      key={`input-${id}`}
-    />
-  </Form.Field>;
+  return (
+    <Form.Field key={`field-${id}`} required={required} error={error}>
+      <ConcertoLabel
+        key={`label-${id}`}
+        skip={skipLabel}
+        name={applyDecoratorTitle(field)}
+        htmlFor={id}
+      />
+      {!textOnly ? (
+        <Input
+          id={id}
+          type={type}
+          readOnly={readOnly}
+          value={value}
+          onChange={(e, data) =>
+            onFieldValueChange(
+              { ...data, value: parseValue(data.value, field.getType()) },
+              id
+            )
+          }
+          key={`input-${id}`}
+        />
+      ) : (
+        <div className="textOnly">
+          <label value={value} key={`input-${id}`}>
+            {" "}
+            {value}{" "}
+          </label>
+        </div>
+      )}
+    </Form.Field>
+  );
 };
 
 export const ConcertoRelationship = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   value,
   onFieldValueChange,
@@ -104,6 +129,7 @@ export const ConcertoRelationship = ({
     return ConcertoInput({
       id,
       field,
+      textOnly,
       readOnly,
       required,
       value,
@@ -115,30 +141,32 @@ export const ConcertoRelationship = ({
 
   const relationshipOptions = (relationshipProvider && relationshipProvider.getOptions)
     ? relationshipProvider.getOptions(field) : null;
-  const relationshipEditor = relationshipOptions
-    ? <ConcertoDropdown
+  const relationshipEditor = relationshipOptions ? (
+    <ConcertoDropdown
       id={id}
       value={value}
+      displayText={value}
       readOnly={readOnly}
+      textOnly={textOnly}
       onFieldValueChange={onFieldValueChange}
       options={relationshipOptions}
       key={id}
     />
-    : <Input
+  ) : (
+    <Input
       type={type}
       label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
-      labelPosition='right'
+      labelPosition="right"
       readOnly={readOnly}
+      textOnly={textOnly}
       value={relationship.getIdentifier()}
       onChange={(e, data) => {
-        relationship.setIdentifier(data.value || 'resource1');
-        return onFieldValueChange(
-          { ...data, value: relationship.toURI() },
-          id
-        );
+        relationship.setIdentifier(data.value || "resource1");
+        return onFieldValueChange({ ...data, value: relationship.toURI() }, id);
       }}
       key={id}
-    />;
+    />
+  );
 
   return <Form.Field required={required} key={`field-${id}`}>
     <ConcertoLabel skip={skipLabel} name={applyDecoratorTitle(field)} key={`label-${id}`} />
@@ -173,6 +201,7 @@ export const ConcertoArray = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   children,
   addElement,
@@ -180,74 +209,100 @@ export const ConcertoArray = ({
   <Form.Field key={`field-${id}`} required={required}>
     <ConcertoLabel name={applyDecoratorTitle(field)} />
     {children}
-    <div className="arrayElement grid">
-      <div />
-      <Button
-        key={`add-btn-${id}`}
-        aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
-        icon={<Popup
-          content='Add an element'
-          position='left center'
-          trigger={<Icon name='add' />}
-        />}
-        disabled={readOnly}
-        className='arrayButton'
-        onClick={e => {
-          addElement(e, id);
-          e.preventDefault();
-        }}
-      />
-    </div>
+    {!textOnly ? (
+      <div className="arrayElement grid">
+        <div />
+        <Button
+          key={`add-btn-${id}`}
+          aria-label={`Add an element to ${normalizeLabel(`${id}`)}`}
+          icon={
+            <Popup
+              content="Add an element"
+              position="left center"
+              trigger={<Icon name="add" />}
+            />
+          }
+          disabled={readOnly || textOnly}
+          className="arrayButton"
+          onClick={(e) => {
+            addElement(e, id);
+            e.preventDefault();
+          }}
+        />
+      </div>
+    ) : null}
   </Form.Field>
 );
 
 export const ConcertoArrayElement = ({
   id,
   readOnly,
+  textOnly,
   children,
   index,
   removeElement,
 }) => (
   <div className="arrayElement grid" key={`array-${id}`}>
     <div key={`array-children-${id}`}>{children}</div>
-    <Button
-      icon={<Popup
-        content='Remove this element'
-        position='left center'
-        key={`array-popup-${id}`}
-        trigger={<Icon name='delete' key={`array-icon-${id}`} />}
-      />}
-      aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
-      className='arrayButton'
-      disabled={readOnly}
-      onClick={e => {
-        removeElement(e, id, index);
-        e.preventDefault();
-      }}
-      key={`array-btn-${id}`}
-    />
+    {!textOnly ? (
+      <Button
+        icon={
+          <Popup
+            content="Remove this element"
+            position="left center"
+            key={`array-popup-${id}`}
+            trigger={<Icon name="delete" key={`array-icon-${id}`} />}
+          />
+        }
+        aria-label={`Remove element ${index} from ${normalizeLabel(`${id}`)}`}
+        className="arrayButton"
+        disabled={readOnly || textOnly}
+        onClick={(e) => {
+          removeElement(e, id, index);
+          e.preventDefault();
+        }}
+        key={`array-btn-${id}`}
+      />
+    ) : null}
   </div>
 );
 
 export const ConcertoDropdown = ({
   id,
   readOnly,
+  textOnly,
+  displayText,
   value,
   text,
   onFieldValueChange,
   options,
-}) => !readOnly ? (
-  <Select
-    clearable
-    fluid
-    value={value}
-    onChange={(e, data) => onFieldValueChange(data, id)}
-    key={`select-${id}`}
-    options={options}
-  />
-) : (
-    <Input type="text" readOnly value={text} key={`input-${id}`} />
-  );
+}) => {
+  if (readOnly) {
+    return (
+      <Input type="text" readOnly value={displayText} key={`input-${id}`} />
+    );
+  } else if (textOnly) {
+    return (
+      <div className="textOnly">
+        <label value={displayText} key={`input-${id}`}>
+          {" "}
+          {displayText}{" "}
+        </label>
+      </div>
+    );
+  } else {
+    return (
+      <Select
+        clearable
+        fluid
+        value={value}
+        onChange={(e, data) => onFieldValueChange(data, id)}
+        key={`select-${id}`}
+        options={options}
+      />
+    );
+  }
+}
 
 const BinaryField = ({ className, children }) => (
   <div className={className}>

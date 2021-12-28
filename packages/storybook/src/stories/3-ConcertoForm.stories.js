@@ -17,6 +17,7 @@ export default {
 };
 
 export const SimpleExample = () => {
+  const textOnly = boolean("Text-only", false);
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'test.Person');
   const options = object('Options', {
@@ -75,8 +76,9 @@ export const SimpleExample = () => {
   };
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: "10px" }}>
       <ConcertoForm
+        textOnly={textOnly}
         readOnly={readOnly}
         models={[model]}
         options={options}
@@ -85,11 +87,12 @@ export const SimpleExample = () => {
         onValueChange={handleValueChange}
       />
     </div>
-  )
+  );
 };
 
 
 export const ModelBuilder = () => {
+  const textOnly = boolean("Text-only", false);
   const readOnly = boolean('Read-only', false);
   const type = text('Type', 'concerto.metamodel.ModelFile');
   const options = object('Options', {
@@ -127,8 +130,9 @@ export const ModelBuilder = () => {
   };
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: "10px" }}>
       <ConcertoModelBuilder
+        textOnly={textOnly}
         readOnly={readOnly}
         options={options}
         type={type}
@@ -136,5 +140,5 @@ export const ModelBuilder = () => {
         onValueChange={handleValueChange}
       />
     </div>
-  )
+  );
 };
