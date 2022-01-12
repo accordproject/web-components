@@ -169,6 +169,8 @@ class ModelBuilderVisitor extends ReactFormVisitor {
             key={key}
             value={value.$class}
             text={altText ? altText.text : value.$class}
+            displayText={altText ? altText.text : value.$class}
+            textOnly={parameters.textOnly}
             readOnly={parameters.disabled}
             onFieldValueChange={onFieldValueChange}
             options={declarationTypes.map(({ value, text }) => ({

@@ -18,6 +18,7 @@ export default {
 
 export const SimpleExample = () => {
   const readOnly = boolean('Read-only', false);
+  const textOnly = boolean('Text-only', false);
   const type = text('Type', 'test.Person');
   const options = object('Options', {
     includeOptionalFields: true,
@@ -78,6 +79,7 @@ export const SimpleExample = () => {
     <div style={{ padding: '10px' }}>
       <ConcertoForm
         readOnly={readOnly}
+        textOnly={textOnly}
         models={[model]}
         options={options}
         type={type}
@@ -91,6 +93,7 @@ export const SimpleExample = () => {
 
 export const ModelBuilder = () => {
   const readOnly = boolean('Read-only', false);
+  const textOnly = boolean('Text-only', false);
   const type = text('Type', 'concerto.metamodel.ModelFile');
   const options = object('Options', {
     includeOptionalFields: false,
@@ -130,6 +133,7 @@ export const ModelBuilder = () => {
     <div style={{ padding: '10px' }}>
       <ConcertoModelBuilder
         readOnly={readOnly}
+        textOnly={textOnly}
         options={options}
         type={type}
         json={json}
