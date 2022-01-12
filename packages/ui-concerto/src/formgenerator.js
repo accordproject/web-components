@@ -34,6 +34,7 @@ class FormGenerator {
    * 'sample' uses random well-typed values
    * 'empty' provides sensible empty values
    * @param {object} options.disabled - if true, all form fields will be disabled
+   * @param {object} options.textOnly - if true, all form fields will appear as labels
    * @param {object} options.visitor - a class that extends HTMLFormVisitor
    *  that generates HTML, defaults to HTMLFormVisitor
    * @param {object} options.customClasses - a custom CSS classes that can be

@@ -196,8 +196,10 @@ class ReactFormVisitor {
         id={key}
         key={`enum-${key}`}
         value={value}
+        displayText={value}
         field={enumDeclaration}
         readOnly={parameters.disabled}
+        textOnly={parameters.textOnly}
         onFieldValueChange={parameters.onFieldValueChange}
         options={enumDeclaration.getProperties().map(property => ({
           key: `option-${property.getName()}`,
@@ -219,6 +221,7 @@ class ReactFormVisitor {
     const {
       skipLabel,
       disabled,
+      textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -242,6 +245,7 @@ class ReactFormVisitor {
       type: toFieldType(field.getType()),
       required: !field.isOptional(),
       readOnly: disabled,
+      textOnly: textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -315,6 +319,8 @@ class ReactFormVisitor {
           id={key}
           key={`select-${key}`}
           value={value}
+          displayText={value}
+          textOnly={parameters.textOnly}
           readOnly={parameters.disabled}
           onFieldValueChange={parameters.onFieldValueChange}
           options={options.map(({ value, text }) => ({
@@ -357,6 +363,7 @@ class ReactFormVisitor {
     const {
       skipLabel,
       disabled,
+      textOnly,
       addElement,
       removeElement,
       onFieldValueChange,
@@ -380,6 +387,7 @@ class ReactFormVisitor {
       type: 'text',
       required: !relationship.isOptional(),
       readOnly: disabled,
+      textOnly: textOnly,
       addElement,
       removeElement,
       onFieldValueChange,

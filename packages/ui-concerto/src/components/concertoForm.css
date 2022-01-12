@@ -59,6 +59,12 @@
   margin-bottom: 0;
 }
 
+.textOnly > label{
+  font-weight: 300;
+  color: #2f4f4f;
+  font-size: small;
+}
+
 /** CSS Classes for use by the ModelBuilderVisitor */
 .mbFieldDeclaration {
   display: grid;

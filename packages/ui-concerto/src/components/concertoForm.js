@@ -70,6 +70,7 @@ const ConcertoForm = (props) => {
     includeOptionalFields: true,
     includeSampleData: 'sample',
     disabled: props.readOnly,
+    textOnly: props.textOnly,
     visitor: new ReactFormVisitor(),
     onFieldValueChange: (e, key) => {
       onFieldValueChange(e, key);
@@ -81,7 +82,7 @@ const ConcertoForm = (props) => {
       removeElement(e, key, index);
     },
     ...options,
-  }), [addElement, onFieldValueChange, removeElement, options, props.readOnly]);
+  }), [addElement, onFieldValueChange, removeElement, options, props.readOnly, props.textOnly]);
 
   const generator = React.useMemo(() => {
     if (modelManager) {
@@ -184,6 +185,7 @@ ConcertoForm.defaultProps = {
   onValueChange: () => true,
   options: {},
   readOnly: false,
+  textOnly: false,
   style: {}
 };
 
@@ -194,6 +196,7 @@ ConcertoForm.propTypes = {
   onValueChange: PropTypes.func.isRequired,
   options: PropTypes.object,
   readOnly: PropTypes.bool,
+  textOnly: PropTypes.bool,
   style: PropTypes.object
 };
 
