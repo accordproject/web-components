@@ -25,6 +25,7 @@ export const ConcertoCheckbox = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   value,
   onFieldValueChange,
@@ -38,6 +39,7 @@ export const ConcertoCheckbox = ({
       fitted
       id={id}
       readOnly={readOnly}
+      disabled={textOnly}
       checked={value}
       onChange={(e, data) => onFieldValueChange(data, id)}
       key={`checkbox-${id}`}
@@ -49,6 +51,7 @@ export const ConcertoInput = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   value,
   onFieldValueChange,
@@ -67,6 +70,7 @@ export const ConcertoInput = ({
   }
   return <Form.Field key={`field-${id}`} required={required} error={error}>
     <ConcertoLabel key={`label-${id}`} skip={skipLabel} name={applyDecoratorTitle(field)} htmlFor={id} />
+    {!textOnly ? (
     <Input
       id={id}
       type={type}
@@ -79,6 +83,13 @@ export const ConcertoInput = ({
       }
       key={`input-${id}`}
     />
+    ) : (
+      <div className='textOnly'>
+        <label value={value} key={`input-${id}`} >
+          {value}
+        </label>
+      </div>
+    )}
   </Form.Field>;
 };
 
@@ -86,6 +97,7 @@ export const ConcertoRelationship = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   value,
   onFieldValueChange,
@@ -105,6 +117,7 @@ export const ConcertoRelationship = ({
       id,
       field,
       readOnly,
+      textOnly,
       required,
       value,
       onFieldValueChange,
@@ -119,6 +132,8 @@ export const ConcertoRelationship = ({
     ? <ConcertoDropdown
       id={id}
       value={value}
+      displayText={value}
+      textOnly={textOnly}
       readOnly={readOnly}
       onFieldValueChange={onFieldValueChange}
       options={relationshipOptions}
@@ -129,6 +144,7 @@ export const ConcertoRelationship = ({
       label={<Label basic>{normalizeLabel(relationship.getType())}</Label>}
       labelPosition='right'
       readOnly={readOnly}
+      textOnly={textOnly}
       value={relationship.getIdentifier()}
       onChange={(e, data) => {
         relationship.setIdentifier(data.value || 'resource1');
@@ -173,6 +189,7 @@ export const ConcertoArray = ({
   id,
   field,
   readOnly,
+  textOnly,
   required,
   children,
   addElement,
@@ -180,6 +197,7 @@ export const ConcertoArray = ({
   <Form.Field key={`field-${id}`} required={required}>
     <ConcertoLabel name={applyDecoratorTitle(field)} />
     {children}
+    {!textOnly ? (
     <div className="arrayElement grid">
       <div />
       <Button
@@ -198,18 +216,21 @@ export const ConcertoArray = ({
         }}
       />
     </div>
+    ) : null}
   </Form.Field>
 );
 
 export const ConcertoArrayElement = ({
   id,
   readOnly,
+  textOnly,
   children,
   index,
   removeElement,
 }) => (
   <div className="arrayElement grid" key={`array-${id}`}>
     <div key={`array-children-${id}`}>{children}</div>
+    {!textOnly ? (
     <Button
       icon={<Popup
         content='Remove this element'
@@ -226,28 +247,46 @@ export const ConcertoArrayElement = ({
       }}
       key={`array-btn-${id}`}
     />
+    ) : null}
   </div>
 );
 
 export const ConcertoDropdown = ({
   id,
   readOnly,
+  textOnly,
+  displayText,
   value,
   text,
   onFieldValueChange,
   options,
-}) => !readOnly ? (
-  <Select
-    clearable
-    fluid
-    value={value}
-    onChange={(e, data) => onFieldValueChange(data, id)}
-    key={`select-${id}`}
-    options={options}
-  />
-) : (
-    <Input type="text" readOnly value={text} key={`input-${id}`} />
-  );
+}) => {
+  if (readOnly) {
+    return (
+      <Input type="text" readOnly value={displayText} key={`input-${id}`} />
+    );
+  } else if (textOnly) {
+    return (
+      <div className="textOnly">
+        <label value={displayText} key={`input-${id}`}>
+          {" "}
+          {displayText}{" "}
+        </label>
+      </div>
+    );
+  } else {
+    return (
+      <Select
+        clearable
+        fluid
+        value={value}
+        onChange={(e, data) => onFieldValueChange(data, id)}
+        key={`select-${id}`}
+        options={options}
+      />
+    );
+  }
+}
 
 const BinaryField = ({ className, children }) => (
   <div className={className}>

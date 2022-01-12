@@ -39,6 +39,7 @@ ConcertoModelBuilder.propTypes = {
   onValueChange: PropTypes.func.isRequired,
   options: PropTypes.shape(),
   readOnly: PropTypes.bool,
+  textOnly: PropTypes.bool,
 };
 
 export default ConcertoModelBuilder;
