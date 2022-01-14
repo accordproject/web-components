@@ -103,17 +103,27 @@ export const Demo = () => {
       LocalStorage sets the Changed value
     */
     localStorage.setItem("slate-editor-value", JSON.stringify(slateChildren));
-    /*
-    Actions are a feature of stories which allow live changes to be recorded in an action.
-    (https://storybook.js.org/docs/react/essentials/actions#gatsby-focus-wrapper)
-    */
-    action("onSlateValueChange")(slateChildren);
-    action("markdown")(markdown);
+
     /*
       setMarkdown and setSlateValue are state-hooks which deal with handling data with Markdown
     */
     setMarkdown(markdown);
+    /* Serializing MarkDown Points */
+    const SlateValue = {
+      document: {
+        children: slateChildren,
+      },
+    };
     setSlateValue(slateChildren);
+    const edited_markdown = slateTransformer.toMarkdown(SlateValue);
+
+    /*
+    Actions are a feature of stories which allow live changes to be recorded in an action.
+    (https://storybook.js.org/docs/react/essentials/actions#gatsby-focus-wrapper)
+    */
+
+    action("onSlateValueChange")(slateChildren);
+    action("setMarkdown")(edited_markdown);
   });
 
   return (
