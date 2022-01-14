@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from "react";
 
-import { SlateTransformer } from '@accordproject/markdown-slate';
-import { boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
+import { SlateTransformer } from "@accordproject/markdown-slate";
+import { boolean } from "@storybook/addon-knobs";
+import { action } from "@storybook/addon-actions";
+import { MarkdownEditor } from "@accordproject/ui-markdown-editor";
 
 const slateTransformer = new SlateTransformer();
 
@@ -70,15 +70,14 @@ Fin.
 `;
 
 const propsObj = {
-  WIDTH: '600px',
+  WIDTH: "600px",
 };
 
 /**
  * MarkdownEditor demo
  */
 export const Demo = () => {
-
-  const readOnly = boolean('Read-only', false);
+  const readOnly = boolean("Read-only", false);
 
   /**
    * Current Slate Value
@@ -93,28 +92,32 @@ export const Demo = () => {
    * Called when the markdown changes
    */
   const onMarkdownChange = useCallback((markdown) => {
-    localStorage.setItem('markdown-editor', markdown);
+    localStorage.setItem("markdown-editor", markdown);
   }, []);
 
   /**
    * Called when the Slate Value changes
    */
   const onSlateValueChange = useCallback((slateChildren) => {
-    action('onSlateValueChange')(slateChildren);
-    localStorage.setItem('slate-editor-value', JSON.stringify(slateChildren));
-    const slateValue = {
-      document: {
-        children: slateChildren
-      }
-    };
-    const markdown = slateTransformer.toMarkdown(slateValue);
-    setSlateValue(slateValue.document.children);
-    action('markdown')(markdown);
+    /*
+      LocalStorage sets the Changed value
+    */
+    localStorage.setItem("slate-editor-value", JSON.stringify(slateChildren));
+    /*
+    Actions are a feature of stories which allow live changes to be recorded in an action.
+    (https://storybook.js.org/docs/react/essentials/actions#gatsby-focus-wrapper)
+    */
+    action("onSlateValueChange")(slateChildren);
+    action("markdown")(markdown);
+    /*
+      setMarkdown and setSlateValue are state-hooks which deal with handling data with Markdown
+    */
     setMarkdown(markdown);
-  }, []);
+    setSlateValue(slateChildren);
+  });
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: "10px" }}>
       <MarkdownEditor
         readOnly={readOnly}
         value={slateValue}
@@ -123,7 +126,7 @@ export const Demo = () => {
       />
     </div>
   );
-}
+};
 
 const intro = `
 The markdown editor implements a WYSIWYG editor for markdown that conforms to
@@ -132,19 +135,19 @@ the [CommonMark](https://spec.commonmark.org) specification.
 The editor is based on [Slate](https://www.slatejs.org) and the Accord Project
 \`markdown-transform \` [project](https://github.com/accordproject/markdown-transform) includes lots of useful utilities to transform various
 formats to and from markdown.
-`
+`;
 
 const configuration = `
 You can configure this component to be in read/write mode, 
 in which case a formatting toolbar is displayed, or a read-only mode which locks
 the text against editing and the formatting toolbar is removed.
-`
+`;
 
 export default {
-  title: 'Markdown Editor',
+  title: "Markdown Editor",
   component: MarkdownEditor,
   parameters: {
-    componentSubtitle: 'WYSIWYG Markdown Editor',
+    componentSubtitle: "WYSIWYG Markdown Editor",
     notes: { Introduction: intro, Configuration: configuration },
-  }
+  },
 };
