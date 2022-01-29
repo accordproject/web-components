@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 
-import { SlateTransformer } from "@accordproject/markdown-slate";
-import { boolean } from "@storybook/addon-knobs";
-import { action } from "@storybook/addon-actions";
-import { MarkdownEditor } from "@accordproject/ui-markdown-editor";
+import { SlateTransformer } from '@accordproject/markdown-slate';
+import { boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { MarkdownEditor } from '@accordproject/ui-markdown-editor';
 
 const slateTransformer = new SlateTransformer();
 
@@ -24,7 +24,7 @@ softbreak.
 
 This ^^^^ is a thematic break
 
-![ap_logo](https://docs.accordproject.org/docs/assets/020/template.png "AP triangle")
+![ap_logo](https://docs.accordproject.org/docs/assets/020/template.png 'AP triangle')
 
 > This is a quote.
 ## Heading Two
@@ -70,14 +70,14 @@ Fin.
 `;
 
 const propsObj = {
-  WIDTH: "600px",
+  WIDTH: '600px',
 };
 
 /**
  * MarkdownEditor demo
  */
 export const Demo = () => {
-  const readOnly = boolean("Read-only", false);
+  const readOnly = boolean('Read-only', false);
 
   /**
    * Current Slate Value
@@ -92,7 +92,7 @@ export const Demo = () => {
    * Called when the markdown changes
    */
   const onMarkdownChange = useCallback((markdown) => {
-    localStorage.setItem("markdown-editor", markdown);
+    localStorage.setItem('markdown-editor', markdown);
   }, []);
 
   /**
@@ -102,7 +102,7 @@ export const Demo = () => {
     /*
       LocalStorage sets the Changed value
     */
-    localStorage.setItem("slate-editor-value", JSON.stringify(slateChildren));
+    localStorage.setItem('slate-editor-value', JSON.stringify(slateChildren));
 
     /*
       setMarkdown and setSlateValue are state-hooks which deal with handling data with Markdown
@@ -122,12 +122,12 @@ export const Demo = () => {
     (https://storybook.js.org/docs/react/essentials/actions#gatsby-focus-wrapper)
     */
 
-    action("onSlateValueChange")(slateChildren);
-    action("setMarkdown")(edited_markdown);
+    action('onSlateValueChange')(slateChildren);
+    action('setMarkdown')(edited_markdown);
   });
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div style={{ padding: '10px' }}>
       <MarkdownEditor
         readOnly={readOnly}
         value={slateValue}
@@ -154,10 +154,10 @@ the text against editing and the formatting toolbar is removed.
 `;
 
 export default {
-  title: "Markdown Editor",
+  title: 'Markdown Editor',
   component: MarkdownEditor,
   parameters: {
-    componentSubtitle: "WYSIWYG Markdown Editor",
+    componentSubtitle: 'WYSIWYG Markdown Editor',
     notes: { Introduction: intro, Configuration: configuration },
   },
 };
