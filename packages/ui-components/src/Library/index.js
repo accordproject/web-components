@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 /* Styling */
 import styled from 'styled-components';
-import { Input, Checkbox } from 'semantic-ui-react';
+import { Input, Checkbox, Dropdown } from 'semantic-ui-react';
 
 /* Internal */
 import isQueryMatch from '../utilities/isQueryMatch';
@@ -58,6 +58,16 @@ const ItemTypeFilterContainer = styled.div`
   margin-top: 15px;
 `;
 
+const ItemVersionFilterContainer = styled.div`
+  display: flex;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: solid 1px rgba(34, 36, 38, 0.15);
+  padding: 0.67857143em 1em;
+  width: min-content;
+  border-radius: 3px;
+`;
+
 const searchInputStyles = {
   margin: '5px 0',
   width: '100%',
@@ -80,9 +90,32 @@ const LibraryItemCards = styled.div`
 
 const LibraryComponent = (props) => {
   const [query, setQuery] = useState([]);
+  const [ciceroVersion, setCiceroVersion] = useState([]);
   const [itemTypeFilter, setItemTypeFilter] = useState(
     props.itemTypes.reduce((acc, el) => ({ ...acc, [el.type]: true }), {})
   );
+
+  const distinctCiceroVersions = props.items.reduce((acc, { CiceroVersion }) => {
+    if(!CiceroVersion){
+      CiceroVersion = "Unknown";
+    }
+    if (!acc[CiceroVersion]) {
+      acc[CiceroVersion] = 1;
+    }
+    return acc;
+  }, {});
+  const distinctOptions = [
+    { key: "", value: "", text: "" },
+    ...Object.keys(distinctCiceroVersions).map((CiceroVersion, index) => ({
+      key: index,
+      value: CiceroVersion,
+      text: CiceroVersion,
+    })),
+  ];
+
+  const onCiceroVersionChange = ({ value }) => {
+    setCiceroVersion(value);
+  };
 
   const onQueryChange = (e, input) => {
     const inputQuery = input.value.toLowerCase().trim().split(' ').filter(q => q.length);
@@ -125,8 +158,22 @@ const LibraryComponent = (props) => {
       filtered = filtered.filter(item => currentFilter.indexOf(item.itemType) > -1);
     }
 
+    if (ciceroVersion.length) {
+      // pre-existinmg length for filtered present
+      if (filtered.length < 1) {
+        // populate filtered with available options again
+        filtered = filterItemsByQuery();
+      }
+      
+      if (ciceroVersion === "Unknown"){
+        filtered = filtered.filter((item) => item.CiceroVersion === undefined)
+      }else{
+        filtered = filtered.filter((item) => item.CiceroVersion === ciceroVersion);
+      }
+    }
+
     return filtered;
-  }, [query, props.items, itemTypeFilter]);
+  }, [itemTypeFilter, ciceroVersion, props.itemTypes.length, filterItemsByQuery]);
 
   const renderItemTypeFilter = useCallback(() => {
     if (props.itemTypes.length === 1) return null;
@@ -151,6 +198,23 @@ const LibraryComponent = (props) => {
     );
   }, [itemTypeFilter]);
 
+  const renderItemVersionFilter = useCallback(() => {
+    if (props.itemTypes.length === 1) return null;
+    return (
+      <ItemVersionFilterContainer>
+        {distinctOptions.length > 1 ? (
+          <Dropdown
+            placeholder="Filter by Cicero version"
+            style={{ width: "325px" }}
+            fluid
+            onChange={(e, data) => onCiceroVersionChange(data)}
+            options={distinctOptions}
+          />
+        ) : null}
+      </ItemVersionFilterContainer>
+    );
+  }, [itemTypeFilter, distinctOptions, props.itemTypes]);
+
   const filtered = filterItems();
   const dislayedItemTypes = props.itemTypes.reduce(
     (acc, el) => ({ ...acc, [el.type]: el.name }),
@@ -162,6 +226,7 @@ const LibraryComponent = (props) => {
       { renderHeader() }
       <Functionality>
         { renderItemTypeFilter() }
+        { renderItemVersionFilter() }
         <Input
           className="ui-components__library-search-input"
           fluid

@@ -92,6 +92,7 @@ export const heterogeneous = () => {
       ),
       name: text("First template's Name", "Acceptance of Delivery"),
       version: text("First template's Version", "0.20.10"),
+      CiceroVersion: text("First template's Cicero Version", "0.22.0"),
       description: text(
         "First template's Description",
         "This clause allows the receiver of goods to inspect them for a given time period after delivery."
@@ -103,6 +104,7 @@ export const heterogeneous = () => {
         "variable://first-variable-item@0.10.1#fc26b60d5cb6c23c4e85ea643a6931bca96c42ec94e467df522d80fb79864353",
       name: "First variable item",
       version: "0.20.1",
+      CiceroVersion: "0.21.0",
       description: "This is a sample variable item",
       itemType: 'variable'
     },
@@ -111,6 +113,7 @@ export const heterogeneous = () => {
         "https://templates.accordproject.org/archives/car-rental-tr@0.10.1.cta",
       name: "Car Rental (TR)",
       version: "0.20.10",
+      CiceroVersion: "0.21.0",
       description: "Ta Simple Car Rental Contract in Turkish Language",
       itemType: 'template'
     },
