@@ -41,10 +41,10 @@ jobs:
       - name: Build & test 
         if: github.ref == 'refs/heads/master'
         run: |
-            npx lerna bootstrap
-            npx lerna run build
-            npm run build --if-present
-            npm test
+            npm install -g lerna
+            lerna bootstrap
+            lerna run build
+            npm run storybook
 
       - name: Set S3 
         if: github.ref == 'refs/heads/master'
@@ -57,7 +57,7 @@ jobs:
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
-          SOURCE_DIR: 'packages/storybook'
+          SOURCE_DIR: 'packages/storybook/storybook-static'
 
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@master
