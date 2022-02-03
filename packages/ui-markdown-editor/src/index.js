@@ -21,7 +21,7 @@ import { withLinks, isSelectionLinkBody } from './plugins/withLinks';
 import { withHtml } from './plugins/withHtml';
 import { withLists } from './plugins/withLists';
 import FormatBar from './FormattingToolbar';
-import { withText } from './plugins/withText';
+import { withShortcuts } from './plugins/withShortcuts';
 
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
@@ -41,12 +41,12 @@ export const MarkdownEditor = (props) => {
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
-        withLists(withLinks(withHtml(withImages(withText(
+        withLists(withLinks(withHtml(withImages(withShortcuts(
           withSchema(withHistory(withReact(createEditor())))
         )))))
       );
     }
-    return withLists(withLinks(withHtml(withImages(withText(
+    return withLists(withLinks(withHtml(withImages(withShortcuts(
       withSchema(withHistory(withReact(createEditor())))
     )))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
