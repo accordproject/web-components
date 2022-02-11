@@ -1,7 +1,7 @@
 import {
   LINK, IMAGE, BLOCK_QUOTE, UL_LIST, OL_LIST,
   MARK_BOLD, MARK_ITALIC, MARK_CODE, HR, LINEBREAK,
-  HEADINGBREAK
+  PARAGRAPH_BREAK
 } from './schema';
 
 const HOTKEYS = {
@@ -54,8 +54,8 @@ const HOTKEYS = {
     code: LINEBREAK,
   },
   'enter': {
-    type: 'headingbreak',
-    code: HEADINGBREAK
+    type: 'paragraph_break',
+    code: PARAGRAPH_BREAK,
   }
 };
 

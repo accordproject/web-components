@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS, H1, H2, H3, H4, H5, H6
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, LINEBREAK, HEADINGS, H1, H2, H3, H4, H5, H6
 } from './schema';
 
 /**
@@ -159,19 +159,24 @@ export const insertThematicBreak = (editor, type) => {
  * @param {Object} editor Editor to be transformed
  * @param {string} format Type of the break
  */
-export const insertLinebreak = (editor, type) => {
+export const insertLineBreak = (editor, type) => {
   const text = { object: 'text', text: '' };
-  const br = { type, children: [text], data: {} };
+  const br = { type: LINEBREAK, children: [text], data: {} };
   Transforms.insertNodes(editor, br);
   Transforms.move(editor, { distance: 1, unit: 'character' });
 };
+
+export const insertParagraphBreak = (editor) => {
+  editor.insertBreak();
+  return;
+}
 
 /**
  * Inserts a heading break in the document.
  * 
  * @param {Object} editor Editor to be transformed
  */
-export const insertHeadingbreak = (editor) => {
+export const insertHeadingBreak = (editor) => {
   const text = { object: 'text', text: '' };
   const n = { object: "block", type: 'paragraph', children: [text] };
   Transforms.insertNodes(editor, n);
