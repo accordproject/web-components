@@ -92,6 +92,17 @@ export const H6_STYLING = {
   fontWeight: MISC_CONSTANTS.DROPDOWN_WEIGHT,
 };
 
+export const TABLE_CELL_STYLING = {
+  border: "1px solid black",
+  height: "50px",
+  padding: "0 5px",
+};
+
+export const TABLE_STYLING = {
+  width: "100%",
+  borderCollapse: "collapse",
+};
+
 export const TOOLBAR_DROPDOWN_STYLE_H1 = {
   ...H1_STYLING,
   margin: 0

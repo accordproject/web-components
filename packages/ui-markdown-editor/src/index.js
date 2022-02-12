@@ -22,6 +22,7 @@ import { withHtml } from './plugins/withHtml';
 import { withLists } from './plugins/withLists';
 import FormatBar from './FormattingToolbar';
 import { withText } from './plugins/withText';
+import { withTables, isSelectionTable } from 'plugins/withTables';
 
 export const markdownToSlate = (markdown) => {
   const slateTransformer = new SlateTransformer();
@@ -37,18 +38,19 @@ export const MarkdownEditor = (props) => {
     canBeFormatted
   } = props;
   const [showLinkModal, setShowLinkModal] = useState(false);
+  const [showTableModal, setShowTableModal] = useState(false);
   const [currentStyle, setCurrentStyle] = useState('');
   const editor = useMemo(() => {
     if (augmentEditor) {
       return augmentEditor(
-        withLists(withLinks(withHtml(withImages(withText(
+        withTables(withLists(withLinks(withHtml(withImages(withText(
           withSchema(withHistory(withReact(createEditor())))
-        )))))
+        ))))))
       );
     }
-    return withLists(withLinks(withHtml(withImages(withText(
+    return withTables(withLists(withLinks(withHtml(withImages(withText(
       withSchema(withHistory(withReact(createEditor())))
-    )))));
+    ))))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -190,6 +192,9 @@ export const MarkdownEditor = (props) => {
       if (selection && isSelectionLinkBody(editor)) {
         setShowLinkModal(true);
       }
+      if (selection && isSelectionTable(editor)) {
+        setShowTableModal(true);
+      }
       const currentStyleCalculated = BLOCK_STYLE[Node.parent(editor, editor.selection.focus.path).type] || 'Style';
       setCurrentStyle(currentStyleCalculated);
     } catch (err) {
@@ -243,6 +248,8 @@ export const MarkdownEditor = (props) => {
         canBeFormatted={props.canBeFormatted}
         showLinkModal={showLinkModal}
         setShowLinkModal={setShowLinkModal}
+        showTableModal={showTableModal}
+        setShowTableModal={setShowTableModal}
         activeButton={props.activeButton || BUTTON_ACTIVE}
         /> }
       <Editable

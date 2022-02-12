@@ -30,6 +30,10 @@ export const IMAGE = 'image';
 export const HTML_INLINE = 'html_inline';
 export const HEADINGBREAK = 'headingbreak';
 
+export const TABLE = "table";
+export const TABLE_ROW = "table-row";
+export const TABLE_CELL = "table-cell";
+
 const INLINES = {
   [LINEBREAK]: true,
   [SOFTBREAK]: true,
