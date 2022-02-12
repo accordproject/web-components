@@ -7,7 +7,7 @@ import { HorizontalRule } from './Span';
 import {
   PARAGRAPH, LINK, IMAGE, H1, H2, H3, H4, H5, H6, HR,
   CODE_BLOCK, HTML_BLOCK, BLOCK_QUOTE, UL_LIST, OL_LIST, LIST_ITEM,
-  HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS
+  HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS, TABLE, TABLE_ROW, TABLE_CELL
 } from '../utilities/schema';
 import {
   H1_STYLING,
@@ -16,7 +16,9 @@ import {
   H4_STYLING,
   H5_STYLING,
   H6_STYLING,
-  PARAGRAPH_STYLING
+  PARAGRAPH_STYLING,
+  TABLE_CELL_STYLING,
+  TABLE_STYLING
 } from '../utilities/constants';
 import generateId from '../utilities/generateId';
 
@@ -59,6 +61,9 @@ const Element = (props) => {
     [HTML_INLINE]: () => (<span className={HTML_INLINE} {...attributes}>
       {data.content}{children}
     </span>),
+    [TABLE] : () => (<table style={TABLE_STYLING}> <tbody {...attributes}>{children}</tbody> </table>),
+    [TABLE_ROW] : () => (<tr {...attributes}>{children}</tr>),
+    [TABLE_CELL] : () => (<td {...attributes} style={TABLE_CELL_STYLING}>{children}</td>),
     default: () => {
       console.log(`Didn't know how to render ${JSON.stringify(element, null, 2)}`);
       return <p {...attributes}>{children}</p>;

@@ -4,6 +4,7 @@ import { ReactEditor, useEditor } from 'slate-react';
 import { Transforms } from 'slate';
 
 import { InsertImageButton } from '../plugins/withImages';
+import { InsertTableButton } from 'plugins/withTables';
 import ToolbarMenu from './ToolbarMenu';
 import FormatButton from './FormatButton';
 import InsertButton from './InsertButton';
@@ -11,6 +12,7 @@ import HistoryButton from './HistoryButton';
 import HyperlinkButton from './HyperlinkButton';
 import StyleDropdown from './StyleFormat';
 import HyperlinkModal from './HyperlinkModal';
+import TableModal from './TableModal';
 import {
   toggleBlock, isBlockActive,
   toggleMark, isMarkActive,
@@ -20,7 +22,7 @@ import {
   bold, italic, code,
   quote, olist, ulist,
   image, link, undo, redo,
-  tbreak, Separator
+  tbreak, Separator, table
 } from '../components/icons';
 
 const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
@@ -33,10 +35,13 @@ const FormattingToolbar = ({
   showLinkModal,
   setShowLinkModal,
   activeButton,
-  currentStyle
+  currentStyle,
+  showTableModal,
+  setShowTableModal
 }) => {
   const editor = useEditor();
   const linkModalRef = useRef();
+  const tableModalRef = useRef();
 
   const buttonProps = {
     canBeFormatted,
@@ -48,9 +53,14 @@ const FormattingToolbar = ({
     setShowLinkModal
   };
 
+  const tableProps = {
+    showTableModal,
+    setShowTableModal
+  }
+
   useEffect(() => {
-    if (showLinkModal) {
-      const el = linkModalRef.current;
+    if (showLinkModal || showTableModal) {
+      const el = showLinkModal ? linkModalRef.current : tableModalRef.current;
       const domRange = ReactEditor.toDOMRange(editor, editor.selection);
       const rect = domRange.getBoundingClientRect();
       const CARET_TOP_OFFSET = 15;
@@ -85,7 +95,7 @@ const FormattingToolbar = ({
 
       el.style.left = `${calPos}px`;
     }
-  }, [editor, showLinkModal]);
+  }, [editor, showLinkModal, showTableModal]);
 
   return (
     <ToolbarMenu id="ap-rich-text-editor-toolbar">
@@ -105,7 +115,9 @@ const FormattingToolbar = ({
       <HyperlinkButton {...linkProps} {...link} {...buttonProps} />
       <InsertImageButton {...image} canBeFormatted={canBeFormatted} />
       <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
+      <InsertTableButton {...table} {...tableProps} canBeFormatted={canBeFormatted} />
       { showLinkModal && <HyperlinkModal ref={linkModalRef} {...linkProps} /> }
+      {showTableModal && <TableModal ref={tableModalRef} {...tableProps}  />}
     </ToolbarMenu>
   );
 };

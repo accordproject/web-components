@@ -10,6 +10,7 @@ import undo from './undo';
 import redo from './redo';
 import tbreak from './tbreak';
 import Separator from './separator';
+import table from './table';
 
 export {
   bold,
@@ -23,5 +24,6 @@ export {
   undo,
   redo,
   tbreak,
-  Separator
+  Separator,
+  table
 };
