@@ -16,6 +16,7 @@ import {
   H4_STYLING,
   H5_STYLING,
   H6_STYLING,
+	CODEBLOCK_STYLING,
   PARAGRAPH_STYLING
 } from '../utilities/constants';
 import generateId from '../utilities/generateId';
@@ -49,7 +50,7 @@ const Element = (props) => {
     </span>),
     [LINK]: () => (<a {...attributes} href={data.href}>{children}</a>),
     [HTML_BLOCK]: () => (<pre className={HTML_BLOCK} {...attributes}>{children}</pre>),
-    [CODE_BLOCK]: () => (<pre {...attributes}>{children}</pre>),
+    [CODE_BLOCK]: () => (<div style={CODEBLOCK_STYLING} {...attributes}>{children}</div>),
     [BLOCK_QUOTE]: () => (<blockquote {...attributes}>{children}</blockquote>),
     [OL_LIST]: () => (<ol {...attributes}>{children}</ol>),
     [UL_LIST]: () => (<ul {...attributes}>{children}</ul>),

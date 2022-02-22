@@ -37,8 +37,16 @@ export const DROPDOWN_STYLE = {
   width: '100px',
 };
 
+export const CODEBLOCK_STYLING = {
+	padding: '1rem',
+  maxWidth: '100%',
+  borderRadius: '6px',
+	backgroundColor: '#F7F7F7',
+	fontFamily: 'monospace'
+};
+
 export const PARAGRAPH_STYLING = {
-  margin: '1rem 0rem 0rem 0rem'
+	lineHeight: '1.4rem',
 }
 
 export const H1_STYLING = {

@@ -20,7 +20,7 @@ import {
   bold, italic, code,
   quote, olist, ulist,
   image, link, undo, redo,
-  tbreak, Separator
+  tbreak, codeblock, Separator
 } from '../components/icons';
 
 const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
@@ -94,6 +94,7 @@ const FormattingToolbar = ({
       <FormatButton {...mark} {...bold} {...buttonProps} />
       <FormatButton {...mark} {...italic} {...buttonProps} />
       <FormatButton {...mark} {...code} {...buttonProps} />
+			<FormatButton {...block} {...codeblock} {...buttonProps} />
       <Separator />
       <FormatButton {...block} {...quote} {...buttonProps} />
       <FormatButton {...block} {...olist} {...buttonProps} />
