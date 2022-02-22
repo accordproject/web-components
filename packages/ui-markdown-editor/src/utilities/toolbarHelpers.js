@@ -1,6 +1,6 @@
 import { Node, Editor, Transforms } from 'slate';
 import {
-  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, PARAGRAPH, HEADINGS, H1, H2, H3, H4, H5, H6
+  LIST_ITEM, BLOCK_QUOTE, LIST_TYPES, CODE_BLOCK, PARAGRAPH, HEADINGS, H1, H2, H3, H4, H5, H6
 } from './schema';
 
 /**
@@ -62,10 +62,13 @@ export const toggleBlock = (editor, format) => {
    */
   const isListItem = input => input === LIST_ITEM;
 
+	const isCodeBlock = input => input === CODE_BLOCK;
+
   /* Clear selection of block types */
   Transforms.unwrapNodes(editor, { match: n => isQuote(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => isListItem(n.type), split: true });
   Transforms.unwrapNodes(editor, { match: n => LIST_TYPES.includes(n.type), split: true });
+	Transforms.unwrapNodes(editor, { match: n => isCodeBlock(n.type), split: true });
 
   if (format === 'paragraph' || format.startsWith('heading')) {
     Transforms.setNodes(editor, { type: format });

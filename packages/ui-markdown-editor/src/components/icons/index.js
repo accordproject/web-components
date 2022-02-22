@@ -9,6 +9,7 @@ import link from './link';
 import undo from './undo';
 import redo from './redo';
 import tbreak from './tbreak';
+import codeblock from "./codeblock";
 import Separator from './separator';
 
 export {
@@ -23,5 +24,6 @@ export {
   undo,
   redo,
   tbreak,
+	codeblock,
   Separator
 };
