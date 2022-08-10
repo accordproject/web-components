@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { ReactEditor, useEditor } from 'slate-react';
 import { Transforms } from 'slate';
 
-import { InsertImageButton } from '../plugins/withImages';
 import { InsertTableButton } from 'plugins/withTables';
+import { InsertImageButton } from '../plugins/withImages';
 import ToolbarMenu from './ToolbarMenu';
 import FormatButton from './FormatButton';
 import InsertButton from './InsertButton';
@@ -24,6 +24,7 @@ import {
   image, link, undo, redo,
   tbreak, Separator, table
 } from '../components/icons';
+import DownloadDropdown from './DownloadDropdown';
 
 const mark = { toggleFunc: toggleMark, activeFunc: isMarkActive };
 const block = { toggleFunc: toggleBlock, activeFunc: isBlockActive };
@@ -56,7 +57,7 @@ const FormattingToolbar = ({
   const tableProps = {
     showTableModal,
     setShowTableModal
-  }
+  };
 
   useEffect(() => {
     if (showLinkModal || showTableModal) {
@@ -69,28 +70,27 @@ const FormattingToolbar = ({
         rect.top + rect.height + window.pageYOffset + CARET_TOP_OFFSET
       }px`;
       const hyperlinkCaret = el.children[0];
-      let calPos = rect.left  - el.offsetWidth / 2  ;
-
+      let calPos = rect.left - el.offsetWidth / 2;
 
       // When the modal goes off page from left side
       if (calPos < 0) {
-        // start from 10px 
+        // start from 10px
         calPos = 10;
         hyperlinkCaret.style.left = `${rect.left - 10}px`;
       }
 
       // calculate the endpoint of the modal
-      const rightEndPos = calPos + el.offsetWidth,
-        containerWidth = el.parentElement.offsetWidth;
+      const rightEndPos = calPos + el.offsetWidth;
+      const containerWidth = el.parentElement.offsetWidth;
 
       // When the modal goes off the page from right side
       if (rightEndPos > containerWidth) {
-        let diff = rightEndPos-containerWidth;
+        let diff = rightEndPos - containerWidth;
         // extra space of 10px on right side to look clean
-        diff+=10;
-        calPos=calPos-diff;
-        let shift=diff-5;
-        hyperlinkCaret.style.left= `calc(50% + ${shift}px)`;
+        diff += 10;
+        calPos -= diff;
+        const shift = diff - 5;
+        hyperlinkCaret.style.left = `calc(50% + ${shift}px)`;
       }
 
       el.style.left = `${calPos}px`;
@@ -117,7 +117,8 @@ const FormattingToolbar = ({
       <InsertButton {...insert} {...tbreak} canBeFormatted={canBeFormatted} />
       <InsertTableButton {...table} {...tableProps} canBeFormatted={canBeFormatted} />
       { showLinkModal && <HyperlinkModal ref={linkModalRef} {...linkProps} /> }
-      {showTableModal && <TableModal ref={tableModalRef} {...tableProps}  />}
+      {showTableModal && <TableModal ref={tableModalRef} {...tableProps} />}
+      <DownloadDropdown />
     </ToolbarMenu>
   );
 };
@@ -129,6 +130,5 @@ FormattingToolbar.propTypes = {
   activeButton: PropTypes.object,
   currentStyle: PropTypes.string,
 };
-
 
 export default FormattingToolbar;
