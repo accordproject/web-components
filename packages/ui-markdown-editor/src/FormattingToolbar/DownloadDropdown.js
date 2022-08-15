@@ -3,41 +3,43 @@ import PropTypes from 'prop-types';
 import { useEditor } from 'slate-react';
 import { Dropdown } from 'semantic-ui-react';
 import { DROPDOWN_STYLE } from 'utilities/constants';
-// import { transform } from '@accordproject/markdown-transform';
+import { transform } from '@accordproject/markdown-transform';
 import { SlateTransformer } from '@accordproject/markdown-slate';
-// import { PdfTransformer } from '@accordproject/markdown-pdf';
+import { PdfTransformer, ToPdfMake } from '@accordproject/markdown-pdf';
 
 const DownloadDropdownItem = ({
   editor, format, style,
 }) => {
-  const save = (editor, format) => {
-    // using markdown-transform as below causes an error
-    // transform({ document: { children: editor.children } }, 'slate', [format.toLowerCase()]);
-
+  const save = async (editor, format) => {
     const formattingOptions = {
       Markdown: {
         type: 'text/markdown',
         fileName: 'contract.md',
-        getContent: (slateDoc) => {
-          const slateTransformer = new SlateTransformer();
-          return slateTransformer.toMarkdown(slateDoc);
-        }
       },
       PDF: {
         type: 'application/pdf',
         fileName: 'contract.pdf',
-        getContent: (slateDoc) => {
-          const slateTransformer = new SlateTransformer();
-          const ciceroMark = slateTransformer.toCiceroMark(slateDoc);
-        }
       },
-      DOCX: {
-        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        fileName: 'contract.docx'
+      HTML: {
+        type: 'text/html',
+        fileName: 'contract.html'
       }
     };
     const slateDoc = { document: { children: editor.children } };
-    const result = formattingOptions[format].getContent(slateDoc);
+    let result;
+    if (format === 'PDF') {
+      const slateTransformer = new SlateTransformer();
+      const ciceroMark = slateTransformer.toCiceroMark(slateDoc);
+      const pdfMakeDom = await ToPdfMake.CiceroMarkToPdfMake(ciceroMark);
+      pdfMakeDom.styles.Code.font = 'Roboto';
+      pdfMakeDom.styles.CodeBlock.font = 'Roboto';
+      pdfMakeDom.styles.HtmlBlock.font = 'Roboto';
+      pdfMakeDom.styles.HtmlInline.font = 'Roboto';
+
+      result = await PdfTransformer.pdfMakeToPdfBuffer(pdfMakeDom);
+    } else {
+      result = await transform(slateDoc, 'slate', [format.toLowerCase()]);
+    }
     const blob = new Blob([result], { type: formattingOptions[format].type });
     const a = document.createElement('a');
     a.download = formattingOptions[format].fileName;
@@ -55,7 +57,6 @@ const DownloadDropdownItem = ({
 
   );
 };
-
 DownloadDropdownItem.propTypes = {
   editor: PropTypes.object,
   format: PropTypes.string,
@@ -64,9 +65,6 @@ DownloadDropdownItem.propTypes = {
 
 const DownloadDropdown = () => {
   const editor = useEditor();
-
-  console.log('editor - ', editor);
-  console.log('editor.children - ', editor.children);
 
   return (
     <Dropdown
@@ -86,7 +84,7 @@ const DownloadDropdown = () => {
           />
           <DownloadDropdownItem
             editor={editor}
-            format='DOCX'
+            format='HTML'
           />
         </Dropdown.Menu>
       </Dropdown>);
