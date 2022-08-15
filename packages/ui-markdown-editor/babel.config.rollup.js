@@ -6,7 +6,9 @@ module.exports = {
       '@babel/preset-env',
       {
         modules: false,
-        targets: pkg.browserslist.production,
+        targets: {
+          node: '10.0.0'
+        }
       },
     ],
     '@babel/preset-react',
