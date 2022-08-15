@@ -98,6 +98,7 @@
     "babel-jest": "^26.1.0",
     "cross-env": "^7.0.3",
     "cypress": "^6.6.0",
+    "file-system-cache": "1.0.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
     "react-test-renderer": "16.13.1",
