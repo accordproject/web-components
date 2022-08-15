@@ -31,11 +31,11 @@ const DownloadDropdownItem = ({
       const slateTransformer = new SlateTransformer();
       const ciceroMark = slateTransformer.toCiceroMark(slateDoc);
       const pdfMakeDom = await ToPdfMake.CiceroMarkToPdfMake(ciceroMark);
+      // Hacky way of making sure we dont try using a font we dont have access to
       pdfMakeDom.styles.Code.font = 'Roboto';
       pdfMakeDom.styles.CodeBlock.font = 'Roboto';
       pdfMakeDom.styles.HtmlBlock.font = 'Roboto';
       pdfMakeDom.styles.HtmlInline.font = 'Roboto';
-
       result = await PdfTransformer.pdfMakeToPdfBuffer(pdfMakeDom);
     } else {
       result = await transform(slateDoc, 'slate', [format.toLowerCase()]);
