@@ -1,5 +1,3 @@
-const pkg = require('./package.json');
-
 module.exports = {
   presets: [
     [
@@ -7,7 +5,7 @@ module.exports = {
       {
         modules: false,
         targets: {
-          node: '10.0.0'
+          node: 'current'
         }
       },
     ],
