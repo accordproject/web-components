@@ -6,7 +6,7 @@
     "@accordproject/concerto-core": "1.2.2-20210927172800",
     "@accordproject/cicero-core": "0.22.0",
     "@accordproject/markdown-slate": "0.13.0",
-    "@accordproject/markdown-transform": "0.13.0",
+    "@accordproject/markdown-transform": "0.16.0",
     "@accordproject/ui-components": "0.98.0",
     "@accordproject/ui-concerto": "0.98.0",
     "@accordproject/ui-contract-editor": "0.98.0",

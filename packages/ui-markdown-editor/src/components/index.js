@@ -7,7 +7,8 @@ import { HorizontalRule } from './Span';
 import {
   PARAGRAPH, LINK, IMAGE, H1, H2, H3, H4, H5, H6, HR,
   CODE_BLOCK, HTML_BLOCK, BLOCK_QUOTE, UL_LIST, OL_LIST, LIST_ITEM,
-  HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS, TABLE, TABLE_ROW, TABLE_CELL
+  HTML_INLINE, SOFTBREAK, LINEBREAK, HEADINGS, TABLE, TABLE_ROW, TABLE_CELL,
+  TABLE_BODY, TABLE_HEAD, HEADER_CELL
 } from '../utilities/schema';
 import {
   H1_STYLING,
@@ -61,8 +62,11 @@ const Element = (props) => {
     [HTML_INLINE]: () => (<span className={HTML_INLINE} {...attributes}>
       {data.content}{children}
     </span>),
-    [TABLE] : () => (<table style={TABLE_STYLING}> <tbody {...attributes}>{children}</tbody> </table>),
-    [TABLE_ROW] : () => (<tr {...attributes}>{children}</tr>),
+    [TABLE] : () => (<table style={TABLE_STYLING}>{children} </table>),
+    [TABLE_BODY] : () => (<tbody {...attributes}>{children}</tbody>),
+    [TABLE_HEAD] : () => (<thead {...attributes}>{children}</thead>),
+    [TABLE_ROW] : () => (<tr {...attributes} style={TABLE_CELL_STYLING}>{children}</tr>),
+    [HEADER_CELL] : () => (<th {...attributes}>{children}</th>),
     [TABLE_CELL] : () => (<td {...attributes} style={TABLE_CELL_STYLING}>{children}</td>),
     default: () => {
       console.log(`Didn't know how to render ${JSON.stringify(element, null, 2)}`);

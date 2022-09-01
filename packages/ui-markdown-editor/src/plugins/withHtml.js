@@ -29,7 +29,10 @@ export const withHtml = (editor) => {
           : slateTransformer
             .fromCiceroMark(ciceroMarkTransformer.fromMarkdown(PLAIN_DOM));
 
-        Transforms.insertFragment(editor, SLATE_DOM.document.children);
+        SLATE_DOM.document.children[0].type === 'table'
+          ? Transforms.insertNodes(editor, SLATE_DOM.document.children)
+          : Transforms.insertFragment(editor, SLATE_DOM.document.children);
+          
       } catch (err) {
         console.error(err);
       }
