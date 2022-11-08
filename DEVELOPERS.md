@@ -6,7 +6,6 @@ We'd love for you to help develop improvements to Accord Project technology! Ple
 ## Web Components Specific Information
 
 ### Creating New Packages
-
 The packages have all been created by running `yarn create react-app %PROJECT_NAME% --template npm-library` in the packages directory.
 
 After running the command above, you need to:
