@@ -39,14 +39,14 @@ export const withTables = (editor) => {
         match: (n) =>
           !Editor.isEditor(n) &&
           Element.isElement(n) &&
-          n.type === "table-cell",
+          n.type === "table_cell",
       });
       const prevNodePath = Editor.before(editor, selection);
 
       const [tableNode] = Editor.nodes(editor, {
         at: prevNodePath,
         match: (n) =>
-          !Editor.isEditor(n) && Element.isElement && n.type === "table-cell",
+          !Editor.isEditor(n) && Element.isElement && n.type === "table_cell",
       });
 
       if (cell) {
@@ -71,14 +71,14 @@ export const withTables = (editor) => {
         match: (n) =>
           !Editor.isEditor(n) &&
           Element.isElement(n) &&
-          n.type === "table-cell",
+          n.type === "table_cell",
       });
 
       const prevNodePath = Editor.after(editor, selection);
       const [tableNode] = Editor.nodes(editor, {
         at: prevNodePath,
         match: (n) =>
-          !Editor.isEditor(n) && Element.isElement && n.type === "table-cell",
+          !Editor.isEditor(n) && Element.isElement && n.type === "table_cell",
       });
 
       if (cell) {
@@ -124,51 +124,116 @@ export const withTables = (editor) => {
  * @param {Path}   path      the path of the table
  */
 export const handleCells = (tableNode, path, action, editor) => {
-  let existingText = Array.from(tableNode.children, (rows) =>
-    Array.from(rows.children, (arr) => arr.children[0].text)
-  );
+
+  const headerExists = tableNode.children[0].type == 'table_head' ? true : false;
+
+  let existingText = headerExists
+    ? Array.from(tableNode.children[1].children, (rows) =>
+        Array.from(rows.children, (arr) => arr.children)
+      )
+    : Array.from(tableNode.children[0].children, (rows) =>
+        Array.from(rows.children, (arr) => arr.children)
+      );
+ 
+  let headerText = headerExists
+    ? Array.from(tableNode.children[0].children, (rows) =>
+        Array.from(rows.children, (arr) => arr.children)
+      )
+    : [];
+
+  // determining the number of columns in the existing table
   const columns = existingText[0].length;
+
   if (action === "row") {
-    existingText.push(Array(columns).fill(""));
+    
+    //creating a table cell slate object to be pushed in the new row
+    const newCell = [{
+      object: 'text', text: ' ' 
+    }];
+    existingText.push(Array(columns).fill(newCell));
+
   } else if (action === "col") {
+
+    //creating a table cell slate object to be pushed at the end of each row
+    const newCell = [{
+      object: 'text', text: ' ' 
+    }];
+
     existingText = Array.from(existingText, (item) => {
-      item.push("");
+      item.push(newCell);
       return item;
     });
+
+    headerText = headerExists ? Array.from(headerText, (item) => {
+      item.push(newCell);
+      return item;
+    }) : [];
   } else if (action === "drow") {
     existingText.pop();
   } else {
     existingText = Array.from(existingText, (item) => {
-      item.pop("");
+      item.pop();
       return item;
     });
+    headerText = headerExists ? Array.from(headerText, (item) => {
+      item.pop();
+      return item;
+    }) : [];
   }
-  const newTable = createTableNode(existingText);
+  const newTable = createTableNode(existingText, headerText, headerExists);
   Transforms.insertNodes(editor, newTable, {
     at: path,
   });
 };
 
-const createTableCell = (text) => {
+const createTableCell = (value) => {
   return {
-    type: "table-cell",
-    children: [{ text }],
+    type: 'table_cell',
+    children: value,
   };
 };
 
-const createRow = (cellText) => {
-  const newRow = Array.from(cellText, (value) => createTableCell(value));
+const createHeaderCell = (value) => {
   return {
-    type: "table-row",
+    type: 'header_cell',
+    children: value,
+  };
+};
+
+const createRow = (cellText, segment = "body") => {
+  let newRow =
+    segment == "header"
+      ? Array.from(cellText, (value) => createHeaderCell(value))
+      : Array.from(cellText, (value) => createTableCell(value));
+  return {
+    type: "table_row",
     children: newRow,
   };
 };
 
-const createTableNode = (cellText) => {
+const createBody = (cellText) => {
   const tableChildren = Array.from(cellText, (value) => createRow(value));
-  let tableNode = { type: "table", children: tableChildren };
+  return {
+    type: "table_body",
+    children: tableChildren,
+  };
+}
+
+const createHead = (headerText) => {
+  const tableChildren = Array.from(headerText, (value) => createRow(value, "header"));
+  return {
+    type: "table_head",
+    children: tableChildren,
+  };
+}
+
+const createTableNode = (cellText, headerText, headerExists) => {
+  const headChildren = headerExists ? createHead(headerText) : [];
+  const bodyChildren = createBody(cellText);
+  const tableChildren = headerExists ? [(headChildren, bodyChildren)] : [bodyChildren];
+  let tableNode = { type: 'table', children: tableChildren };
   return tableNode;
-};
+}; 
 
 /**
  * Inserts a table into the editor
@@ -188,12 +253,15 @@ export const insertTable = (editor, rows, columns) => {
   if (!rows || !columns) {
     return;
   }
+  const headerText = Array.from({ length: 1 }, () =>
+    Array.from({ length: columns }, () => "")
+  );
   const cellText = Array.from({ length: rows }, () =>
     Array.from({ length: columns }, () => "")
   );
-  const newTable = createTableNode(cellText);
+  const newTable = createTableNode(cellText, headerText);
 
-  Transforms.insertNodes(editor, newTable, {
+  Transforms.insertFragment(editor, newTable, {
     mode: "highest",
   });
   Transforms.insertNodes(

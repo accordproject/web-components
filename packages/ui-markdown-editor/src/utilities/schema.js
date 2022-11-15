@@ -31,8 +31,11 @@ export const HTML_INLINE = 'html_inline';
 export const HEADINGBREAK = 'headingbreak';
 
 export const TABLE = "table";
-export const TABLE_ROW = "table-row";
-export const TABLE_CELL = "table-cell";
+export const TABLE_HEAD = 'table_head';
+export const TABLE_BODY = 'table_body';
+export const HEADER_CELL = 'header_cell';
+export const TABLE_ROW = 'table_row';
+export const TABLE_CELL = 'table_cell';
 
 const INLINES = {
   [LINEBREAK]: true,
