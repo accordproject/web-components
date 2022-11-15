@@ -32,6 +32,7 @@ If you are not already using semantic-ui-react in your project, be sure to inclu
 npm install -g lerna
 lerna clean && lerna bootstrap && lerna run build
 cd packages/storybook
+npm i
 npm run storybook
 ```
 ### User Interaction Testing (e2e tests)
