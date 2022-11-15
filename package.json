@@ -78,7 +78,9 @@
       "HEADER",
       "docs/",
       "coverage",
-      ".DS_Store"
+      ".DS_Store",
+      ".npmrc",
+      ".nvmrc"
     ],
     "file_type_method": "EXCLUDE",
     "file_types": [
