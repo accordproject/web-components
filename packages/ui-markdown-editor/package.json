@@ -7,7 +7,7 @@
     "@accordproject/markdown-html": "0.13.0",
     "@accordproject/markdown-pdf": "^0.15.2",
     "@accordproject/markdown-slate": "0.13.0",
-    "@accordproject/markdown-transform": "^0.15.2",
+    "@accordproject/markdown-transform": "^0.16.0",
     "@babel/runtime": "^7.10.3",
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.1.6",
