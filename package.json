@@ -17,7 +17,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "file-system-cache": "1.0.5",
-    "lerna": "^3.22.1",
+    "lerna": "^6.4.1",
     "lerna-changelog": "^1.0.1",
     "license-check-and-add": "2.3.6",
     "moment-mini": "2.22.1",
