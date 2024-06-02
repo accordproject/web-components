@@ -18,7 +18,7 @@ This is a
 hard break.
 
 This is a
-softbreak.
+paragraph break.
 
 ---
 
