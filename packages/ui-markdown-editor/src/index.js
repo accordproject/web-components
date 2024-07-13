@@ -252,28 +252,32 @@ export const MarkdownEditor = (props) => {
         setShowTableModal={setShowTableModal}
         activeButton={props.activeButton || BUTTON_ACTIVE}
         /> }
-      <Editable
-        id="ap-rich-text-editor"
-        style={{
+      <div id='ap-rich-text-editor-parent'
+       style={{
           padding: '0px 20px 10px 20px',
           border: '1px solid grey',
           borderRadius: '4px',
-          minWidth: '600px'
-        }}
-        readOnly={props.readOnly}
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder={props.placeholder || 'Enter some text here...'}
-        spellCheck
-        autoFocus
-        onKeyDown={onKeyDown}
-        onDOMBeforeInput={onBeforeInput}
-        onCopy={handleCopyOrCut}
-        onCut={event => handleCopyOrCut(event, true)}
-        onDragStart={handleDragStart}
-        onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
-        onDrop={handleDrop}
-      />
+       }}>
+        <Editable
+         id="ap-rich-text-editor"
+         style={{
+           minWidth: '600px'
+         }}
+         readOnly={props.readOnly}
+         renderElement={renderElement}
+         renderLeaf={renderLeaf}
+         placeholder={props.placeholder || 'Enter some text here...'}
+         spellCheck
+         autoFocus
+         onKeyDown={onKeyDown}
+         onDOMBeforeInput={onBeforeInput}
+         onCopy={handleCopyOrCut}
+         onCut={event => handleCopyOrCut(event, true)}
+         onDragStart={handleDragStart}
+         onDragOver={event => props.onDragOver ? props.onDragOver(editor, event) : null}
+         onDrop={handleDrop}
+        />
+      </div>
     </Slate>
   );
 };
