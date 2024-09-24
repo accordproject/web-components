@@ -79,7 +79,7 @@
     "react-test-renderer": "16.13.1",
     "recursive-copy": "2.0.10",
     "rimraf": "3.0.2",
-    "rollup": "2.7.3",
+    "rollup": "3.29.5",
     "rollup-plugin-eslint": "7.0.0",
     "rollup-plugin-filesize": "7.0.0",
     "rollup-plugin-includepaths": "0.2.3",
