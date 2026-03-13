@@ -1,0 +1,217 @@
+.ap-template-editor__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--ap-toolbar-bg);
+  border-bottom: 1px solid var(--ap-toolbar-border);
+  flex-wrap: wrap;
+  min-height: 44px;
+}
+
+.ap-template-editor__toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ap-template-editor__toolbar-group--primary {
+  flex-shrink: 0;
+}
+
+.ap-template-editor__toolbar-separator {
+  width: 1px;
+  height: 24px;
+  background: var(--ap-border-color);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+.ap-template-editor__toolbar-spacer {
+  flex: 1;
+  min-width: 8px;
+}
+
+.ap-template-editor__toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 10px;
+  font-size: var(--ap-font-size-sm);
+  font-family: var(--ap-font-family);
+  border: 1px solid var(--ap-toolbar-btn-border);
+  border-radius: var(--ap-radius-md);
+  background: var(--ap-toolbar-btn-bg);
+  color: var(--ap-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  min-height: 32px;
+}
+
+.ap-template-editor__toolbar-btn:hover:not(:disabled) {
+  background: var(--ap-hover-bg);
+  border-color: var(--ap-primary);
+}
+
+.ap-template-editor__toolbar-btn:active:not(:disabled) {
+  background: var(--ap-active-bg);
+}
+
+.ap-template-editor__toolbar-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-template-editor__toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ap-template-editor__toolbar-btn--icon {
+  min-width: 32px;
+  padding: 6px 8px;
+}
+
+.ap-template-editor__toolbar-btn--active {
+  background: var(--ap-toolbar-btn-active-bg);
+  border-color: var(--ap-toolbar-btn-active-border);
+  color: var(--ap-toolbar-btn-active-text);
+}
+
+.ap-template-editor__toolbar-btn--toggle {
+  font-family: var(--ap-font-mono);
+  background: var(--ap-bg-tertiary);
+}
+
+.ap-template-editor__toolbar-btn--toggle.ap-template-editor__toolbar-btn--active {
+  background: var(--ap-primary);
+  border-color: var(--ap-primary);
+  color: #ffffff;
+}
+
+/* Icon and label inside buttons */
+.ap-toolbar-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.ap-toolbar-label {
+  font-size: var(--ap-font-size-sm);
+}
+
+/* Button group (connected buttons) */
+.ap-toolbar-btn-group {
+  display: inline-flex;
+  border-radius: var(--ap-radius-md);
+  overflow: hidden;
+}
+
+.ap-toolbar-btn-group .ap-template-editor__toolbar-btn {
+  border-radius: 0;
+  margin-left: -1px;
+}
+
+.ap-toolbar-btn-group .ap-template-editor__toolbar-btn:first-child {
+  border-radius: var(--ap-radius-md) 0 0 var(--ap-radius-md);
+  margin-left: 0;
+}
+
+.ap-toolbar-btn-group .ap-template-editor__toolbar-btn:last-child {
+  border-radius: 0 var(--ap-radius-md) var(--ap-radius-md) 0;
+}
+
+/* ─── Dropdown Menu ──────────────────────────────────────────────────────────── */
+
+.ap-toolbar-dropdown {
+  position: relative;
+}
+
+.ap-toolbar-dropdown__trigger {
+  padding-right: 6px;
+}
+
+.ap-toolbar-dropdown__caret {
+  font-size: 10px;
+  margin-left: 2px;
+  opacity: 0.6;
+  transition: transform 0.15s;
+}
+
+.ap-toolbar-dropdown__trigger--open .ap-toolbar-dropdown__caret {
+  transform: rotate(180deg);
+}
+
+.ap-toolbar-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1000;
+  min-width: 180px;
+  padding: 4px;
+  background: var(--ap-popover-bg);
+  border: 1px solid var(--ap-popover-border);
+  border-radius: var(--ap-radius-lg);
+  box-shadow: var(--ap-popover-shadow);
+}
+
+.ap-toolbar-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: var(--ap-font-size-sm);
+  font-family: var(--ap-font-family);
+  text-align: left;
+  border: none;
+  border-radius: var(--ap-radius-md);
+  background: transparent;
+  color: var(--ap-text);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.ap-toolbar-dropdown__item:hover {
+  background: var(--ap-hover-bg);
+}
+
+.ap-toolbar-dropdown__item-icon {
+  width: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ─── Responsive Breakpoints ─────────────────────────────────────────────────── */
+
+/* Hide labels on smaller screens, show only icons */
+@media (max-width: 768px) {
+  .ap-toolbar-label {
+    display: none;
+  }
+  
+  .ap-template-editor__toolbar-btn {
+    padding: 6px 8px;
+  }
+  
+  .ap-template-editor__toolbar-separator {
+    margin: 0;
+  }
+}
+
+/* Stack dropdowns on very small screens */
+@media (max-width: 480px) {
+  .ap-template-editor__toolbar {
+    gap: 4px;
+    padding: 6px 8px;
+  }
+  
+  .ap-template-editor__toolbar-group {
+    gap: 2px;
+  }
+  
+  .ap-toolbar-dropdown__menu {
+    min-width: 160px;
+  }
+}

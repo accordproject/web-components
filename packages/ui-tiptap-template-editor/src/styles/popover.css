@@ -1,0 +1,150 @@
+/**
+ * Accord Project Template Editor - Popover Styles
+ * 
+ * Styles for popover dialogs and form elements.
+ * Uses CSS variables from variables.css for theming support.
+ */
+
+@import './variables.css';
+
+/* ─── Popover Container ──────────────────────────────────────── */
+
+.ap-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.ap-popover {
+  position: absolute;
+  z-index: 1000;
+  background: var(--ap-popover-bg);
+  border: 1px solid var(--ap-popover-border);
+  border-radius: var(--ap-radius-lg);
+  padding: 12px;
+  box-shadow: var(--ap-popover-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--ap-font-family);
+}
+
+/* ─── Form Elements ──────────────────────────────────────────── */
+
+.ap-popover__label {
+  font-size: var(--ap-font-size-xs);
+  font-weight: 600;
+  color: var(--ap-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+.ap-popover__label:first-child {
+  margin-top: 0;
+}
+
+.ap-popover__input {
+  padding: 4px 6px;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-base);
+  font-family: var(--ap-font-family);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ap-input-bg);
+  color: var(--ap-input-text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ap-popover__input:focus {
+  border-color: var(--ap-primary);
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-popover__input::placeholder {
+  color: var(--ap-input-placeholder);
+}
+
+.ap-popover__select {
+  padding: 4px 6px;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-base);
+  font-family: var(--ap-font-family);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ap-input-bg);
+  color: var(--ap-input-text);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ap-popover__select:focus {
+  border-color: var(--ap-primary);
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-popover__textarea {
+  padding: 6px 8px;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-base);
+  font-family: var(--ap-font-mono);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ap-input-bg);
+  color: var(--ap-input-text);
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ap-popover__textarea:focus {
+  border-color: var(--ap-primary);
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+/* ─── Button Row ─────────────────────────────────────────────── */
+
+.ap-popover__buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.ap-popover__btn {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  border-radius: var(--ap-radius-md);
+  cursor: pointer;
+  font-size: var(--ap-font-size-base);
+  font-family: var(--ap-font-family);
+  font-weight: 500;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.ap-popover__btn:active {
+  transform: scale(0.98);
+}
+
+.ap-popover__btn--primary {
+  background: var(--ap-btn-primary-bg);
+  color: var(--ap-btn-primary-text);
+}
+
+.ap-popover__btn--primary:hover {
+  background: var(--ap-btn-primary-hover);
+}
+
+.ap-popover__btn--secondary {
+  background: var(--ap-btn-secondary-bg);
+  color: var(--ap-btn-secondary-text);
+}
+
+.ap-popover__btn--secondary:hover {
+  background: var(--ap-btn-secondary-hover);
+}

@@ -21,8 +21,8 @@ import {
   ClassDeclaration,
   Field,
   RelationshipDeclaration,
-  Writer,
 } from '@accordproject/concerto-core';
+import { Writer } from '@accordproject/concerto-util';
 import * as util from 'util';
 
 import {

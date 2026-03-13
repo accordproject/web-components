@@ -100,7 +100,7 @@ const ConcertoForm = (props) => {
     const modelManager = new ModelManager();
     models.forEach((model, idx) => {
       try {
-        modelManager.addModelFile(model, `model-${idx}`, true);
+        modelManager.addCTOModel(model, `model-${idx}`, false);
       } catch (err) {
         console.log(err);
       }

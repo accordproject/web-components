@@ -3,35 +3,33 @@ name: Publish
 on:
   release:
     types:
-      - released
+      - published
+
+permissions:
+  id-token: write  # Required for OIDC / npmjs publish
 
 jobs:
   publish:
     name: Publish to npm
     if: ${{ github.repository_owner == 'accordproject' }}
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
 
-      - uses: actions/cache@v2
-        id: npm-and-build-cache
-        with:
-          path: |
-            ~/.cache/Cypress
-            build
-            node_modules
-          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-build-
+      # Ensure npm 11.5.1 or later for trusted publishing
+      - run: npm install -g npm@latest
 
-      - run: npx lerna bootstrap && npx lerna run build
+      - run: npm ci
       - run: npm run build --if-present
 
       - name: tag
@@ -42,14 +40,13 @@ jobs:
       - name: build and publish
         run: |
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-          npm version --no-git-tag-version --yes --exact ${{ github.event.release.tag_name }}
-          npx lerna version --no-git-tag-version --yes --exact ${{ github.event.release.tag_name }}
-          npx lerna exec --ignore storybook -- npm publish --access public ${{ steps.tag.outputs.tag }} 2>&1
+          npm version --workspaces --include-workspace-root --no-git-tag-version --yes --exact ${{ github.event.release.tag_name }}
+          npm publish --workspaces --access public ${{ steps.tag.outputs.tag }} 2>&1
 
       - name: Create PR to increment version
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v7
         with:
-          base: master
+          base: main
           commit-message: 'chore(actions): publish ${{ github.event.release.tag_name }} to npm'
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>

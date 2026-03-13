@@ -1,0 +1,90 @@
+{
+  "name": "@accordproject/ui-tiptap-template-editor",
+  "version": "0.1.0",
+  "private": false,
+  "description": "TipTap v2 template editor for Accord Project TemplateMark",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs",
+    "build:prod": "NODE_ENV=production rollup -c rollup.config.mjs",
+    "test": "jest --passWithNoTests",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@accordproject/concerto-core": "^3.25.7",
+    "@accordproject/markdown-template": "^0.17.2",
+    "@accordproject/markdown-transform": "^0.17.2",
+    "@tiptap/core": "^2.5.0",
+    "@tiptap/extension-gapcursor": "^2.5.0",
+    "@tiptap/extension-horizontal-rule": "^2.5.0",
+    "@tiptap/extension-image": "^2.5.0",
+    "@tiptap/react": "^2.5.0",
+    "@tiptap/starter-kit": "^2.5.0",
+    "prosemirror-model": "^1.21.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.33.4"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@testing-library/jest-dom": "^6.4.0",
+    "@testing-library/react": "^15.0.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/jest": "^29.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "postcss": "^8.5.8",
+    "postcss-import": "^16.1.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup": "^4.0.0",
+    "rollup-plugin-dts": "^6.0.0",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "ts-jest": "^29.0.0",
+    "tslib": "^2.6.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/web-components",
+    "directory": "packages/ui-tiptap-template-editor"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "setupFilesAfterFramework": [
+      "@testing-library/jest-dom"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "./tsconfig.test.json"
+      }
+    },
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/test/__mocks__/styleMock.js"
+    },
+    "testEnvironmentOptions": {
+      "customExportConditions": [
+        "node",
+        "node-addons"
+      ]
+    }
+  }
+}

@@ -20,8 +20,8 @@ const fs = require('fs');
 
 describe('formgenerator Tests', () => {
   const modelManager = new ModelManager();
-  modelManager.addModelFile(
-    `namespace org.accordproject.base
+  modelManager.addCTOModel(
+    `namespace org.accordproject.base@1.0.0
   abstract asset Asset {  }
   abstract participant Participant {  }
   abstract transaction Transaction identified by transactionId {
@@ -51,7 +51,7 @@ describe('formgenerator Tests', () => {
         },
         updateExternalModels: true,
       };
-      modelManager.addModelFile(text, 'model', true);
+      modelManager.addCTOModel(text, 'model', false);
       modelManager.updateExternalModels();
       const generator = new Generator(modelManager, options);
       expect(generator).not.toBeNull();

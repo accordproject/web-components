@@ -96,14 +96,14 @@ exports[`formgenerator Tests #instantiate generates a form from text 1`] = `
           <div
             aria-atomic="true"
             aria-live="polite"
-            class="text"
+            class="divider text"
             role="alert"
           >
             USA
           </div>
           <i
             aria-hidden="true"
-            class="dropdown icon"
+            class="dropdown icon clear"
           />
           <div
             class="menu transition"
@@ -174,17 +174,33 @@ exports[`formgenerator Tests #instantiate generates a form from text 1`] = `
         class="arrayElement grid"
       >
         <div />
-        <div>
-          <button
-            aria-label="Add an element to Children"
-            class="ui basic circular icon button arrayButton"
-          >
-            <i
-              aria-hidden="true"
-              class="plus circle icon"
-            />
-          </button>
-        </div>
+        <button
+          aria-label="Add an element to Children"
+          class="ui icon button arrayButton"
+        >
+          <i
+            aria-hidden="true"
+            class="add icon"
+          />
+        </button>
+      </div>
+    </div>
+    <div
+      class="required field"
+    >
+      <label
+        for="$identifier"
+      >
+        $identifier
+      </label>
+      <div
+        class="ui input"
+      >
+        <input
+          id="$identifier"
+          type="text"
+          value="resource1"
+        />
       </div>
     </div>
   </div>

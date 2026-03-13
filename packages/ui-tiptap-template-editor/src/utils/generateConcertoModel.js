@@ -1,0 +1,130 @@
+const TYPE_MAP = {
+    String: 'String',
+    Integer: 'Integer',
+    Double: 'Double',
+    Boolean: 'Boolean',
+    DateTime: 'DateTime',
+    Long: 'Long',
+};
+function mapType(elementType) {
+    return TYPE_MAP[elementType ?? 'String'] ?? 'String';
+}
+function collectVarsFromNodes(nodes, acc) {
+    for (const node of nodes) {
+        const $class = node.$class;
+        if ($class === 'org.accordproject.templatemark@0.5.0.VariableDefinition' ||
+            $class === 'org.accordproject.templatemark@0.5.0.FormattedVariableDefinition') {
+            const v = node;
+            if (!acc.has(v.name)) {
+                acc.set(v.name, {
+                    name: v.name,
+                    elementType: v.elementType,
+                    format: v.format,
+                });
+            }
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.EnumVariableDefinition') {
+            const v = node;
+            if (!acc.has(v.name)) {
+                acc.set(v.name, {
+                    name: v.name,
+                    elementType: v.elementType ?? 'String',
+                    enumValues: v.enumValues,
+                });
+            }
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.FormulaDefinition') {
+            const v = node;
+            if (!acc.has(v.name)) {
+                acc.set(v.name, { name: v.name, elementType: v.elementType ?? 'Double' });
+            }
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.ConditionalDefinition') {
+            const cond = node;
+            if (!acc.has(cond.name)) {
+                acc.set(cond.name, { name: cond.name, elementType: 'Boolean' });
+            }
+            if (cond.whenTrue)
+                collectVarsFromNodes(cond.whenTrue, acc);
+            if (cond.whenFalse)
+                collectVarsFromNodes(cond.whenFalse, acc);
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.OptionalDefinition') {
+            const opt = node;
+            if (!acc.has(opt.name)) {
+                acc.set(opt.name, { name: opt.name, elementType: 'Boolean' });
+            }
+            if (opt.whenSome)
+                collectVarsFromNodes(opt.whenSome, acc);
+            if (opt.whenNone)
+                collectVarsFromNodes(opt.whenNone, acc);
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.ConditionalBlockDefinition') {
+            const cond = node;
+            if (!acc.has(cond.name))
+                acc.set(cond.name, { name: cond.name, elementType: 'Boolean' });
+            if (cond.whenTrue)
+                collectVarsFromNodes(cond.whenTrue, acc);
+            if (cond.whenFalse)
+                collectVarsFromNodes(cond.whenFalse, acc);
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.OptionalBlockDefinition') {
+            const opt = node;
+            if (!acc.has(opt.name))
+                acc.set(opt.name, { name: opt.name, elementType: 'Boolean' });
+            if (opt.whenSome)
+                collectVarsFromNodes(opt.whenSome, acc);
+            if (opt.whenNone)
+                collectVarsFromNodes(opt.whenNone, acc);
+        }
+        else if ($class === 'org.accordproject.templatemark@0.5.0.WithBlockDefinition' ||
+            $class === 'org.accordproject.templatemark@0.5.0.ClauseDefinition' ||
+            $class === 'org.accordproject.templatemark@0.5.0.ContractDefinition') {
+            if ('nodes' in node && Array.isArray(node.nodes)) {
+                collectVarsFromNodes(node.nodes, acc);
+            }
+        }
+        // Recurse into child nodes (for types not handled above)
+        if ($class !== 'org.accordproject.templatemark@0.5.0.ConditionalDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.OptionalDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.ConditionalBlockDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.OptionalBlockDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.WithBlockDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.ClauseDefinition' &&
+            $class !== 'org.accordproject.templatemark@0.5.0.ContractDefinition' &&
+            'nodes' in node && Array.isArray(node.nodes)) {
+            collectVarsFromNodes(node.nodes, acc);
+        }
+    }
+}
+/** Walk a TemplateMark document and collect all declared variable definitions. */
+export function collectVariables(doc) {
+    const acc = new Map();
+    const nodes = 'nodes' in doc ? doc.nodes : undefined;
+    if (nodes)
+        collectVarsFromNodes(nodes, acc);
+    return [...acc.values()];
+}
+/**
+ * Generate a Concerto CTO model string from a TemplateMark document.
+ * Walks the document tree to collect all variable definitions.
+ */
+export function generateConcertoModel(doc) {
+    const vars = collectVariables(doc);
+    const fields = vars.flatMap((v) => {
+        const type = mapType(v.elementType);
+        const lines = [];
+        if (v.format)
+            lines.push(`  @format("${v.format}")`);
+        lines.push(`  o ${type} ${v.name} optional`);
+        return lines;
+    });
+    return [
+        'namespace com.template@1.0.0',
+        '',
+        '@template',
+        'concept TemplateData {',
+        ...fields,
+        '}',
+    ].join('\n');
+}

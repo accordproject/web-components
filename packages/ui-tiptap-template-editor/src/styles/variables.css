@@ -1,0 +1,191 @@
+/**
+ * Accord Project Template Editor - Design Tokens
+ * 
+ * These CSS variables align with the template-playground design system.
+ * Consumers can override these variables to customize the editor appearance.
+ * 
+ * Usage: Set these variables on a parent element or :root to override defaults.
+ * For dark mode: Set data-theme="dark" on the editor container or html element.
+ */
+
+:root,
+.ap-template-editor {
+  /* ─── Brand Colors ─────────────────────────────────────────── */
+  --ap-primary: #19C6C8;
+  --ap-primary-hover: #15b0b2;
+  --ap-primary-light: #e0f7f8;
+  --ap-primary-dark: #0e9a9c;
+  --ap-secondary: #1B2540;
+  
+  /* ─── Typography ───────────────────────────────────────────── */
+  --ap-font-family: var(--font-family-primary, 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  --ap-font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  --ap-font-size-xs: 11px;
+  --ap-font-size-sm: 12px;
+  --ap-font-size-base: 13px;
+  --ap-font-size-md: 14px;
+  
+  /* ─── Light Theme (default) ────────────────────────────────── */
+  --ap-bg: var(--bg-color, #ffffff);
+  --ap-bg-secondary: #f8f9fa;
+  --ap-bg-tertiary: #f3f4f6;
+  --ap-text: var(--text-color, #121212);
+  --ap-text-muted: #6b7280;
+  --ap-text-light: #9ca3af;
+  --ap-border-color: var(--border-color, #d1d5db);
+  --ap-border-light: #e5e7eb;
+  
+  /* ─── Interactive States ───────────────────────────────────── */
+  --ap-hover-bg: var(--hover-bg-color, #f3f4f6);
+  --ap-active-bg: var(--active-bg-color, #e5e7eb);
+  --ap-focus-ring: rgba(25, 198, 200, 0.4);
+  
+  /* ─── Toolbar ──────────────────────────────────────────────── */
+  --ap-toolbar-bg: #f9fafb;
+  --ap-toolbar-border: #e5e7eb;
+  --ap-toolbar-btn-bg: #ffffff;
+  --ap-toolbar-btn-border: #d1d5db;
+  --ap-toolbar-btn-active-bg: var(--ap-primary-light);
+  --ap-toolbar-btn-active-border: var(--ap-primary);
+  --ap-toolbar-btn-active-text: var(--ap-primary-dark);
+  
+  /* ─── Validation ───────────────────────────────────────────── */
+  --ap-error: #dc2626;
+  --ap-error-bg: #fff7f7;
+  --ap-error-border: #fca5a5;
+  --ap-warning: #d97706;
+  --ap-warning-bg: #fffbeb;
+  --ap-success: #059669;
+  --ap-success-bg: #ecfdf5;
+  
+  /* ─── Template Elements (Badges) ───────────────────────────── */
+  --ap-badge-variable-bg: var(--ap-primary-light);
+  --ap-badge-variable-border: var(--ap-primary);
+  --ap-badge-variable-text: var(--ap-primary-dark);
+  
+  --ap-badge-formula-bg: #f0fff4;
+  --ap-badge-formula-border: #68d391;
+  --ap-badge-formula-text: #276749;
+  
+  --ap-badge-formatted-bg: #fef9c3;
+  --ap-badge-formatted-border: #f6e05e;
+  --ap-badge-formatted-text: #744210;
+  
+  --ap-badge-monetary-bg: #fffbeb;
+  --ap-badge-monetary-border: #f59e0b;
+  --ap-badge-monetary-text: #92400e;
+  
+  --ap-badge-duration-bg: #eff6ff;
+  --ap-badge-duration-border: #3b82f6;
+  --ap-badge-duration-text: #1e40af;
+  
+  --ap-badge-period-bg: #faf5ff;
+  --ap-badge-period-border: #a855f7;
+  --ap-badge-period-text: #6b21a8;
+  
+  /* ─── Block Elements (Clause, Conditional, Optional) ───────── */
+  --ap-block-clause-bg: #ebf8ff;
+  --ap-block-clause-border: #90cdf4;
+  --ap-block-clause-header: #bee3f8;
+  
+  --ap-block-conditional-bg: #ebf8ff;
+  --ap-block-conditional-border: #63b3ed;
+  --ap-block-conditional-header: #bee3f8;
+  
+  --ap-block-optional-bg: #faf5ff;
+  --ap-block-optional-border: #d6bcfa;
+  --ap-block-optional-header: #e9d8fd;
+  
+  /* ─── Popover/Dialog ───────────────────────────────────────── */
+  --ap-popover-bg: var(--ap-bg);
+  --ap-popover-border: #cbd5e0;
+  --ap-popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  
+  /* ─── Buttons ──────────────────────────────────────────────── */
+  --ap-btn-primary-bg: var(--ap-primary);
+  --ap-btn-primary-text: #ffffff;
+  --ap-btn-primary-hover: var(--ap-primary-hover);
+  --ap-btn-secondary-bg: #e2e8f0;
+  --ap-btn-secondary-text: #4a5568;
+  --ap-btn-secondary-hover: #cbd5e0;
+  --ap-btn-danger: #e53e3e;
+  
+  /* ─── Inputs ───────────────────────────────────────────────── */
+  --ap-input-bg: var(--ap-bg);
+  --ap-input-border: #cbd5e0;
+  --ap-input-text: var(--ap-text);
+  --ap-input-placeholder: var(--ap-text-light);
+  
+  /* ─── Spacing ──────────────────────────────────────────────── */
+  --ap-radius-sm: 3px;
+  --ap-radius-md: 4px;
+  --ap-radius-lg: 6px;
+}
+
+/* ─── Dark Theme ─────────────────────────────────────────────── */
+[data-theme="dark"] .ap-template-editor,
+.ap-template-editor[data-theme="dark"] {
+  --ap-bg: var(--bg-color, #121212);
+  --ap-bg-secondary: #1e1e1e;
+  --ap-bg-tertiary: #2d2d2d;
+  --ap-text: var(--text-color, #ffffff);
+  --ap-text-muted: #a0a0a0;
+  --ap-text-light: #707070;
+  --ap-border-color: var(--border-color, #444444);
+  --ap-border-light: #333333;
+  
+  --ap-hover-bg: var(--hover-bg-color, #333333);
+  --ap-active-bg: var(--active-bg-color, #444444);
+  
+  --ap-toolbar-bg: #1e1e1e;
+  --ap-toolbar-border: #333333;
+  --ap-toolbar-btn-bg: #2d2d2d;
+  --ap-toolbar-btn-border: #444444;
+  
+  --ap-error-bg: #2d1f1f;
+  --ap-warning-bg: #2d2a1f;
+  --ap-success-bg: #1f2d25;
+  
+  --ap-primary-light: rgba(25, 198, 200, 0.2);
+  
+  --ap-badge-variable-bg: rgba(25, 198, 200, 0.15);
+  --ap-badge-formula-bg: rgba(104, 211, 145, 0.15);
+  --ap-badge-formula-text: #68d391;
+  --ap-badge-formatted-bg: rgba(246, 224, 94, 0.15);
+  --ap-badge-formatted-text: #f6e05e;
+  
+  --ap-badge-monetary-bg: rgba(245, 158, 11, 0.15);
+  --ap-badge-monetary-border: rgba(245, 158, 11, 0.6);
+  --ap-badge-monetary-text: #f59e0b;
+  
+  --ap-badge-duration-bg: rgba(59, 130, 246, 0.15);
+  --ap-badge-duration-border: rgba(59, 130, 246, 0.6);
+  --ap-badge-duration-text: #60a5fa;
+  
+  --ap-badge-period-bg: rgba(168, 85, 247, 0.15);
+  --ap-badge-period-border: rgba(168, 85, 247, 0.6);
+  --ap-badge-period-text: #c084fc;
+  
+  --ap-block-clause-bg: rgba(144, 205, 244, 0.1);
+  --ap-block-clause-border: rgba(144, 205, 244, 0.4);
+  --ap-block-clause-header: rgba(190, 227, 248, 0.2);
+  
+  --ap-block-conditional-bg: rgba(99, 179, 237, 0.1);
+  --ap-block-conditional-border: rgba(99, 179, 237, 0.4);
+  --ap-block-conditional-header: rgba(190, 227, 248, 0.2);
+  
+  --ap-block-optional-bg: rgba(214, 188, 250, 0.1);
+  --ap-block-optional-border: rgba(214, 188, 250, 0.4);
+  --ap-block-optional-header: rgba(233, 216, 253, 0.2);
+  
+  --ap-popover-bg: #1e1e1e;
+  --ap-popover-border: #444444;
+  --ap-popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  
+  --ap-btn-secondary-bg: #3d3d3d;
+  --ap-btn-secondary-text: #e0e0e0;
+  --ap-btn-secondary-hover: #4d4d4d;
+  
+  --ap-input-bg: #2d2d2d;
+  --ap-input-border: #444444;
+}

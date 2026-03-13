@@ -1,0 +1,329 @@
+/**
+ * Accord Project Template Editor - NodeView Styles
+ * 
+ * Styles for template element badges and block containers.
+ * Uses CSS variables from variables.css for theming support.
+ */
+
+@import './variables.css';
+
+/* ─── Inline Badges (Variables, Formulas) ────────────────────── */
+
+.ap-badge {
+  display: inline;
+  border-radius: var(--ap-radius-sm);
+  padding: 0 4px;
+  font-style: normal;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  font-family: var(--ap-font-family);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.ap-badge--variable {
+  background: var(--ap-badge-variable-bg);
+  border: 1px solid var(--ap-badge-variable-border);
+  color: var(--ap-badge-variable-text);
+}
+
+.ap-badge--variable:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge--formatted {
+  background: var(--ap-badge-formatted-bg);
+  border: 1px solid var(--ap-badge-formatted-border);
+  color: var(--ap-badge-formatted-text);
+}
+
+.ap-badge--formatted:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge--formula {
+  background: var(--ap-badge-formula-bg);
+  border: 1px solid var(--ap-badge-formula-border);
+  color: var(--ap-badge-formula-text);
+}
+
+.ap-badge--formula:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge--enum {
+  background: var(--ap-badge-variable-bg);
+  border: 1px solid var(--ap-badge-variable-border);
+  color: var(--ap-badge-variable-text);
+}
+
+.ap-badge--monetary {
+  background: var(--ap-badge-monetary-bg);
+  border: 1px solid var(--ap-badge-monetary-border);
+  color: var(--ap-badge-monetary-text);
+}
+
+.ap-badge--monetary:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge--duration {
+  background: var(--ap-badge-duration-bg);
+  border: 1px solid var(--ap-badge-duration-border);
+  color: var(--ap-badge-duration-text);
+}
+
+.ap-badge--duration:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge--period {
+  background: var(--ap-badge-period-bg);
+  border: 1px solid var(--ap-badge-period-border);
+  color: var(--ap-badge-period-text);
+}
+
+.ap-badge--period:hover {
+  filter: brightness(0.95);
+}
+
+.ap-badge__type {
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.ap-badge__format {
+  opacity: 0.6;
+}
+
+.ap-badge__sigil {
+  font-weight: 700;
+  color: var(--ap-success);
+}
+
+.ap-badge__code-preview {
+  font-family: var(--ap-font-mono);
+  font-size: var(--ap-font-size-xs);
+  opacity: 0.75;
+  background: rgba(104, 211, 145, 0.3);
+  border-radius: 2px;
+  padding: 0 3px;
+  margin-left: 2px;
+}
+
+/* ─── Block Containers (Clause, Conditional, Optional) ───────── */
+
+.ap-block {
+  border-radius: var(--ap-radius-lg);
+  margin: 8px 0;
+  font-family: var(--ap-font-family);
+}
+
+.ap-block--clause {
+  border: 1px solid var(--ap-block-clause-border);
+  background: var(--ap-block-clause-bg);
+}
+
+.ap-block--clause.ap-block--error {
+  border-color: #fc8181;
+  background: var(--ap-error-bg);
+}
+
+.ap-block--conditional {
+  border: 1px solid var(--ap-block-conditional-border);
+  background: var(--ap-block-conditional-bg);
+}
+
+.ap-block--optional {
+  border: 1px solid var(--ap-block-optional-border);
+  background: var(--ap-block-optional-bg);
+}
+
+.ap-block--with {
+  border: 1px solid var(--ap-block-conditional-border);
+  background: var(--ap-block-conditional-bg);
+}
+
+/* ─── Block Header ───────────────────────────────────────────── */
+
+.ap-block__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 5px 5px 0 0;
+  font-size: var(--ap-font-size-base);
+}
+
+.ap-block--clause .ap-block__header {
+  border-bottom: 1px solid var(--ap-block-clause-border);
+  background: var(--ap-block-clause-header);
+}
+
+.ap-block--conditional .ap-block__header {
+  border-bottom: 1px solid var(--ap-block-conditional-border);
+  background: var(--ap-block-conditional-header);
+}
+
+.ap-block--optional .ap-block__header {
+  border-bottom: 1px solid var(--ap-block-optional-border);
+  background: var(--ap-block-optional-header);
+}
+
+.ap-block--with .ap-block__header {
+  border-bottom: 1px solid var(--ap-block-conditional-border);
+  background: var(--ap-block-conditional-header);
+}
+
+.ap-block__header-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ap-block__icon {
+  font-size: var(--ap-font-size-md);
+}
+
+.ap-block__name {
+  font-weight: 500;
+}
+
+.ap-block__code {
+  font-family: var(--ap-font-mono);
+  background: rgba(144, 205, 244, 0.5);
+  padding: 1px 4px;
+  border-radius: var(--ap-radius-sm);
+  font-size: var(--ap-font-size-sm);
+}
+
+.ap-block__condition {
+  font-size: var(--ap-font-size-xs);
+  color: #2b6cb0;
+  font-style: italic;
+}
+
+.ap-block__error {
+  color: var(--ap-btn-danger);
+  margin-left: 8px;
+  font-size: var(--ap-font-size-sm);
+}
+
+/* ─── Block Actions ──────────────────────────────────────────── */
+
+.ap-block__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.ap-block__btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--ap-font-size-sm);
+  padding: 2px 6px;
+  border-radius: var(--ap-radius-sm);
+  transition: background 0.1s;
+}
+
+.ap-block__btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.ap-block__btn--danger {
+  color: var(--ap-btn-danger);
+}
+
+/* ─── Block Content ──────────────────────────────────────────── */
+
+.ap-block__content {
+  padding: 12px;
+  min-height: 40px;
+}
+
+/* ─── Tab Bar (for Conditional blocks) ───────────────────────── */
+
+.ap-block__tabs {
+  display: flex;
+  border-bottom: 1px solid var(--ap-block-conditional-header);
+  background: rgba(227, 242, 253, 0.5);
+}
+
+.ap-block__tab {
+  flex: 1;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--ap-font-size-sm);
+  font-weight: 400;
+  color: var(--ap-text-muted);
+  border-bottom: 2px solid transparent;
+  font-family: var(--ap-font-family);
+  transition: background 0.1s, color 0.1s;
+}
+
+.ap-block__tab:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.ap-block__tab--active {
+  font-weight: 600;
+}
+
+.ap-block__tab--true.ap-block__tab--active {
+  background: #c6f6d5;
+  color: #276749;
+  border-bottom-color: #48bb78;
+}
+
+.ap-block__tab--false.ap-block__tab--active {
+  background: #fed7d7;
+  color: #c53030;
+  border-bottom-color: #fc8181;
+}
+
+/* ─── Branch Container ───────────────────────────────────────── */
+
+.ap-block__branch {
+  position: relative;
+}
+
+/* ─── Template Images ───────────────────────────────────────── */
+
+.ap-image {
+  display: inline-block;
+}
+
+.ap-image__wrapper {
+  display: inline-block;
+  border-radius: var(--ap-radius-sm);
+  overflow: hidden;
+}
+
+.ap-image__wrapper--selected {
+  outline: 2px solid var(--ap-primary);
+}
+
+.ap-image__wrapper--editable {
+  cursor: pointer;
+}
+
+.ap-image__img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ap-image__placeholder {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--ap-surface-secondary);
+  border: 1px dashed var(--ap-border-color);
+  border-radius: var(--ap-radius-sm);
+  color: var(--ap-text-muted);
+  font-size: 13px;
+}

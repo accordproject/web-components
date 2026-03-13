@@ -1,0 +1,227 @@
+/**
+ * Accord Project Template Editor - Modal / Insert Dialog Styles
+ *
+ * Uses CSS variables from variables.css for full theme support.
+ * Modals are portaled to document.body so they inherit from :root.
+ */
+
+@import './variables.css';
+
+/* ─── Backdrop ───────────────────────────────────────────────── */
+
+.ap-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+/* ─── Modal container ────────────────────────────────────────── */
+
+.ap-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ap-bg);
+  border: 1px solid var(--ap-popover-border);
+  border-radius: var(--ap-radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), var(--ap-popover-shadow);
+  font-family: var(--ap-font-family);
+  color: var(--ap-text);
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+
+.ap-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--ap-border-light);
+  flex-shrink: 0;
+}
+
+.ap-modal__title {
+  font-size: var(--ap-font-size-md);
+  font-weight: 600;
+  color: var(--ap-text);
+  margin: 0;
+}
+
+.ap-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--ap-radius-md);
+  font-size: 16px;
+  color: var(--ap-text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+
+.ap-modal__close:hover {
+  background: var(--ap-hover-bg);
+  color: var(--ap-text);
+}
+
+/* ─── Body ───────────────────────────────────────────────────── */
+
+.ap-modal__body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ap-modal__help {
+  font-size: var(--ap-font-size-sm);
+  color: var(--ap-text-muted);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+/* ─── Fields ─────────────────────────────────────────────────── */
+
+.ap-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.ap-modal__field:last-child {
+  margin-bottom: 0;
+}
+
+.ap-modal__label {
+  font-size: var(--ap-font-size-xs);
+  font-weight: 600;
+  color: var(--ap-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ap-modal__required {
+  color: var(--ap-error);
+  margin-left: 2px;
+}
+
+.ap-modal__input,
+.ap-modal__select {
+  padding: 8px 10px;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-md);
+  font-family: var(--ap-font-family);
+  background: var(--ap-input-bg);
+  color: var(--ap-input-text);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ap-modal__select {
+  cursor: pointer;
+}
+
+.ap-modal__input:focus,
+.ap-modal__select:focus {
+  border-color: var(--ap-primary);
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-modal__input::placeholder {
+  color: var(--ap-input-placeholder);
+}
+
+.ap-modal__textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-sm);
+  font-family: var(--ap-font-mono);
+  background: var(--ap-input-bg);
+  color: var(--ap-input-text);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ap-modal__textarea:focus {
+  border-color: var(--ap-primary);
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-modal__textarea::placeholder {
+  color: var(--ap-input-placeholder);
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+
+.ap-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--ap-border-light);
+  flex-shrink: 0;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+
+.ap-modal__btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--ap-radius-md);
+  font-size: var(--ap-font-size-base);
+  font-family: var(--ap-font-family);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.ap-modal__btn:active {
+  transform: scale(0.98);
+}
+
+.ap-modal__btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ap-focus-ring);
+}
+
+.ap-modal__btn--primary {
+  background: var(--ap-btn-primary-bg);
+  color: var(--ap-btn-primary-text);
+}
+
+.ap-modal__btn--primary:hover {
+  background: var(--ap-btn-primary-hover);
+}
+
+.ap-modal__btn--secondary {
+  background: var(--ap-btn-secondary-bg);
+  color: var(--ap-btn-secondary-text);
+}
+
+.ap-modal__btn--secondary:hover {
+  background: var(--ap-btn-secondary-hover);
+}

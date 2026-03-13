@@ -19,6 +19,8 @@ import ConcertoForm from './concertoForm';
 import ModelBuilderVisitor from '../modelBuilderVisitor';
 import { MetaModel } from '@accordproject/concerto-core';
 
+const metaModelCto = MetaModel.newMetaModelManager().getModelFiles()[0].definitions;
+
 /**
  * This React component generates a React object for a bound model.
  */
@@ -28,7 +30,7 @@ const ConcertoModelBuilder = props => {
   console.log(`PROPS ${Object.keys(props.options)}`);
   return (
     <ErrorBoundary>
-      <ConcertoForm key={`form-wrapper-${props.type}`} models={[MetaModel.metaModelCto]} {...props} />
+      <ConcertoForm key={`form-wrapper-${props.type}`} models={[metaModelCto]} {...props} />
     </ErrorBoundary>
   );
 };

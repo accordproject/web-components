@@ -69,7 +69,7 @@ describe('render form', () => {
 
       // Exercise the onChange handlers
       const nameInput = screen.getByLabelText('Name');
-      userEvent.type(nameInput, ' Roberts');
+      await userEvent.type(nameInput, ' Roberts');
       expect(onValueChange).toHaveBeenLastCalledWith({
         ...parsedJson,
         name: `${parsedJson.name} Roberts`
