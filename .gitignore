@@ -124,3 +124,12 @@ storybook-static
 
 .vscode
 .claude
+
+# TypeScript compiled output in source directories
+src/**/*.js
+src/**/*.jsx
+src/**/*.js.map
+!src/**/*.config.js
+
+# Build output
+lib/
