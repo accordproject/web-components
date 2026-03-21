@@ -97,27 +97,152 @@ export function parseCto(cto: string): ConcertoModel {
   return { namespace, declarations };
 }
 
+/**
+ * Tree layout: inheritance roots at the top, children below.
+ * Nodes without relationships are placed to the side.
+ */
+function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number; y: number }> {
+  const positions = new Map<string, { x: number; y: number }>();
+  const declMap = new Map(declarations.map((d) => [d.name, d]));
+  const declNames = new Set(declarations.map((d) => d.name));
+
+  // Build inheritance tree: parent → children[]
+  const children = new Map<string, string[]>();
+  const hasParent = new Set<string>();
+  for (const decl of declarations) {
+    if (decl.superType && declNames.has(decl.superType)) {
+      hasParent.add(decl.name);
+      const kids = children.get(decl.superType) || [];
+      kids.push(decl.name);
+      children.set(decl.superType, kids);
+    }
+  }
+
+  // Build property/relationship references (non-inheritance connections)
+  const referencedBy = new Map<string, string[]>();
+  for (const decl of declarations) {
+    const props = decl.type === 'map'
+      ? decl.properties.filter((p) => p.name === '_value')
+      : decl.properties;
+    for (const prop of props) {
+      if (declNames.has(prop.type) && !PRIMITIVE_TYPES.has(prop.type) && prop.type !== decl.name) {
+        const refs = referencedBy.get(prop.type) || [];
+        refs.push(decl.name);
+        referencedBy.set(prop.type, refs);
+      }
+    }
+  }
+
+  // Find inheritance roots (nodes that have children but no parent)
+  const inheritanceRoots: string[] = [];
+  // Find standalone nodes (no inheritance at all)
+  const standalone: string[] = [];
+
+  for (const decl of declarations) {
+    if (!hasParent.has(decl.name) && children.has(decl.name)) {
+      inheritanceRoots.push(decl.name);
+    } else if (!hasParent.has(decl.name) && !children.has(decl.name)) {
+      standalone.push(decl.name);
+    }
+  }
+
+  const spacingX = 300;
+  const spacingY = 250;
+  let currentX = 0;
+
+  // Layout a subtree, returns width used
+  function layoutSubtree(name: string, depth: number, startX: number): number {
+    const kids = children.get(name) || [];
+    if (kids.length === 0) {
+      positions.set(name, { x: startX, y: depth * spacingY });
+      return spacingX;
+    }
+
+    let childX = startX;
+    let totalWidth = 0;
+    for (const kid of kids) {
+      const w = layoutSubtree(kid, depth + 1, childX);
+      childX += w;
+      totalWidth += w;
+    }
+
+    // Center parent above its children
+    const firstChild = positions.get(kids[0])!;
+    const lastChild = positions.get(kids[kids.length - 1])!;
+    const centerX = (firstChild.x + lastChild.x) / 2;
+    positions.set(name, { x: centerX, y: depth * spacingY });
+
+    return Math.max(totalWidth, spacingX);
+  }
+
+  // Layout inheritance trees
+  for (const root of inheritanceRoots) {
+    const width = layoutSubtree(root, 0, currentX);
+    currentX += width + spacingX * 0.5;
+  }
+
+  // Group standalone nodes: sort so that nodes that reference each other are nearby
+  // Put enums and maps in separate columns from concepts
+  const standaloneEnums = standalone.filter((n) => declMap.get(n)?.type === 'enum');
+  const standaloneMaps = standalone.filter((n) => declMap.get(n)?.type === 'map');
+  const standaloneConcepts = standalone.filter((n) => {
+    const t = declMap.get(n)?.type;
+    return t !== 'enum' && t !== 'map';
+  });
+
+  // Layout standalone concepts in rows
+  if (standaloneConcepts.length > 0) {
+    // If there were inheritance trees, add gap
+    if (currentX > 0) currentX += spacingX * 0.5;
+
+    const cols = Math.max(1, Math.ceil(Math.sqrt(standaloneConcepts.length)));
+    standaloneConcepts.forEach((name, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      positions.set(name, { x: currentX + col * spacingX, y: row * spacingY });
+    });
+    const usedCols = Math.min(standaloneConcepts.length, cols);
+    currentX += usedCols * spacingX + spacingX * 0.5;
+  }
+
+  // Layout enums in a column to the right
+  if (standaloneEnums.length > 0) {
+    if (currentX > 0) currentX += spacingX * 0.3;
+    standaloneEnums.forEach((name, i) => {
+      positions.set(name, { x: currentX, y: i * spacingY });
+    });
+    currentX += spacingX;
+  }
+
+  // Layout maps in a column to the right
+  if (standaloneMaps.length > 0) {
+    if (currentX > 0) currentX += spacingX * 0.3;
+    standaloneMaps.forEach((name, i) => {
+      positions.set(name, { x: currentX, y: i * spacingY });
+    });
+  }
+
+  return positions;
+}
+
 export function declarationsToGraph(declarations: Declaration[]): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
   const declNames = new Set(declarations.map((d) => d.name));
 
-  const cols = Math.ceil(Math.sqrt(declarations.length)) || 1;
-  const spacingX = 320;
-  const spacingY = 300;
+  const positions = computeTreeLayout(declarations);
 
-  declarations.forEach((decl, i) => {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-
+  declarations.forEach((decl) => {
     let nodeType = 'conceptNode';
     if (decl.type === 'enum') nodeType = 'enumNode';
     else if (decl.type === 'map') nodeType = 'mapNode';
 
+    const pos = positions.get(decl.name) || { x: 0, y: 0 };
+
     nodes.push({
       id: decl.name,
       type: nodeType,
-      position: { x: col * spacingX, y: row * spacingY },
+      position: pos,
       data: { label: decl.name, declaration: decl },
     });
 

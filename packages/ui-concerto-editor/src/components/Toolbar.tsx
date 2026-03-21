@@ -44,12 +44,12 @@ export function Toolbar({ declarations, onAddDeclaration, onAddProperty, onAddEn
       <button onClick={onUndo} disabled={!canUndo}
         style={{ ...arrowBtn, opacity: canUndo ? 1 : 0.25 }}
         title="Undo (Ctrl+Z)">
-        \u21A9
+        {'↩'}
       </button>
       <button onClick={onRedo} disabled={!canRedo}
         style={{ ...arrowBtn, opacity: canRedo ? 1 : 0.25 }}
         title="Redo (Ctrl+Shift+Z)">
-        \u21AA
+        {'↪'}
       </button>
 
       {/* Right group: legend */}

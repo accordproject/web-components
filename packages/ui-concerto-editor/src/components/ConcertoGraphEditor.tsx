@@ -52,7 +52,9 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [error, setError] = useState<string | null>(null);
-  const [model, setModel] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', declarations: [] });
+  const [model, setModelState] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', declarations: [] });
+  const modelRef = useRef(model);
+  const setModel = useCallback((m: ConcertoModel) => { modelRef.current = m; setModelState(m); }, []);
   const [activeDialog, setActiveDialog] = useState<{ type: 'property' | 'enum-value' | 'inheritance'; declName: string } | null>(null);
   const [connectDialog, setConnectDialog] = useState<ConnectDialog | null>(null);
   const updatingFromGraph = useRef(false);
@@ -111,10 +113,10 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
 
   // Graph → CTO (preserves node positions)
   const updateModelAndSync = useCallback((newDeclarations: Declaration[]) => {
-    const newModel = { ...model, declarations: newDeclarations };
+    const cur = modelRef.current;
+    const newModel = { ...cur, declarations: newDeclarations };
     setModel(newModel);
     const graph = declarationsToGraph(newDeclarations);
-    // Preserve existing positions, only use grid for brand new nodes
     const nodesWithPositions = graph.nodes.map((node) => {
       const savedPos = nodePositionsRef.current.get(node.id);
       return savedPos ? { ...node, position: savedPos } : node;
@@ -124,65 +126,65 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
     pushHistory({ model: newModel, nodes: nodesWithPositions, edges: graph.edges });
     updatingFromGraph.current = true;
     onModelChange?.(declarationsToCto(newModel));
-  }, [model, setNodes, setEdges, onModelChange, pushHistory]);
+  }, [setModel, setNodes, setEdges, onModelChange, pushHistory]);
 
   // --- Operations ---
 
   const handleAddDeclaration = useCallback((decl: Declaration) => {
-    updateModelAndSync([...model.declarations, decl]);
-  }, [model, updateModelAndSync]);
+    updateModelAndSync([...modelRef.current.declarations, decl]);
+  }, [updateModelAndSync]);
 
   const handleDeleteDeclaration = useCallback((declName: string) => {
-    updateModelAndSync(model.declarations.filter((d) => d.name !== declName));
-  }, [model, updateModelAndSync]);
+    updateModelAndSync(modelRef.current.declarations.filter((d) => d.name !== declName));
+  }, [updateModelAndSync]);
 
   const handleToggleAbstract = useCallback((declName: string) => {
     updateModelAndSync(
-      model.declarations.map((d) => d.name === declName ? { ...d, isAbstract: !d.isAbstract } : d)
+      modelRef.current.declarations.map((d) => d.name === declName ? { ...d, isAbstract: !d.isAbstract } : d)
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   const handleAddProperty = useCallback((declName: string, propName: string, propType: string, isOptional: boolean, isArray: boolean, isRelationship: boolean) => {
     updateModelAndSync(
-      model.declarations.map((d) =>
+      modelRef.current.declarations.map((d) =>
         d.name === declName
           ? { ...d, properties: [...d.properties, { name: propName, type: propType, isOptional, isArray, isRelationship }] }
           : d
       )
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   const handleDeleteProperty = useCallback((declName: string, propName: string) => {
     updateModelAndSync(
-      model.declarations.map((d) =>
+      modelRef.current.declarations.map((d) =>
         d.name === declName
           ? { ...d, properties: d.properties.filter((p) => p.name !== propName) }
           : d
       )
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   const handleAddEnumValue = useCallback((declName: string, value: string) => {
     updateModelAndSync(
-      model.declarations.map((d) =>
+      modelRef.current.declarations.map((d) =>
         d.name === declName ? { ...d, enumValues: [...d.enumValues, value] } : d
       )
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   const handleDeleteEnumValue = useCallback((declName: string, value: string) => {
     updateModelAndSync(
-      model.declarations.map((d) =>
+      modelRef.current.declarations.map((d) =>
         d.name === declName ? { ...d, enumValues: d.enumValues.filter((v) => v !== value) } : d
       )
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   const handleSetSuperType = useCallback((declName: string, superType: string | undefined) => {
     updateModelAndSync(
-      model.declarations.map((d) => d.name === declName ? { ...d, superType } : d)
+      modelRef.current.declarations.map((d) => d.name === declName ? { ...d, superType } : d)
     );
-  }, [model, updateModelAndSync]);
+  }, [updateModelAndSync]);
 
   // Undo
   const handleUndo = useCallback(() => {
@@ -245,13 +247,12 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
 
   // Save position after drag as a history entry
   const onNodeDragStop = useCallback((_event: React.MouseEvent, _node: Node) => {
-    // Capture current positions from all nodes
     const currentNodes = nodes.map((n) => {
       const pos = nodePositionsRef.current.get(n.id);
       return pos ? { ...n, position: pos } : n;
     });
-    pushHistory({ model, nodes: currentNodes, edges });
-  }, [model, nodes, edges, pushHistory]);
+    pushHistory({ model: modelRef.current, nodes: currentNodes, edges });
+  }, [nodes, edges, pushHistory]);
 
   // Drag edge between nodes → open connect dialog
   const onConnect = useCallback((connection: Connection) => {
