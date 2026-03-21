@@ -14,18 +14,27 @@ concept Address {
   o Jurisdiction jurisdiction
 }
 
-concept Party {
+abstract concept Person {
   o String name
   o String email optional
+}
+
+concept Party extends Person {
   o Address address
+  o String[] tags optional
 }
 
 concept NdaData {
   o DateTime effectiveDate
-  o Party disclosingParty
-  o Party receivingParty
+  --> Party disclosingParty
+  --> Party receivingParty
   o Boolean isMutual
   o Jurisdiction jurisdiction
   o Integer termYears
+}
+
+map ContactInfo {
+  o String
+  o String
 }
 `;
