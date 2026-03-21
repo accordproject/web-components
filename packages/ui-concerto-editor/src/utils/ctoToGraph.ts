@@ -98,127 +98,106 @@ export function parseCto(cto: string): ConcertoModel {
 }
 
 /**
- * Tree layout: inheritance roots at the top, children below.
- * Nodes without relationships are placed to the side.
+ * Dendrogram tree layout.
+ * - Finds the "root" node: the concept that is referenced the most but references the least
+ * - Builds a tree from root by following property/relationship/inheritance connections
+ * - Lays out as a top-down dendrogram (root centered at top, children spread below)
+ * - Unconnected nodes placed at the bottom
  */
 function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number; y: number }> {
   const positions = new Map<string, { x: number; y: number }>();
+  if (declarations.length === 0) return positions;
+
   const declMap = new Map(declarations.map((d) => [d.name, d]));
   const declNames = new Set(declarations.map((d) => d.name));
 
-  // Build inheritance tree: parent → children[]
-  const children = new Map<string, string[]>();
-  const hasParent = new Set<string>();
-  for (const decl of declarations) {
-    if (decl.superType && declNames.has(decl.superType)) {
-      hasParent.add(decl.name);
-      const kids = children.get(decl.superType) || [];
-      kids.push(decl.name);
-      children.set(decl.superType, kids);
-    }
-  }
+  // Build adjacency: who references whom (all connection types)
+  const refsFrom = new Map<string, Set<string>>(); // A → [B, C] means A has props of type B, C
+  const refsTo = new Map<string, Set<string>>();   // B → [A] means B is referenced by A
 
-  // Build property/relationship references (non-inheritance connections)
-  const referencedBy = new Map<string, string[]>();
   for (const decl of declarations) {
+    if (!refsFrom.has(decl.name)) refsFrom.set(decl.name, new Set());
+
+    // Inheritance
+    if (decl.superType && declNames.has(decl.superType)) {
+      refsFrom.get(decl.name)!.add(decl.superType);
+      if (!refsTo.has(decl.superType)) refsTo.set(decl.superType, new Set());
+      refsTo.get(decl.superType)!.add(decl.name);
+    }
+
+    // Properties/relationships
     const props = decl.type === 'map'
       ? decl.properties.filter((p) => p.name === '_value')
       : decl.properties;
     for (const prop of props) {
       if (declNames.has(prop.type) && !PRIMITIVE_TYPES.has(prop.type) && prop.type !== decl.name) {
-        const refs = referencedBy.get(prop.type) || [];
-        refs.push(decl.name);
-        referencedBy.set(prop.type, refs);
+        refsFrom.get(decl.name)!.add(prop.type);
+        if (!refsTo.has(prop.type)) refsTo.set(prop.type, new Set());
+        refsTo.get(prop.type)!.add(decl.name);
       }
     }
   }
 
-  // Find inheritance roots (nodes that have children but no parent)
-  const inheritanceRoots: string[] = [];
-  // Find standalone nodes (no inheritance at all)
-  const standalone: string[] = [];
-
+  // Find root: node with most outgoing refs (it "uses" the most other types)
+  // This is typically the main aggregate concept (e.g. NdaData)
+  let root = declarations[0].name;
+  let maxOut = -1;
   for (const decl of declarations) {
-    if (!hasParent.has(decl.name) && children.has(decl.name)) {
-      inheritanceRoots.push(decl.name);
-    } else if (!hasParent.has(decl.name) && !children.has(decl.name)) {
-      standalone.push(decl.name);
+    const outCount = refsFrom.get(decl.name)?.size || 0;
+    const inCount = refsTo.get(decl.name)?.size || 0;
+    // Prefer nodes with most outgoing and least incoming
+    const score = outCount * 2 - inCount;
+    if (score > maxOut) {
+      maxOut = score;
+      root = decl.name;
     }
   }
 
-  const spacingX = 300;
-  const spacingY = 250;
-  let currentX = 0;
+  // BFS from root to build tree layers
+  const visited = new Set<string>();
+  const layers: string[][] = [];
+  let queue = [root];
+  visited.add(root);
 
-  // Layout a subtree, returns width used
-  function layoutSubtree(name: string, depth: number, startX: number): number {
-    const kids = children.get(name) || [];
-    if (kids.length === 0) {
-      positions.set(name, { x: startX, y: depth * spacingY });
-      return spacingX;
+  while (queue.length > 0) {
+    layers.push([...queue]);
+    const nextQueue: string[] = [];
+    for (const name of queue) {
+      // Add all connected nodes (both directions) that haven't been visited
+      const outRefs = refsFrom.get(name) || new Set();
+      const inRefs = refsTo.get(name) || new Set();
+      const allConnected = new Set([...outRefs, ...inRefs]);
+      for (const connected of allConnected) {
+        if (!visited.has(connected)) {
+          visited.add(connected);
+          nextQueue.push(connected);
+        }
+      }
     }
-
-    let childX = startX;
-    let totalWidth = 0;
-    for (const kid of kids) {
-      const w = layoutSubtree(kid, depth + 1, childX);
-      childX += w;
-      totalWidth += w;
-    }
-
-    // Center parent above its children
-    const firstChild = positions.get(kids[0])!;
-    const lastChild = positions.get(kids[kids.length - 1])!;
-    const centerX = (firstChild.x + lastChild.x) / 2;
-    positions.set(name, { x: centerX, y: depth * spacingY });
-
-    return Math.max(totalWidth, spacingX);
+    queue = nextQueue;
   }
 
-  // Layout inheritance trees
-  for (const root of inheritanceRoots) {
-    const width = layoutSubtree(root, 0, currentX);
-    currentX += width + spacingX * 0.5;
+  // Add any unvisited nodes as a final layer
+  const unvisited = declarations.filter((d) => !visited.has(d.name)).map((d) => d.name);
+  if (unvisited.length > 0) {
+    layers.push(unvisited);
   }
 
-  // Group standalone nodes: sort so that nodes that reference each other are nearby
-  // Put enums and maps in separate columns from concepts
-  const standaloneEnums = standalone.filter((n) => declMap.get(n)?.type === 'enum');
-  const standaloneMaps = standalone.filter((n) => declMap.get(n)?.type === 'map');
-  const standaloneConcepts = standalone.filter((n) => {
-    const t = declMap.get(n)?.type;
-    return t !== 'enum' && t !== 'map';
-  });
+  // Position: horizontal tree — root on the left, children spread to the right
+  const nodeHeight = 200;
+  const spacingX = 380;
+  const spacingY = 80;
 
-  // Layout standalone concepts in rows
-  if (standaloneConcepts.length > 0) {
-    // If there were inheritance trees, add gap
-    if (currentX > 0) currentX += spacingX * 0.5;
+  for (let depth = 0; depth < layers.length; depth++) {
+    const layer = layers[depth];
+    const totalHeight = layer.length * nodeHeight + (layer.length - 1) * spacingY;
+    const startY = -totalHeight / 2;
 
-    const cols = Math.max(1, Math.ceil(Math.sqrt(standaloneConcepts.length)));
-    standaloneConcepts.forEach((name, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      positions.set(name, { x: currentX + col * spacingX, y: row * spacingY });
-    });
-    const usedCols = Math.min(standaloneConcepts.length, cols);
-    currentX += usedCols * spacingX + spacingX * 0.5;
-  }
-
-  // Layout enums in a column to the right
-  if (standaloneEnums.length > 0) {
-    if (currentX > 0) currentX += spacingX * 0.3;
-    standaloneEnums.forEach((name, i) => {
-      positions.set(name, { x: currentX, y: i * spacingY });
-    });
-    currentX += spacingX;
-  }
-
-  // Layout maps in a column to the right
-  if (standaloneMaps.length > 0) {
-    if (currentX > 0) currentX += spacingX * 0.3;
-    standaloneMaps.forEach((name, i) => {
-      positions.set(name, { x: currentX, y: i * spacingY });
+    layer.forEach((name, i) => {
+      positions.set(name, {
+        x: depth * spacingX,
+        y: startY + i * (nodeHeight + spacingY),
+      });
     });
   }
 
@@ -246,38 +225,47 @@ export function declarationsToGraph(declarations: Declaration[]): { nodes: Node[
       data: { label: decl.name, declaration: decl },
     });
 
-    // Inheritance edge
+    // Inheritance edge — smooth bezier, subtle
     if (decl.superType && declNames.has(decl.superType)) {
       edges.push({
         id: `${decl.name}-extends-${decl.superType}`,
         source: decl.name, target: decl.superType,
-        type: 'smoothstep', animated: true,
+        sourceHandle: 'right', targetHandle: 'left',
+        type: 'default',
+        animated: true,
         label: 'extends',
-        style: { stroke: '#805ad5', strokeWidth: 2 },
-        labelStyle: { fill: '#b794f4', fontSize: 11 },
-        labelBgStyle: { fill: '#1a202c' },
+        style: { stroke: '#b794f4', strokeWidth: 1.5, opacity: 0.7 },
+        labelStyle: { fill: '#b794f4', fontSize: 10, fontWeight: 600 },
+        labelBgStyle: { fill: '#1a202c', fillOpacity: 0.8 },
+        labelBgPadding: [6, 3] as [number, number],
+        labelBgBorderRadius: 4,
       });
     }
 
-    // Property/relationship edges
+    // Property/relationship edges — thin bezier curves
     const propsToEdge = decl.type === 'map'
       ? decl.properties.filter((p) => p.name === '_value')
       : decl.properties;
 
     for (const prop of propsToEdge) {
       if (declNames.has(prop.type) && !PRIMITIVE_TYPES.has(prop.type)) {
+        const isRel = prop.isRelationship;
         edges.push({
           id: `${decl.name}-${prop.name}-${prop.type}`,
           source: decl.name, target: prop.type,
+          sourceHandle: 'right', targetHandle: 'left',
           label: prop.name.startsWith('_') ? '' : prop.name + (prop.isArray ? '[]' : ''),
-          type: 'smoothstep',
+          type: 'default',
           style: {
-            stroke: prop.isRelationship ? '#e53e3e' : '#3182ce',
-            strokeWidth: 1.5,
-            strokeDasharray: prop.isRelationship ? '5 5' : undefined,
+            stroke: isRel ? '#fc8181' : '#90cdf4',
+            strokeWidth: isRel ? 1.5 : 1.2,
+            opacity: 0.6,
+            strokeDasharray: isRel ? '6 4' : undefined,
           },
-          labelStyle: { fill: prop.isRelationship ? '#fc8181' : '#90cdf4', fontSize: 11 },
-          labelBgStyle: { fill: '#1a202c' },
+          labelStyle: { fill: isRel ? '#fc8181' : '#90cdf4', fontSize: 10, fontWeight: 500 },
+          labelBgStyle: { fill: '#1a202c', fillOpacity: 0.8 },
+          labelBgPadding: [6, 3] as [number, number],
+          labelBgBorderRadius: 4,
         });
       }
     }

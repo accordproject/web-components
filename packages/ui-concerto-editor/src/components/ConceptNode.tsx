@@ -44,7 +44,9 @@ export function ConceptNode({ data, selected }: { data: ConceptNodeData; selecte
       overflow: 'hidden',
       transition: 'border-color 0.2s, box-shadow 0.2s',
     }}>
-      <Handle type="target" position={Position.Top} style={{ ...handleStyle, background: colors.accent }} />
+      <Handle type="target" position={Position.Top} id="top" style={{ ...handleStyle, background: colors.accent }} />
+      <Handle type="target" position={Position.Left} id="left" style={{ ...handleStyle, background: colors.accent }} />
+      <Handle type="source" position={Position.Right} id="right" style={{ ...handleStyle, background: colors.accent }} />
 
       {/* Header */}
       <div style={{
@@ -148,7 +150,7 @@ export function ConceptNode({ data, selected }: { data: ConceptNodeData; selecte
         </button>
       </div>
 
-      <Handle type="source" position={Position.Bottom} style={{ ...handleStyle, background: colors.accent }} />
+      <Handle type="source" position={Position.Bottom} id="bottom" style={{ ...handleStyle, background: colors.accent }} />
     </div>
   );
 }

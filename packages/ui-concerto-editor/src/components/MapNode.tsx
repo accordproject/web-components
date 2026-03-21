@@ -23,7 +23,9 @@ export function MapNode({ data, selected }: { data: MapNodeData; selected?: bool
       overflow: 'hidden',
       transition: 'border-color 0.2s, box-shadow 0.2s',
     }}>
-      <Handle type="target" position={Position.Top} style={handleStyle} />
+      <Handle type="target" position={Position.Top} id="top" style={handleStyle} />
+      <Handle type="target" position={Position.Left} id="left" style={handleStyle} />
+      <Handle type="source" position={Position.Right} id="right" style={handleStyle} />
 
       <div style={{
         padding: '12px 14px 10px',
@@ -65,7 +67,7 @@ export function MapNode({ data, selected }: { data: MapNodeData; selected?: bool
         )}
       </div>
 
-      <Handle type="source" position={Position.Bottom} style={handleStyle} />
+      <Handle type="source" position={Position.Bottom} id="bottom" style={handleStyle} />
     </div>
   );
 }
