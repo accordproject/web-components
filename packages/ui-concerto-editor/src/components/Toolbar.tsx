@@ -111,14 +111,21 @@ function AddDeclarationDialog({ declarations, onAdd, onClose }: {
 
   const allTypeOptions = [...ALL_TYPES, ...declarations.map((d) => d.name)];
 
+  const [scalarExtends, setScalarExtends] = useState('String');
+
   const handleSubmit = () => {
     if (!name.trim()) return;
     const decl: Declaration = {
       name: name.trim(), type, isAbstract: false,
       properties: [], enumValues: [],
+      identified: 'none', decorators: [],
     };
     if (type === 'map') {
       decl.mapDeclaration = { keyType: mapKeyType, valueType: mapValueType };
+    }
+    if (type === 'scalar') {
+      decl.scalarExtends = scalarExtends;
+      decl.scalarValidators = {};
     }
     onAdd(decl);
   };
@@ -134,6 +141,14 @@ function AddDeclarationDialog({ declarations, onAdd, onClose }: {
           placeholder="Name (e.g. MyContract)" style={inputStyle} autoFocus
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
         />
+        {type === 'scalar' && (
+          <>
+            <label style={fieldLabel}>Extends primitive</label>
+            <select value={scalarExtends} onChange={(e) => setScalarExtends(e.target.value)} style={inputStyle}>
+              {ALL_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </>
+        )}
         {type === 'map' && (
           <>
             <label style={fieldLabel}>Key Type</label>
@@ -262,7 +277,7 @@ function SetInheritanceDialog({ declName, declarations, onSet, onClose }: {
 // --- Styles ---
 
 const toolbarStyle: React.CSSProperties = {
-  padding: '6px 10px', background: '#171d2b', borderBottom: '1px solid #2d3748',
+  padding: '10px 10px', background: '#171d2b', borderBottom: '1px solid #2d3748',
   display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0, position: 'relative',
 };
 

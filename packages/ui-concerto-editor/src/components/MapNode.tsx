@@ -54,14 +54,14 @@ export function MapNode({ data, selected }: { data: MapNodeData; selected?: bool
               padding: '5px 8px', margin: '2px 0', background: '#161b27', borderRadius: 6,
             }}>
               <span style={{ fontSize: 10, color: '#a0aec0', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>Key</span>
-              <span style={{ fontSize: 12, color: '#81e6d9', fontFamily: 'monospace', fontWeight: 600 }}>{map.keyType}</span>
+              <span style={{ fontSize: 12, color: '#81e6d9', fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>{map.keyType}</span>
             </div>
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '5px 8px', margin: '2px 0', background: '#161b27', borderRadius: 6,
             }}>
               <span style={{ fontSize: 10, color: '#a0aec0', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>Value</span>
-              <span style={{ fontSize: 12, color: '#81e6d9', fontFamily: 'monospace', fontWeight: 600 }}>{map.valueType}</span>
+              <span style={{ fontSize: 12, color: '#81e6d9', fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>{map.valueType}</span>
             </div>
           </>
         )}

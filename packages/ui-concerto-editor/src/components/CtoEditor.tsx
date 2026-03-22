@@ -27,6 +27,7 @@ const COLORS = {
 };
 
 function highlightCto(cto: string): string {
+  try {
   return cto.split('\n').map((line) => {
     const trimmed = line.trim();
 
@@ -40,20 +41,48 @@ function highlightCto(cto: string): string {
       return `<span style="color:${COLORS.namespace}">${esc(line)}</span>`;
     }
 
+    // Decorator
+    const decoMatch = trimmed.match(/^(@\w+(?:\([^)]*\))?)$/);
+    if (decoMatch) {
+      return `${getIndent(line)}<span style="color:#fbb6ce">${esc(decoMatch[1])}</span>`;
+    }
+
+    // Scalar
+    const scalarMatch = trimmed.match(/^(scalar)\s+(\w+)\s+(extends)\s+(\w+)(.*)$/);
+    if (scalarMatch) {
+      let result = getIndent(line);
+      result += `<span style="color:${COLORS.keyword}">scalar</span> `;
+      result += `<span style="color:${COLORS.identifier};font-weight:700">${scalarMatch[2]}</span> `;
+      result += `<span style="color:${COLORS.extends}">extends</span> `;
+      result += `<span style="color:${colorForType(scalarMatch[4])}">${scalarMatch[4]}</span>`;
+      if (scalarMatch[5]) result += `<span style="color:${COLORS.optional}">${esc(scalarMatch[5])}</span>`;
+      return result;
+    }
+
     // Declaration line
     const declMatch = trimmed.match(
-      /^(abstract\s+)?(concept|enum|asset|participant|event|transaction|map)\s+(\w+)(\s+extends\s+(\w+))?\s*(\{)?$/
+      /^(abstract\s+)?(concept|enum|asset|participant|event|transaction|map)\s+(\w+)(.*?)\s*(\{)?$/
     );
     if (declMatch) {
       let result = getIndent(line);
       if (declMatch[1]) result += `<span style="color:${COLORS.abstract}">abstract</span> `;
       result += `<span style="color:${COLORS.keyword}">${declMatch[2]}</span> `;
       result += `<span style="color:${COLORS.identifier};font-weight:700">${declMatch[3]}</span>`;
-      if (declMatch[4]) {
-        result += ` <span style="color:${COLORS.extends}">extends</span> `;
-        result += `<span style="color:${COLORS.identifier}">${declMatch[5]}</span>`;
+      const rest = declMatch[4] || '';
+      // identified by field
+      const idByMatch = rest.match(/(identified\s+by)\s+(\w+)/);
+      const idMatch = !idByMatch && /\bidentified\b/.test(rest);
+      const extMatch = rest.match(/(extends)\s+(\w+)/);
+      if (idByMatch) {
+        result += ` <span style="color:#68d391">identified by</span> <span style="color:${COLORS.propName}">${idByMatch[2]}</span>`;
+      } else if (idMatch) {
+        result += ` <span style="color:#68d391">identified</span>`;
       }
-      if (declMatch[6]) result += ` <span style="color:${COLORS.brace}">{</span>`;
+      if (extMatch) {
+        result += ` <span style="color:${COLORS.extends}">extends</span> `;
+        result += `<span style="color:${COLORS.identifier}">${extMatch[2]}</span>`;
+      }
+      if (declMatch[5]) result += ` <span style="color:${COLORS.brace}">{</span>`;
       return result;
     }
 
@@ -61,27 +90,27 @@ function highlightCto(cto: string): string {
     if (trimmed === '{') return `${getIndent(line)}<span style="color:${COLORS.brace}">{</span>`;
     if (trimmed === '}') return `${getIndent(line)}<span style="color:${COLORS.brace}">}</span>`;
 
-    // Relationship: --> Type[] name optional
-    const relMatch = trimmed.match(/^(-->)\s+(\w+)(\[\])?\s+(\w+)(\s+optional)?$/);
+    // Relationship: --> Type[] name ...
+    const relMatch = trimmed.match(/^(-->)\s+(\w+)(\[\])?\s+(\w+)(.*?)$/);
     if (relMatch) {
       let result = getIndent(line);
       result += `<span style="color:${COLORS.relationship};font-weight:700">--&gt;</span> `;
       result += `<span style="color:${colorForType(relMatch[2])}">${relMatch[2]}</span>`;
       if (relMatch[3]) result += `<span style="color:${COLORS.typeInteger}">[]</span>`;
       result += ` <span style="color:${COLORS.propName}">${relMatch[4]}</span>`;
-      if (relMatch[5]) result += ` <span style="color:${COLORS.optional}">optional</span>`;
+      if (relMatch[5]) result += highlightModifiers(relMatch[5]);
       return result;
     }
 
-    // Property: o Type[] name optional
-    const propMatch = trimmed.match(/^(o)\s+(\w+)(\[\])?\s+(\w+)?(\s+optional)?$/);
+    // Property: o Type[] name ...
+    const propMatch = trimmed.match(/^(o)\s+(\w+)(\[\])?\s+(\w+)(.*?)$/);
     if (propMatch) {
       let result = getIndent(line);
       result += `<span style="color:${COLORS.o}">o</span> `;
       result += `<span style="color:${colorForType(propMatch[2])}">${propMatch[2]}</span>`;
       if (propMatch[3]) result += `<span style="color:${COLORS.typeInteger}">[]</span>`;
-      if (propMatch[4]) result += ` <span style="color:${COLORS.propName}">${propMatch[4]}</span>`;
-      if (propMatch[5]) result += ` <span style="color:${COLORS.optional}">optional</span>`;
+      result += ` <span style="color:${COLORS.propName}">${propMatch[4]}</span>`;
+      if (propMatch[5]) result += highlightModifiers(propMatch[5]);
       return result;
     }
 
@@ -105,6 +134,19 @@ function highlightCto(cto: string): string {
 
     return esc(line);
   }).join('\n');
+  } catch {
+    return esc(cto);
+  }
+}
+
+function highlightModifiers(str: string): string {
+  let result = str;
+  result = result.replace(/\boptional\b/g, `<span style="color:${COLORS.optional}">optional</span>`);
+  result = result.replace(/\bdefault\s*=\s*("(?:[^"\\]|\\.)*"|\S+)/g, `<span style="color:${COLORS.optional}">default=$1</span>`);
+  result = result.replace(/\bregex\s*=\s*(\/[^/]*\/)/g, `<span style="color:${COLORS.optional}">regex=$1</span>`);
+  result = result.replace(/\brange\s*=\s*(\[[^\]]*\])/g, `<span style="color:${COLORS.optional}">range=$1</span>`);
+  result = result.replace(/\blength\s*=\s*(\[[^\]]*\])/g, `<span style="color:${COLORS.optional}">length=$1</span>`);
+  return result;
 }
 
 function colorForType(type: string): string {
@@ -188,7 +230,7 @@ const preStyle: React.CSSProperties = {
   ...sharedStyle,
   background: '#1a202c',
   color: '#e2e8f0',
-  overflow: 'hidden',
+  overflow: 'auto',
   pointerEvents: 'none',
 };
 

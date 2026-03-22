@@ -15,6 +15,7 @@ import '@xyflow/react/dist/style.css';
 import { ConceptNode } from './ConceptNode';
 import { EnumNode } from './EnumNode';
 import { MapNode } from './MapNode';
+import { ScalarNode } from './ScalarNode';
 import { Toolbar } from './Toolbar';
 import { parseCto, declarationsToGraph } from '../utils/ctoToGraph';
 import { declarationsToCto } from '../utils/graphToCto';
@@ -24,6 +25,7 @@ const nodeTypes: NodeTypes = {
   conceptNode: ConceptNode,
   enumNode: EnumNode,
   mapNode: MapNode,
+  scalarNode: ScalarNode,
 };
 
 interface ConcertoGraphEditorProps {
@@ -33,11 +35,6 @@ interface ConcertoGraphEditorProps {
   onToggleText: () => void;
   onImport: () => void;
   onExport: () => void;
-}
-
-interface ConnectDialog {
-  sourceId: string;
-  targetId: string;
 }
 
 interface HistoryEntry {
@@ -52,11 +49,11 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [error, setError] = useState<string | null>(null);
-  const [model, setModelState] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', declarations: [] });
+  const [model, setModelState] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', imports: [], declarations: [] });
   const modelRef = useRef(model);
   const setModel = useCallback((m: ConcertoModel) => { modelRef.current = m; setModelState(m); }, []);
   const [activeDialog, setActiveDialog] = useState<{ type: 'property' | 'enum-value' | 'inheritance'; declName: string } | null>(null);
-  const [connectDialog, setConnectDialog] = useState<ConnectDialog | null>(null);
+  const [connectDialog, setConnectDialog] = useState<{ sourceId: string; targetId: string } | null>(null);
   const updatingFromGraph = useRef(false);
 
   // Undo/Redo history
@@ -148,7 +145,7 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
     updateModelAndSync(
       modelRef.current.declarations.map((d) =>
         d.name === declName
-          ? { ...d, properties: [...d.properties, { name: propName, type: propType, isOptional, isArray, isRelationship }] }
+          ? { ...d, properties: [...d.properties, { name: propName, type: propType, isOptional, isArray, isRelationship, validators: {} }] }
           : d
       )
     );
@@ -261,11 +258,9 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
     }
   }, []);
 
-  // Handle connect dialog result
   const handleConnectSubmit = useCallback((connType: 'property' | 'relationship' | 'extends', propName: string) => {
     if (!connectDialog) return;
     const { sourceId, targetId } = connectDialog;
-
     if (connType === 'extends') {
       handleSetSuperType(sourceId, targetId);
     } else {
@@ -329,7 +324,6 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
           <Background variant={BackgroundVariant.Dots} color="#4a5568" gap={20} size={1} />
         </ReactFlow>
 
-        {/* Connect dialog — appears when you drag an edge between two nodes */}
         {connectDialog && (
           <ConnectEdgeDialog
             sourceId={connectDialog.sourceId}
@@ -378,7 +372,7 @@ function ConnectEdgeDialog({ sourceId, targetId, onSubmit, onClose }: {
           </button>
           <button onClick={() => setConnType('relationship')}
             style={{ ...typeBtnStyle, background: connType === 'relationship' ? '#e53e3e' : '#4a5568' }}>
-            Relationship (--&gt;)
+            Relationship (&rarr;)
           </button>
           <button onClick={() => setConnType('extends')}
             style={{ ...typeBtnStyle, background: connType === 'extends' ? '#805ad5' : '#4a5568' }}>
@@ -439,3 +433,4 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid #4a5568', borderRadius: 6, fontSize: 13,
   outline: 'none', boxSizing: 'border-box',
 };
+

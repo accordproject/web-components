@@ -42,7 +42,7 @@ The graph uses different visual styles to help you read the model at a glance:
 
 ## Concerto features covered
 
-These are from the [GSoC project description](https://github.com/accordproject/techdocs/wiki/Google-Summer-of-Code-2026-Ideas-List):
+Based on the [Concerto specification](https://concerto.accordproject.org/docs/category/specification) and the [GSoC project description](https://github.com/accordproject/techdocs/wiki/Google-Summer-of-Code-2026-Ideas-List):
 
 - Type composition (concept with properties of other concept types)
 - Enumerations (full create/edit/delete)

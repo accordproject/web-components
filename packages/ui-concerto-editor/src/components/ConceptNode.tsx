@@ -88,22 +88,38 @@ export function ConceptNode({ data, selected }: { data: ConceptNodeData; selecte
             &times;
           </button>
         </div>
+        {/* Decorators */}
+        {declaration.decorators?.length > 0 && (
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginTop: 2 }}>
+            {declaration.decorators.map((d) => (
+              <span key={d.name} style={{
+                fontSize: 8, color: '#fbb6ce', background: '#ed64a622', padding: '1px 5px',
+                borderRadius: 4, fontFamily: 'monospace',
+              }}>
+                @{d.name}{d.args.length > 0 ? `(${d.args.join(', ')})` : ''}
+              </span>
+            ))}
+          </div>
+        )}
         <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 4 }}>
           {declaration.name}
         </div>
-        <div style={{ marginTop: 4 }}>
-          {declaration.superType ? (
-            <span style={{ fontSize: 11, color: '#d6bcfa', cursor: 'pointer' }}
-              onClick={() => data.onSetInheritance?.(declaration.name)} title="Change inheritance">
-              extends {declaration.superType}
-            </span>
-          ) : (
-            <button onClick={() => data.onSetInheritance?.(declaration.name)}
-              style={{ background: 'none', border: 'none', color: '#ffffff33', cursor: 'pointer', fontSize: 10, padding: 0 }}>
-              + set extends
-            </button>
-          )}
-        </div>
+        {/* Identified */}
+        {declaration.identified === 'identified-by' && declaration.identifiedBy && (
+          <div style={{ fontSize: 10, color: '#68d391', marginTop: 2 }}>
+            identified by {declaration.identifiedBy}
+          </div>
+        )}
+        {declaration.identified === 'identified' && (
+          <div style={{ fontSize: 10, color: '#68d391', marginTop: 2 }}>
+            identified
+          </div>
+        )}
+        {declaration.superType && (
+          <div style={{ fontSize: 11, color: '#d6bcfa', marginTop: 4 }}>
+            extends {declaration.superType}
+          </div>
+        )}
       </div>
 
       {/* Properties */}
@@ -118,11 +134,17 @@ export function ConceptNode({ data, selected }: { data: ConceptNodeData; selecte
             )}
             <span style={{
               color: TYPE_COLORS[prop.type] || colors.accent,
-              fontFamily: 'monospace', fontSize: 11, fontWeight: 600, flexShrink: 0,
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600, flexShrink: 0,
             }}>
               {prop.type}{prop.isArray ? '[]' : ''}
             </span>
             <span style={{ color: '#e2e8f0', flex: 1 }}>{prop.name}</span>
+            {prop.validators?.default && (
+              <span style={{ color: '#a0aec0', fontSize: 8, fontFamily: 'monospace' }}>={prop.validators.default}</span>
+            )}
+            {prop.validators?.regex && (
+              <span style={{ color: '#a0aec0', fontSize: 8, fontFamily: 'monospace' }}>{prop.validators.regex}</span>
+            )}
             {prop.isOptional && (
               <span style={{ color: '#fbd38d', fontSize: 9, fontWeight: 700, background: '#fbd38d22', padding: '1px 5px', borderRadius: 4 }}>
                 opt
