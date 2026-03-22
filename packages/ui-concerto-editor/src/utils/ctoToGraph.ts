@@ -98,11 +98,30 @@ export function parseCto(cto: string): ConcertoModel {
 }
 
 /**
- * Dendrogram tree layout.
- * - Finds the "root" node: the concept that is referenced the most but references the least
- * - Builds a tree from root by following property/relationship/inheritance connections
- * - Lays out as a top-down dendrogram (root centered at top, children spread below)
- * - Unconnected nodes placed at the bottom
+ * Estimate the rendered height of a node based on its content.
+ */
+function estimateNodeHeight(decl: Declaration): number {
+  const headerHeight = 70; // header + type label + name + extends line
+  const rowHeight = 30;    // per property/enum value row
+  const buttonHeight = 36; // "+ Add Property" / "+ Add Value" button
+  const padding = 16;      // top/bottom padding
+
+  if (decl.type === 'enum') {
+    const rows = Math.max(decl.enumValues.length, 1);
+    return headerHeight + rows * rowHeight + buttonHeight + padding;
+  }
+  if (decl.type === 'map') {
+    return headerHeight + 2 * rowHeight + padding; // key + value rows
+  }
+  // concept/asset/participant/event/transaction
+  const rows = Math.max(decl.properties.length, 1);
+  return headerHeight + rows * rowHeight + buttonHeight + padding;
+}
+
+/**
+ * Horizontal dendrogram tree layout.
+ * - Root on the left, children spread to the right
+ * - Node spacing is dynamic based on estimated node height
  */
 function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number; y: number }> {
   const positions = new Map<string, { x: number; y: number }>();
@@ -111,21 +130,25 @@ function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number
   const declMap = new Map(declarations.map((d) => [d.name, d]));
   const declNames = new Set(declarations.map((d) => d.name));
 
-  // Build adjacency: who references whom (all connection types)
-  const refsFrom = new Map<string, Set<string>>(); // A → [B, C] means A has props of type B, C
-  const refsTo = new Map<string, Set<string>>();   // B → [A] means B is referenced by A
+  // Precompute heights
+  const heights = new Map<string, number>();
+  for (const decl of declarations) {
+    heights.set(decl.name, estimateNodeHeight(decl));
+  }
+
+  // Build adjacency
+  const refsFrom = new Map<string, Set<string>>();
+  const refsTo = new Map<string, Set<string>>();
 
   for (const decl of declarations) {
     if (!refsFrom.has(decl.name)) refsFrom.set(decl.name, new Set());
 
-    // Inheritance
     if (decl.superType && declNames.has(decl.superType)) {
       refsFrom.get(decl.name)!.add(decl.superType);
       if (!refsTo.has(decl.superType)) refsTo.set(decl.superType, new Set());
       refsTo.get(decl.superType)!.add(decl.name);
     }
 
-    // Properties/relationships
     const props = decl.type === 'map'
       ? decl.properties.filter((p) => p.name === '_value')
       : decl.properties;
@@ -138,22 +161,20 @@ function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number
     }
   }
 
-  // Find root: node with most outgoing refs (it "uses" the most other types)
-  // This is typically the main aggregate concept (e.g. NdaData)
+  // Find root
   let root = declarations[0].name;
-  let maxOut = -1;
+  let maxScore = -Infinity;
   for (const decl of declarations) {
     const outCount = refsFrom.get(decl.name)?.size || 0;
     const inCount = refsTo.get(decl.name)?.size || 0;
-    // Prefer nodes with most outgoing and least incoming
     const score = outCount * 2 - inCount;
-    if (score > maxOut) {
-      maxOut = score;
+    if (score > maxScore) {
+      maxScore = score;
       root = decl.name;
     }
   }
 
-  // BFS from root to build tree layers
+  // BFS layers
   const visited = new Set<string>();
   const layers: string[][] = [];
   let queue = [root];
@@ -163,11 +184,9 @@ function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number
     layers.push([...queue]);
     const nextQueue: string[] = [];
     for (const name of queue) {
-      // Add all connected nodes (both directions) that haven't been visited
       const outRefs = refsFrom.get(name) || new Set();
       const inRefs = refsTo.get(name) || new Set();
-      const allConnected = new Set([...outRefs, ...inRefs]);
-      for (const connected of allConnected) {
+      for (const connected of new Set([...outRefs, ...inRefs])) {
         if (!visited.has(connected)) {
           visited.add(connected);
           nextQueue.push(connected);
@@ -177,28 +196,34 @@ function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number
     queue = nextQueue;
   }
 
-  // Add any unvisited nodes as a final layer
   const unvisited = declarations.filter((d) => !visited.has(d.name)).map((d) => d.name);
-  if (unvisited.length > 0) {
-    layers.push(unvisited);
-  }
+  if (unvisited.length > 0) layers.push(unvisited);
 
-  // Position: horizontal tree — root on the left, children spread to the right
-  const nodeHeight = 200;
+  // Position: horizontal tree with dynamic vertical spacing
   const spacingX = 380;
-  const spacingY = 80;
+  const gapY = 40; // gap between nodes
 
   for (let depth = 0; depth < layers.length; depth++) {
     const layer = layers[depth];
-    const totalHeight = layer.length * nodeHeight + (layer.length - 1) * spacingY;
-    const startY = -totalHeight / 2;
 
-    layer.forEach((name, i) => {
+    // Calculate total height of this layer including gaps
+    let totalHeight = 0;
+    for (const name of layer) {
+      totalHeight += heights.get(name) || 150;
+    }
+    totalHeight += (layer.length - 1) * gapY;
+
+    // Center the layer vertically
+    let currentY = -totalHeight / 2;
+
+    for (const name of layer) {
+      const h = heights.get(name) || 150;
       positions.set(name, {
         x: depth * spacingX,
-        y: startY + i * (nodeHeight + spacingY),
+        y: currentY,
       });
-    });
+      currentY += h + gapY;
+    }
   }
 
   return positions;
