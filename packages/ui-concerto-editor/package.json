@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@accordproject/concerto-core": "^3.25.7",
+    "@accordproject/concerto-cto": "^3.25.7",
     "@xyflow/react": "^12.0.0"
   },
   "peerDependencies": {

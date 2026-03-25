@@ -2,199 +2,211 @@ import type { Node, Edge } from '@xyflow/react';
 import type { Declaration, ConcertoModel, ImportStatement, Property, PropertyValidator, Decorator, IdentifiedKind } from './types';
 import { PRIMITIVE_TYPES } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const ConcertoCto = require('@accordproject/concerto-cto');
+const ParserModule = ConcertoCto.Parser;
+const META = 'concerto.metamodel@1.0.0';
+
 /**
- * Full CTO parser based on the Concerto specification.
- * https://concerto.accordproject.org/docs/category/specification
+ * Parse CTO string using the official Concerto parser (@accordproject/concerto-cto).
  */
 export function parseCto(cto: string): ConcertoModel {
-  const declarations: Declaration[] = [];
-  const imports: ImportStatement[] = [];
-  let namespace = 'org.example@1.0.0';
+  const ast = ParserModule.parse(cto);
 
-  const lines = cto.split('\n');
-  let current: Declaration | null = null;
-  let braceDepth = 0;
-  let pendingDecorators: Decorator[] = [];
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('//') || trimmed.startsWith('/*') || trimmed.startsWith('*')) continue;
-
-    // Namespace
-    const nsMatch = trimmed.match(/^namespace\s+(.+)/);
-    if (nsMatch) { namespace = nsMatch[1].trim(); continue; }
-
-    // Decorators: @Name or @Name(args)
-    const decoMatch = trimmed.match(/^@(\w+)(?:\(([^)]*)\))?$/);
-    if (decoMatch) {
-      const args = decoMatch[2] ? decoMatch[2].split(',').map((a) => a.trim()) : [];
-      pendingDecorators.push({ name: decoMatch[1], args });
-      continue;
-    }
-
-    // Import: import ns.Type, import ns.{A, B}, import ns.Type from url
-    const importMatch = trimmed.match(/^import\s+(\S+?)\.(\{[^}]+\}|\w+|\*)(?:\s+from\s+(\S+))?$/);
-    if (importMatch) {
-      const ns = importMatch[1];
-      let types: string[];
-      const typesPart = importMatch[2];
-      if (typesPart.startsWith('{')) {
-        types = typesPart.slice(1, -1).split(',').map((t) => t.trim().split(/\s+as\s+/)[0]);
-      } else {
-        types = [typesPart];
-      }
-      imports.push({ namespace: ns, types, uri: importMatch[3] });
-      continue;
-    }
-
-    // Scalar: scalar Name extends PrimitiveType default="x" regex=/x/ range=[x,y] length=[x,y]
-    const scalarMatch = trimmed.match(/^scalar\s+(\w+)\s+extends\s+(\w+)(.*?)$/);
-    if (scalarMatch && braceDepth === 0) {
-      const validators = parseValidators(scalarMatch[3]);
-      declarations.push({
-        name: scalarMatch[1], type: 'scalar', isAbstract: false,
-        superType: undefined, properties: [], enumValues: [],
-        scalarExtends: scalarMatch[2], scalarValidators: validators,
-        identified: 'none', decorators: [...pendingDecorators],
-      });
-      pendingDecorators = [];
-      continue;
-    }
-
-    // Map: map Name { ... }
-    const mapMatch = trimmed.match(/^map\s+(\w+)\s*\{?$/);
-    if (mapMatch && braceDepth === 0) {
-      current = {
-        name: mapMatch[1], type: 'map', isAbstract: false,
-        properties: [], enumValues: [],
-        mapDeclaration: { keyType: 'String', valueType: 'String' },
-        identified: 'none', decorators: [...pendingDecorators],
-      };
-      declarations.push(current);
-      pendingDecorators = [];
-      if (trimmed.includes('{')) braceDepth = 1;
-      continue;
-    }
-
-    // Regular declaration: [abstract] (concept|enum|asset|participant|event|transaction) Name [identified [by field]] [extends SuperType] {
-    const declMatch = trimmed.match(
-      /^(abstract\s+)?(concept|enum|asset|participant|event|transaction)\s+(\w+)(.*?)\s*\{?$/
-    );
-    if (declMatch && braceDepth === 0) {
-      const rest = declMatch[4].trim();
-
-      // Parse "identified by field" or "identified"
-      let identified: IdentifiedKind = 'none';
-      let identifiedBy: string | undefined;
-      const idByMatch = rest.match(/identified\s+by\s+(\w+)/);
-      if (idByMatch) {
-        identified = 'identified-by';
-        identifiedBy = idByMatch[1];
-      } else if (/\bidentified\b/.test(rest)) {
-        identified = 'identified';
-      }
-
-      // Parse "extends SuperType"
-      let superType: string | undefined;
-      const extendsMatch = rest.match(/extends\s+(\w+)/);
-      if (extendsMatch) superType = extendsMatch[1];
-
-      current = {
-        name: declMatch[3],
-        type: declMatch[2] as Declaration['type'],
-        isAbstract: !!declMatch[1],
-        superType,
-        properties: [], enumValues: [],
-        identified, identifiedBy,
-        decorators: [...pendingDecorators],
-      };
-      declarations.push(current);
-      pendingDecorators = [];
-      if (trimmed.includes('{')) braceDepth = 1;
-      continue;
-    }
-
-    if (trimmed === '{') { braceDepth++; continue; }
-    if (trimmed === '}') { braceDepth--; if (braceDepth === 0) { current = null; pendingDecorators = []; } continue; }
-    if (!current || braceDepth !== 1) continue;
-
-    // Inside a declaration body
-
-    // Property-level decorators
-    if (decoMatch) continue; // already handled above
-
-    // Map key/value: o Type
-    if (current.type === 'map' && current.mapDeclaration) {
-      const mapFieldMatch = trimmed.match(/^o\s+(\w+)/);
-      if (mapFieldMatch) {
-        if (current.properties.length === 0) {
-          current.mapDeclaration.keyType = mapFieldMatch[1];
-          current.properties.push({ name: '_key', type: mapFieldMatch[1], isOptional: false, isArray: false, isRelationship: false, validators: {} });
-        } else {
-          current.mapDeclaration.valueType = mapFieldMatch[1];
-          current.properties.push({ name: '_value', type: mapFieldMatch[1], isOptional: false, isArray: false, isRelationship: false, validators: {} });
-        }
-      }
-      continue;
-    }
-
-    // Enum value
-    if (current.type === 'enum') {
-      const enumMatch = trimmed.match(/^o\s+(\w+)/);
-      if (enumMatch) current.enumValues.push(enumMatch[1]);
-      continue;
-    }
-
-    // Relationship: --> Type[] name optional
-    const relMatch = trimmed.match(/^-->\s+(\w+)(\[\])?\s+(\w+)(.*?)$/);
-    if (relMatch) {
-      const validators = parseValidators(relMatch[4]);
-      const isOptional = /\boptional\b/.test(relMatch[4] || '');
-      current.properties.push({
-        name: relMatch[3], type: relMatch[1],
-        isArray: !!relMatch[2], isOptional, isRelationship: true,
-        validators,
-      });
-      continue;
-    }
-
-    // Property: o Type[] name [default="x"] [regex=/x/] [range=[x,y]] [length=[x,y]] [optional]
-    const propMatch = trimmed.match(/^o\s+(\w+)(\[\])?\s+(\w+)(.*?)$/);
-    if (propMatch) {
-      const rest = propMatch[4] || '';
-      const validators = parseValidators(rest);
-      const isOptional = /\boptional\b/.test(rest);
-      current.properties.push({
-        name: propMatch[3], type: propMatch[1],
-        isArray: !!propMatch[2], isOptional, isRelationship: false,
-        validators,
-      });
-    }
-  }
+  const namespace: string = ast.namespace;
+  const imports = parseImports(ast.imports || []);
+  const declarations = parseDeclarations(ast.declarations || []);
 
   return { namespace, imports, declarations };
 }
 
-function parseValidators(str: string): PropertyValidator {
+// ── Import conversion ────────────────────────────────────────────
+
+function parseImports(astImports: any[]): ImportStatement[] {
+  return astImports.map((imp: any) => {
+    const $class: string = imp.$class;
+    if ($class === `${META}.ImportAll` || $class === `${META}.ImportAllFrom`) {
+      return { namespace: imp.namespace, types: ['*'], uri: imp.uri };
+    }
+    if ($class === `${META}.ImportTypes`) {
+      return { namespace: imp.namespace, types: imp.types || [], uri: imp.uri };
+    }
+    // ImportType / ImportTypeFrom
+    return { namespace: imp.namespace, types: [imp.name], uri: imp.uri };
+  });
+}
+
+// ── Declaration conversion ───────────────────────────────────────
+
+function parseDeclarations(astDecls: any[]): Declaration[] {
+  return astDecls.map((decl: any) => {
+    const $class: string = decl.$class;
+    const decorators = parseDecorators(decl.decorators || []);
+
+    // ── Scalar ──
+    if ($class.includes('Scalar')) {
+      const scalarType = $class.replace(`${META}.`, '').replace('Scalar', '');
+      return {
+        name: decl.name,
+        type: 'scalar' as const,
+        isAbstract: false,
+        properties: [],
+        enumValues: [],
+        scalarExtends: scalarType,
+        scalarValidators: parseScalarValidators(decl),
+        identified: 'none' as IdentifiedKind,
+        decorators,
+      };
+    }
+
+    // ── Map ──
+    if ($class === `${META}.MapDeclaration`) {
+      const keyType = extractMapType(decl.key);
+      const valueType = extractMapType(decl.value);
+      return {
+        name: decl.name,
+        type: 'map' as const,
+        isAbstract: false,
+        properties: [
+          { name: '_key', type: keyType, isOptional: false, isArray: false, isRelationship: false, validators: {} },
+          { name: '_value', type: valueType, isOptional: false, isArray: false, isRelationship: false, validators: {} },
+        ],
+        enumValues: [],
+        mapDeclaration: { keyType, valueType },
+        identified: 'none' as IdentifiedKind,
+        decorators,
+      };
+    }
+
+    // ── Enum ──
+    if ($class === `${META}.EnumDeclaration`) {
+      return {
+        name: decl.name,
+        type: 'enum' as const,
+        isAbstract: false,
+        properties: [],
+        enumValues: (decl.properties || []).map((p: any) => p.name),
+        identified: 'none' as IdentifiedKind,
+        decorators,
+      };
+    }
+
+    // ── Class declarations (concept, asset, participant, event, transaction) ──
+    const typeMap: Record<string, Declaration['type']> = {
+      [`${META}.ConceptDeclaration`]: 'concept',
+      [`${META}.AssetDeclaration`]: 'asset',
+      [`${META}.ParticipantDeclaration`]: 'participant',
+      [`${META}.EventDeclaration`]: 'event',
+      [`${META}.TransactionDeclaration`]: 'transaction',
+    };
+    const type = typeMap[$class] || 'concept';
+
+    // Identification
+    let identified: IdentifiedKind = 'none';
+    let identifiedBy: string | undefined;
+    if (decl.identified) {
+      if (decl.identified.$class === `${META}.IdentifiedBy`) {
+        identified = 'identified-by';
+        identifiedBy = decl.identified.name;
+      } else {
+        identified = 'identified';
+      }
+    }
+
+    return {
+      name: decl.name,
+      type,
+      isAbstract: !!decl.isAbstract,
+      superType: decl.superType?.name,
+      properties: (decl.properties || []).map(parseProperty),
+      enumValues: [],
+      identified,
+      identifiedBy,
+      decorators,
+    };
+  });
+}
+
+// ── Property conversion ──────────────────────────────────────────
+
+function parseProperty(p: any): Property {
+  const $class: string = p.$class;
+  const isRelationship = $class === `${META}.RelationshipProperty`;
+
+  let type: string;
+  if ($class === `${META}.ObjectProperty` || isRelationship) {
+    type = p.type?.name || 'String';
+  } else {
+    // BooleanProperty → Boolean, StringProperty → String, etc.
+    type = $class.replace(`${META}.`, '').replace('Property', '');
+  }
+
+  const validators: PropertyValidator = {};
+
+  if (p.defaultValue != null) validators.default = JSON.stringify(p.defaultValue);
+
+  if (p.validator) {
+    if (p.validator.pattern) {
+      validators.regex = `/${p.validator.pattern}/${p.validator.flags || ''}`;
+    }
+    if (p.validator.lower != null || p.validator.upper != null) {
+      validators.range = `[${p.validator.lower ?? ''},${p.validator.upper ?? ''}]`;
+    }
+  }
+
+  if (p.lengthValidator) {
+    validators.length = `[${p.lengthValidator.minLength ?? ''},${p.lengthValidator.maxLength ?? ''}]`;
+  }
+
+  return {
+    name: p.name,
+    type,
+    isOptional: !!p.isOptional,
+    isArray: !!p.isArray,
+    isRelationship,
+    validators,
+  };
+}
+
+// ── Decorator conversion ─────────────────────────────────────────
+
+function parseDecorators(astDecorators: any[]): Decorator[] {
+  return astDecorators.map((d: any) => ({
+    name: d.name,
+    args: (d.arguments || []).map((a: any) => {
+      if (a.$class === `${META}.DecoratorString`) return `"${a.value}"`;
+      if (a.$class === `${META}.DecoratorTypeReference`) return a.type?.name || '';
+      return String(a.value);
+    }),
+  }));
+}
+
+// ── Scalar validators ────────────────────────────────────────────
+
+function parseScalarValidators(decl: any): PropertyValidator {
   const v: PropertyValidator = {};
-  if (!str) return v;
-
-  const defaultMatch = str.match(/default\s*=\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\S+)/);
-  if (defaultMatch) v.default = defaultMatch[1];
-
-  const regexMatch = str.match(/regex\s*=\s*(\/[^/]*\/)/);
-  if (regexMatch) v.regex = regexMatch[1];
-
-  const rangeMatch = str.match(/range\s*=\s*(\[[^\]]*\])/);
-  if (rangeMatch) v.range = rangeMatch[1];
-
-  const lengthMatch = str.match(/length\s*=\s*(\[[^\]]*\])/);
-  if (lengthMatch) v.length = lengthMatch[1];
-
+  if (decl.defaultValue != null) v.default = JSON.stringify(decl.defaultValue);
+  if (decl.validator) {
+    if (decl.validator.pattern) v.regex = `/${decl.validator.pattern}/${decl.validator.flags || ''}`;
+    if (decl.validator.lower != null || decl.validator.upper != null) {
+      v.range = `[${decl.validator.lower ?? ''},${decl.validator.upper ?? ''}]`;
+    }
+  }
+  if (decl.lengthValidator) {
+    v.length = `[${decl.lengthValidator.minLength ?? ''},${decl.lengthValidator.maxLength ?? ''}]`;
+  }
   return v;
 }
 
-// ── Layout ──────────────────────────────────────────────────────
+// ── Map type extraction ──────────────────────────────────────────
+
+function extractMapType(mapEntry: any): string {
+  if (mapEntry.type) return mapEntry.type.name;
+  const $class: string = mapEntry.$class;
+  return $class.replace(`${META}.`, '').replace(/Map(Key|Value)Type$/, '');
+}
+
+// ── Layout ───────────────────────────────────────────────────────
 
 function estimateNodeHeight(decl: Declaration): number {
   let headerHeight = 70;
@@ -202,7 +214,6 @@ function estimateNodeHeight(decl: Declaration): number {
   const buttonHeight = 36;
   const padding = 16;
 
-  // Extra header space for decorators, identified, extends
   if (decl.decorators?.length > 0) headerHeight += 20;
   if (decl.identified !== 'none') headerHeight += 16;
   if (decl.superType) headerHeight += 16;
@@ -302,7 +313,7 @@ function computeTreeLayout(declarations: Declaration[]): Map<string, { x: number
   return positions;
 }
 
-// ── Graph generation ──────────────────────────────────────────────
+// ── Graph generation ─────────────────────────────────────────────
 
 export function declarationsToGraph(declarations: Declaration[]): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = [];

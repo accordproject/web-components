@@ -1,113 +1,229 @@
-import type { ConcertoModel, Declaration, PropertyValidator } from './types';
+import type { ConcertoModel, Declaration, Property, PropertyValidator, Decorator } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const ConcertoCto = require('@accordproject/concerto-cto');
+const PrinterModule = ConcertoCto.Printer;
+const META = 'concerto.metamodel@1.0.0';
+
+/**
+ * Convert the editor model to CTO string using the official Concerto printer
+ * (@accordproject/concerto-cto Printer.toCTO).
+ */
 export function declarationsToCto(model: ConcertoModel): string {
-  const lines: string[] = [];
-  lines.push(`namespace ${model.namespace}`);
+  const ast = modelToMetamodel(model);
+  return PrinterModule.toCTO(ast);
+}
 
-  // Imports
-  if (model.imports.length > 0) {
-    lines.push('');
-    for (const imp of model.imports) {
-      let line = 'import ';
-      if (imp.types.length === 1) {
-        line += `${imp.namespace}.${imp.types[0]}`;
-      } else {
-        line += `${imp.namespace}.{${imp.types.join(', ')}}`;
-      }
-      if (imp.uri) line += ` from ${imp.uri}`;
-      lines.push(line);
-    }
+// ── Model → Metamodel AST ────────────────────────────────────────
+
+function modelToMetamodel(model: ConcertoModel): any {
+  return {
+    namespace: model.namespace,
+    imports: model.imports.map(importToAst),
+    declarations: model.declarations.map(declarationToAst),
+  };
+}
+
+// ── Imports ──────────────────────────────────────────────────────
+
+function importToAst(imp: { namespace: string; types: string[]; uri?: string }): any {
+  if (imp.types.length === 1 && imp.types[0] === '*') {
+    return imp.uri
+      ? { $class: `${META}.ImportAllFrom`, namespace: imp.namespace, uri: imp.uri }
+      : { $class: `${META}.ImportAll`, namespace: imp.namespace };
   }
-
-  lines.push('');
-
-  for (const decl of model.declarations) {
-    lines.push(declarationToCto(decl));
-    lines.push('');
+  if (imp.types.length === 1) {
+    return imp.uri
+      ? { $class: `${META}.ImportTypeFrom`, namespace: imp.namespace, name: imp.types[0], uri: imp.uri }
+      : { $class: `${META}.ImportType`, namespace: imp.namespace, name: imp.types[0] };
   }
-
-  return lines.join('\n');
+  return { $class: `${META}.ImportTypes`, namespace: imp.namespace, types: imp.types, uri: imp.uri };
 }
 
-function validatorsToCto(v: PropertyValidator): string {
-  let s = '';
-  if (v.default != null) s += ` default=${v.default}`;
-  if (v.regex) s += ` regex=${v.regex}`;
-  if (v.range) s += ` range=${v.range}`;
-  if (v.length) s += ` length=${v.length}`;
-  return s;
-}
+// ── Declarations ─────────────────────────────────────────────────
 
-function decoratorsToCto(decorators: { name: string; args: string[] }[], indent: string): string[] {
-  return decorators.map((d) => {
-    if (d.args.length > 0) {
-      return `${indent}@${d.name}(${d.args.join(', ')})`;
-    }
-    return `${indent}@${d.name}`;
-  });
-}
+function declarationToAst(decl: Declaration): any {
+  const decorators = decl.decorators.map(decoratorToAst);
 
-function declarationToCto(decl: Declaration): string {
-  const lines: string[] = [];
-
-  // Declaration-level decorators
-  lines.push(...decoratorsToCto(decl.decorators, ''));
-
-  // Scalar
+  // ── Scalar ──
   if (decl.type === 'scalar') {
-    let line = `scalar ${decl.name} extends ${decl.scalarExtends || 'String'}`;
-    if (decl.scalarValidators) line += validatorsToCto(decl.scalarValidators);
-    lines.push(line);
-    return lines.join('\n');
+    const scalarClass = `${META}.${decl.scalarExtends || 'String'}Scalar`;
+    const result: any = { $class: scalarClass, name: decl.name };
+    if (decorators.length) result.decorators = decorators;
+    if (decl.scalarValidators) addValidatorsToAst(result, decl.scalarValidators, decl.scalarExtends || 'String');
+    return result;
   }
 
-  // Map
+  // ── Map ──
   if (decl.type === 'map') {
-    lines.push(`map ${decl.name} {`);
-    if (decl.mapDeclaration) {
-      lines.push(`  o ${decl.mapDeclaration.keyType}`);
-      lines.push(`  o ${decl.mapDeclaration.valueType}`);
-    }
-    lines.push('}');
-    return lines.join('\n');
+    const keyType = decl.mapDeclaration?.keyType || 'String';
+    const valueType = decl.mapDeclaration?.valueType || 'String';
+    const result: any = {
+      $class: `${META}.MapDeclaration`,
+      name: decl.name,
+      key: mapTypeToAst(keyType, 'Key'),
+      value: mapTypeToAst(valueType, 'Value'),
+    };
+    if (decorators.length) result.decorators = decorators;
+    return result;
   }
 
-  // Regular declarations
-  let header = '';
-  if (decl.isAbstract) header += 'abstract ';
-  header += `${decl.type} ${decl.name}`;
-
-  // Identity
-  if (decl.identified === 'identified-by' && decl.identifiedBy) {
-    header += ` identified by ${decl.identifiedBy}`;
-  } else if (decl.identified === 'identified') {
-    header += ' identified';
-  }
-
-  if (decl.superType) header += ` extends ${decl.superType}`;
-  header += ' {';
-  lines.push(header);
-
+  // ── Enum ──
   if (decl.type === 'enum') {
-    for (const val of decl.enumValues) {
-      lines.push(`  o ${val}`);
-    }
-  } else {
-    for (const prop of decl.properties) {
-      let line = '  ';
-      if (prop.isRelationship) {
-        line += `--> ${prop.type}`;
-      } else {
-        line += `o ${prop.type}`;
-      }
-      if (prop.isArray) line += '[]';
-      line += ` ${prop.name}`;
-      line += validatorsToCto(prop.validators);
-      if (prop.isOptional) line += ' optional';
-      lines.push(line);
+    const result: any = {
+      $class: `${META}.EnumDeclaration`,
+      name: decl.name,
+      properties: decl.enumValues.map((v) => ({ $class: `${META}.EnumProperty`, name: v })),
+    };
+    if (decorators.length) result.decorators = decorators;
+    return result;
+  }
+
+  // ── Class declarations ──
+  const classMap: Record<string, string> = {
+    concept: `${META}.ConceptDeclaration`,
+    asset: `${META}.AssetDeclaration`,
+    participant: `${META}.ParticipantDeclaration`,
+    event: `${META}.EventDeclaration`,
+    transaction: `${META}.TransactionDeclaration`,
+  };
+
+  const result: any = {
+    $class: classMap[decl.type] || `${META}.ConceptDeclaration`,
+    name: decl.name,
+    isAbstract: decl.isAbstract,
+    properties: decl.properties.map(propertyToAst),
+  };
+
+  if (decl.superType) {
+    result.superType = { name: decl.superType };
+  }
+
+  if (decl.identified === 'identified-by' && decl.identifiedBy) {
+    result.identified = { $class: `${META}.IdentifiedBy`, name: decl.identifiedBy };
+  } else if (decl.identified === 'identified') {
+    result.identified = { $class: `${META}.Identified` };
+  }
+
+  if (decorators.length) result.decorators = decorators;
+
+  return result;
+}
+
+// ── Properties ───────────────────────────────────────────────────
+
+const PRIMITIVE_TO_CLASS: Record<string, string> = {
+  String: 'StringProperty',
+  Integer: 'IntegerProperty',
+  Long: 'LongProperty',
+  Double: 'DoubleProperty',
+  Boolean: 'BooleanProperty',
+  DateTime: 'DateTimeProperty',
+};
+
+function propertyToAst(prop: Property): any {
+  if (prop.isRelationship) {
+    return {
+      $class: `${META}.RelationshipProperty`,
+      name: prop.name,
+      type: { name: prop.type },
+      isArray: prop.isArray,
+      isOptional: prop.isOptional,
+    };
+  }
+
+  const primitiveClass = PRIMITIVE_TO_CLASS[prop.type];
+  if (primitiveClass) {
+    const result: any = {
+      $class: `${META}.${primitiveClass}`,
+      name: prop.name,
+      isArray: prop.isArray,
+      isOptional: prop.isOptional,
+    };
+    addValidatorsToAst(result, prop.validators, prop.type);
+    return result;
+  }
+
+  // Object property (reference to another declaration)
+  const result: any = {
+    $class: `${META}.ObjectProperty`,
+    name: prop.name,
+    type: { name: prop.type },
+    isArray: prop.isArray,
+    isOptional: prop.isOptional,
+  };
+  if (prop.validators?.default) result.defaultValue = prop.validators.default;
+  return result;
+}
+
+// ── Validators ───────────────────────────────────────────────────
+
+function addValidatorsToAst(result: any, validators: PropertyValidator, typeName: string) {
+  if (!validators) return;
+
+  if (validators.default != null) {
+    const val = validators.default;
+    const unquoted = val.replace(/^["']|["']$/g, '');
+    if (typeName === 'Boolean') result.defaultValue = unquoted === 'true';
+    else if (['Integer', 'Long', 'Double'].includes(typeName)) result.defaultValue = Number(unquoted);
+    else result.defaultValue = unquoted;
+  }
+
+  if (validators.regex) {
+    const match = validators.regex.match(/^\/(.*)\/([gimsuy]*)$/);
+    if (match) {
+      result.validator = { pattern: match[1], flags: match[2] };
     }
   }
 
-  lines.push('}');
-  return lines.join('\n');
+  if (validators.range) {
+    const match = validators.range.match(/^\[([^,]*),([^\]]*)\]$/);
+    if (match) {
+      result.validator = result.validator || {};
+      if (match[1].trim()) result.validator.lower = Number(match[1].trim());
+      if (match[2].trim()) result.validator.upper = Number(match[2].trim());
+    }
+  }
+
+  if (validators.length) {
+    const match = validators.length.match(/^\[([^,]*),([^\]]*)\]$/);
+    if (match) {
+      result.lengthValidator = {};
+      if (match[1].trim()) result.lengthValidator.minLength = Number(match[1].trim());
+      if (match[2].trim()) result.lengthValidator.maxLength = Number(match[2].trim());
+    }
+  }
+}
+
+// ── Map types ────────────────────────────────────────────────────
+
+const PRIMITIVE_MAP_TYPES = new Set(['String', 'Integer', 'Long', 'Double', 'Boolean', 'DateTime']);
+
+function mapTypeToAst(typeName: string, kind: 'Key' | 'Value'): any {
+  if (PRIMITIVE_MAP_TYPES.has(typeName)) {
+    return { $class: `${META}.${typeName}Map${kind}Type` };
+  }
+  const $class = kind === 'Key' ? `${META}.ObjectMapKeyType` : `${META}.ObjectMapValueType`;
+  return { $class, type: { name: typeName } };
+}
+
+// ── Decorators ───────────────────────────────────────────────────
+
+function decoratorToAst(dec: Decorator): any {
+  const result: any = { name: dec.name };
+  if (dec.args.length > 0) {
+    result.arguments = dec.args.map((arg) => {
+      if ((arg.startsWith('"') && arg.endsWith('"')) || (arg.startsWith("'") && arg.endsWith("'"))) {
+        return { $class: `${META}.DecoratorString`, value: arg.slice(1, -1) };
+      }
+      if (!isNaN(Number(arg))) {
+        return { $class: `${META}.DecoratorNumber`, value: Number(arg) };
+      }
+      if (arg === 'true' || arg === 'false') {
+        return { $class: `${META}.DecoratorBoolean`, value: arg === 'true' };
+      }
+      return { $class: `${META}.DecoratorTypeReference`, type: { name: arg } };
+    });
+  }
+  return result;
 }
