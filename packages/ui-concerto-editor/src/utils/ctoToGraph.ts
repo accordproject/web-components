@@ -4,7 +4,10 @@ import { PRIMITIVE_TYPES } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const ConcertoCto = require('@accordproject/concerto-cto');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const ConcertoCore = require('@accordproject/concerto-core');
 const ParserModule = ConcertoCto.Parser;
+const ModelManager = ConcertoCore.ModelManager;
 const META = 'concerto.metamodel@1.0.0';
 
 /**
@@ -18,6 +21,20 @@ export function parseCto(cto: string): ConcertoModel {
   const declarations = parseDeclarations(ast.declarations || []);
 
   return { namespace, imports, declarations };
+}
+
+/**
+ * Validate a CTO string using ModelManager from @accordproject/concerto-core.
+ * Returns null if valid, or an error message string if invalid.
+ */
+export function validateCto(cto: string): string | null {
+  try {
+    const mm = new ModelManager({ enableMapType: true });
+    mm.addCTOModel(cto, 'model.cto');
+    return null;
+  } catch (e: any) {
+    return e.message || 'Validation failed';
+  }
 }
 
 // ── Import conversion ────────────────────────────────────────────

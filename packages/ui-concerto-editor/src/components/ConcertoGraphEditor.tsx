@@ -17,7 +17,7 @@ import { EnumNode } from './EnumNode';
 import { MapNode } from './MapNode';
 import { ScalarNode } from './ScalarNode';
 import { Toolbar } from './Toolbar';
-import { parseCto, declarationsToGraph } from '../utils/ctoToGraph';
+import { parseCto, declarationsToGraph, validateCto } from '../utils/ctoToGraph';
 import { declarationsToCto } from '../utils/graphToCto';
 import type { Declaration, ConcertoModel } from '../utils/types';
 
@@ -49,6 +49,7 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [error, setError] = useState<string | null>(null);
+  const [validationWarning, setValidationWarning] = useState<string | null>(null);
   const [model, setModelState] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', imports: [], declarations: [] });
   const modelRef = useRef(model);
   const setModel = useCallback((m: ConcertoModel) => { modelRef.current = m; setModelState(m); }, []);
@@ -99,6 +100,9 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
       setNodes(nodesWithPositions);
       setEdges(graph.edges);
       setError(null);
+      // Validate with ModelManager (non-blocking)
+      const validation = validateCto(cto);
+      setValidationWarning(validation);
       if (!isUndoRedo.current) {
         pushHistory({ model: parsed, nodes: nodesWithPositions, edges: graph.edges });
       }
@@ -112,6 +116,10 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
   const updateModelAndSync = useCallback((newDeclarations: Declaration[]) => {
     const cur = modelRef.current;
     const newModel = { ...cur, declarations: newDeclarations };
+    const newCto = declarationsToCto(newModel);
+    // Validate with ModelManager before applying
+    const validation = validateCto(newCto);
+    setValidationWarning(validation);
     setModel(newModel);
     const graph = declarationsToGraph(newDeclarations);
     const nodesWithPositions = graph.nodes.map((node) => {
@@ -122,7 +130,7 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
     setEdges(graph.edges);
     pushHistory({ model: newModel, nodes: nodesWithPositions, edges: graph.edges });
     updatingFromGraph.current = true;
-    onModelChange?.(declarationsToCto(newModel));
+    onModelChange?.(newCto);
   }, [setModel, setNodes, setEdges, onModelChange, pushHistory]);
 
   // --- Operations ---
@@ -305,6 +313,7 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
       />
       <div style={{ flex: 1, position: 'relative' }}>
         {error && <div style={errorStyle}>Parse error: {error}</div>}
+        {!error && validationWarning && <div style={warningStyle}>Validation: {validationWarning}</div>}
         <ReactFlow
           nodes={nodesWithCallbacks}
           edges={edges}
@@ -408,6 +417,12 @@ function ConnectEdgeDialog({ sourceId, targetId, onSubmit, onClose }: {
 const errorStyle: React.CSSProperties = {
   position: 'absolute', top: 8, left: 8, right: 8, zIndex: 10,
   background: '#fc8181', color: '#1a202c', padding: '8px 12px',
+  borderRadius: 6, fontSize: 12, fontWeight: 600,
+};
+
+const warningStyle: React.CSSProperties = {
+  position: 'absolute', top: 8, left: 8, right: 8, zIndex: 10,
+  background: '#ecc94b', color: '#1a202c', padding: '8px 12px',
   borderRadius: 6, fontSize: 12, fontWeight: 600,
 };
 

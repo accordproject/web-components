@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { Declaration, MapDeclaration } from '../utils/types';
-import { DECLARATION_TYPES, ALL_TYPES } from '../utils/types';
+import type { Declaration } from '../utils/types';
+import { DECLARATION_TYPES, ALL_TYPES, getAvailableTypes, getExtendsCandidates } from '../utils/types';
 
 interface ToolbarProps {
   declarations: Declaration[];
@@ -109,7 +109,7 @@ function AddDeclarationDialog({ declarations, onAdd, onClose }: {
   const [mapKeyType, setMapKeyType] = useState('String');
   const [mapValueType, setMapValueType] = useState('String');
 
-  const allTypeOptions = [...ALL_TYPES, ...declarations.map((d) => d.name)];
+  const allTypeOptions = getAvailableTypes(declarations);
 
   const [scalarExtends, setScalarExtends] = useState('String');
 
@@ -182,7 +182,7 @@ function AddPropertyDialog({ declName, declarations, onAdd, onClose }: {
   const [isArray, setIsArray] = useState(false);
   const [isRelationship, setIsRelationship] = useState(false);
 
-  const availableTypes = [...ALL_TYPES, ...declarations.map((d) => d.name).filter((n) => n !== declName)];
+  const availableTypes = getAvailableTypes(declarations, declName);
 
   const handleSubmit = () => {
     if (!name.trim()) return;
@@ -253,9 +253,7 @@ function SetInheritanceDialog({ declName, declarations, onSet, onClose }: {
   onClose: () => void;
 }) {
   const [superType, setSuperType] = useState('');
-  const candidates = declarations
-    .filter((d) => d.name !== declName && d.type !== 'enum' && d.type !== 'map')
-    .map((d) => d.name);
+  const candidates = getExtendsCandidates(declarations, declName);
 
   return (
     <div style={dialogOverlay} onClick={onClose}>

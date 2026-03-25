@@ -67,3 +67,43 @@ export const ALL_TYPES = [
 export const DECLARATION_TYPES = [
   'concept', 'enum', 'asset', 'participant', 'event', 'transaction', 'map', 'scalar',
 ] as const;
+
+/**
+ * Get all available types for property/map dropdowns.
+ * Includes primitives + all declaration names (concepts, enums, scalars, etc.)
+ */
+export function getAvailableTypes(declarations: Declaration[], exclude?: string): string[] {
+  const declNames = declarations.map((d) => d.name).filter((n) => n !== exclude);
+  return [...ALL_TYPES, ...declNames];
+}
+
+/**
+ * Get valid candidates for "extends" on a given declaration.
+ * Only same-kind declarations (no enums, no maps, no scalars), excluding self and checking for cycles.
+ */
+export function getExtendsCandidates(declarations: Declaration[], declName: string): string[] {
+  const decl = declarations.find((d) => d.name === declName);
+  if (!decl) return [];
+
+  // Build ancestor set to prevent cycles
+  const ancestors = new Set<string>();
+  const collectDescendants = (name: string) => {
+    for (const d of declarations) {
+      if (d.superType === name && !ancestors.has(d.name)) {
+        ancestors.add(d.name);
+        collectDescendants(d.name);
+      }
+    }
+  };
+  collectDescendants(declName);
+
+  return declarations
+    .filter((d) =>
+      d.name !== declName &&
+      d.type !== 'enum' &&
+      d.type !== 'map' &&
+      d.type !== 'scalar' &&
+      !ancestors.has(d.name)
+    )
+    .map((d) => d.name);
+}
