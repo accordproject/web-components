@@ -1,7 +1,7 @@
 import type { ConcertoModel, Declaration, Property, PropertyValidator, Decorator } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const ConcertoCto = require('@accordproject/concerto-cto');
+import ConcertoCto from '@accordproject/concerto-cto';
 const PrinterModule = ConcertoCto.Printer;
 const META = 'concerto.metamodel@1.0.0';
 

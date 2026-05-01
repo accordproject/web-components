@@ -46,8 +46,8 @@ interface HistoryEntry {
 const MAX_HISTORY = 50;
 
 export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText, onImport, onExport }: ConcertoGraphEditorProps) {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [error, setError] = useState<string | null>(null);
   const [validationWarning, setValidationWarning] = useState<string | null>(null);
   const [model, setModelState] = useState<ConcertoModel>({ namespace: 'org.example@1.0.0', imports: [], declarations: [] });
@@ -314,7 +314,7 @@ export function ConcertoGraphEditor({ cto, onModelChange, showText, onToggleText
       <div style={{ flex: 1, position: 'relative' }}>
         {error && <div style={errorStyle}>Parse error: {error}</div>}
         {!error && validationWarning && <div style={warningStyle}>Validation: {validationWarning}</div>}
-        <ReactFlow
+        <ReactFlow<Node, Edge>
           nodes={nodesWithCallbacks}
           edges={edges}
           onNodesChange={onNodesChange}

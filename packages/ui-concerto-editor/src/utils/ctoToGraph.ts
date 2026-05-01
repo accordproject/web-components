@@ -1,11 +1,12 @@
 import type { Node, Edge } from '@xyflow/react';
+import type { IModel } from '@accordproject/concerto-types';
 import type { Declaration, ConcertoModel, ImportStatement, Property, PropertyValidator, Decorator, IdentifiedKind } from './types';
 import { PRIMITIVE_TYPES } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const ConcertoCto = require('@accordproject/concerto-cto');
+import ConcertoCto from '@accordproject/concerto-cto';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const ConcertoCore = require('@accordproject/concerto-core');
+import ConcertoCore from '@accordproject/concerto-core';
 const ParserModule = ConcertoCto.Parser;
 const ModelManager = ConcertoCore.ModelManager;
 const META = 'concerto.metamodel@1.0.0';
@@ -14,7 +15,7 @@ const META = 'concerto.metamodel@1.0.0';
  * Parse CTO string using the official Concerto parser (@accordproject/concerto-cto).
  */
 export function parseCto(cto: string): ConcertoModel {
-  const ast = ParserModule.parse(cto);
+  const ast = ParserModule.parse(cto) as IModel;
 
   const namespace: string = ast.namespace;
   const imports = parseImports(ast.imports || []);
