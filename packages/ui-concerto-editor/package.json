@@ -1,6 +1,6 @@
 {
   "name": "@accordproject/ui-concerto-editor",
-  "version": "0.1.0",
+  "version": "0.98.0",
   "private": false,
   "description": "Graphical editor for Concerto data models using React Flow",
   "main": "lib/index.cjs.js",
