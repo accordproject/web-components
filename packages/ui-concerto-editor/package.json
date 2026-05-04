@@ -1,0 +1,45 @@
+{
+  "name": "@accordproject/ui-concerto-editor",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Graphical editor for Concerto data models using React Flow",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "jest --passWithNoTests",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@accordproject/concerto-core": "^3.25.7",
+    "@accordproject/concerto-cto": "^3.25.7",
+    "@xyflow/react": "^12.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-node-polyfills": "^0.22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accordproject/web-components",
+    "directory": "packages/ui-concerto-editor"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
