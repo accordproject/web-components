@@ -25,7 +25,7 @@ export function parseCto(cto: string): ConcertoModel {
  */
 export function validateCto(cto: string): string | null {
   try {
-    const mm = new ModelManager({ enableMapType: true });
+    const mm = new ModelManager();
     mm.addCTOModel(cto, 'model.cto');
     return null;
   } catch (e: any) {
