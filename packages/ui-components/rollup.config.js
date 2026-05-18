@@ -39,7 +39,6 @@ const config = outputs.map(({ file, format }) => ({
       react: 'React',
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      '@accordproject/ui-markdown-editor': 'MarkdownEditor',
       'styled-components': 'styled',
       '@accordproject/markdown-slate': 'markdownSlate',
       '@accordproject/markdown-html': 'markdownHtml',
