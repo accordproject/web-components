@@ -108,7 +108,7 @@ Accord Project documentation files are made available under the [Creative Common
 Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respective owners. See [LF Projects Trademark Policy](https://lfprojects.org/policies/trademark-policy/).
 
 [linuxfound]: https://www.linuxfoundation.org
-[charter]: https://github.com/accordproject/governance/blob/master/accord-project-technical-charter.md
+[charter]: https://github.com/accordproject/governance/blob/main/accord-project-technical-charter.md
 [apmain]: https://accordproject.org/ 
 [apblog]: https://medium.com/@accordhq
 [apdoc]: https://docs.accordproject.org/
@@ -117,8 +117,8 @@ Copyright 2018-2019 Clause, Inc. All trademarks are the property of their respec
 
 [storybook]: https://ap-web-components.netlify.app/
 
-[contributing]: https://github.com/accordproject/web-components/blob/master/CONTRIBUTING.md
-[developers]: https://github.com/accordproject/web-components/blob/master/DEVELOPERS.md
+[contributing]: https://github.com/accordproject/web-components/blob/main/CONTRIBUTING.md
+[developers]: https://github.com/accordproject/web-components/blob/main/DEVELOPERS.md
 
-[apache]: https://github.com/accordproject/web-components/blob/master/LICENSE
+[apache]: https://github.com/accordproject/web-components/blob/main/LICENSE
 [creativecommons]: http://creativecommons.org/licenses/by/4.0/
