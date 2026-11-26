@@ -61,10 +61,13 @@ export const parseValue = (value, type) => {
     case 'Boolean':
       return value === 'true';
     case 'Double':
-      return parseFloat(value);
+      return /^[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?$/.test(value)
+        && Number.isFinite(Number(value))
+        ? Number(value)
+        : value;
     case 'Long':
     case 'Integer':
-      return parseInt(value, 10);
+      return /^[-+]?\d+$/.test(value) ? Number(value) : value;
     default:
       return value;
   }
