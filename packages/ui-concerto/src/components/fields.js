@@ -59,12 +59,50 @@ export const ConcertoInput = ({
   type,
 }) => {
   let error;
+  let errorMessage;
+
+  if (required && (value === undefined || value === null || value === '')) {
+    error = true;
+    errorMessage = 'This field is required';
+  }
+
+  const fieldType = field.getType();
+  if (!error && (fieldType === 'Integer' || fieldType === 'Long')) {
+    if (typeof value === 'number' && !Number.isInteger(value)) {
+      error = true;
+      errorMessage = `Please enter a valid ${fieldType.toLowerCase()}`;
+    } else if (typeof value !== 'number' && typeof value !== 'string') {
+      error = true;
+      errorMessage = `Please enter a valid ${fieldType.toLowerCase()}`;
+    } else if (typeof value === 'string' && value !== '' && !/^[-+]?\d+$/.test(value)) {
+      error = true;
+      errorMessage = `Please enter a valid ${fieldType.toLowerCase()}`;
+    }
+  }
+  if (!error && fieldType === 'Double') {
+    if (typeof value !== 'number' && typeof value !== 'string') {
+      error = true;
+      errorMessage = 'Please enter a valid number';
+    } else if (
+      typeof value === 'string'
+      && value !== ''
+      && (
+        !/^[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?$/.test(value)
+        || !Number.isFinite(Number(value))
+      )
+    ) {
+      error = true;
+      errorMessage = 'Please enter a valid number';
+    }
+  }
+
   const validator = field.getValidator();
-  if (validator) {
+  if (!error && validator) {
     try {
       validator.validate(id, value);
     } catch (validationError) {
       error = true;
+      errorMessage = validationError.message;
       console.warn(validationError.message);
     }
   }
@@ -90,6 +128,9 @@ export const ConcertoInput = ({
         </label>
       </div>
     )}
+    {error && errorMessage
+      ? <Label basic color="red" pointing>{errorMessage}</Label>
+      : null}
   </Form.Field>;
 };
 

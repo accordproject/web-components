@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import { normalizeLabel } from './utilities';
+import { normalizeLabel, parseValue } from './utilities';
 
 describe('Utilities', () => {
   describe('#normalizeLabel', () => {
@@ -24,6 +24,22 @@ describe('Utilities', () => {
     });
     it('accepts CamelCase', async () => {
       expect(normalizeLabel('CamelCase')).toEqual('Camel Case');
+    });
+  });
+
+  describe('#parseValue', () => {
+    it('does not accept partial integer input', () => {
+      expect(parseValue('12abc', 'Integer')).toEqual('12abc');
+      expect(parseValue('12.5', 'Integer')).toEqual('12.5');
+    });
+
+    it('does not accept partial double input', () => {
+      expect(parseValue('12.5abc', 'Double')).toEqual('12.5abc');
+    });
+
+    it('strictly casts valid numeric input', () => {
+      expect(parseValue('-42', 'Integer')).toEqual(-42);
+      expect(parseValue('12.5', 'Double')).toEqual(12.5);
     });
   });
 });
